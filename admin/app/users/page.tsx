@@ -17,7 +17,7 @@ export default function AdminUsersPage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (!isAdminLoggedIn()) { router.push('/admin/login'); return; }
+    if (!isAdminLoggedIn()) { router.push('/login'); return; }
     admin.users()
       .then(setUsers)
       .catch(e => setError(e.message))

@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
     try {
       const { accessToken } = await adminAuth.login(email, password);
       saveAdminToken(accessToken);
-      router.push('/admin');
+      router.push('/');
     } catch {
       setError('Неверный email или пароль');
     } finally {

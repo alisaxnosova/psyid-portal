@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import { adminLogout } from '@/lib/adminApi';
 
 const NAV = [
-  { href: '/admin', label: 'Dashboard', exact: true },
-  { href: '/admin/users', label: 'Пользователи' },
-  { href: '/admin/results', label: 'Результаты тестов' },
+  { href: '/', label: 'Dashboard', exact: true },
+  { href: '/users', label: 'Пользователи' },
+  { href: '/results', label: 'Результаты тестов' },
 ];
 
 function NavIcon({ type }: { type: string }) {
@@ -35,18 +35,13 @@ function NavIcon({ type }: { type: string }) {
   );
 }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+const icons = ['dashboard', 'users', 'results'];
+
+export default function AdminShellLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
-  const icons = ['dashboard', 'users', 'results'];
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f4f5f7' }}>
-      {/* Sidebar */}
       <aside style={{
         width: 220, flexShrink: 0,
         background: '#1a1a2e', color: 'white',
@@ -57,9 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 4 }}>
             PsyID
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>
-            Admin Panel
-          </div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Admin Panel</div>
         </div>
 
         <div style={{ width: '100%', height: 1, background: 'rgba(255,255,255,0.08)' }} />
@@ -77,7 +70,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 background: isActive ? 'rgba(255,255,255,0.12)' : 'transparent',
                 color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
                 fontWeight: isActive ? 600 : 400, fontSize: 13,
-                transition: 'all .15s',
               }}>
                 <NavIcon type={icons[i]} />
                 {item.label}
@@ -97,7 +89,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      {/* Main */}
       <div style={{ flex: 1, minWidth: 0, padding: 32 }}>
         {children}
       </div>

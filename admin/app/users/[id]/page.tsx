@@ -31,7 +31,7 @@ export default function AdminUserDetailPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!isAdminLoggedIn()) { router.push('/admin/login'); return; }
+    if (!isAdminLoggedIn()) { router.push('/login'); return; }
     admin.user(id)
       .then(setData)
       .catch(e => setError(e.message))
@@ -53,7 +53,7 @@ export default function AdminUserDetailPage() {
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <Link href="/admin/users" style={{ fontSize: 13, color: '#6b7280', display: 'inline-flex', alignItems: 'center', gap: 4, marginBottom: 16 }}>
+        <Link href="/users" style={{ fontSize: 13, color: '#6b7280', display: 'inline-flex', alignItems: 'center', gap: 4, marginBottom: 16 }}>
           ← Все пользователи
         </Link>
         <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111827', letterSpacing: '-0.02em' }}>

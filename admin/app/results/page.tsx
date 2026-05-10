@@ -31,7 +31,7 @@ export default function AdminResultsPage() {
   const [filter, setFilter] = useState<'all' | 'COMPLETED' | 'IN_PROGRESS'>('all');
 
   useEffect(() => {
-    if (!isAdminLoggedIn()) { router.push('/admin/login'); return; }
+    if (!isAdminLoggedIn()) { router.push('/login'); return; }
     admin.attempts()
       .then(setAttempts)
       .catch(e => setError(e.message))
