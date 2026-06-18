@@ -8,7 +8,7 @@ import { useAdminLang, TKey, AdminLang } from '@/lib/adminLang';
 const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean; newTab?: boolean }[] = [
   { href: '/admin',                      key: 'nav_dashboard',    icon: 'dashboard', exact: true, built: true  },
   { href: '/admin/questions',            key: 'nav_assessments',  icon: 'questions',              built: true  },
-  { href: '/start',                      key: 'nav_test',         icon: 'test',                   built: true, newTab: true },
+  { href: '/admin/test',                  key: 'nav_test',         icon: 'test',                   built: true  },
   { href: '/admin/report-templates',     key: 'nav_report_tmpls', icon: 'report',                 built: false },
   { href: '/admin/users',                key: 'nav_users',        icon: 'users',                  built: false },
   { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: true  },
