@@ -487,10 +487,31 @@ export default function StartPage() {
                   ...inputBase, height: 68,
                   fontSize: 28, fontFamily: "'Geist Mono', monospace",
                   fontWeight: 800, letterSpacing: '0.45em', textAlign: 'center',
-                  borderColor: code.length === 6 ? C.orangeHot : C.line,
+                  borderColor: codeStatus === 'valid' ? '#22c55e' : codeStatus === 'not_found' || codeStatus === 'already_used' ? '#ef4444' : code.length === 6 ? C.orangeHot : C.line,
                   background: C.bone,
+                  transition: 'border-color .2s',
                 }}
               />
+              {code.length === 6 && codeStatus === 'checking' && (
+                <div style={{ marginTop: 8, fontSize: 13, color: C.inkMute, textAlign: 'center' }}>
+                  Checking code…
+                </div>
+              )}
+              {codeStatus === 'valid' && (
+                <div style={{ marginTop: 8, fontSize: 13, color: '#22c55e', textAlign: 'center', fontWeight: 600 }}>
+                  Code accepted
+                </div>
+              )}
+              {codeStatus === 'not_found' && (
+                <div style={{ marginTop: 8, fontSize: 13, color: '#ef4444', textAlign: 'center', fontWeight: 600 }}>
+                  Code not found. Check for typos or contact support.
+                </div>
+              )}
+              {codeStatus === 'already_used' && (
+                <div style={{ marginTop: 8, fontSize: 13, color: '#ef4444', textAlign: 'center', fontWeight: 600 }}>
+                  This code has already been used.
+                </div>
+              )}
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 28 }}>
