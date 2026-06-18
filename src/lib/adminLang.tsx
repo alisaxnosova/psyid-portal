@@ -16,6 +16,7 @@ export const T = {
   nav_billing:      { en: 'Billing',              ru: 'Финансы'             },
   nav_analytics:    { en: 'Analytics',            ru: 'Аналитика'           },
   nav_assess_ana:   { en: 'Assessment Analytics', ru: 'Аналитика теста'     },
+  nav_test:         { en: 'Test Page',            ru: 'Страница теста'      },
   nav_to_site:      { en: 'Go to site',           ru: 'На сайт'             },
   nav_logout:       { en: 'Log out',              ru: 'Выйти'               },
   // Common
