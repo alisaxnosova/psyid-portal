@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { kvConfigured, kvGet, kvSet } from '@/lib/upstash';
 
 export interface AccessCode {
   id: string;
@@ -28,26 +28,26 @@ async function verifyAdmin(req: Request): Promise<boolean> {
 }
 
 export async function GET(req: Request) {
-  if (!process.env.KV_REST_API_URL) {
+  if (!kvConfigured()) {
     return NextResponse.json({ error: 'kv_not_configured', codes: [] }, { status: 503 });
   }
   if (!(await verifyAdmin(req))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const codes: AccessCode[] = (await kv.get<AccessCode[]>(CODES_KEY)) ?? [];
+  const codes: AccessCode[] = (await kvGet<AccessCode[]>(CODES_KEY)) ?? [];
   return NextResponse.json({ codes });
 }
 
 export async function POST(req: Request) {
-  if (!process.env.KV_REST_API_URL) {
+  if (!kvConfigured()) {
     return NextResponse.json({ error: 'kv_not_configured' }, { status: 503 });
   }
   if (!(await verifyAdmin(req))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const body = await req.json() as AccessCode;
-  const codes: AccessCode[] = (await kv.get<AccessCode[]>(CODES_KEY)) ?? [];
+  const body = (await req.json()) as AccessCode;
+  const codes: AccessCode[] = (await kvGet<AccessCode[]>(CODES_KEY)) ?? [];
   codes.unshift(body);
-  await kv.set(CODES_KEY, codes);
+  await kvSet(CODES_KEY, codes);
   return NextResponse.json({ code: body });
 }
