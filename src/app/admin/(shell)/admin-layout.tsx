@@ -28,6 +28,13 @@ function NavIcon({ type }: { type: string }) {
       <circle cx="12" cy="4.5" r="2" stroke="currentColor" strokeWidth="1.4"/>
     </svg>
   );
+  if (type === 'questions') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M8 5.5c-1.1 0-2 .9-2 2 0 .8.5 1.5 1.2 1.8L8 9.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="8" cy="11.5" r=".75" fill="currentColor"/>
+    </svg>
+  );
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <rect x="1.5" y="3" width="13" height="10" rx="2" stroke="currentColor" strokeWidth="1.4"/>
@@ -36,7 +43,7 @@ function NavIcon({ type }: { type: string }) {
   );
 }
 
-const icons = ['dashboard', 'users', 'results'];
+const icons = ['dashboard', 'users', 'results', 'questions'];
 
 export default function AdminShellLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
