@@ -323,9 +323,62 @@ export default function StartPage() {
     }, 250);
   }
 
+  // Validate code when it reaches 6 digits
+  useEffect(() => {
+    if (!/^\d{6}$/.test(code)) {
+      setCodeStatus('idle');
+      setValidCodeId(null);
+      return;
+    }
+    setCodeStatus('checking');
+    setValidCodeId(null);
+
+    let cancelled = false;
+
+    async function validate() {
+      // Try API first (KV — cross-device)
+      try {
+        const res = await fetch('/api/codes/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        if (!cancelled && res.ok) {
+          const data = await res.json() as { valid: boolean; reason?: string; id?: string };
+          if (data.valid) {
+            setCodeStatus('valid');
+            setValidCodeId(data.id ?? null);
+          } else if (data.reason === 'already_used') {
+            setCodeStatus('already_used');
+          } else {
+            setCodeStatus('not_found');
+          }
+          return;
+        }
+      } catch { /* API unavailable */ }
+
+      // Fallback: check localStorage
+      if (cancelled) return;
+      try {
+        const raw = localStorage.getItem('psyid_admin_codes');
+        const all = raw ? (JSON.parse(raw) as { id: string; code: string; status: string }[]) : [];
+        const found = all.find(c => c.code === code);
+        if (!found) { setCodeStatus('not_found'); return; }
+        if (found.status === 'USED') { setCodeStatus('already_used'); return; }
+        setCodeStatus('valid');
+        setValidCodeId(found.id);
+      } catch {
+        setCodeStatus('not_found');
+      }
+    }
+
+    validate();
+    return () => { cancelled = true; };
+  }, [code]);
+
   const t = T[lang];
   const isRtl = lang === 'ar';
-  const canContinue1 = /^\d{6}$/.test(code) && tcChecked;
+  const canContinue1 = codeStatus === 'valid' && tcChecked;
   const filteredCountries = COUNTRIES.filter(c => c.toLowerCase().includes(countrySearch.toLowerCase()));
   const selectStyle: React.CSSProperties = { ...inputBase, appearance: 'none', backgroundImage: chevronBg, backgroundRepeat: 'no-repeat', backgroundPosition: isRtl ? '12px 50%' : 'calc(100% - 12px) 50%', paddingRight: isRtl ? '11px' : '36px', paddingLeft: isRtl ? '36px' : '11px' };
 
