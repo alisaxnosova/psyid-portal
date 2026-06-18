@@ -8,6 +8,7 @@ const NAV = [
   { href: '/admin', label: 'Dashboard', exact: true },
   { href: '/admin/users', label: 'Пользователи' },
   { href: '/admin/results', label: 'Результаты тестов' },
+  { href: '/admin/questions', label: 'Вопросы' },
 ];
 
 function NavIcon({ type }: { type: string }) {
