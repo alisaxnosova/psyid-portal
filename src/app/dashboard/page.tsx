@@ -10,9 +10,9 @@ function ProgressStep({ n, label, done, active }: { n: number; label: string; do
     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <div style={{
         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-        background: done ? 'var(--violet)' : active ? 'white' : 'var(--bg-3)',
-        border: active ? '2px solid var(--violet)' : 'none',
-        color: done ? 'white' : active ? 'var(--violet)' : 'var(--ink-3)',
+        background: done ? '#FF9540' : active ? 'white' : '#E8E4DC',
+        border: active ? '2px solid #FF9540' : 'none',
+        color: done ? 'white' : active ? '#FF9540' : '#8A8596',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 12, fontWeight: 700,
       }}>
