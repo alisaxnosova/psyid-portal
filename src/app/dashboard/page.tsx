@@ -22,7 +22,7 @@ function ProgressStep({ n, label, done, active }: { n: number; label: string; do
           </svg>
         ) : n}
       </div>
-      <span style={{ fontSize: 14, color: done ? 'var(--ink)' : active ? 'var(--ink)' : 'var(--ink-3)', fontWeight: done || active ? 600 : 400 }}>
+      <span style={{ fontSize: 14, color: done ? '#14111C' : active ? '#14111C' : '#8A8596', fontWeight: done || active ? 600 : 400 }}>
         {label}
       </span>
     </div>
