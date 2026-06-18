@@ -1,22 +1,31 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { admin, AdminUser, AdminAttempt, isAdminLoggedIn } from '@/lib/adminApi';
+import { useState, useEffect } from 'react';
 import { useAdminLang } from '@/lib/adminLang';
 
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
   line: '#E5DED2', bone: '#F6F1EA',
-  orange: '#FF7A3D', orangeHot: '#FF9540', coral: '#FF5A5A',
-  blue: '#2244E0', green: '#1DA36A',
+  orange: '#FF7A3D', orangeHot: '#FF9540',
+  green: '#1DA36A', coral: '#FF5A5A', blue: '#2244E0',
 };
 
-type Tab = 'users' | 'results' | 'research';
+const CODES_KEY = 'psyid_admin_codes';
 
-function formatDate(iso: string, lang: 'en' | 'ru') {
-  return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', {
+interface AccessCode {
+  id: string;
+  code: string;
+  status: 'UNUSED' | 'USED';
+  invoice_ref: string | null;
+  note: string | null;
+  created_at: string;
+  used_at: string | null;
+}
+
+type Tab = 'codes' | 'users' | 'results' | 'research';
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-US', {
     day: 'numeric', month: 'short', year: 'numeric',
     hour: '2-digit', minute: '2-digit',
   });
@@ -24,25 +33,6 @@ function formatDate(iso: string, lang: 'en' | 'ru') {
 
 function shortId(id: string) {
   return id.slice(0, 8) + '…';
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, { label: string; bg: string; color: string }> = {
-    COMPLETED:   { label: 'Completed',   bg: 'rgba(255,149,64,0.12)',  color: C.orangeHot },
-    IN_PROGRESS: { label: 'In Progress', bg: 'rgba(255,198,116,0.18)', color: '#B8800A'   },
-    CREATED:     { label: 'Created',     bg: C.bone,                   color: C.inkMute   },
-  };
-  const s = map[status] ?? { label: status, bg: C.bone, color: C.inkMute };
-  return (
-    <span style={{
-      padding: '3px 10px', borderRadius: 999,
-      background: s.bg, color: s.color,
-      fontSize: 11, fontWeight: 700,
-      fontFamily: "'Geist Mono', monospace", letterSpacing: '0.04em',
-    }}>
-      {s.label}
-    </span>
-  );
 }
 
 function TH({ children, width }: { children: React.ReactNode; width?: number | string }) {
@@ -60,8 +50,7 @@ function TH({ children, width }: { children: React.ReactNode; width?: number | s
 function TD({ children, mono }: { children: React.ReactNode; mono?: boolean }) {
   return (
     <td style={{
-      padding: '13px 16px',
-      fontSize: mono ? 12 : 13,
+      padding: '13px 16px', fontSize: mono ? 12 : 13,
       color: mono ? C.inkMute : C.ink,
       fontFamily: mono ? "'Geist Mono', monospace" : 'inherit',
       borderBottom: `1px solid ${C.bone}`,
@@ -70,44 +59,74 @@ function TD({ children, mono }: { children: React.ReactNode; mono?: boolean }) {
   );
 }
 
-export default function AdminDatabasePage() {
-  const router = useRouter();
-  const { lang } = useAdminLang();
+function ComingSoonTable({ columns }: { columns: string[] }) {
+  return (
+    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
+      <thead>
+        <tr>{columns.map(c => <TH key={c}>{c}</TH>)}</tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colSpan={columns.length} style={{ padding: '72px 32px', textAlign: 'center' }}>
+            <div style={{ maxWidth: 380, margin: '0 auto' }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: 12,
+                background: 'rgba(255,149,64,0.08)', margin: '0 auto 14px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 4.5V11m0 3v.5" stroke={C.orangeHot} strokeWidth="1.6" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>New endpoint coming soon</div>
+              <div style={{ fontSize: 13, color: C.inkMute, lineHeight: 1.6 }}>
+                This table will connect to the new backend API. Building out fresh — no legacy endpoints.
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
 
-  const [tab, setTab]           = useState<Tab>('results');
-  const [users, setUsers]       = useState<AdminUser[]>([]);
-  const [attempts, setAttempts] = useState<AdminAttempt[]>([]);
-  const [loading, setLoading]   = useState(true);
-  const [error, setError]       = useState('');
-  const [search, setSearch]     = useState('');
+export default function AdminDatabasePage() {
+  const { lang } = useAdminLang();
+  const [tab, setTab] = useState<Tab>('codes');
+  const [codes, setCodes] = useState<AccessCode[]>([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (!isAdminLoggedIn()) { router.push('/admin/login'); return; }
-    Promise.all([admin.users(), admin.attempts()])
-      .then(([u, a]) => { setUsers(u); setAttempts(a); })
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false));
-  }, [router]);
+    const raw = localStorage.getItem(CODES_KEY);
+    if (raw) {
+      try { setCodes(JSON.parse(raw)); } catch { setCodes([]); }
+    }
+  }, []);
 
-  const filteredUsers = users.filter(u =>
+  // Re-read when tab switches to codes (picks up newly generated ones)
+  useEffect(() => {
+    if (tab !== 'codes') return;
+    const raw = localStorage.getItem(CODES_KEY);
+    if (raw) {
+      try { setCodes(JSON.parse(raw)); } catch { setCodes([]); }
+    }
+  }, [tab]);
+
+  const filteredCodes = codes.filter(c =>
     !search ||
-    u.email.toLowerCase().includes(search.toLowerCase()) ||
-    (u.fullName ?? '').toLowerCase().includes(search.toLowerCase()) ||
-    u.id.toLowerCase().startsWith(search.toLowerCase())
+    c.code.includes(search) ||
+    (c.invoice_ref ?? '').toLowerCase().includes(search.toLowerCase()) ||
+    (c.note ?? '').toLowerCase().includes(search.toLowerCase())
   );
 
-  const filteredAttempts = attempts.filter(a =>
-    !search ||
-    (a.user?.email ?? '').toLowerCase().includes(search.toLowerCase()) ||
-    (a.user?.fullName ?? '').toLowerCase().includes(search.toLowerCase()) ||
-    a.id.toLowerCase().startsWith(search.toLowerCase()) ||
-    (a.topProfile ?? '').toLowerCase().includes(search.toLowerCase())
-  );
+  const unusedCount = codes.filter(c => c.status === 'UNUSED').length;
+  const usedCount   = codes.filter(c => c.status === 'USED').length;
 
-  const tabs: { key: Tab; label: string; table: string; count: number | null }[] = [
-    { key: 'users',    label: 'Table A', table: 'Users',              count: loading ? null : users.length    },
-    { key: 'results',  label: 'Table B', table: 'Assessment Results', count: loading ? null : attempts.length },
-    { key: 'research', label: 'Table C', table: 'Research Dataset',   count: 0 },
+  const tabs: { key: Tab; label: string; table: string; count?: number }[] = [
+    { key: 'codes',    label: 'Table D', table: 'Access Codes',        count: codes.length  },
+    { key: 'users',    label: 'Table A', table: 'Users'                                      },
+    { key: 'results',  label: 'Table B', table: 'Assessment Results'                         },
+    { key: 'research', label: 'Table C', table: 'Research Dataset'                           },
   ];
 
   return (
@@ -119,19 +138,21 @@ export default function AdminDatabasePage() {
             Database
           </h1>
           <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-            {loading ? 'Loading…' : `${users.length} users · ${attempts.length} attempts · 3 tables`}
+            {`${codes.length} codes · ${unusedCount} unused · ${usedCount} used`}
           </p>
         </div>
-        <input
-          placeholder="Search by email, name, ID…"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            padding: '10px 16px', borderRadius: 12, border: `1.5px solid ${C.line}`,
-            fontSize: 14, color: C.ink, background: 'white', width: 280, outline: 'none',
-            fontFamily: 'inherit',
-          }}
-        />
+        {tab === 'codes' && (
+          <input
+            placeholder="Search codes, invoice, note…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              padding: '10px 16px', borderRadius: 12, border: `1.5px solid ${C.line}`,
+              fontSize: 14, color: C.ink, background: 'white', width: 260, outline: 'none',
+              fontFamily: 'inherit',
+            }}
+          />
+        )}
       </div>
 
       {/* Tabs */}
@@ -147,14 +168,11 @@ export default function AdminDatabasePage() {
               fontFamily: 'inherit', fontWeight: active ? 700 : 400,
               transition: 'all .15s', display: 'flex', alignItems: 'center', gap: 8,
             }}>
-              <span style={{
-                fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700,
-                color: active ? C.orangeHot : C.inkMute,
-              }}>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700, color: active ? C.orangeHot : C.inkMute }}>
                 {tb.label}
               </span>
               <span>{tb.table}</span>
-              {tb.count !== null && (
+              {tb.count !== undefined && (
                 <span style={{
                   background: active ? 'rgba(255,149,64,0.15)' : C.bone,
                   color: active ? C.orangeHot : C.inkMute,
@@ -170,199 +188,102 @@ export default function AdminDatabasePage() {
         })}
       </div>
 
-      {error && (
-        <div style={{ padding: '14px 20px', borderRadius: 12, background: 'rgba(255,90,90,0.08)', color: C.coral, fontSize: 14, marginBottom: 16 }}>
-          {error}
-        </div>
-      )}
-
       {/* Table card */}
       <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
 
-          {/* ── TABLE A: Users ── */}
-          {tab === 'users' && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 760 }}>
+          {/* ── TABLE D: Access Codes ── */}
+          {tab === 'codes' && (
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
               <thead>
                 <tr>
-                  <TH width={120}>user_id</TH>
-                  <TH width={180}>name</TH>
-                  <TH width={230}>email</TH>
-                  <TH width={110}>account</TH>
-                  <TH width={80}>tests</TH>
-                  <TH width={100}>completed</TH>
-                  <TH>joined</TH>
+                  <TH width={90}>code_id</TH>
+                  <TH width={100}>code</TH>
+                  <TH width={120}>status</TH>
+                  <TH width={200}>invoice_ref</TH>
+                  <TH width={200}>note</TH>
+                  <TH width={170}>created_at</TH>
+                  <TH>used_at</TH>
                 </tr>
               </thead>
               <tbody>
-                {loading && (
-                  <tr><td colSpan={7} style={{ padding: 48, textAlign: 'center', color: C.inkMute, fontSize: 14 }}>Loading…</td></tr>
+                {filteredCodes.length === 0 && (
+                  <tr>
+                    <td colSpan={7} style={{ padding: '64px 32px', textAlign: 'center' }}>
+                      <div style={{ maxWidth: 360, margin: '0 auto' }}>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>
+                          {search ? 'No codes match your search' : 'No access codes yet'}
+                        </div>
+                        <div style={{ fontSize: 13, color: C.inkMute, lineHeight: 1.6 }}>
+                          {search
+                            ? 'Try a different search term.'
+                            : 'Go to Access Codes in the sidebar to generate your first code.'
+                          }
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 )}
-                {!loading && filteredUsers.length === 0 && (
-                  <tr><td colSpan={7} style={{ padding: 48, textAlign: 'center', color: C.inkMute, fontSize: 14 }}>No rows found</td></tr>
-                )}
-                {!loading && filteredUsers.map(u => (
-                  <tr key={u.id}
+                {filteredCodes.map(c => (
+                  <tr key={c.id}
                     onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     style={{ transition: 'background .1s' }}
                   >
-                    <TD mono>{shortId(u.id)}</TD>
+                    <TD mono>{shortId(c.id)}</TD>
                     <TD>
-                      <span style={{ fontWeight: 600, color: C.ink }}>
-                        {u.fullName ?? u.firstName ?? <span style={{ color: C.inkMute }}>—</span>}
+                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 16, fontWeight: 800, letterSpacing: '0.08em', color: C.ink }}>
+                        {c.code}
                       </span>
                     </TD>
-                    <TD mono>{u.email}</TD>
                     <TD>
                       <span style={{
-                        padding: '2px 8px', borderRadius: 6,
-                        background: C.bone, fontSize: 11,
-                        color: C.inkMute, fontFamily: "'Geist Mono', monospace",
+                        padding: '3px 10px', borderRadius: 999,
+                        background: c.status === 'USED' ? C.bone : 'rgba(255,149,64,0.12)',
+                        color: c.status === 'USED' ? C.inkMute : C.orangeHot,
+                        fontSize: 11, fontWeight: 700,
+                        fontFamily: "'Geist Mono', monospace",
                       }}>
-                        user
+                        {c.status}
                       </span>
                     </TD>
-                    <TD mono>{u.attemptsCount}</TD>
-                    <TD>
-                      {u.completedCount > 0
-                        ? <span style={{ color: C.orangeHot, fontWeight: 700, fontFamily: "'Geist Mono', monospace", fontSize: 12 }}>{u.completedCount}</span>
-                        : <span style={{ color: C.inkMute }}>—</span>
-                      }
-                    </TD>
-                    <TD mono>{formatDate(u.createdAt, lang)}</TD>
+                    <TD>{c.invoice_ref || <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{c.note || <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD mono>{formatDate(c.created_at)}</TD>
+                    <TD mono>{c.used_at ? formatDate(c.used_at) : <span style={{ color: C.inkMute }}>—</span>}</TD>
                   </tr>
                 ))}
               </tbody>
             </table>
+          )}
+
+          {/* ── TABLE A: Users ── */}
+          {tab === 'users' && (
+            <ComingSoonTable columns={['user_id', 'name', 'email', 'account', 'tests', 'completed', 'joined']} />
           )}
 
           {/* ── TABLE B: Assessment Results ── */}
           {tab === 'results' && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 960 }}>
-              <thead>
-                <tr>
-                  <TH width={120}>result_id</TH>
-                  <TH width={120}>user_id</TH>
-                  <TH width={210}>user</TH>
-                  <TH width={190}>personality_type</TH>
-                  <TH width={140}>status</TH>
-                  <TH width={180}>test_start</TH>
-                  <TH>test_end</TH>
-                </tr>
-              </thead>
-              <tbody>
-                {loading && (
-                  <tr><td colSpan={7} style={{ padding: 48, textAlign: 'center', color: C.inkMute, fontSize: 14 }}>Loading…</td></tr>
-                )}
-                {!loading && filteredAttempts.length === 0 && (
-                  <tr><td colSpan={7} style={{ padding: 48, textAlign: 'center', color: C.inkMute, fontSize: 14 }}>No rows found</td></tr>
-                )}
-                {!loading && filteredAttempts.map(a => (
-                  <tr key={a.id}
-                    onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
-                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                    style={{ transition: 'background .1s' }}
-                  >
-                    <TD mono>{shortId(a.id)}</TD>
-                    <TD mono>
-                      {a.user
-                        ? <Link href={`/admin/users/${a.user.id}`} style={{ color: C.blue }}>{shortId(a.user.id)}</Link>
-                        : <span style={{ color: C.inkMute }}>—</span>
-                      }
-                    </TD>
-                    <TD>
-                      {a.user ? (
-                        <>
-                          <Link href={`/admin/users/${a.user.id}`} style={{ fontSize: 13, fontWeight: 600, color: C.blue, display: 'block' }}>
-                            {a.user.fullName ?? a.user.email}
-                          </Link>
-                          <span style={{ fontSize: 11, color: C.inkMute, fontFamily: "'Geist Mono', monospace" }}>
-                            {a.user.email}
-                          </span>
-                        </>
-                      ) : (
-                        <span style={{ color: C.inkMute, fontSize: 12 }}>anonymous</span>
-                      )}
-                    </TD>
-                    <TD>
-                      {a.topProfile
-                        ? <span style={{ fontWeight: 600, color: C.ink }}>{a.topProfile}</span>
-                        : <span style={{ color: C.inkMute }}>—</span>
-                      }
-                    </TD>
-                    <TD><StatusBadge status={a.status} /></TD>
-                    <TD mono>{formatDate(a.createdAt, lang)}</TD>
-                    <TD mono>
-                      {a.completedAt
-                        ? formatDate(a.completedAt, lang)
-                        : <span style={{ color: C.inkMute }}>—</span>
-                      }
-                    </TD>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ComingSoonTable columns={['result_id', 'user_id', 'user', 'personality_type', 'status', 'test_start', 'test_end']} />
           )}
 
           {/* ── TABLE C: Research Dataset ── */}
           {tab === 'research' && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 960 }}>
-              <thead>
-                <tr>
-                  <TH width={130}>research_id</TH>
-                  <TH width={80}>age</TH>
-                  <TH width={150}>education</TH>
-                  <TH width={150}>country</TH>
-                  <TH width={170}>occupation</TH>
-                  <TH width={110}>language</TH>
-                  <TH width={140}>research_consent</TH>
-                  <TH>scores</TH>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colSpan={8} style={{ padding: '72px 32px', textAlign: 'center' }}>
-                    <div style={{ maxWidth: 440, margin: '0 auto' }}>
-                      <div style={{
-                        width: 52, height: 52, borderRadius: 16,
-                        background: 'rgba(255,149,64,0.08)', margin: '0 auto 18px',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 5.5v5.5m0 3.5v.5" stroke={C.orangeHot} strokeWidth="1.7" strokeLinecap="round"/>
-                        </svg>
-                      </div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: C.ink, marginBottom: 10 }}>
-                        Research Dataset is empty
-                      </div>
-                      <div style={{ fontSize: 13, color: C.inkMute, lineHeight: 1.65 }}>
-                        Rows will appear here when participants complete the onboarding flow
-                        with research consent checked. The backend endpoint for this table
-                        is not yet built.
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <ComingSoonTable columns={['research_id', 'age', 'education', 'country', 'occupation', 'language', 'research_consent', 'scores']} />
           )}
 
         </div>
 
         {/* Footer */}
-        {!loading && !error && (
-          <div style={{
-            padding: '10px 20px', borderTop: `1px solid ${C.line}`,
-            display: 'flex', alignItems: 'center', gap: 8,
-            fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute,
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
-            {tab === 'users'    && `${filteredUsers.length} row${filteredUsers.length !== 1 ? 's' : ''}${search ? ` (filtered from ${users.length})` : ''}`}
-            {tab === 'results'  && `${filteredAttempts.length} row${filteredAttempts.length !== 1 ? 's' : ''}${search ? ` (filtered from ${attempts.length})` : ''}`}
-            {tab === 'research' && '0 rows'}
-          </div>
-        )}
+        <div style={{
+          padding: '10px 20px', borderTop: `1px solid ${C.line}`,
+          display: 'flex', alignItems: 'center', gap: 8,
+          fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute,
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
+          {tab === 'codes' && `${filteredCodes.length} row${filteredCodes.length !== 1 ? 's' : ''}${search ? ` (filtered from ${codes.length})` : ''} · stored locally`}
+          {tab !== 'codes' && 'awaiting new endpoint'}
+        </div>
       </div>
     </div>
   );
