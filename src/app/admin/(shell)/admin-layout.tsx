@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation';
 import { adminLogout } from '@/lib/adminApi';
 
 const NAV = [
-  { href: '/admin', label: 'Dashboard', exact: true },
-  { href: '/admin/users', label: 'Пользователи' },
-  { href: '/admin/results', label: 'Результаты тестов' },
-  { href: '/admin/questions', label: 'Вопросы' },
+  { href: '/admin',           label: 'Dashboard',         exact: true },
+  { href: '/admin/users',     label: 'Пользователи'                   },
+  { href: '/admin/results',   label: 'Результаты'                     },
+  { href: '/admin/questions', label: 'Вопросы'                        },
 ];
 
 function NavIcon({ type }: { type: string }) {
@@ -49,61 +49,81 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
   const pathname = usePathname();
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f4f5f7' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#F6F1EA', fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
+
+      {/* ── Sidebar ── */}
       <aside style={{
-        width: 220, flexShrink: 0,
-        background: '#1a1a2e', color: 'white',
-        display: 'flex', flexDirection: 'column',
+        width: 232, flexShrink: 0,
+        background: 'linear-gradient(180deg, #050C2E 0%, #0B1A56 100%)',
+        color: 'white', display: 'flex', flexDirection: 'column',
         position: 'sticky', top: 0, height: '100vh',
       }}>
-        <div style={{ padding: '24px 20px 20px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 4 }}>
-            PsyID
+        {/* Brand */}
+        <div style={{ padding: '24px 20px 22px' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 32, height: 32, borderRadius: 10, background: 'white', position: 'relative', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
+              <span style={{ position: 'absolute', left: 5, top: 5, width: 9, height: 9, borderRadius: '50%', background: '#2244E0' }}/>
+              <span style={{ position: 'absolute', right: 5, bottom: 5, width: 9, height: 9, borderRadius: 3, background: '#FF9540' }}/>
+            </span>
+            <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.03em', color: '#fff' }}>
+              Psy<span style={{ color: '#FF9540' }}>ID</span>
+            </span>
+          </Link>
+          <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
+            Admin Panel
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Admin Panel</div>
         </div>
 
-        <div style={{ width: '100%', height: 1, background: 'rgba(255,255,255,0.08)' }} />
+        <div style={{ width: '100%', height: 1, background: 'rgba(255,255,255,0.08)' }}/>
 
+        {/* Nav */}
         <nav style={{ padding: '16px 12px', flex: 1 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.3)', padding: '0 8px 10px', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.28)', padding: '0 8px 10px', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
             Навигация
           </div>
           {NAV.map((item, i) => {
-            const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
             return (
               <Link key={item.href} href={item.href} style={{
                 display: 'flex', alignItems: 'center', gap: 10,
-                padding: '9px 10px', borderRadius: 8, marginBottom: 2,
-                background: isActive ? 'rgba(255,255,255,0.12)' : 'transparent',
-                color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
-                fontWeight: isActive ? 600 : 400, fontSize: 13,
+                padding: '9px 10px', borderRadius: 10, marginBottom: 2,
+                background: active ? 'rgba(255,149,64,0.18)' : 'transparent',
+                color: active ? '#FF9540' : 'rgba(255,255,255,0.52)',
+                fontWeight: active ? 600 : 400, fontSize: 13,
+                borderLeft: active ? '2px solid #FF9540' : '2px solid transparent',
+                transition: 'all .15s',
               }}>
-                <NavIcon type={icons[i] ?? 'results'} />
+                <NavIcon type={icons[i] ?? 'results'}/>
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
+        {/* Footer links */}
         <div style={{ padding: '16px 12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <Link href="/" style={{
-            display: 'block', padding: '9px 10px', borderRadius: 8, marginBottom: 4,
-            color: 'rgba(255,255,255,0.4)', fontSize: 13,
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '9px 10px', borderRadius: 10, marginBottom: 4,
+            color: 'rgba(255,255,255,0.35)', fontSize: 13, transition: 'color .15s',
           }}>
-            ← Вернуться на сайт
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            На сайт
           </Link>
           <button onClick={adminLogout} style={{
-            width: '100%', padding: '9px 10px', borderRadius: 8,
-            background: 'transparent', color: 'rgba(255,255,255,0.4)',
-            fontSize: 13, cursor: 'pointer', border: 'none', textAlign: 'left',
+            width: '100%', display: 'flex', alignItems: 'center', gap: 8,
+            padding: '9px 10px', borderRadius: 10, background: 'transparent',
+            color: 'rgba(255,255,255,0.35)', fontSize: 13, cursor: 'pointer',
+            border: 'none', textAlign: 'left', fontFamily: 'inherit', transition: 'color .15s',
           }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 7h7M9 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M5 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
             Выйти
           </button>
         </div>
       </aside>
 
-      <div style={{ flex: 1, minWidth: 0, padding: 32 }}>
+      {/* ── Content ── */}
+      <div style={{ flex: 1, minWidth: 0, padding: 32, overflowY: 'auto' }}>
         {children}
       </div>
     </div>
