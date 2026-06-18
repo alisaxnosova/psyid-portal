@@ -131,13 +131,12 @@ export default function TestPage() {
     const accessCode = typeof window !== 'undefined' ? sessionStorage.getItem('access_code') : null;
     const anonId     = typeof window !== 'undefined' ? sessionStorage.getItem('anon_session_id') : null;
 
-    // No registered user and no access code → show auth wall
     if (!userId && !accessCode) {
+      window.location.replace('/start');
       setNeedAuth(true);
       return;
     }
 
-    // Use registered userId if present, else anonymous session id from /start
     const effectiveId = userId ?? anonId ?? ('guest_' + Date.now());
 
     attempts.create(METHODOLOGY_CODE, effectiveId)
