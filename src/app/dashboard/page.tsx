@@ -59,36 +59,41 @@ export default function DashboardPage() {
 
       {/* Journey progress */}
       <div style={{
-        background: 'white', borderRadius: 18, padding: 24,
-        border: '1px solid var(--line)', marginBottom: 20,
+        background: 'white', borderRadius: 16, padding: 24,
+        border: '1px solid #E8E4DC', marginBottom: 16,
       }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 18 }}>Ваш путь</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: '#8A8596', textTransform: 'uppercase', marginBottom: 16, fontFamily: "'Geist Mono', monospace" }}>
+          Ваш путь
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <ProgressStep n={1} label="Тест пройден" done={false} active={true} />
-          <div style={{ flex: 1, height: 2, background: 'var(--bg-3)', margin: '0 12px' }} />
+          <div style={{ flex: 1, height: 2, background: '#E8E4DC', margin: '0 12px' }} />
           <ProgressStep n={2} label="Паспорт получен" done={false} active={false} />
-          <div style={{ flex: 1, height: 2, background: 'var(--bg-3)', margin: '0 12px' }} />
+          <div style={{ flex: 1, height: 2, background: '#E8E4DC', margin: '0 12px' }} />
           <ProgressStep n={3} label="Программа выбрана" done={false} active={false} />
         </div>
       </div>
 
       {/* No test CTA */}
       <div style={{
-        background: 'var(--grad-hero)', color: 'white',
-        borderRadius: 20, padding: 40, textAlign: 'center',
+        background: 'linear-gradient(135deg, #050C2E 0%, #0B1A56 60%, #1A2A7A 100%)',
+        color: 'white', borderRadius: 20, padding: 40, textAlign: 'center',
       }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', opacity: 0.7, marginBottom: 12, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.45)', marginBottom: 12, textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
           Первый шаг
         </div>
-        <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Пройдите тест вместе с ребёнком</div>
-        <div style={{ fontSize: 15, opacity: 0.8, marginBottom: 28, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 12, letterSpacing: '-0.02em' }}>Пройдите тест вместе с ребёнком</div>
+        <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', marginBottom: 28, lineHeight: 1.6 }}>
           15 минут — и вы узнаете психотип, сильные стороны и подходящие профессии
         </div>
         <Link href="/start" style={{
-          display: 'inline-block', background: 'white', color: 'var(--violet)',
-          padding: '14px 28px', borderRadius: 100, fontWeight: 700, fontSize: 15,
+          display: 'inline-block',
+          background: 'linear-gradient(95deg, #FF9540 0%, #E6337C 100%)',
+          color: 'white',
+          padding: '14px 32px', borderRadius: 100, fontWeight: 700, fontSize: 15,
+          letterSpacing: '-0.01em',
         }}>
-          Пройти тест
+          Пройти тест →
         </Link>
       </div>
     </div>
