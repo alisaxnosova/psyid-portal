@@ -10,9 +10,9 @@ const C = {
   green: '#1DA36A', blue: '#2244E0',
 };
 
-const CODES_KEY = 'psyid_admin_codes';
+const LOCAL_KEY = 'psyid_admin_codes';
 
-interface AccessCode {
+export interface AccessCode {
   id: string;
   code: string;
   status: 'UNUSED' | 'USED';
@@ -40,31 +40,81 @@ function formatDate(iso: string) {
   });
 }
 
-export default function AdminCodesPage() {
-  const { t, lang } = useAdminLang();
+function getToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('admin_access_token');
+}
 
-  const [codes, setCodes]         = useState<AccessCode[]>([]);
-  const [invoiceRef, setInvoiceRef] = useState('');
-  const [note, setNote]           = useState('');
-  const [lastCode, setLastCode]   = useState<string | null>(null);
-  const [copied, setCopied]       = useState(false);
+function localRead(): AccessCode[] {
+  try { return JSON.parse(localStorage.getItem(LOCAL_KEY) ?? '[]'); } catch { return []; }
+}
+
+function localWrite(codes: AccessCode[]) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(codes));
+}
+
+export default function AdminCodesPage() {
+  const { t } = useAdminLang();
+
+  const [codes, setCodes]             = useState<AccessCode[]>([]);
+  const [kvReady, setKvReady]         = useState<boolean | null>(null); // null = loading
+  const [invoiceRef, setInvoiceRef]   = useState('');
+  const [note, setNote]               = useState('');
+  const [lastCode, setLastCode]       = useState<string | null>(null);
+  const [copied, setCopied]           = useState(false);
+  const [generating, setGenerating]   = useState(false);
   const [filterStatus, setFilterStatus] = useState<'all' | 'UNUSED' | 'USED'>('all');
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Load codes from localStorage
+  // On mount: check if KV is configured, then load codes
   useEffect(() => {
-    const raw = localStorage.getItem(CODES_KEY);
-    if (raw) {
-      try { setCodes(JSON.parse(raw)); } catch { setCodes([]); }
-    }
+    loadCodes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function saveCodes(updated: AccessCode[]) {
-    setCodes(updated);
-    localStorage.setItem(CODES_KEY, JSON.stringify(updated));
+  async function loadCodes() {
+    const token = getToken();
+    try {
+      const res = await fetch('/api/codes', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (res.status === 503) {
+        // KV not configured — use localStorage
+        setKvReady(false);
+        setCodes(localRead());
+        return;
+      }
+      if (res.ok) {
+        const { codes: remote } = await res.json() as { codes: AccessCode[] };
+        setKvReady(true);
+        setCodes(remote);
+        // Sync local → KV if local has data and KV is empty
+        if (remote.length === 0) {
+          const local = localRead();
+          if (local.length > 0) {
+            await uploadLocal(local, token);
+            setCodes(local);
+          }
+        }
+        return;
+      }
+    } catch { /* network error */ }
+    setKvReady(false);
+    setCodes(localRead());
   }
 
-  function handleGenerate() {
+  async function uploadLocal(local: AccessCode[], token: string | null) {
+    for (const c of [...local].reverse()) {
+      await fetch('/api/codes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify(c),
+      });
+    }
+  }
+
+  async function handleGenerate() {
+    setGenerating(true);
     const code: AccessCode = {
       id: generateId(),
       code: generateCode(),
@@ -74,10 +124,23 @@ export default function AdminCodesPage() {
       created_at: new Date().toISOString(),
       used_at: null,
     };
-    saveCodes([code, ...codes]);
+    const token = getToken();
+    if (kvReady) {
+      await fetch('/api/codes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify(code),
+      });
+      await loadCodes();
+    } else {
+      const updated = [code, ...localRead()];
+      localWrite(updated);
+      setCodes(updated);
+    }
     setLastCode(code.code);
     setInvoiceRef('');
     setNote('');
+    setGenerating(false);
   }
 
   function handleCopy(code: string) {
@@ -88,9 +151,19 @@ export default function AdminCodesPage() {
     copyTimer.current = setTimeout(() => setCopied(false), 2000);
   }
 
-  function handleDelete(id: string) {
-    saveCodes(codes.filter(c => c.id !== id));
-    if (lastCode && codes.find(c => c.id === id)?.code === lastCode) setLastCode(null);
+  async function handleDelete(id: string) {
+    const token = getToken();
+    if (kvReady) {
+      await fetch(`/api/codes/${id}`, {
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      await loadCodes();
+    } else {
+      const updated = localRead().filter(c => c.id !== id);
+      localWrite(updated);
+      setCodes(updated);
+    }
   }
 
   const filtered = filterStatus === 'all' ? codes : codes.filter(c => c.status === filterStatus);
@@ -109,6 +182,44 @@ export default function AdminCodesPage() {
         </p>
       </div>
 
+      {/* KV status banner */}
+      {kvReady === false && (
+        <div style={{
+          marginBottom: 20, padding: '14px 18px', borderRadius: 14,
+          background: 'rgba(255,149,64,0.08)', border: `1.5px solid rgba(255,149,64,0.25)`,
+          display: 'flex', gap: 12, alignItems: 'flex-start',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
+            <circle cx="9" cy="9" r="8" stroke={C.orangeHot} strokeWidth="1.5"/>
+            <path d="M9 5.5V9.5m0 2.5v.4" stroke={C.orangeHot} strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 4 }}>
+              Cross-device sync not active — codes stored in this browser only
+            </div>
+            <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.55 }}>
+              To enable cross-device sync: go to your{' '}
+              <strong>Vercel dashboard → Storage → Create KV Database</strong>, then link it to this project.
+              Env vars <code style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11 }}>KV_REST_API_URL</code> and{' '}
+              <code style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11 }}>KV_REST_API_TOKEN</code> will be added automatically.
+              Existing codes will migrate on next load.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {kvReady === true && (
+        <div style={{
+          marginBottom: 20, padding: '10px 16px', borderRadius: 12,
+          background: 'rgba(29,163,106,0.08)', border: `1px solid rgba(29,163,106,0.2)`,
+          display: 'flex', gap: 8, alignItems: 'center', fontSize: 13,
+        }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.green, display: 'inline-block' }} />
+          <span style={{ color: C.green, fontWeight: 600 }}>Cross-device sync active</span>
+          <span style={{ color: C.inkMute }}>— codes stored in Vercel KV</span>
+        </div>
+      )}
+
       <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: 24, alignItems: 'start' }}>
 
         {/* ── Generate card ── */}
@@ -117,7 +228,6 @@ export default function AdminCodesPage() {
             {t('codes_gen_heading')}
           </div>
 
-          {/* Invoice ref */}
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: C.inkMute, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6, fontFamily: "'Geist Mono', monospace" }}>
               {t('codes_invoice')}
@@ -134,7 +244,6 @@ export default function AdminCodesPage() {
             />
           </div>
 
-          {/* Note */}
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: C.inkMute, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6, fontFamily: "'Geist Mono', monospace" }}>
               {t('codes_note')}
@@ -151,28 +260,25 @@ export default function AdminCodesPage() {
             />
           </div>
 
-          {/* Buttons */}
           <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={handleGenerate} style={{
-              flex: 1, padding: '12px 0', borderRadius: 12, border: 'none', cursor: 'pointer',
-              background: C.orangeHot, color: 'white',
-              fontSize: 14, fontWeight: 800, fontFamily: 'inherit',
-              transition: 'opacity .15s',
+            <button onClick={handleGenerate} disabled={generating} style={{
+              flex: 1, padding: '12px 0', borderRadius: 12, border: 'none', cursor: generating ? 'default' : 'pointer',
+              background: generating ? C.line : C.orangeHot, color: 'white',
+              fontSize: 14, fontWeight: 800, fontFamily: 'inherit', transition: 'background .15s',
             }}>
-              {t('codes_gen_btn')}
+              {generating ? '…' : t('codes_gen_btn')}
             </button>
             <a href="/start" target="_blank" rel="noopener noreferrer" style={{
               padding: '12px 16px', borderRadius: 12,
               border: `1.5px solid ${C.line}`, color: C.inkSoft,
               fontSize: 13, fontWeight: 600, textDecoration: 'none',
               display: 'flex', alignItems: 'center', whiteSpace: 'nowrap',
-              transition: 'border-color .15s',
             }}>
               {t('codes_open_test')}
             </a>
           </div>
 
-          {/* Generated code display */}
+          {/* Last generated code */}
           {lastCode && (
             <div style={{
               marginTop: 20, padding: '16px 20px', borderRadius: 14,
@@ -188,32 +294,20 @@ export default function AdminCodesPage() {
                 <button onClick={() => handleCopy(lastCode)} style={{
                   padding: '8px 14px', borderRadius: 10, border: `1.5px solid ${C.line}`,
                   background: copied ? C.green : 'white', color: copied ? 'white' : C.inkSoft,
-                  fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-                  transition: 'all .15s',
+                  fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s',
                 }}>
                   {copied ? t('codes_copied') : t('codes_copy')}
                 </button>
               </div>
             </div>
           )}
-
-          {/* Local storage note */}
-          <div style={{ marginTop: 16, display: 'flex', gap: 6, alignItems: 'flex-start' }}>
-            <div style={{ width: 14, height: 14, flexShrink: 0, marginTop: 1 }}>
-              <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke={C.inkMute} strokeWidth="1.2"/><path d="M7 4.5V7.5m0 2v.4" stroke={C.inkMute} strokeWidth="1.2" strokeLinecap="round"/></svg>
-            </div>
-            <span style={{ fontSize: 11, color: C.inkMute, lineHeight: 1.5 }}>
-              {t('codes_local_note')}
-            </span>
-          </div>
         </div>
 
         {/* ── Codes list ── */}
         <div>
-          {/* Filter pills */}
           <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
             {([
-              { key: 'all' as const,    label: `All (${codes.length})`          },
+              { key: 'all' as const,    label: `All (${codes.length})`           },
               { key: 'UNUSED' as const, label: `${t('codes_unused')} (${unusedCount})` },
               { key: 'USED' as const,   label: `${t('codes_used')} (${usedCount})`     },
             ]).map(f => {
@@ -234,11 +328,15 @@ export default function AdminCodesPage() {
           </div>
 
           <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, overflow: 'hidden' }}>
-            {filtered.length === 0 ? (
+            {kvReady === null && (
+              <div style={{ padding: '52px 32px', textAlign: 'center', color: C.inkMute, fontSize: 14 }}>Loading…</div>
+            )}
+            {kvReady !== null && filtered.length === 0 && (
               <div style={{ padding: '52px 32px', textAlign: 'center', color: C.inkMute, fontSize: 14 }}>
                 {t('codes_none')}
               </div>
-            ) : (
+            )}
+            {kvReady !== null && filtered.length > 0 && (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
@@ -271,8 +369,7 @@ export default function AdminCodesPage() {
                           padding: '3px 10px', borderRadius: 999,
                           background: c.status === 'USED' ? C.bone : 'rgba(255,149,64,0.12)',
                           color: c.status === 'USED' ? C.inkMute : C.orangeHot,
-                          fontSize: 11, fontWeight: 700,
-                          fontFamily: "'Geist Mono', monospace",
+                          fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono', monospace",
                         }}>
                           {c.status === 'USED' ? t('codes_used') : t('codes_unused')}
                         </span>
@@ -295,16 +392,12 @@ export default function AdminCodesPage() {
                             padding: '5px 10px', borderRadius: 8, border: `1px solid ${C.line}`,
                             background: 'transparent', color: C.inkMute, fontSize: 11, fontWeight: 600,
                             cursor: 'pointer', fontFamily: 'inherit',
-                          }}>
-                            {t('codes_copy')}
-                          </button>
+                          }}>{t('codes_copy')}</button>
                           <button onClick={() => handleDelete(c.id)} style={{
                             padding: '5px 10px', borderRadius: 8, border: `1px solid rgba(255,90,90,0.2)`,
                             background: 'transparent', color: C.coral, fontSize: 11, fontWeight: 600,
                             cursor: 'pointer', fontFamily: 'inherit',
-                          }}>
-                            {t('codes_del')}
-                          </button>
+                          }}>{t('codes_del')}</button>
                         </div>
                       </td>
                     </tr>
