@@ -164,8 +164,6 @@ export default function TestPage() {
   };
 
   if (needAuth) {
-    // Redirect to /start — access code is required, no registration
-    if (typeof window !== 'undefined') window.location.replace('/start');
     return (
       <div style={{
         minHeight: 'calc(100vh - 120px)',
@@ -173,43 +171,6 @@ export default function TestPage() {
       }}>
         <div style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: 16 }}>
           Redirecting…
-        </div>
-      </div>
-    );
-    return (
-      <div style={{
-        minHeight: 'calc(100vh - 120px)', background: 'var(--grad-hero)', color: 'white',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 48,
-      }}>
-        <div style={{
-          background: 'white', color: 'var(--ink)', borderRadius: 28,
-          padding: '52px 48px', textAlign: 'center', maxWidth: 480, width: '100%',
-          boxShadow: '0 40px 80px -20px rgba(0,0,0,0.3)',
-        }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: 20, background: 'var(--grad-cta)',
-            margin: '0 auto 24px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M14 3C10.13 3 7 6.13 7 10c0 5.25 7 14 7 14s7-8.75 7-14c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 14 7a2.5 2.5 0 0 1 0 5z" fill="white"/>
-            </svg>
-          </div>
-          <div className="eyebrow" style={{ marginBottom: 12 }}>Шаг 1 из 2</div>
-          <h2 style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 10 }}>
-            Создайте аккаунт
-          </h2>
-          <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5, marginBottom: 28 }}>
-            Займёт 30 секунд. После регистрации сразу начнёте тест - результаты сохранятся в вашем личном кабинете.
-          </p>
-          <a href="/register" className="btn-primary" style={{
-            display: 'block', textAlign: 'center', padding: '15px 24px',
-            fontSize: 15, marginBottom: 14, textDecoration: 'none',
-          }}>
-            Зарегистрироваться бесплатно →
-          </a>
-          <a href="/login" style={{ fontSize: 14, color: 'var(--ink-3)' }}>
-            Уже есть аккаунт? Войти
-          </a>
         </div>
       </div>
     );
