@@ -138,9 +138,12 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
             {t('nav_section')}
           </div>
           {NAV.map((item) => {
-            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+            const active = !item.newTab && (item.exact ? pathname === item.href : pathname.startsWith(item.href));
             return (
-              <Link key={item.href} href={item.href} style={{
+              <Link key={item.href} href={item.href}
+                target={item.newTab ? '_blank' : undefined}
+                rel={item.newTab ? 'noopener noreferrer' : undefined}
+                style={{
                 display: 'flex', alignItems: 'center', gap: 10,
                 padding: '8px 10px', borderRadius: 10, marginBottom: 1,
                 background: active ? 'rgba(255,149,64,0.18)' : 'transparent',
