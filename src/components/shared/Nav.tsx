@@ -42,6 +42,16 @@ export function Nav() {
         )}
 
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <Link href="/admin" title="Admin" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: 36, height: 36, borderRadius: '50%',
+            color: 'var(--ink-3)', border: '1.5px solid var(--line)',
+            background: 'white', flexShrink: 0,
+          }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.5 2.5a2.5 2.5 0 0 0-3.45 2.3l-6.3 6.3a2.5 2.5 0 1 0 1.15 1.15l6.3-6.3A2.5 2.5 0 0 0 13.5 2.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
           {!loading && !user && (
             <>
               <Link href="/login" style={{
