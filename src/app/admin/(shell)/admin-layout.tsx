@@ -76,6 +76,13 @@ function NavIcon({ type }: { type: string }) {
       <rect x="11.5" y="2" width="3" height="12.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
     </svg>
   );
+  if (type === 'test') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="2" y="1.5" width="12" height="13" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5 12h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  );
   if (type === 'chart') return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <polyline points="1,12 5,7 9,9.5 13,3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
