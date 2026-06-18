@@ -46,13 +46,13 @@ export default function DashboardPage() {
   }
 
   return (
-    <div style={{ padding: '32px 40px 80px', maxWidth: 960 }}>
+    <div style={{ padding: '36px 40px 80px', maxWidth: 960, fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
       {/* Header */}
       <div style={{ marginBottom: 32 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'var(--ink-3)', textTransform: 'uppercase', marginBottom: 8 }}>
-          Личный кабинет
+        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: '#8A8596', textTransform: 'uppercase', marginBottom: 6, fontFamily: "'Geist Mono', monospace" }}>
+          Dashboard
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--ink)' }}>
+        <h1 style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.025em', color: '#14111C' }}>
           Главная
         </h1>
       </div>
