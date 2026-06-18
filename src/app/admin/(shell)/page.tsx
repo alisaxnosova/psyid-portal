@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { admin, AdminStats, isAdminLoggedIn } from '@/lib/adminApi';
+import { useAdminLang } from '@/lib/adminLang';
 
 const C = { ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8', line: '#E5DED2', paper: '#FBF7F1', bone: '#F6F1EA', orange: '#FF7A3D', orangeHot: '#FF9540', coral: '#FF5A5A', blue: '#2244E0' };
 
@@ -36,49 +37,50 @@ function FunnelBar({ label, value, max, color }: { label: string; value: number;
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [stats, setStats]   = useState<AdminStats | null>(null);
+  const { t } = useAdminLang();
+  const [stats, setStats]     = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState('');
+  const [error, setError]     = useState('');
 
   useEffect(() => {
     if (!isAdminLoggedIn()) { router.push('/admin/login'); return; }
     admin.stats().then(setStats).catch(e => setError(e.message)).finally(() => setLoading(false));
   }, [router]);
 
-  if (loading) return <div style={{ padding: 60, textAlign: 'center', color: C.inkMute }}>Загрузка...</div>;
+  if (loading) return <div style={{ padding: 60, textAlign: 'center', color: C.inkMute }}>{t('loading')}</div>;
   if (error)   return <div style={{ background: 'white', borderRadius: 16, padding: 32, textAlign: 'center', border: `1px solid ${C.line}`, color: C.coral }}>{error}</div>;
 
   return (
     <>
       {/* Header */}
       <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Dashboard</h1>
-        <p style={{ fontSize: 14, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>Общая картина · PsyID</p>
+        <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>{t('dash_title')}</h1>
+        <p style={{ fontSize: 14, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>{t('dash_sub')}</p>
       </div>
 
       {/* Stat cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
-        <StatCard label="Всего пользователей" value={stats?.totalUsers      ?? 0} accent={C.blue}      />
-        <StatCard label="Тестов начато"        value={stats?.totalAttempts   ?? 0} accent={C.orangeHot} />
-        <StatCard label="Тестов завершено"     value={stats?.completedAttempts ?? 0} accent={C.coral}  />
+        <StatCard label={t('dash_users')}   value={stats?.totalUsers        ?? 0} accent={C.blue}      />
+        <StatCard label={t('dash_started')} value={stats?.totalAttempts     ?? 0} accent={C.orangeHot} />
+        <StatCard label={t('dash_compl')}   value={stats?.completedAttempts ?? 0} accent={C.coral}     />
       </div>
 
       {/* Charts row */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
         <div style={{ background: 'white', borderRadius: 20, padding: '24px 28px', border: `1px solid ${C.line}` }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: C.ink, marginBottom: 22, letterSpacing: '-0.01em' }}>Воронка</div>
-          <FunnelBar label="Зарегистрировались" value={stats?.totalUsers        ?? 0} max={stats?.totalUsers ?? 1} color={C.blue}      />
-          <FunnelBar label="Начали тест"         value={stats?.totalAttempts     ?? 0} max={stats?.totalUsers ?? 1} color={C.orangeHot} />
-          <FunnelBar label="Завершили тест"      value={stats?.completedAttempts ?? 0} max={stats?.totalUsers ?? 1} color={C.coral}     />
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.ink, marginBottom: 22, letterSpacing: '-0.01em' }}>{t('dash_funnel')}</div>
+          <FunnelBar label={t('dash_reg')}      value={stats?.totalUsers        ?? 0} max={stats?.totalUsers ?? 1} color={C.blue}      />
+          <FunnelBar label={t('dash_started2')} value={stats?.totalAttempts     ?? 0} max={stats?.totalUsers ?? 1} color={C.orangeHot} />
+          <FunnelBar label={t('dash_compl2')}   value={stats?.completedAttempts ?? 0} max={stats?.totalUsers ?? 1} color={C.coral}     />
         </div>
 
         <div style={{ background: 'white', borderRadius: 20, padding: '24px 28px', border: `1px solid ${C.line}` }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: C.ink, marginBottom: 22, letterSpacing: '-0.01em' }}>Сегодня</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.ink, marginBottom: 22, letterSpacing: '-0.01em' }}>{t('dash_today')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
-              { label: 'Новых пользователей', value: stats?.todayUsers    ?? 0, color: C.blue      },
-              { label: 'Тестов начато',        value: stats?.todayAttempts ?? 0, color: C.orangeHot },
-              { label: 'Тестов завершено',     value: stats?.todayCompleted ?? 0, color: C.coral   },
+              { label: t('dash_new_u'),  value: stats?.todayUsers     ?? 0, color: C.blue      },
+              { label: t('dash_t_start'), value: stats?.todayAttempts  ?? 0, color: C.orangeHot },
+              { label: t('dash_t_compl'), value: stats?.todayCompleted ?? 0, color: C.coral     },
             ].map(item => (
               <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px', background: C.bone, borderRadius: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
