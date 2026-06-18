@@ -165,6 +165,18 @@ export default function TestPage() {
   };
 
   if (needAuth) {
+    // Redirect to /start — access code is required, no registration
+    if (typeof window !== 'undefined') window.location.replace('/start');
+    return (
+      <div style={{
+        minHeight: 'calc(100vh - 120px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <div style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: 16 }}>
+          Redirecting…
+        </div>
+      </div>
+    );
     return (
       <div style={{
         minHeight: 'calc(100vh - 120px)', background: 'var(--grad-hero)', color: 'white',
