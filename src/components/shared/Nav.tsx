@@ -10,7 +10,7 @@ export function Nav() {
   const { user, loading } = useAuth();
   const isHome = pathname === '/';
 
-  if (pathname === '/' || pathname.startsWith('/dashboard') || pathname.startsWith('/test')) return null;
+  if (pathname === '/' || pathname.startsWith('/dashboard') || pathname.startsWith('/start')) return null;
 
   return (
     <>
