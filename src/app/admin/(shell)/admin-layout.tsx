@@ -11,7 +11,7 @@ const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: bool
   { href: '/start',                      key: 'nav_test',         icon: 'test',                   built: true, newTab: true },
   { href: '/admin/report-templates',     key: 'nav_report_tmpls', icon: 'report',                 built: false },
   { href: '/admin/users',                key: 'nav_users',        icon: 'users',                  built: false },
-  { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: false },
+  { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: true  },
   { href: '/admin/orders',               key: 'nav_orders',       icon: 'orders',                 built: false },
   { href: '/admin/billing',              key: 'nav_billing',      icon: 'billing',                built: false },
   { href: '/admin/analytics',            key: 'nav_analytics',    icon: 'analytics',              built: false },
