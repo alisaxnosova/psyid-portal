@@ -615,12 +615,27 @@ export default function StartPage() {
 
             <button
               onClick={() => {
-                // Record test_start_timestamp
                 const startTs = Date.now();
-                // Store in session for downstream use
                 sessionStorage.setItem('test_start_timestamp', String(startTs));
                 sessionStorage.setItem('research_consent', String(researchChecked));
-                // Navigate to the actual test
+                // Store code so /test can bypass registration
+                sessionStorage.setItem('access_code', code);
+                // Generate anonymous session ID for this test run
+                const anonId = 'anon_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now();
+                sessionStorage.setItem('anon_session_id', anonId);
+                // Mark code as used in admin localStorage (works when same browser)
+                try {
+                  const raw = localStorage.getItem('psyid_admin_codes');
+                  if (raw) {
+                    const allCodes = JSON.parse(raw) as { id: string; code: string; status: string; used_at: string | null }[];
+                    const idx = allCodes.findIndex(c => c.code === code);
+                    if (idx >= 0) {
+                      allCodes[idx].status = 'USED';
+                      allCodes[idx].used_at = new Date().toISOString();
+                      localStorage.setItem('psyid_admin_codes', JSON.stringify(allCodes));
+                    }
+                  }
+                } catch { /* ignore */ }
                 window.location.href = '/test';
               }}
               style={{
