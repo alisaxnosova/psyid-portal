@@ -5,9 +5,10 @@ import { usePathname } from 'next/navigation';
 import { adminLogout } from '@/lib/adminApi';
 import { useAdminLang, TKey, AdminLang } from '@/lib/adminLang';
 
-const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean }[] = [
+const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean; newTab?: boolean }[] = [
   { href: '/admin',                      key: 'nav_dashboard',    icon: 'dashboard', exact: true, built: true  },
   { href: '/admin/questions',            key: 'nav_assessments',  icon: 'questions',              built: true  },
+  { href: '/test',                       key: 'nav_test',         icon: 'test',                   built: true, newTab: true },
   { href: '/admin/report-templates',     key: 'nav_report_tmpls', icon: 'report',                 built: false },
   { href: '/admin/users',                key: 'nav_users',        icon: 'users',                  built: false },
   { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: false },
