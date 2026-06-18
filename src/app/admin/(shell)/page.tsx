@@ -12,7 +12,7 @@ function StatCard({ label, value, accent }: { label: string; value: number; acce
       <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700, color: C.inkMute, marginBottom: 12, textTransform: 'uppercase' as const, letterSpacing: '0.12em' }}>
         {label}
       </div>
-      <div style={{ fontSize: 44, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', lineHeight: 1, background: `linear-gradient(135deg, ${accent}, ${accent}aa)`, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+      <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, background: `linear-gradient(135deg, ${accent}, ${accent}aa)`, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
         {value}
       </div>
     </div>
