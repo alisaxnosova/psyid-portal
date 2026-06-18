@@ -127,12 +127,20 @@ export default function TestPage() {
   }, []);
 
   useEffect(() => {
-    const userId = typeof window !== 'undefined' ? localStorage.getItem('reno_user_id') : null;
-    if (!userId) {
+    const userId     = typeof window !== 'undefined' ? localStorage.getItem('reno_user_id') : null;
+    const accessCode = typeof window !== 'undefined' ? sessionStorage.getItem('access_code') : null;
+    const anonId     = typeof window !== 'undefined' ? sessionStorage.getItem('anon_session_id') : null;
+
+    // No registered user and no access code → show auth wall
+    if (!userId && !accessCode) {
       setNeedAuth(true);
       return;
     }
-    attempts.create(METHODOLOGY_CODE, userId)
+
+    // Use registered userId if present, else anonymous session id from /start
+    const effectiveId = userId ?? anonId ?? ('guest_' + Date.now());
+
+    attempts.create(METHODOLOGY_CODE, effectiveId)
       .then(a => {
         setAttemptId(a.id);
         return loadNextQuestion(a.id);
