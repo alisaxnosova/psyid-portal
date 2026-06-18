@@ -269,6 +269,8 @@ export default function StartPage() {
   const [code, setCode] = useState('');
   const [tcChecked, setTcChecked] = useState(false);
   const [researchChecked, setResearchChecked] = useState(false);
+  const [codeStatus, setCodeStatus] = useState<'idle' | 'checking' | 'valid' | 'not_found' | 'already_used'>('idle');
+  const [validCodeId, setValidCodeId] = useState<string | null>(null);
 
   /* Stage 2 */
   const [age, setAge] = useState('');
