@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAdminLoggedIn } from '@/lib/adminApi';
 import { translate, LangCode, LANG_LABELS } from '@/lib/questionTranslations';
+import { useAdminLang } from '@/lib/adminLang';
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? '/backend';
 const LANGS: LangCode[] = ['ru', 'en', 'es', 'fr', 'ar'];
@@ -20,6 +21,7 @@ interface Question {
 
 export default function QuestionsPage() {
   const router = useRouter();
+  const { t } = useAdminLang();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState('');
@@ -39,8 +41,8 @@ export default function QuestionsPage() {
   const isRtl = lang === 'ar';
   const filtered = questions.filter(q => {
     if (!search) return true;
-    const t = translate(q.text, lang).toLowerCase();
-    return t.includes(search.toLowerCase()) || q.code.toLowerCase().includes(search.toLowerCase());
+    const tx = translate(q.text, lang).toLowerCase();
+    return tx.includes(search.toLowerCase()) || q.code.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
@@ -48,13 +50,13 @@ export default function QuestionsPage() {
       {/* Header */}
       <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Вопросы теста</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>{t('ass_title')}</h1>
           <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-            {loading ? '...' : `${questions.length} вопросов · TestPersonal v1`}
+            {loading ? '...' : `${questions.length} ${t('ass_sub')}`}
           </p>
         </div>
         <input
-          placeholder="Поиск..."
+          placeholder={t('ass_search')}
           value={search}
           onChange={e => setSearch(e.target.value)}
           style={{
@@ -84,7 +86,7 @@ export default function QuestionsPage() {
         })}
       </div>
 
-      {loading && <div style={{ padding: 48, textAlign: 'center', color: C.inkMute }}>Загрузка...</div>}
+      {loading && <div style={{ padding: 48, textAlign: 'center', color: C.inkMute }}>{t('loading')}</div>}
       {error   && <div style={{ padding: 48, textAlign: 'center', color: C.coral }}>{error}</div>}
 
       {!loading && !error && (
@@ -98,7 +100,6 @@ export default function QuestionsPage() {
                 border: `1.5px solid ${isOpen ? C.orangeHot : C.line}`,
                 overflow: 'hidden', transition: 'border-color .15s',
               }}>
-                {/* Row */}
                 <button
                   onClick={() => setExpanded(isOpen ? null : q.id)}
                   style={{
@@ -127,7 +128,6 @@ export default function QuestionsPage() {
                   </svg>
                 </button>
 
-                {/* Options */}
                 {isOpen && (
                   <div style={{ borderTop: `1px solid ${C.bone}`, padding: '4px 0 8px' }}>
                     {q.options.map(opt => {
