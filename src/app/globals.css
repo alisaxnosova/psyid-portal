@@ -148,3 +148,49 @@ a { text-decoration: none; color: inherit; }
 }
 
 .fade-in-up { animation: fadeInUp .5s ease both; }
+
+/* ── Responsive layout grids ── */
+.r-wrap       { max-width: 1280px; margin: 0 auto; padding: 0 36px; }
+.r-hero       { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; position: relative; }
+.r-feat       { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.r-steps      { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.r-two        { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.r-inside     { display: grid; grid-template-columns: 1fr 1.15fr; gap: 60px; align-items: start; }
+.r-stats      { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 48px; }
+.r-price      { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.r-faq        { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 48px; align-items: start; }
+.r-foot       { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; }
+.r-chips      { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.r-nav-links  { display: flex; gap: 26px; }
+
+@media (max-width: 1100px) {
+  .r-hero, .r-two, .r-inside, .r-faq { grid-template-columns: 1fr; }
+  .r-stats  { grid-template-columns: repeat(2, 1fr); }
+  .r-foot   { grid-template-columns: 1fr 1fr; }
+  .r-feat   { grid-template-columns: repeat(2, 1fr); }
+  .r-steps  { grid-template-columns: repeat(2, 1fr); }
+  .r-hero .radar-stage { display: none; }
+}
+
+@media (max-width: 720px) {
+  .r-wrap   { padding: 0 20px; }
+  .r-feat, .r-steps, .r-price, .r-chips, .r-foot { grid-template-columns: 1fr; }
+  .r-stats  { grid-template-columns: 1fr 1fr; }
+  .r-nav-links { display: none; }
+}
+
+/* ── Responsive section padding ── */
+.r-section   { padding: 110px 0; }
+.r-hero-wrap { padding: 140px 0 110px; min-height: 760px; }
+.r-final     { padding: 90px 56px; }
+
+@media (max-width: 1100px) {
+  .r-section   { padding: 80px 0; }
+  .r-hero-wrap { padding: 130px 0 80px; min-height: unset; }
+}
+
+@media (max-width: 720px) {
+  .r-section   { padding: 60px 0; }
+  .r-hero-wrap { padding: 110px 0 60px; }
+  .r-final     { padding: 56px 24px; }
+}
