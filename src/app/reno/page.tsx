@@ -5,15 +5,20 @@ import { Logo } from '@/components/shared/Logo';
 import questionsData from './data/questions.json';
 
 /* ─── Questions ─── */
-type QuestionType = 'yesno' | 'wordselect';
+interface QuestionOption {
+  id: string;
+  text: Record<Lang, string>;
+  key: string;
+  score: number;
+}
 interface Question {
   id: string;
   axis: string;
-  type: QuestionType;
-  text: string;
-  options?: string[];
+  type: 'wordselect';
+  text: Record<Lang, string>;
+  options: QuestionOption[];
 }
-const QUESTIONS = questionsData as Question[];
+const QUESTIONS = questionsData as unknown as Question[];
 const TOTAL = QUESTIONS.length; // 94
 
 /* ─── Lang ─── */
@@ -728,7 +733,7 @@ function YesNoAnswer({
 function WordSelectAnswer({
   options, selected, locked, onSelect,
 }: {
-  options: string[];
+  options: { id: string; label: string }[];
   selected: string | null;
   locked: boolean;
   onSelect: (v: string) => void;
@@ -738,13 +743,13 @@ function WordSelectAnswer({
   return (
     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
       {options.map(opt => {
-        const active = selected === opt;
-        const isHov = hovered === opt && !locked;
+        const active = selected === opt.id;
+        const isHov = hovered === opt.id && !locked;
         return (
           <button
-            key={opt}
-            onClick={() => !locked && onSelect(opt)}
-            onMouseEnter={() => !locked && setHovered(opt)}
+            key={opt.id}
+            onClick={() => !locked && onSelect(opt.id)}
+            onMouseEnter={() => !locked && setHovered(opt.id)}
             onMouseLeave={() => setHovered(null)}
             aria-pressed={active}
             style={{
@@ -763,7 +768,7 @@ function WordSelectAnswer({
                 : isHov ? '0 3px 8px rgba(75,30,142,0.08)' : 'none',
             }}
           >
-            {opt}
+            {opt.label}
           </button>
         );
       })}
@@ -773,10 +778,11 @@ function WordSelectAnswer({
 
 /* ─── Stage 5: Test engine ─── */
 function TestStage({
-  t, sessionId, onComplete,
+  t, sessionId, lang, onComplete,
 }: {
   t: (typeof T)[Lang];
   sessionId: string;
+  lang: Lang;
   onComplete: () => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -904,24 +910,15 @@ function TestStage({
             color: 'var(--ink)', marginBottom: 36,
             fontFamily: 'Onest, sans-serif',
           }}>
-            {question.text}
+            {question.text[lang]}
           </p>
 
-          {question.type === 'yesno' ? (
-            <YesNoAnswer
-              t={t}
-              selected={selectedAnswer}
-              locked={locked}
-              onSelect={handleAnswer}
-            />
-          ) : (
-            <WordSelectAnswer
-              options={question.options ?? []}
-              selected={selectedAnswer}
-              locked={locked}
-              onSelect={handleAnswer}
-            />
-          )}
+          <WordSelectAnswer
+            options={question.options.map(o => ({ id: o.id, label: o.text[lang] }))}
+            selected={selectedAnswer}
+            locked={locked}
+            onSelect={handleAnswer}
+          />
         </div>
       </div>
     </div>
@@ -1114,7 +1111,7 @@ export default function RenoPage() {
           {stage === 'disclaimer' && <DisclaimerStage t={t} onContinue={() => goToStage('consent')} />}
           {stage === 'consent'    && <ConsentStage t={t} onContinue={() => goToStage('intake')} />}
           {stage === 'intake'     && <IntakeStage t={t} sessionId={sessionId!} lang={lang} onContinue={() => goToStage('test')} />}
-          {stage === 'test'       && <TestStage t={t} sessionId={sessionId!} onComplete={() => goToStage('complete')} />}
+          {stage === 'test'       && <TestStage t={t} sessionId={sessionId!} lang={lang} onComplete={() => goToStage('complete')} />}
           {stage === 'complete'   && <CompleteStage t={t} sessionId={sessionId} />}
         </div>
       </div>
