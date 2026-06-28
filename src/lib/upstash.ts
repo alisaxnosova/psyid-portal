@@ -37,3 +37,13 @@ export async function kvSet(key: string, value: unknown): Promise<void> {
     // silent — callers handle missing data gracefully
   }
 }
+
+export async function kvDel(key: string): Promise<void> {
+  const redis = getClient();
+  if (!redis) return;
+  try {
+    await redis.del(key);
+  } catch {
+    // silent
+  }
+}

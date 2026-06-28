@@ -155,7 +155,7 @@ function ExpandedRow({ r }: { r: ResultRow }) {
 
   return (
     <tr>
-      <td colSpan={9} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
+      <td colSpan={11} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
         <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
 
           {/* Axis scores */}
@@ -218,6 +218,26 @@ export default function AdminResultsPage() {
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
+
+  const deleteResult = useCallback(async (sessionId: string) => {
+    if (!confirm('Delete this result permanently? This cannot be undone.')) return;
+    setDeleting(sessionId);
+    try {
+      const token = getAdminToken();
+      const res = await fetch(`/api/admin/results/${sessionId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error(`${res.status}`);
+      setResults(prev => prev.filter(r => r.sessionId !== sessionId));
+      if (expanded === sessionId) setExpanded(null);
+    } catch {
+      alert('Failed to delete. Try again.');
+    } finally {
+      setDeleting(null);
+    }
+  }, [expanded]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -310,15 +330,16 @@ export default function AdminResultsPage() {
                   <TH w={90}>device</TH>
                   <TH w={160}>completed</TH>
                   <TH w={40}>{''}</TH>
+                  <TH w={40}>{''}</TH>
                 </tr>
               </thead>
               <tbody>
                 {loading && (
-                  <tr><td colSpan={10} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
+                  <tr><td colSpan={11} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
                 )}
                 {!loading && results.length === 0 && (
                   <tr>
-                    <td colSpan={10} style={{ padding: '72px 32px', textAlign: 'center' }}>
+                    <td colSpan={11} style={{ padding: '72px 32px', textAlign: 'center' }}>
                       <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No completed tests yet</div>
                       <div style={{ fontSize: 13, color: C.inkMute }}>Results will appear here once someone finishes the assessment.</div>
                     </td>
@@ -348,6 +369,26 @@ export default function AdminResultsPage() {
                         <TD mono muted>{r.completedAt ? fmt(r.completedAt) : '—'}</TD>
                         <TD>
                           <span style={{ color: C.inkMute, fontSize: 16, display: 'block', textAlign: 'center', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span>
+                        </TD>
+                        <TD>
+                          <button
+                            onClick={e => { e.stopPropagation(); deleteResult(r.sessionId); }}
+                            disabled={deleting === r.sessionId}
+                            title="Delete result"
+                            style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              width: 28, height: 28, borderRadius: 7, border: 'none',
+                              background: 'transparent', cursor: deleting === r.sessionId ? 'not-allowed' : 'pointer',
+                              color: C.inkMute, transition: 'all .15s', padding: 0,
+                            }}
+                            onMouseEnter={e => (e.currentTarget.style.color = C.coral, e.currentTarget.style.background = 'rgba(255,90,90,0.08)')}
+                            onMouseLeave={e => (e.currentTarget.style.color = C.inkMute, e.currentTarget.style.background = 'transparent')}
+                          >
+                            {deleting === r.sessionId
+                              ? <span style={{ fontSize: 10 }}>…</span>
+                              : <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M5.5 3.5V2.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1M5.5 6v4M8.5 6v4M3 3.5l.7 7.3a1 1 0 001 .7h4.6a1 1 0 001-.7L11 3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            }
+                          </button>
                         </TD>
                       </tr>
                       {isOpen && <ExpandedRow key={`${r.sessionId}-exp`} r={r} />}
