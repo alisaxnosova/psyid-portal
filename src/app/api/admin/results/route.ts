@@ -44,11 +44,16 @@ export async function GET(req: Request) {
         codeId: s.codeId,
         code: codeMap.get(s.codeId) ?? '—',
         status: s.status,
+        device: s.device ?? 'unknown',
         type: score.type,
+        nearBoundary: score.nearBoundary,
         pct: score.pct,
         scores: score.scores,
         intake: s.intake ?? null,
         answersCount: s.answers.length,
+        avgResponseTimeMs: s.answers.length
+          ? Math.round(s.answers.reduce((sum, a) => sum + (a.responseTimeMs ?? 0), 0) / s.answers.length)
+          : null,
         createdAt: s.createdAt,
         completedAt: s.completedAt ?? null,
       };

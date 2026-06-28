@@ -6,6 +6,13 @@ import type { RenoSession, RenoSessionsMap } from '@/app/api/reno/types';
 const CODES_KEY = 'psyid:codes';
 const RENO_SESSIONS_MAP_KEY = 'psyid:reno-sessions';
 
+function detectDevice(req: Request): 'mobile' | 'desktop' | 'unknown' {
+  const ua = req.headers.get('user-agent') ?? '';
+  if (/mobile|android|iphone|ipad|ipod/i.test(ua)) return 'mobile';
+  if (ua) return 'desktop';
+  return 'unknown';
+}
+
 export async function POST(req: Request) {
   if (!kvConfigured()) {
     return NextResponse.json({ valid: false, reason: 'server_error' }, { status: 503 });
@@ -46,6 +53,7 @@ export async function POST(req: Request) {
     id: sessionId,
     codeId: found.id,
     status: 'started',
+    device: detectDevice(req),
     answers: [],
     lastIndex: 0,
     createdAt: new Date().toISOString(),

@@ -9,11 +9,12 @@ export async function POST(
   if (!kvConfigured()) return NextResponse.json({ ok: false, error: 'server_error' }, { status: 503 });
 
   const { sessionId } = await params;
-  const { questionId, answerId, answeredAt, questionIndex } = (await req.json()) as {
+  const { questionId, answerId, answeredAt, questionIndex, responseTimeMs } = (await req.json()) as {
     questionId: string;
     answerId: string;
     answeredAt: string;
     questionIndex: number;
+    responseTimeMs?: number;
   };
 
   const session = await kvGet<RenoSession>(`psyid:reno-session:${sessionId}`);
@@ -22,10 +23,11 @@ export async function POST(
   // Idempotent: overwrite existing answer for this questionId
   const updated = [...session.answers];
   const existing = updated.findIndex(a => a.questionId === questionId);
+  const entry = { questionId, answerId, answeredAt, ...(responseTimeMs != null ? { responseTimeMs } : {}) };
   if (existing >= 0) {
-    updated[existing] = { questionId, answerId, answeredAt };
+    updated[existing] = entry;
   } else {
-    updated.push({ questionId, answerId, answeredAt });
+    updated.push(entry);
   }
 
   await kvSet(`psyid:reno-session:${sessionId}`, {

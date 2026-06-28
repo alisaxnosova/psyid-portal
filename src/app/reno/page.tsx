@@ -36,6 +36,30 @@ const EDUCATION_OPTIONS = {
   ar: ['ثانوية', 'دراسات جامعية جزئية', 'بكالوريوس', 'ماجستير', 'دكتوراه', 'أفضل عدم الإجابة'],
 };
 
+const SEX_OPTIONS = {
+  en: ['Female', 'Male', 'Non-binary / gender diverse', 'Prefer not to say'],
+  ru: ['Женщина', 'Мужчина', 'Небинарная идентичность', 'Не хочу указывать'],
+  es: ['Femenino', 'Masculino', 'No binario / género diverso', 'Prefiero no decir'],
+  fr: ['Féminin', 'Masculin', 'Non-binaire / genre divers', 'Je préfère ne pas répondre'],
+  ar: ['أنثى', 'ذكر', 'غير ثنائي / متنوع جنسياً', 'أفضل عدم الإجابة'],
+};
+
+const EMPLOYMENT_OPTIONS = {
+  en: ['Employed (full-time)', 'Employed (part-time)', 'Self-employed', 'Student', 'Job-seeking', 'Career transitioning', 'Not employed', 'Prefer not to say'],
+  ru: ['Работаю полный день', 'Работаю неполный день', 'Самозанятый(ая)', 'Студент(ка)', 'В поиске работы', 'Смена карьеры', 'Не работаю', 'Не хочу указывать'],
+  es: ['Empleado a tiempo completo', 'Empleado a tiempo parcial', 'Autónomo', 'Estudiante', 'En búsqueda de empleo', 'Transición de carrera', 'Sin empleo', 'Prefiero no decir'],
+  fr: ['Employé à temps plein', 'Employé à temps partiel', 'Indépendant', 'Étudiant', 'En recherche d\'emploi', 'Reconversion professionnelle', 'Sans emploi', 'Je préfère ne pas répondre'],
+  ar: ['موظف بدوام كامل', 'موظف بدوام جزئي', 'عامل حر', 'طالب', 'باحث عن عمل', 'تحول مهني', 'غير موظف', 'أفضل عدم الإجابة'],
+};
+
+const RELATIONSHIP_OPTIONS = {
+  en: ['Single', 'In a relationship', 'Married / partnered', 'Divorced / separated', 'Widowed', 'Prefer not to say'],
+  ru: ['Не в отношениях', 'В отношениях', 'В браке / с партнёром', 'В разводе / разлучён(а)', 'Вдовец / вдова', 'Не хочу указывать'],
+  es: ['Soltero/a', 'En una relación', 'Casado/a o con pareja', 'Divorciado/a o separado/a', 'Viudo/a', 'Prefiero no decir'],
+  fr: ['Célibataire', 'En relation', 'Marié(e) / en couple', 'Divorcé(e) / séparé(e)', 'Veuf / veuve', 'Je préfère ne pas répondre'],
+  ar: ['أعزب / عزباء', 'في علاقة', 'متزوج / شريك', 'مطلق / منفصل', 'أرمل / أرملة', 'أفضل عدم الإجابة'],
+};
+
 const T = {
   en: {
     eyebrow: 'ReNo Assessment',
@@ -65,12 +89,19 @@ const T = {
     intake_eyebrow: 'Optional',
     intake_heading: 'A few details',
     intake_note: 'This information is used for research purposes only. All fields are optional — feel free to skip.',
-    intake_age: 'Your age',
+    intake_age: 'Age',
     intake_age_ph: '16+',
-    intake_education: 'Education level',
-    intake_select_ph: 'Select…',
+    intake_sex: 'Sex / gender identity',
     intake_country: 'Country',
     intake_country_ph: 'e.g. United States',
+    intake_native_language: 'Native language',
+    intake_native_language_ph: 'e.g. English',
+    intake_education: 'Education level',
+    intake_occupation: 'Occupation / industry',
+    intake_occupation_ph: 'e.g. Software engineer, Healthcare',
+    intake_employment: 'Employment status',
+    intake_relationship: 'Relationship status',
+    intake_select_ph: 'Select…',
     intake_err_save: 'Could not save. Please try again.',
     intake_skip: 'Skip',
 
@@ -115,12 +146,19 @@ const T = {
     intake_eyebrow: 'Опционально',
     intake_heading: 'Немного о вас',
     intake_note: 'Эта информация используется только в исследовательских целях. Все поля необязательны.',
-    intake_age: 'Ваш возраст',
+    intake_age: 'Возраст',
     intake_age_ph: '16+',
-    intake_education: 'Образование',
-    intake_select_ph: 'Выберите…',
+    intake_sex: 'Пол / гендерная идентичность',
     intake_country: 'Страна',
     intake_country_ph: 'например, Россия',
+    intake_native_language: 'Родной язык',
+    intake_native_language_ph: 'например, Русский',
+    intake_education: 'Образование',
+    intake_occupation: 'Профессия / отрасль',
+    intake_occupation_ph: 'например, Программист, Медицина',
+    intake_employment: 'Занятость',
+    intake_relationship: 'Семейное положение',
+    intake_select_ph: 'Выберите…',
     intake_err_save: 'Не удалось сохранить данные. Попробуйте ещё раз.',
     intake_skip: 'Пропустить',
 
@@ -165,12 +203,19 @@ const T = {
     intake_eyebrow: 'Opcional',
     intake_heading: 'Algunos detalles',
     intake_note: 'Esta información se utiliza únicamente con fines de investigación. Todos los campos son opcionales.',
-    intake_age: 'Su edad',
+    intake_age: 'Edad',
     intake_age_ph: '16+',
-    intake_education: 'Nivel de educación',
-    intake_select_ph: 'Seleccionar…',
+    intake_sex: 'Sexo / identidad de género',
     intake_country: 'País',
     intake_country_ph: 'p. ej. España',
+    intake_native_language: 'Idioma nativo',
+    intake_native_language_ph: 'p. ej. Español',
+    intake_education: 'Nivel de educación',
+    intake_occupation: 'Ocupación / industria',
+    intake_occupation_ph: 'p. ej. Ingeniero de software, Salud',
+    intake_employment: 'Situación laboral',
+    intake_relationship: 'Estado civil',
+    intake_select_ph: 'Seleccionar…',
     intake_err_save: 'No se pudieron guardar los datos. Inténtelo de nuevo.',
     intake_skip: 'Omitir',
 
@@ -215,12 +260,19 @@ const T = {
     intake_eyebrow: 'Optionnel',
     intake_heading: 'Quelques détails',
     intake_note: 'Ces informations sont utilisées à des fins de recherche uniquement. Tous les champs sont optionnels.',
-    intake_age: 'Votre âge',
+    intake_age: 'Âge',
     intake_age_ph: '16+',
-    intake_education: 'Niveau d\'études',
-    intake_select_ph: 'Sélectionner…',
+    intake_sex: 'Sexe / identité de genre',
     intake_country: 'Pays',
     intake_country_ph: 'ex. France',
+    intake_native_language: 'Langue maternelle',
+    intake_native_language_ph: 'ex. Français',
+    intake_education: 'Niveau d\'études',
+    intake_occupation: 'Profession / secteur',
+    intake_occupation_ph: 'ex. Ingénieur logiciel, Santé',
+    intake_employment: 'Situation professionnelle',
+    intake_relationship: 'Situation relationnelle',
+    intake_select_ph: 'Sélectionner…',
     intake_err_save: 'Impossible de sauvegarder. Veuillez réessayer.',
     intake_skip: 'Passer',
 
@@ -265,12 +317,19 @@ const T = {
     intake_eyebrow: 'اختياري',
     intake_heading: 'بعض التفاصيل',
     intake_note: 'تُستخدم هذه المعلومات لأغراض بحثية فقط. جميع الحقول اختيارية.',
-    intake_age: 'عمرك',
+    intake_age: 'العمر',
     intake_age_ph: '١٦+',
-    intake_education: 'المستوى التعليمي',
-    intake_select_ph: 'اختر…',
+    intake_sex: 'الجنس / الهوية الجندرية',
     intake_country: 'البلد',
     intake_country_ph: 'مثال: المملكة العربية السعودية',
+    intake_native_language: 'اللغة الأم',
+    intake_native_language_ph: 'مثال: العربية',
+    intake_education: 'المستوى التعليمي',
+    intake_occupation: 'المهنة / القطاع',
+    intake_occupation_ph: 'مثال: مهندس برمجيات، الرعاية الصحية',
+    intake_employment: 'الحالة الوظيفية',
+    intake_relationship: 'الحالة الاجتماعية',
+    intake_select_ph: 'اختر…',
     intake_err_save: 'تعذّر حفظ البيانات. يرجى المحاولة مجدداً.',
     intake_skip: 'تخطي',
 
@@ -584,10 +643,15 @@ function IntakeStage({
   lang: Lang;
   onContinue: () => void;
 }) {
-  const [age, setAge]             = useState('');
-  const [education, setEducation] = useState('');
-  const [country, setCountry]     = useState('');
-  const [loading, setLoading]     = useState(false);
+  const [age, setAge]                     = useState('');
+  const [sex, setSex]                     = useState('');
+  const [country, setCountry]             = useState('');
+  const [nativeLanguage, setNativeLanguage] = useState('');
+  const [education, setEducation]         = useState('');
+  const [occupation, setOccupation]       = useState('');
+  const [employment, setEmployment]       = useState('');
+  const [relationship, setRelationship]   = useState('');
+  const [loading, setLoading]             = useState(false);
 
   async function save(skip = false) {
     setLoading(true);
@@ -598,8 +662,13 @@ function IntakeStage({
         body: JSON.stringify({
           consent: true,
           ...(!skip && age && !isNaN(parseInt(age, 10)) ? { age: parseInt(age, 10) } : {}),
-          ...(!skip && education ? { education } : {}),
+          ...(!skip && sex ? { sex } : {}),
           ...(!skip && country.trim() ? { country: country.trim() } : {}),
+          ...(!skip && nativeLanguage.trim() ? { nativeLanguage: nativeLanguage.trim() } : {}),
+          ...(!skip && education ? { education } : {}),
+          ...(!skip && occupation.trim() ? { occupation: occupation.trim() } : {}),
+          ...(!skip && employment ? { employmentStatus: employment } : {}),
+          ...(!skip && relationship ? { relationshipStatus: relationship } : {}),
         }),
       });
     } catch {
@@ -607,6 +676,37 @@ function IntakeStage({
     }
     setLoading(false);
     onContinue();
+  }
+
+  function SelectField({ id, label, value, onChange, options }: {
+    id: string; label: string; value: string;
+    onChange: (v: string) => void; options: string[];
+  }) {
+    return (
+      <div style={{ marginBottom: 18 }}>
+        <FieldLabel htmlFor={id}>{label}</FieldLabel>
+        <select id={id} value={value} onChange={e => onChange(e.target.value)} style={inputStyle(false)}>
+          <option value="">{t.intake_select_ph}</option>
+          {options.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+      </div>
+    );
+  }
+
+  function TextField({ id, label, value, onChange, placeholder, type = 'text', maxWidth }: {
+    id: string; label: string; value: string; onChange: (v: string) => void;
+    placeholder?: string; type?: string; maxWidth?: number;
+  }) {
+    return (
+      <div style={{ marginBottom: 18 }}>
+        <FieldLabel htmlFor={id}>{label}</FieldLabel>
+        <input
+          id={id} type={type} inputMode={type === 'number' ? 'numeric' : undefined}
+          placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)}
+          style={{ ...inputStyle(false), ...(maxWidth ? { maxWidth } : {}) }}
+        />
+      </div>
+    );
   }
 
   return (
@@ -619,65 +719,40 @@ function IntakeStage({
         {t.intake_note}
       </p>
 
-      {/* Age */}
-      <div style={{ marginBottom: 20 }}>
-        <FieldLabel htmlFor="intake-age">{t.intake_age}</FieldLabel>
-        <input
-          id="intake-age"
-          type="number"
-          inputMode="numeric"
-          min={16}
-          placeholder={t.intake_age_ph}
-          value={age}
-          onChange={e => setAge(e.target.value)}
-          style={{ ...inputStyle(false), maxWidth: 140 }}
-        />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 20px' }}>
+        <TextField id="intake-age" label={t.intake_age} value={age} onChange={setAge}
+          placeholder={t.intake_age_ph} type="number" maxWidth={140} />
+        <SelectField id="intake-sex" label={t.intake_sex} value={sex} onChange={setSex}
+          options={SEX_OPTIONS[lang]} />
+        <TextField id="intake-country" label={t.intake_country} value={country} onChange={setCountry}
+          placeholder={t.intake_country_ph} />
+        <TextField id="intake-lang" label={t.intake_native_language} value={nativeLanguage}
+          onChange={setNativeLanguage} placeholder={t.intake_native_language_ph} />
+        <SelectField id="intake-education" label={t.intake_education} value={education}
+          onChange={setEducation} options={EDUCATION_OPTIONS[lang]} />
+        <TextField id="intake-occupation" label={t.intake_occupation} value={occupation}
+          onChange={setOccupation} placeholder={t.intake_occupation_ph} />
+        <SelectField id="intake-employment" label={t.intake_employment} value={employment}
+          onChange={setEmployment} options={EMPLOYMENT_OPTIONS[lang]} />
+        <SelectField id="intake-relationship" label={t.intake_relationship} value={relationship}
+          onChange={setRelationship} options={RELATIONSHIP_OPTIONS[lang]} />
       </div>
 
-      {/* Education */}
-      <div style={{ marginBottom: 20 }}>
-        <FieldLabel htmlFor="intake-education">{t.intake_education}</FieldLabel>
-        <select
-          id="intake-education"
-          value={education}
-          onChange={e => setEducation(e.target.value)}
-          style={inputStyle(false)}
+      <div style={{ marginTop: 10 }}>
+        <PrimaryBtn onClick={() => save()} loading={loading} fullWidth>
+          {loading ? '…' : t.btn_continue}
+        </PrimaryBtn>
+        <button
+          onClick={() => save(true)}
+          style={{
+            display: 'block', margin: '14px auto 0', background: 'none', border: 'none',
+            color: 'var(--ink-3)', fontSize: 14, cursor: 'pointer', padding: '4px 8px',
+            textDecoration: 'underline',
+          }}
         >
-          <option value="">{t.intake_select_ph}</option>
-          {EDUCATION_OPTIONS[lang].map(opt => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
+          {t.intake_skip}
+        </button>
       </div>
-
-      {/* Country */}
-      <div style={{ marginBottom: 36 }}>
-        <FieldLabel htmlFor="intake-country">{t.intake_country}</FieldLabel>
-        <input
-          id="intake-country"
-          type="text"
-          autoComplete="country-name"
-          placeholder={t.intake_country_ph}
-          value={country}
-          onChange={e => setCountry(e.target.value)}
-          style={inputStyle(false)}
-        />
-      </div>
-
-      <PrimaryBtn onClick={() => save()} loading={loading} fullWidth>
-        {loading ? '…' : t.btn_continue}
-      </PrimaryBtn>
-
-      <button
-        onClick={() => save(true)}
-        style={{
-          display: 'block', margin: '14px auto 0', background: 'none', border: 'none',
-          color: 'var(--ink-3)', fontSize: 14, cursor: 'pointer', padding: '4px 8px',
-          textDecoration: 'underline',
-        }}
-      >
-        {t.intake_skip}
-      </button>
     </div>
   );
 }
@@ -790,6 +865,9 @@ function TestStage({
   const [locked, setLocked]                   = useState(false);
   const [questionFading, setQuestionFading]   = useState(false);
   const [offline, setOffline]                 = useState(false);
+  const questionShownAt = useRef<number>(Date.now());
+
+  useEffect(() => { questionShownAt.current = Date.now(); }, [currentIndex]);
 
   // Load progress on mount → resume from last saved index
   useEffect(() => {
@@ -802,7 +880,7 @@ function TestStage({
       .catch(() => setCurrentIndex(0));
   }, [sessionId]);
 
-  async function saveAnswer(questionId: string, answerId: string, index: number): Promise<boolean> {
+  async function saveAnswer(questionId: string, answerId: string, index: number, responseTimeMs: number): Promise<boolean> {
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         const res = await fetch(`/api/reno/sessions/${sessionId}/answers`, {
@@ -813,6 +891,7 @@ function TestStage({
             answerId,
             answeredAt: new Date().toISOString(),
             questionIndex: index,
+            responseTimeMs,
           }),
         });
         if (res.ok) return true;
@@ -825,12 +904,13 @@ function TestStage({
   async function handleAnswer(answerId: string) {
     if (locked || currentIndex === null) return;
     const question = QUESTIONS[currentIndex];
+    const responseTimeMs = Date.now() - questionShownAt.current;
 
     setSelectedAnswer(answerId);
     setLocked(true);
     setOffline(false);
 
-    const saved = await saveAnswer(question.id, answerId, currentIndex);
+    const saved = await saveAnswer(question.id, answerId, currentIndex, responseTimeMs);
     if (!saved) {
       // All 3 retries failed — show error, let user try again
       setOffline(true);

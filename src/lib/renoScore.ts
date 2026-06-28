@@ -7,10 +7,14 @@ interface Question { id: string; options: QuestionOption[]; }
 const QUESTIONS = questionsData as unknown as Question[];
 const Q_MAP = new Map(QUESTIONS.map(q => [q.id, q]));
 
+// Axes where the dominant side is below this threshold are flagged as near-boundary
+const NEAR_BOUNDARY_THRESHOLD = 55;
+
 export interface RenoScore {
   type: string;
   scores: Record<string, number>;
   pct: { E: number; I: number; S: number; N: number; F: number; T: number; J: number; P: number };
+  nearBoundary: string[]; // axes where dominant % < threshold, e.g. ['EI', 'JP']
 }
 
 export function scoreSession(answers: RawAnswer[]): RenoScore {
@@ -20,11 +24,19 @@ export function scoreSession(answers: RawAnswer[]): RenoScore {
     const q = Q_MAP.get(ans.questionId);
     if (!q) continue;
     const opt = q.options.find(o => o.id === ans.answerId);
-    if (!opt || !s.hasOwnProperty(opt.key)) continue;
+    if (!opt || !Object.prototype.hasOwnProperty.call(s, opt.key)) continue;
     s[opt.key] += opt.score;
   }
 
   const p = (a: number, b: number) => (a + b === 0 ? 50 : Math.round((a / (a + b)) * 100));
+  const pct = { E: p(s.E, s.I), I: p(s.I, s.E), S: p(s.S, s.N), N: p(s.N, s.S), F: p(s.F, s.T), T: p(s.T, s.F), J: p(s.J, s.P), P: p(s.P, s.J) };
+
+  const dominantPct = (a: keyof typeof pct, b: keyof typeof pct) => Math.max(pct[a], pct[b]);
+  const nearBoundary: string[] = [];
+  if (dominantPct('E', 'I') < NEAR_BOUNDARY_THRESHOLD) nearBoundary.push('EI');
+  if (dominantPct('S', 'N') < NEAR_BOUNDARY_THRESHOLD) nearBoundary.push('SN');
+  if (dominantPct('F', 'T') < NEAR_BOUNDARY_THRESHOLD) nearBoundary.push('FT');
+  if (dominantPct('J', 'P') < NEAR_BOUNDARY_THRESHOLD) nearBoundary.push('JP');
 
   return {
     type:
@@ -33,6 +45,7 @@ export function scoreSession(answers: RawAnswer[]): RenoScore {
       (s.F >= s.T ? 'F' : 'T') +
       (s.J >= s.P ? 'J' : 'P'),
     scores: s,
-    pct: { E: p(s.E, s.I), I: p(s.I, s.E), S: p(s.S, s.N), N: p(s.N, s.S), F: p(s.F, s.T), T: p(s.T, s.F), J: p(s.J, s.P), P: p(s.P, s.J) },
+    pct,
+    nearBoundary,
   };
 }
