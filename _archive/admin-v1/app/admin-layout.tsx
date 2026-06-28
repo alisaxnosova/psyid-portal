@@ -8,6 +8,8 @@ const NAV = [
   { href: '/', label: 'Dashboard', exact: true },
   { href: '/users', label: 'Пользователи' },
   { href: '/results', label: 'Результаты тестов' },
+  { href: '/questions', label: 'Вопросы' },
+  { href: '/test-editor', label: 'Настройки теста' },
 ];
 
 function NavIcon({ type }: { type: string }) {
@@ -71,7 +73,7 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
                 color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
                 fontWeight: isActive ? 600 : 400, fontSize: 13,
               }}>
-                <NavIcon type={icons[i]} />
+                <NavIcon type={icons[i] ?? 'results'} />
                 {item.label}
               </Link>
             );
