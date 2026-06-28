@@ -28,6 +28,32 @@ const LANG_NAMES: Record<Lang, string> = {
   en: 'English', ru: 'Русский', es: 'Español', fr: 'Français', ar: 'العربية',
 };
 
+const COUNTRIES = [
+  'Afghanistan','Albania','Algeria','Argentina','Armenia','Australia','Austria','Azerbaijan',
+  'Bahrain','Bangladesh','Belarus','Belgium','Bolivia','Brazil','Bulgaria','Cambodia',
+  'Canada','Chile','China','Colombia','Croatia','Cuba','Czech Republic','Denmark',
+  'Ecuador','Egypt','Estonia','Ethiopia','Finland','France','Georgia','Germany',
+  'Ghana','Greece','Guatemala','Hungary','India','Indonesia','Iran','Iraq',
+  'Ireland','Israel','Italy','Japan','Jordan','Kazakhstan','Kenya','Kuwait',
+  'Kyrgyzstan','Latvia','Lebanon','Lithuania','Malaysia','Mexico','Moldova',
+  'Morocco','Nepal','Netherlands','New Zealand','Nigeria','Norway','Pakistan',
+  'Palestine','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia',
+  'Saudi Arabia','Serbia','Singapore','Slovakia','South Africa','South Korea',
+  'Spain','Sri Lanka','Sweden','Switzerland','Syria','Taiwan','Tajikistan',
+  'Thailand','Tunisia','Turkey','Turkmenistan','Ukraine','United Arab Emirates',
+  'United Kingdom','United States','Uzbekistan','Venezuela','Vietnam','Yemen','Other',
+];
+
+const NATIVE_LANGUAGES = [
+  'Arabic','Bengali','Chinese (Cantonese)','Chinese (Mandarin)','Czech','Danish',
+  'Dutch','English','Estonian','Finnish','French','German','Greek','Hebrew',
+  'Hindi','Hungarian','Indonesian','Italian','Japanese','Kazakh','Korean',
+  'Latvian','Lithuanian','Malay','Nepali','Norwegian','Persian / Farsi',
+  'Polish','Portuguese','Romanian','Russian','Serbian','Slovak','Spanish',
+  'Swahili','Swedish','Tagalog / Filipino','Tamil','Thai','Turkish',
+  'Ukrainian','Urdu','Uzbek','Vietnamese','Other',
+];
+
 const EDUCATION_OPTIONS = {
   en: ['High school', 'Some college', 'Bachelor\'s degree', 'Master\'s degree', 'Doctoral degree', 'Prefer not to say'],
   ru: ['Среднее', 'Неполное высшее', 'Бакалавр', 'Магистр', 'Доктор наук', 'Не хочу указывать'],
@@ -635,6 +661,40 @@ function ConsentStage({ t, onContinue }: { t: (typeof T)[Lang]; onContinue: () =
 }
 
 /* ─── Stage 4: Intake form ─── */
+/* ── Intake helpers — defined at module level so React doesn't remount on each keystroke ── */
+function ISelect({ id, label, value, onChange, options, placeholder }: {
+  id: string; label: string; value: string; placeholder: string;
+  onChange: (v: string) => void; options: string[];
+}) {
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <select id={id} value={value} onChange={e => onChange(e.target.value)} style={inputStyle(false)}>
+        <option value="">{placeholder}</option>
+        {options.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function IText({ id, label, value, onChange, placeholder, type = 'text', maxWidth }: {
+  id: string; label: string; value: string; placeholder?: string;
+  onChange: (v: string) => void; type?: string; maxWidth?: number;
+}) {
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <input
+        id={id} type={type} inputMode={type === 'number' ? 'numeric' : undefined}
+        min={type === 'number' ? 16 : undefined}
+        placeholder={placeholder} value={value}
+        onChange={e => onChange(e.target.value)}
+        style={{ ...inputStyle(false), ...(maxWidth ? { maxWidth } : {}) }}
+      />
+    </div>
+  );
+}
+
 function IntakeStage({
   t, sessionId, lang, onContinue,
 }: {
@@ -643,15 +703,15 @@ function IntakeStage({
   lang: Lang;
   onContinue: () => void;
 }) {
-  const [age, setAge]                     = useState('');
-  const [sex, setSex]                     = useState('');
-  const [country, setCountry]             = useState('');
+  const [age, setAge]                       = useState('');
+  const [sex, setSex]                       = useState('');
+  const [country, setCountry]               = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [education, setEducation]         = useState('');
-  const [occupation, setOccupation]       = useState('');
-  const [employment, setEmployment]       = useState('');
-  const [relationship, setRelationship]   = useState('');
-  const [loading, setLoading]             = useState(false);
+  const [education, setEducation]           = useState('');
+  const [occupation, setOccupation]         = useState('');
+  const [employment, setEmployment]         = useState('');
+  const [relationship, setRelationship]     = useState('');
+  const [loading, setLoading]               = useState(false);
 
   async function save(skip = false) {
     setLoading(true);
@@ -663,8 +723,8 @@ function IntakeStage({
           consent: true,
           ...(!skip && age && !isNaN(parseInt(age, 10)) ? { age: parseInt(age, 10) } : {}),
           ...(!skip && sex ? { sex } : {}),
-          ...(!skip && country.trim() ? { country: country.trim() } : {}),
-          ...(!skip && nativeLanguage.trim() ? { nativeLanguage: nativeLanguage.trim() } : {}),
+          ...(!skip && country ? { country } : {}),
+          ...(!skip && nativeLanguage ? { nativeLanguage } : {}),
           ...(!skip && education ? { education } : {}),
           ...(!skip && occupation.trim() ? { occupation: occupation.trim() } : {}),
           ...(!skip && employment ? { employmentStatus: employment } : {}),
@@ -678,36 +738,7 @@ function IntakeStage({
     onContinue();
   }
 
-  function SelectField({ id, label, value, onChange, options }: {
-    id: string; label: string; value: string;
-    onChange: (v: string) => void; options: string[];
-  }) {
-    return (
-      <div style={{ marginBottom: 18 }}>
-        <FieldLabel htmlFor={id}>{label}</FieldLabel>
-        <select id={id} value={value} onChange={e => onChange(e.target.value)} style={inputStyle(false)}>
-          <option value="">{t.intake_select_ph}</option>
-          {options.map(o => <option key={o} value={o}>{o}</option>)}
-        </select>
-      </div>
-    );
-  }
-
-  function TextField({ id, label, value, onChange, placeholder, type = 'text', maxWidth }: {
-    id: string; label: string; value: string; onChange: (v: string) => void;
-    placeholder?: string; type?: string; maxWidth?: number;
-  }) {
-    return (
-      <div style={{ marginBottom: 18 }}>
-        <FieldLabel htmlFor={id}>{label}</FieldLabel>
-        <input
-          id={id} type={type} inputMode={type === 'number' ? 'numeric' : undefined}
-          placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)}
-          style={{ ...inputStyle(false), ...(maxWidth ? { maxWidth } : {}) }}
-        />
-      </div>
-    );
-  }
+  const ph = t.intake_select_ph;
 
   return (
     <div className="card" style={{ padding: 40 }}>
@@ -720,22 +751,22 @@ function IntakeStage({
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 20px' }}>
-        <TextField id="intake-age" label={t.intake_age} value={age} onChange={setAge}
+        <IText id="intake-age" label={t.intake_age} value={age} onChange={setAge}
           placeholder={t.intake_age_ph} type="number" maxWidth={140} />
-        <SelectField id="intake-sex" label={t.intake_sex} value={sex} onChange={setSex}
-          options={SEX_OPTIONS[lang]} />
-        <TextField id="intake-country" label={t.intake_country} value={country} onChange={setCountry}
-          placeholder={t.intake_country_ph} />
-        <TextField id="intake-lang" label={t.intake_native_language} value={nativeLanguage}
-          onChange={setNativeLanguage} placeholder={t.intake_native_language_ph} />
-        <SelectField id="intake-education" label={t.intake_education} value={education}
-          onChange={setEducation} options={EDUCATION_OPTIONS[lang]} />
-        <TextField id="intake-occupation" label={t.intake_occupation} value={occupation}
+        <ISelect id="intake-sex" label={t.intake_sex} value={sex} onChange={setSex}
+          options={SEX_OPTIONS[lang]} placeholder={ph} />
+        <ISelect id="intake-country" label={t.intake_country} value={country} onChange={setCountry}
+          options={COUNTRIES} placeholder={ph} />
+        <ISelect id="intake-lang" label={t.intake_native_language} value={nativeLanguage}
+          onChange={setNativeLanguage} options={NATIVE_LANGUAGES} placeholder={ph} />
+        <ISelect id="intake-education" label={t.intake_education} value={education}
+          onChange={setEducation} options={EDUCATION_OPTIONS[lang]} placeholder={ph} />
+        <IText id="intake-occupation" label={t.intake_occupation} value={occupation}
           onChange={setOccupation} placeholder={t.intake_occupation_ph} />
-        <SelectField id="intake-employment" label={t.intake_employment} value={employment}
-          onChange={setEmployment} options={EMPLOYMENT_OPTIONS[lang]} />
-        <SelectField id="intake-relationship" label={t.intake_relationship} value={relationship}
-          onChange={setRelationship} options={RELATIONSHIP_OPTIONS[lang]} />
+        <ISelect id="intake-employment" label={t.intake_employment} value={employment}
+          onChange={setEmployment} options={EMPLOYMENT_OPTIONS[lang]} placeholder={ph} />
+        <ISelect id="intake-relationship" label={t.intake_relationship} value={relationship}
+          onChange={setRelationship} options={RELATIONSHIP_OPTIONS[lang]} placeholder={ph} />
       </div>
 
       <div style={{ marginTop: 10 }}>
@@ -1142,14 +1173,23 @@ export default function RenoPage() {
   }
 
   return (
-    <div dir={isRtl ? 'rtl' : 'ltr'} style={{ minHeight: '100vh', background: 'var(--bg-2)', display: 'flex', flexDirection: 'column' }}>
+    <div dir={isRtl ? 'rtl' : 'ltr'} style={{
+      minHeight: '100vh',
+      background: `
+        radial-gradient(ellipse 65% 55% at 88% 88%, rgba(255,165,72,.55) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 30%, rgba(58,98,232,.65) 0%, transparent 60%),
+        linear-gradient(135deg, #050B36 0%, #0E1F6E 40%, #4B266A 70%, #B23A4C 100%)
+      `,
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
       {/* Top bar */}
       <div style={{
         padding: '16px 28px',
-        background: 'rgba(255,255,255,0.90)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--line)',
+        background: 'rgba(5,11,54,0.60)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        borderBottom: '1px solid rgba(255,255,255,0.10)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
