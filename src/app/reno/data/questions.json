@@ -1168,11 +1168,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1320,11 +1320,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1472,11 +1472,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1624,11 +1624,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1750,11 +1750,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1788,11 +1788,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1914,11 +1914,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -1952,11 +1952,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2066,11 +2066,11 @@
     "axis": "NS",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2104,11 +2104,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2218,11 +2218,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2256,11 +2256,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2344,11 +2344,11 @@
     "axis": "EI",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2382,11 +2382,11 @@
     "axis": "NS",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2420,11 +2420,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2496,11 +2496,11 @@
     "axis": "IE",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2534,11 +2534,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2572,11 +2572,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2610,11 +2610,11 @@
     "axis": "JP",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2648,11 +2648,11 @@
     "axis": "IE",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2686,11 +2686,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2724,11 +2724,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2762,11 +2762,11 @@
     "axis": "JP",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2800,11 +2800,11 @@
     "axis": "EI",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2838,11 +2838,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2876,11 +2876,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2914,11 +2914,11 @@
     "axis": "JP",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2952,11 +2952,11 @@
     "axis": "EI",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -2990,11 +2990,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3028,11 +3028,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3066,11 +3066,11 @@
     "axis": "PJ",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3104,11 +3104,11 @@
     "axis": "EI",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3142,11 +3142,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3180,11 +3180,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3218,11 +3218,11 @@
     "axis": "JP",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3256,11 +3256,11 @@
     "axis": "NS",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3294,11 +3294,11 @@
     "axis": "TF",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3332,11 +3332,11 @@
     "axis": "PJ",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3370,11 +3370,11 @@
     "axis": "NS",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3408,11 +3408,11 @@
     "axis": "FT",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3446,11 +3446,11 @@
     "axis": "JP",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3484,11 +3484,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3522,11 +3522,11 @@
     "axis": "PJ",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3560,11 +3560,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
@@ -3598,11 +3598,11 @@
     "axis": "SN",
     "type": "wordselect",
     "text": {
-      "ru": "Какое слово из пары (А или Б) Вам больше нравится:",
-      "en": "Which word from the pair (A or B) do you prefer:",
-      "es": "¿Cuál de las palabras del par (A o B) prefiere:",
-      "fr": "Quel mot de la paire (A ou B) préférez-vous :",
-      "ar": "أي كلمة من الزوج (أ أو ب) تفضل:"
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
     },
     "options": [
       {
