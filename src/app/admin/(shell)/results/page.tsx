@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+
 function getAdminToken() {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('admin_access_token');
@@ -16,15 +17,31 @@ const C = {
 
 type Tab = 'results' | 'research';
 
+interface Intake {
+  consent: boolean;
+  age?: number;
+  sex?: string;
+  country?: string;
+  nativeLanguage?: string;
+  education?: string;
+  occupation?: string;
+  employmentStatus?: string;
+  relationshipStatus?: string;
+}
+
 interface ResultRow {
   sessionId: string;
   codeId: string;
   code: string;
+  status: string;
+  device: 'mobile' | 'desktop' | 'unknown';
   type: string;
+  nearBoundary: string[];
   pct: { E: number; I: number; S: number; N: number; F: number; T: number; J: number; P: number };
   scores: Record<string, number>;
-  intake: { consent: boolean; age?: number; education?: string; country?: string } | null;
+  intake: Intake | null;
   answersCount: number;
+  avgResponseTimeMs: number | null;
   createdAt: string;
   completedAt: string | null;
 }
@@ -34,6 +51,11 @@ function fmt(iso: string) {
     day: 'numeric', month: 'short', year: 'numeric',
     hour: '2-digit', minute: '2-digit',
   });
+}
+
+function ms(ms: number | null) {
+  if (ms === null) return '—';
+  return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
 }
 
 function TH({ children, w }: { children: React.ReactNode; w?: number | string }) {
@@ -64,7 +86,7 @@ function TypeBadge({ type }: { type: string }) {
   const colors: Record<string, string> = {
     INTJ: C.violet, INTP: C.violet, ENTJ: C.violet, ENTP: C.violet,
     INFJ: C.purple, INFP: C.purple, ENFJ: C.purple, ENFP: C.purple,
-    ISTJ: C.blue, ISFJ: C.blue, ESTJ: C.blue, ESFJ: C.blue,
+    ISTJ: C.blue,   ISFJ: C.blue,   ESTJ: C.blue,   ESFJ: C.blue,
     ISTP: C.inkSoft, ISFP: C.inkSoft, ESTP: C.inkSoft, ESFP: C.inkSoft,
   };
   const bg = colors[type] ?? C.inkMute;
@@ -74,8 +96,30 @@ function TypeBadge({ type }: { type: string }) {
       background: bg, color: 'white',
       fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800,
       letterSpacing: '0.05em',
-    }}>
-      {type}
+    }}>{type}</span>
+  );
+}
+
+function DeviceBadge({ device }: { device: string }) {
+  const icon = device === 'mobile' ? '📱' : device === 'desktop' ? '🖥' : '?';
+  return (
+    <span style={{ fontSize: 12, color: C.inkMute, fontFamily: "'Geist Mono', monospace" }}>
+      {icon} {device}
+    </span>
+  );
+}
+
+function NearBoundaryPills({ axes }: { axes: string[] }) {
+  if (!axes.length) return <span style={{ color: C.inkMute, fontSize: 11 }}>—</span>;
+  return (
+    <span style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+      {axes.map(a => (
+        <span key={a} style={{
+          padding: '2px 6px', borderRadius: 5, fontSize: 10, fontWeight: 700,
+          background: 'rgba(255,149,64,0.15)', color: C.orangeHot,
+          fontFamily: "'Geist Mono', monospace",
+        }}>{a}</span>
+      ))}
     </span>
   );
 }
@@ -92,57 +136,74 @@ function AxisBar({ label, pct, color }: { label: string; pct: number; color: str
   );
 }
 
+function IntakeField({ label, value }: { label: string; value?: string | number }) {
+  if (!value) return null;
+  return (
+    <div style={{ fontSize: 13, color: C.inkSoft, marginBottom: 5 }}>
+      {label}: <b style={{ color: C.ink }}>{value}</b>
+    </div>
+  );
+}
+
 function ExpandedRow({ r }: { r: ResultRow }) {
   const axes = [
-    { left: 'E', right: 'I', dominant: r.type[0], pct: r.pct },
-    { left: 'S', right: 'N', dominant: r.type[1], pct: r.pct },
-    { left: 'F', right: 'T', dominant: r.type[2], pct: r.pct },
-    { left: 'J', right: 'P', dominant: r.type[3], pct: r.pct },
+    { left: 'E' as const, right: 'I' as const },
+    { left: 'S' as const, right: 'N' as const },
+    { left: 'F' as const, right: 'T' as const },
+    { left: 'J' as const, right: 'P' as const },
   ];
 
   return (
     <tr>
-      <td colSpan={8} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
+      <td colSpan={9} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
         <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
-          {/* Axis detail */}
+
+          {/* Axis scores */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Axis Scores</div>
             {axes.map(ax => (
               <div key={ax.left} style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
                 <div style={{ width: 100, display: 'flex', gap: 4, alignItems: 'center' }}>
-                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: ax.dominant === ax.left ? 800 : 400, color: ax.dominant === ax.left ? C.ink : C.inkMute, width: 12 }}>{ax.left}</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: r.type.includes(ax.left) ? 800 : 400, color: r.type.includes(ax.left) ? C.ink : C.inkMute, width: 12 }}>{ax.left}</span>
                   <div style={{ flex: 1, height: 6, background: C.bone, borderRadius: 99, overflow: 'hidden' }}>
-                    <div style={{ width: `${ax.pct[ax.left as keyof typeof ax.pct]}%`, height: '100%', background: C.violet, borderRadius: 99 }} />
+                    <div style={{ width: `${r.pct[ax.left]}%`, height: '100%', background: C.violet, borderRadius: 99 }} />
                   </div>
-                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: C.inkMute, width: 28 }}>{ax.pct[ax.left as keyof typeof ax.pct]}%</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: C.inkMute, width: 28 }}>{r.pct[ax.left]}%</span>
                 </div>
                 <span style={{ color: C.inkMute, fontSize: 10 }}>vs</span>
                 <div style={{ width: 100, display: 'flex', gap: 4, alignItems: 'center' }}>
-                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: ax.dominant === ax.right ? 800 : 400, color: ax.dominant === ax.right ? C.ink : C.inkMute, width: 12 }}>{ax.right}</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: r.type.includes(ax.right) ? 800 : 400, color: r.type.includes(ax.right) ? C.ink : C.inkMute, width: 12 }}>{ax.right}</span>
                   <div style={{ flex: 1, height: 6, background: C.bone, borderRadius: 99, overflow: 'hidden' }}>
-                    <div style={{ width: `${ax.pct[ax.right as keyof typeof ax.pct]}%`, height: '100%', background: C.orange, borderRadius: 99 }} />
+                    <div style={{ width: `${r.pct[ax.right]}%`, height: '100%', background: C.orange, borderRadius: 99 }} />
                   </div>
-                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: C.inkMute, width: 28 }}>{ax.pct[ax.right as keyof typeof ax.pct]}%</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: C.inkMute, width: 28 }}>{r.pct[ax.right]}%</span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Intake */}
+          {/* Intake demographics */}
           {r.intake && (
             <div>
-              <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Intake</div>
-              {r.intake.age && <div style={{ fontSize: 13, color: C.inkSoft, marginBottom: 5 }}>Age: <b style={{ color: C.ink }}>{r.intake.age}</b></div>}
-              {r.intake.education && <div style={{ fontSize: 13, color: C.inkSoft, marginBottom: 5 }}>Education: <b style={{ color: C.ink }}>{r.intake.education}</b></div>}
-              {r.intake.country && <div style={{ fontSize: 13, color: C.inkSoft, marginBottom: 5 }}>Country: <b style={{ color: C.ink }}>{r.intake.country}</b></div>}
+              <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Demographics</div>
+              <IntakeField label="Age"                value={r.intake.age} />
+              <IntakeField label="Sex"                value={r.intake.sex} />
+              <IntakeField label="Country"            value={r.intake.country} />
+              <IntakeField label="Native language"    value={r.intake.nativeLanguage} />
+              <IntakeField label="Education"          value={r.intake.education} />
+              <IntakeField label="Occupation"         value={r.intake.occupation} />
+              <IntakeField label="Employment"         value={r.intake.employmentStatus} />
+              <IntakeField label="Relationship"       value={r.intake.relationshipStatus} />
             </div>
           )}
 
           {/* Session meta */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Session</div>
-            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>ID: {r.sessionId.slice(0, 20)}…</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>ID: {r.sessionId.slice(0, 22)}…</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Answers: {r.answersCount} / 94</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Avg response: {ms(r.avgResponseTimeMs)}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Device: {r.device}</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute }}>Started: {fmt(r.createdAt)}</div>
           </div>
         </div>
@@ -152,10 +213,10 @@ function ExpandedRow({ r }: { r: ResultRow }) {
 }
 
 export default function AdminResultsPage() {
-  const [tab, setTab] = useState<Tab>('results');
-  const [results, setResults] = useState<ResultRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [tab, setTab]           = useState<Tab>('results');
+  const [results, setResults]   = useState<ResultRow[]>([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -224,7 +285,6 @@ export default function AdminResultsPage() {
         })}
       </div>
 
-      {/* Error */}
       {error && (
         <div style={{ padding: '12px 18px', borderRadius: 12, background: 'rgba(255,90,90,0.08)', border: `1px solid rgba(255,90,90,0.2)`, color: C.coral, fontSize: 13, marginBottom: 16 }}>
           {error}
@@ -237,7 +297,7 @@ export default function AdminResultsPage() {
 
           {/* ── TABLE B: Assessment Results ── */}
           {tab === 'results' && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 700 }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
               <thead>
                 <tr>
                   <TH w={70}>code</TH>
@@ -246,19 +306,21 @@ export default function AdminResultsPage() {
                   <TH>S / N</TH>
                   <TH>F / T</TH>
                   <TH>J / P</TH>
-                  <TH w={170}>completed</TH>
+                  <TH w={110}>near boundary</TH>
+                  <TH w={90}>device</TH>
+                  <TH w={160}>completed</TH>
                   <TH w={40}>{''}</TH>
                 </tr>
               </thead>
               <tbody>
                 {loading && (
-                  <tr><td colSpan={8} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
+                  <tr><td colSpan={10} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
                 )}
                 {!loading && results.length === 0 && (
                   <tr>
-                    <td colSpan={8} style={{ padding: '72px 32px', textAlign: 'center' }}>
+                    <td colSpan={10} style={{ padding: '72px 32px', textAlign: 'center' }}>
                       <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No completed tests yet</div>
-                      <div style={{ fontSize: 13, color: C.inkMute }}>Completed results will appear here once someone finishes the assessment.</div>
+                      <div style={{ fontSize: 13, color: C.inkMute }}>Results will appear here once someone finishes the assessment.</div>
                     </td>
                   </tr>
                 )}
@@ -277,18 +339,12 @@ export default function AdminResultsPage() {
                           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 15, fontWeight: 800, letterSpacing: '0.08em', color: C.ink }}>{r.code}</span>
                         </TD>
                         <TD><TypeBadge type={r.type} /></TD>
-                        <TD>
-                          <AxisBar label={r.type[0]} pct={r.pct[r.type[0] as 'E' | 'I']} color={C.violet} />
-                        </TD>
-                        <TD>
-                          <AxisBar label={r.type[1]} pct={r.pct[r.type[1] as 'S' | 'N']} color={C.violet} />
-                        </TD>
-                        <TD>
-                          <AxisBar label={r.type[2]} pct={r.pct[r.type[2] as 'F' | 'T']} color={C.violet} />
-                        </TD>
-                        <TD>
-                          <AxisBar label={r.type[3]} pct={r.pct[r.type[3] as 'J' | 'P']} color={C.violet} />
-                        </TD>
+                        <TD><AxisBar label={r.type[0]} pct={r.pct[r.type[0] as 'E' | 'I']} color={C.violet} /></TD>
+                        <TD><AxisBar label={r.type[1]} pct={r.pct[r.type[1] as 'S' | 'N']} color={C.violet} /></TD>
+                        <TD><AxisBar label={r.type[2]} pct={r.pct[r.type[2] as 'F' | 'T']} color={C.violet} /></TD>
+                        <TD><AxisBar label={r.type[3]} pct={r.pct[r.type[3] as 'J' | 'P']} color={C.violet} /></TD>
+                        <TD><NearBoundaryPills axes={r.nearBoundary} /></TD>
+                        <TD><DeviceBadge device={r.device} /></TD>
                         <TD mono muted>{r.completedAt ? fmt(r.completedAt) : '—'}</TD>
                         <TD>
                           <span style={{ color: C.inkMute, fontSize: 16, display: 'block', textAlign: 'center', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span>
@@ -304,24 +360,31 @@ export default function AdminResultsPage() {
 
           {/* ── TABLE C: Research Dataset ── */}
           {tab === 'research' && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 700 }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1100 }}>
               <thead>
                 <tr>
                   <TH w={70}>code</TH>
-                  <TH w={90}>type</TH>
+                  <TH w={80}>type</TH>
                   <TH>age</TH>
-                  <TH>education</TH>
+                  <TH>sex</TH>
                   <TH>country</TH>
+                  <TH>language</TH>
+                  <TH>education</TH>
+                  <TH>employment</TH>
+                  <TH>relationship</TH>
+                  <TH>occupation</TH>
+                  <TH>avg resp</TH>
+                  <TH>device</TH>
                   <TH>E</TH><TH>I</TH><TH>S</TH><TH>N</TH><TH>F</TH><TH>T</TH><TH>J</TH><TH>P</TH>
                 </tr>
               </thead>
               <tbody>
                 {loading && (
-                  <tr><td colSpan={13} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
+                  <tr><td colSpan={20} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
                 )}
                 {!loading && researchRows.length === 0 && (
                   <tr>
-                    <td colSpan={13} style={{ padding: '72px 32px', textAlign: 'center' }}>
+                    <td colSpan={20} style={{ padding: '72px 32px', textAlign: 'center' }}>
                       <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No research data yet</div>
                       <div style={{ fontSize: 13, color: C.inkMute }}>Participants who fill in the optional intake fields will appear here.</div>
                     </td>
@@ -333,11 +396,18 @@ export default function AdminResultsPage() {
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     style={{ transition: 'background .1s' }}
                   >
-                    <TD><span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 15, fontWeight: 800, letterSpacing: '0.08em' }}>{r.code}</span></TD>
+                    <TD><span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800, letterSpacing: '0.08em' }}>{r.code}</span></TD>
                     <TD><TypeBadge type={r.type} /></TD>
                     <TD mono>{r.intake?.age ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
-                    <TD>{r.intake?.education ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.sex ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
                     <TD>{r.intake?.country ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.nativeLanguage ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.education ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.employmentStatus ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.relationshipStatus ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD>{r.intake?.occupation ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                    <TD mono muted>{ms(r.avgResponseTimeMs)}</TD>
+                    <TD mono muted>{r.device}</TD>
                     {(['E','I','S','N','F','T','J','P'] as const).map(k => (
                       <TD key={k} mono muted>{r.scores[k] ?? 0}</TD>
                     ))}
@@ -355,8 +425,8 @@ export default function AdminResultsPage() {
           fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute,
         }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
-          {tab === 'results' && `${results.length} completed result${results.length !== 1 ? 's' : ''} · live from Redis`}
-          {tab === 'research' && `${researchRows.length} participants with research data`}
+          {tab === 'results'  && `${results.length} completed result${results.length !== 1 ? 's' : ''} · live from Redis`}
+          {tab === 'research' && `${researchRows.length} participant${researchRows.length !== 1 ? 's' : ''} with research data`}
         </div>
       </div>
     </div>
