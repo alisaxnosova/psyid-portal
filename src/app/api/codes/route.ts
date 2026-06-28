@@ -4,7 +4,7 @@ import { kvConfigured, kvGet, kvSet } from '@/lib/upstash';
 export interface AccessCode {
   id: string;
   code: string;
-  status: 'UNUSED' | 'USED';
+  status: 'UNUSED' | 'IN_PROGRESS' | 'USED';
   invoice_ref: string | null;
   note: string | null;
   created_at: string;

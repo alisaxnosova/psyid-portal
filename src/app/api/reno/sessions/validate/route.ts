@@ -23,20 +23,24 @@ export async function POST(req: Request) {
 
   const sessionsMap: RenoSessionsMap = (await kvGet<RenoSessionsMap>(RENO_SESSIONS_MAP_KEY)) ?? {};
 
-  // Code already used — check for a resumable reno session
+  // Completed — permanently blocked
   if (found.status === 'USED') {
-    const existingSessionId = sessionsMap[found.id];
-    if (!existingSessionId) {
-      return NextResponse.json({ valid: false, reason: 'already_used' });
-    }
-    const session = await kvGet<RenoSession>(`psyid:reno-session:${existingSessionId}`);
-    if (!session || session.status === 'completed') {
-      return NextResponse.json({ valid: false, reason: 'already_used' });
-    }
-    return NextResponse.json({ valid: true, resumable: true, sessionId: existingSessionId });
+    return NextResponse.json({ valid: false, reason: 'already_used' });
   }
 
-  // Fresh code — create session and mark code as used immediately
+  // In progress — resume existing session
+  if (found.status === 'IN_PROGRESS') {
+    const existingSessionId = sessionsMap[found.id];
+    if (existingSessionId) {
+      const session = await kvGet<RenoSession>(`psyid:reno-session:${existingSessionId}`);
+      if (session && session.status !== 'completed') {
+        return NextResponse.json({ valid: true, resumable: true, sessionId: existingSessionId });
+      }
+    }
+    // Session missing or completed — treat as fresh
+  }
+
+  // Fresh code — create session, mark IN_PROGRESS (not USED until completed)
   const sessionId = `reno_${found.id}_${Date.now()}`;
   const newSession: RenoSession = {
     id: sessionId,
@@ -48,7 +52,7 @@ export async function POST(req: Request) {
   };
 
   const idx = codes.findIndex(c => c.id === found.id);
-  codes[idx] = { ...codes[idx], status: 'USED', used_at: new Date().toISOString() };
+  codes[idx] = { ...codes[idx], status: 'IN_PROGRESS', used_at: new Date().toISOString() };
 
   await Promise.all([
     kvSet(CODES_KEY, codes),

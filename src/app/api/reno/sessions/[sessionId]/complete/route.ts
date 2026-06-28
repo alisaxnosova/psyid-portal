@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { kvConfigured, kvGet, kvSet } from '@/lib/upstash';
 import type { RenoSession } from '@/app/api/reno/types';
+import type { AccessCode } from '@/app/api/codes/route';
+
+const CODES_KEY = 'psyid:codes';
 
 export async function POST(
   _req: Request,
@@ -12,11 +15,17 @@ export async function POST(
   const session = await kvGet<RenoSession>(`psyid:reno-session:${sessionId}`);
   if (!session) return NextResponse.json({ ok: false, error: 'session_not_found' }, { status: 404 });
 
-  await kvSet(`psyid:reno-session:${sessionId}`, {
-    ...session,
-    status: 'completed',
-    completedAt: new Date().toISOString(),
-  });
+  const completedAt = new Date().toISOString();
+
+  // Mark session completed + mark the code as USED (only happens on full completion)
+  const codes = await kvGet<AccessCode[]>(CODES_KEY) ?? [];
+  const idx = codes.findIndex(c => c.id === session.codeId);
+  if (idx !== -1) codes[idx] = { ...codes[idx], status: 'USED', used_at: completedAt };
+
+  await Promise.all([
+    kvSet(`psyid:reno-session:${sessionId}`, { ...session, status: 'completed', completedAt }),
+    kvSet(CODES_KEY, codes),
+  ]);
 
   return NextResponse.json({ ok: true, redirectUrl: 'https://psyid.com' });
 }

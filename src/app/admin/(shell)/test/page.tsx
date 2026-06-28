@@ -15,7 +15,7 @@ const LOCAL_KEY = 'psyid_admin_codes';
 export interface AccessCode {
   id: string;
   code: string;
-  status: 'UNUSED' | 'USED';
+  status: 'UNUSED' | 'IN_PROGRESS' | 'USED';
   invoice_ref: string | null;
   note: string | null;
   created_at: string;
@@ -367,11 +367,11 @@ export default function AdminCodesPage() {
                       <td style={{ padding: '13px 16px', borderBottom: `1px solid ${C.bone}` }}>
                         <span style={{
                           padding: '3px 10px', borderRadius: 999,
-                          background: c.status === 'USED' ? C.bone : 'rgba(255,149,64,0.12)',
-                          color: c.status === 'USED' ? C.inkMute : C.orangeHot,
+                          background: c.status === 'USED' ? C.bone : c.status === 'IN_PROGRESS' ? 'rgba(34,68,224,0.10)' : 'rgba(255,149,64,0.12)',
+                          color: c.status === 'USED' ? C.inkMute : c.status === 'IN_PROGRESS' ? '#2244E0' : C.orangeHot,
                           fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono', monospace",
                         }}>
-                          {c.status === 'USED' ? t('codes_used') : t('codes_unused')}
+                          {c.status === 'USED' ? t('codes_used') : c.status === 'IN_PROGRESS' ? 'IN PROGRESS' : t('codes_unused')}
                         </span>
                       </td>
                       <td style={{ padding: '13px 16px', fontSize: 13, color: C.inkSoft, borderBottom: `1px solid ${C.bone}` }}>
