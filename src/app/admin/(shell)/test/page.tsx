@@ -268,7 +268,7 @@ export default function AdminCodesPage() {
             }}>
               {generating ? '…' : t('codes_gen_btn')}
             </button>
-            <a href="/start" target="_blank" rel="noopener noreferrer" style={{
+            <a href="/reno" target="_blank" rel="noopener noreferrer" style={{
               padding: '12px 16px', borderRadius: 12,
               border: `1.5px solid ${C.line}`, color: C.inkSoft,
               fontSize: 13, fontWeight: 600, textDecoration: 'none',

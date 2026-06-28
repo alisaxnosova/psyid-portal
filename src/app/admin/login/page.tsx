@@ -16,6 +16,19 @@ export default function AdminLoginPage() {
     setError('');
     setLoading(true);
     try {
+      // Try local auth first (ADMIN_SECRET env var, no backend dependency)
+      const localRes = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (localRes.ok) {
+        const { accessToken } = await localRes.json() as { accessToken: string };
+        saveAdminToken(accessToken);
+        router.push('/admin');
+        return;
+      }
+      // Fall back to backend auth
       const { accessToken } = await adminAuth.login(email, password);
       saveAdminToken(accessToken);
       router.push('/admin');
