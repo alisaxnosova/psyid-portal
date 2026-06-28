@@ -23,47 +23,51 @@ const LANG_NAMES: Record<Lang, string> = {
   en: 'English', ru: 'Русский', es: 'Español', fr: 'Français', ar: 'العربية',
 };
 
+const EDUCATION_OPTIONS = {
+  en: ['High school', 'Some college', 'Bachelor\'s degree', 'Master\'s degree', 'Doctoral degree', 'Prefer not to say'],
+  ru: ['Среднее', 'Неполное высшее', 'Бакалавр', 'Магистр', 'Доктор наук', 'Не хочу указывать'],
+  es: ['Secundaria', 'Universitario parcial', 'Licenciatura', 'Maestría', 'Doctorado', 'Prefiero no decir'],
+  fr: ['Lycée', 'Études supérieures partielles', 'Licence', 'Master', 'Doctorat', 'Je préfère ne pas répondre'],
+  ar: ['ثانوية', 'دراسات جامعية جزئية', 'بكالوريوس', 'ماجستير', 'دكتوراه', 'أفضل عدم الإجابة'],
+};
+
 const T = {
   en: {
     eyebrow: 'ReNo Assessment',
     heading: 'Welcome',
-    subtitle: 'Enter the access code you received to begin your child\'s psychological assessment.',
+    subtitle: 'Enter the access code you received to begin your psychological assessment.',
     code_label: 'Access Code',
     code_ph: '000000',
     btn_begin: 'Begin →',
     btn_loading: 'Checking…',
     err_not_found: 'Code not found. Please check your entry.',
-    err_already_used: 'This code has already been used. Please contact your administrator.',
+    err_already_used: 'This code has already been used. Please contact your provider.',
     err_expired: 'This code has expired.',
     err_network: 'Something went wrong. Please try again.',
     footer: 'Your answers are confidential and secure.',
 
-    disclaimer_eyebrow: 'Step 1 of 3',
+    disclaimer_eyebrow: 'Step 1 of 2',
     disclaimer_heading: 'Before you begin',
-    disclaimer_body: 'This assessment evaluates your child\'s psychological profile across several dimensions. It takes approximately 15–20 minutes. Please answer based on your observations of your child over the past 3–6 months.',
+    disclaimer_body: 'This assessment evaluates your psychological profile across several dimensions. It takes approximately 15–20 minutes. Answer honestly and go with your first instinct — there are no right or wrong answers.',
     btn_continue: 'Continue →',
 
-    consent_eyebrow: 'Step 2 of 3',
+    consent_eyebrow: 'Step 2 of 2',
     consent_heading: 'Data consent',
-    consent_body: 'Your child\'s results will be shared only with the specialist who issued the access code. Anonymous, aggregated data may be used for research purposes.',
-    consent_check: 'I consent to the processing of personal data.',
+    consent_body: 'Your results will be shared only with the specialist who issued your access code. Anonymous, aggregated data may be used for research purposes.',
+    consent_check: 'I consent to the processing of my personal data.',
     consent_err: 'Please give your consent to continue.',
 
-    intake_eyebrow: 'Step 3 of 3',
+    intake_eyebrow: 'Optional',
     intake_heading: 'A few details',
-    intake_parent: 'Parent / guardian name',
-    intake_child: 'Child\'s name',
-    intake_age: 'Child\'s age',
-    intake_age_ph: '6–16',
-    intake_gender: 'Child\'s gender',
-    intake_gender_m: 'Boy',
-    intake_gender_f: 'Girl',
-    intake_email: 'Your email',
-    intake_email_ph: 'name@example.com',
-    intake_err_required: 'This field is required.',
-    intake_err_age: 'Age must be between 6 and 16.',
-    intake_err_email: 'Please enter a valid email address.',
+    intake_note: 'This information is used for research purposes only. All fields are optional — feel free to skip.',
+    intake_age: 'Your age',
+    intake_age_ph: '16+',
+    intake_education: 'Education level',
+    intake_select_ph: 'Select…',
+    intake_country: 'Country',
+    intake_country_ph: 'e.g. United States',
     intake_err_save: 'Could not save. Please try again.',
+    intake_skip: 'Skip',
 
     test_question: 'Question {n} of 94',
     test_yes: 'Yes',
@@ -73,7 +77,7 @@ const T = {
     test_finish: 'Finish test',
 
     complete_heading: 'Thank you!',
-    complete_body: 'You have completed the assessment. The results will be sent to your specialist.',
+    complete_body: 'You have completed the assessment. Your results will be sent to your specialist.',
     complete_btn: 'Return',
 
     resume_note: 'Your previous session was found. Continuing from where you left off.',
@@ -81,43 +85,39 @@ const T = {
   ru: {
     eyebrow: 'Тестирование ReNo',
     heading: 'Добро пожаловать',
-    subtitle: 'Введите код доступа, который вы получили, чтобы начать психологическое тестирование вашего ребёнка.',
+    subtitle: 'Введите код доступа, который вы получили, чтобы начать психологическое тестирование.',
     code_label: 'Код доступа',
     code_ph: '000000',
     btn_begin: 'Начать →',
     btn_loading: 'Проверяем…',
     err_not_found: 'Код не найден. Проверьте правильность ввода.',
-    err_already_used: 'Этот код уже был использован. Свяжитесь с администратором.',
+    err_already_used: 'Этот код уже был использован. Свяжитесь с вашим специалистом.',
     err_expired: 'Срок действия кода истёк.',
     err_network: 'Что-то пошло не так. Попробуйте ещё раз.',
     footer: 'Ваши ответы конфиденциальны и защищены.',
 
-    disclaimer_eyebrow: 'Шаг 1 из 3',
+    disclaimer_eyebrow: 'Шаг 1 из 2',
     disclaimer_heading: 'Перед началом',
-    disclaimer_body: 'Этот тест оценивает психологический профиль вашего ребёнка по нескольким параметрам. Он занимает около 15–20 минут. Отвечайте, исходя из наблюдений за ребёнком за последние 3–6 месяцев.',
+    disclaimer_body: 'Этот тест оценивает ваш психологический профиль по нескольким параметрам. Он занимает около 15–20 минут. Отвечайте честно и доверяйте первому ощущению — правильных и неправильных ответов нет.',
     btn_continue: 'Продолжить →',
 
-    consent_eyebrow: 'Шаг 2 из 3',
+    consent_eyebrow: 'Шаг 2 из 2',
     consent_heading: 'Согласие на обработку данных',
     consent_body: 'Результаты тестирования будут переданы только специалисту, выдавшему код доступа. Обезличенные данные могут использоваться в исследовательских целях.',
-    consent_check: 'Я согласен(на) с обработкой персональных данных.',
+    consent_check: 'Я согласен(на) с обработкой моих персональных данных.',
     consent_err: 'Необходимо согласие для продолжения.',
 
-    intake_eyebrow: 'Шаг 3 из 3',
-    intake_heading: 'Несколько деталей',
-    intake_parent: 'Имя родителя / опекуна',
-    intake_child: 'Имя ребёнка',
-    intake_age: 'Возраст ребёнка',
-    intake_age_ph: '6–16',
-    intake_gender: 'Пол ребёнка',
-    intake_gender_m: 'Мальчик',
-    intake_gender_f: 'Девочка',
-    intake_email: 'Ваш email',
-    intake_email_ph: 'name@example.com',
-    intake_err_required: 'Это поле обязательно.',
-    intake_err_age: 'Возраст должен быть от 6 до 16 лет.',
-    intake_err_email: 'Введите корректный email.',
+    intake_eyebrow: 'Опционально',
+    intake_heading: 'Немного о вас',
+    intake_note: 'Эта информация используется только в исследовательских целях. Все поля необязательны.',
+    intake_age: 'Ваш возраст',
+    intake_age_ph: '16+',
+    intake_education: 'Образование',
+    intake_select_ph: 'Выберите…',
+    intake_country: 'Страна',
+    intake_country_ph: 'например, Россия',
     intake_err_save: 'Не удалось сохранить данные. Попробуйте ещё раз.',
+    intake_skip: 'Пропустить',
 
     test_question: 'Вопрос {n} из 94',
     test_yes: 'Да',
@@ -135,43 +135,39 @@ const T = {
   es: {
     eyebrow: 'Evaluación ReNo',
     heading: 'Bienvenido',
-    subtitle: 'Ingrese el código de acceso que recibió para comenzar la evaluación psicológica de su hijo.',
+    subtitle: 'Ingrese el código de acceso que recibió para comenzar su evaluación psicológica.',
     code_label: 'Código de acceso',
     code_ph: '000000',
     btn_begin: 'Comenzar →',
     btn_loading: 'Verificando…',
     err_not_found: 'Código no encontrado. Por favor, verifique su ingreso.',
-    err_already_used: 'Este código ya fue utilizado. Contacte a su administrador.',
+    err_already_used: 'Este código ya fue utilizado. Contacte a su especialista.',
     err_expired: 'Este código ha expirado.',
     err_network: 'Algo salió mal. Por favor, inténtelo de nuevo.',
     footer: 'Sus respuestas son confidenciales y seguras.',
 
-    disclaimer_eyebrow: 'Paso 1 de 3',
+    disclaimer_eyebrow: 'Paso 1 de 2',
     disclaimer_heading: 'Antes de comenzar',
-    disclaimer_body: 'Esta evaluación valora el perfil psicológico de su hijo en varias dimensiones. Toma aproximadamente 15–20 minutos. Responda basándose en sus observaciones de los últimos 3–6 meses.',
+    disclaimer_body: 'Esta evaluación valora su perfil psicológico en varias dimensiones. Toma aproximadamente 15–20 minutos. Responda honestamente siguiendo su primer instinto — no hay respuestas correctas o incorrectas.',
     btn_continue: 'Continuar →',
 
-    consent_eyebrow: 'Paso 2 de 3',
+    consent_eyebrow: 'Paso 2 de 2',
     consent_heading: 'Consentimiento de datos',
-    consent_body: 'Los resultados de su hijo solo se compartirán con el especialista que emitió el código de acceso. Los datos anónimos pueden utilizarse con fines de investigación.',
-    consent_check: 'Doy mi consentimiento para el procesamiento de datos personales.',
+    consent_body: 'Sus resultados solo se compartirán con el especialista que emitió su código de acceso. Los datos anónimos pueden utilizarse con fines de investigación.',
+    consent_check: 'Doy mi consentimiento para el procesamiento de mis datos personales.',
     consent_err: 'Es necesario su consentimiento para continuar.',
 
-    intake_eyebrow: 'Paso 3 de 3',
+    intake_eyebrow: 'Opcional',
     intake_heading: 'Algunos detalles',
-    intake_parent: 'Nombre del padre / tutor',
-    intake_child: 'Nombre del niño',
-    intake_age: 'Edad del niño',
-    intake_age_ph: '6–16',
-    intake_gender: 'Género del niño',
-    intake_gender_m: 'Niño',
-    intake_gender_f: 'Niña',
-    intake_email: 'Su correo electrónico',
-    intake_email_ph: 'nombre@ejemplo.com',
-    intake_err_required: 'Este campo es obligatorio.',
-    intake_err_age: 'La edad debe estar entre 6 y 16 años.',
-    intake_err_email: 'Ingrese un correo electrónico válido.',
+    intake_note: 'Esta información se utiliza únicamente con fines de investigación. Todos los campos son opcionales.',
+    intake_age: 'Su edad',
+    intake_age_ph: '16+',
+    intake_education: 'Nivel de educación',
+    intake_select_ph: 'Seleccionar…',
+    intake_country: 'País',
+    intake_country_ph: 'p. ej. España',
     intake_err_save: 'No se pudieron guardar los datos. Inténtelo de nuevo.',
+    intake_skip: 'Omitir',
 
     test_question: 'Pregunta {n} de 94',
     test_yes: 'Sí',
@@ -181,7 +177,7 @@ const T = {
     test_finish: 'Finalizar prueba',
 
     complete_heading: '¡Gracias!',
-    complete_body: 'Ha completado la evaluación. Los resultados serán enviados a su especialista.',
+    complete_body: 'Ha completado la evaluación. Sus resultados serán enviados a su especialista.',
     complete_btn: 'Volver',
 
     resume_note: 'Se encontró su sesión anterior. Continuando desde donde lo dejó.',
@@ -189,43 +185,39 @@ const T = {
   fr: {
     eyebrow: 'Évaluation ReNo',
     heading: 'Bienvenue',
-    subtitle: 'Entrez le code d\'accès que vous avez reçu pour commencer l\'évaluation psychologique de votre enfant.',
+    subtitle: 'Entrez le code d\'accès que vous avez reçu pour commencer votre évaluation psychologique.',
     code_label: 'Code d\'accès',
     code_ph: '000000',
     btn_begin: 'Commencer →',
     btn_loading: 'Vérification…',
     err_not_found: 'Code introuvable. Veuillez vérifier votre saisie.',
-    err_already_used: 'Ce code a déjà été utilisé. Veuillez contacter votre administrateur.',
+    err_already_used: 'Ce code a déjà été utilisé. Veuillez contacter votre spécialiste.',
     err_expired: 'Ce code a expiré.',
     err_network: 'Quelque chose s\'est mal passé. Veuillez réessayer.',
     footer: 'Vos réponses sont confidentielles et sécurisées.',
 
-    disclaimer_eyebrow: 'Étape 1 sur 3',
+    disclaimer_eyebrow: 'Étape 1 sur 2',
     disclaimer_heading: 'Avant de commencer',
-    disclaimer_body: 'Cette évaluation mesure le profil psychologique de votre enfant selon plusieurs dimensions. Elle prend environ 15 à 20 minutes. Répondez en vous basant sur vos observations des 3 à 6 derniers mois.',
+    disclaimer_body: 'Cette évaluation mesure votre profil psychologique selon plusieurs dimensions. Elle prend environ 15 à 20 minutes. Répondez honnêtement en suivant votre premier instinct — il n\'y a pas de bonnes ou mauvaises réponses.',
     btn_continue: 'Continuer →',
 
-    consent_eyebrow: 'Étape 2 sur 3',
+    consent_eyebrow: 'Étape 2 sur 2',
     consent_heading: 'Consentement aux données',
-    consent_body: 'Les résultats de votre enfant seront partagés uniquement avec le spécialiste qui a émis le code d\'accès. Des données anonymisées peuvent être utilisées à des fins de recherche.',
-    consent_check: 'Je consens au traitement des données personnelles.',
+    consent_body: 'Vos résultats seront partagés uniquement avec le spécialiste qui a émis votre code d\'accès. Des données anonymisées peuvent être utilisées à des fins de recherche.',
+    consent_check: 'Je consens au traitement de mes données personnelles.',
     consent_err: 'Votre consentement est requis pour continuer.',
 
-    intake_eyebrow: 'Étape 3 sur 3',
+    intake_eyebrow: 'Optionnel',
     intake_heading: 'Quelques détails',
-    intake_parent: 'Nom du parent / tuteur',
-    intake_child: 'Prénom de l\'enfant',
-    intake_age: 'Âge de l\'enfant',
-    intake_age_ph: '6–16',
-    intake_gender: 'Sexe de l\'enfant',
-    intake_gender_m: 'Garçon',
-    intake_gender_f: 'Fille',
-    intake_email: 'Votre e-mail',
-    intake_email_ph: 'nom@exemple.com',
-    intake_err_required: 'Ce champ est obligatoire.',
-    intake_err_age: 'L\'âge doit être compris entre 6 et 16 ans.',
-    intake_err_email: 'Veuillez entrer une adresse e-mail valide.',
+    intake_note: 'Ces informations sont utilisées à des fins de recherche uniquement. Tous les champs sont optionnels.',
+    intake_age: 'Votre âge',
+    intake_age_ph: '16+',
+    intake_education: 'Niveau d\'études',
+    intake_select_ph: 'Sélectionner…',
+    intake_country: 'Pays',
+    intake_country_ph: 'ex. France',
     intake_err_save: 'Impossible de sauvegarder. Veuillez réessayer.',
+    intake_skip: 'Passer',
 
     test_question: 'Question {n} sur 94',
     test_yes: 'Oui',
@@ -235,7 +227,7 @@ const T = {
     test_finish: 'Terminer le test',
 
     complete_heading: 'Merci !',
-    complete_body: 'Vous avez terminé l\'évaluation. Les résultats seront envoyés à votre spécialiste.',
+    complete_body: 'Vous avez terminé l\'évaluation. Vos résultats seront envoyés à votre spécialiste.',
     complete_btn: 'Retour',
 
     resume_note: 'Votre session précédente a été trouvée. Reprise en cours.',
@@ -243,43 +235,39 @@ const T = {
   ar: {
     eyebrow: 'تقييم ReNo',
     heading: 'مرحباً بك',
-    subtitle: 'أدخل رمز الوصول الذي تلقيته لبدء التقييم النفسي لطفلك.',
+    subtitle: 'أدخل رمز الوصول الذي تلقيته لبدء التقييم النفسي.',
     code_label: 'رمز الوصول',
     code_ph: '000000',
     btn_begin: '← ابدأ',
     btn_loading: 'جارٍ التحقق…',
     err_not_found: 'الرمز غير موجود. يرجى التحقق من المدخلات.',
-    err_already_used: 'هذا الرمز مستخدم بالفعل. يرجى التواصل مع المسؤول.',
+    err_already_used: 'هذا الرمز مستخدم بالفعل. يرجى التواصل مع متخصصك.',
     err_expired: 'انتهت صلاحية هذا الرمز.',
     err_network: 'حدث خطأ ما. يرجى المحاولة مجدداً.',
     footer: 'إجاباتك سرية ومحمية.',
 
-    disclaimer_eyebrow: 'الخطوة 1 من 3',
+    disclaimer_eyebrow: 'الخطوة 1 من 2',
     disclaimer_heading: 'قبل البدء',
-    disclaimer_body: 'يقيّم هذا الاختبار الملف النفسي لطفلك عبر عدة أبعاد. يستغرق نحو 15–20 دقيقة. أجب بناءً على ملاحظاتك لطفلك خلال الأشهر الثلاثة إلى الستة الماضية.',
+    disclaimer_body: 'يقيّم هذا الاختبار ملفك النفسي عبر عدة أبعاد. يستغرق نحو 15–20 دقيقة. أجب بصدق واتبع حدسك الأول — لا توجد إجابات صحيحة أو خاطئة.',
     btn_continue: '← متابعة',
 
-    consent_eyebrow: 'الخطوة 2 من 3',
+    consent_eyebrow: 'الخطوة 2 من 2',
     consent_heading: 'الموافقة على البيانات',
-    consent_body: 'لن تُشارَك نتائج طفلك إلا مع المتخصص الذي أصدر رمز الوصول. قد تُستخدم البيانات المجهولة لأغراض بحثية.',
-    consent_check: 'أوافق على معالجة البيانات الشخصية.',
+    consent_body: 'لن تُشارَك نتائجك إلا مع المتخصص الذي أصدر رمز الوصول. قد تُستخدم البيانات المجهولة لأغراض بحثية.',
+    consent_check: 'أوافق على معالجة بياناتي الشخصية.',
     consent_err: 'موافقتك مطلوبة للمتابعة.',
 
-    intake_eyebrow: 'الخطوة 3 من 3',
+    intake_eyebrow: 'اختياري',
     intake_heading: 'بعض التفاصيل',
-    intake_parent: 'اسم الوالد / الوصي',
-    intake_child: 'اسم الطفل',
-    intake_age: 'عمر الطفل',
-    intake_age_ph: '٦–١٦',
-    intake_gender: 'جنس الطفل',
-    intake_gender_m: 'ولد',
-    intake_gender_f: 'بنت',
-    intake_email: 'بريدك الإلكتروني',
-    intake_email_ph: 'الاسم@مثال.com',
-    intake_err_required: 'هذا الحقل مطلوب.',
-    intake_err_age: 'يجب أن يكون العمر بين 6 و16 سنة.',
-    intake_err_email: 'يرجى إدخال بريد إلكتروني صحيح.',
+    intake_note: 'تُستخدم هذه المعلومات لأغراض بحثية فقط. جميع الحقول اختيارية.',
+    intake_age: 'عمرك',
+    intake_age_ph: '١٦+',
+    intake_education: 'المستوى التعليمي',
+    intake_select_ph: 'اختر…',
+    intake_country: 'البلد',
+    intake_country_ph: 'مثال: المملكة العربية السعودية',
     intake_err_save: 'تعذّر حفظ البيانات. يرجى المحاولة مجدداً.',
+    intake_skip: 'تخطي',
 
     test_question: 'سؤال {n} من 94',
     test_yes: 'نعم',
@@ -289,7 +277,7 @@ const T = {
     test_finish: 'إنهاء الاختبار',
 
     complete_heading: 'شكراً لك!',
-    complete_body: 'لقد أكملت الاختبار. ستُرسَل النتائج إلى متخصصك.',
+    complete_body: 'لقد أكملت الاختبار. ستُرسَل نتائجك إلى متخصصك.',
     complete_btn: 'العودة',
 
     resume_note: 'تم العثور على جلستك السابقة. نستأنف من حيث توقفت.',
@@ -584,192 +572,107 @@ function ConsentStage({ t, onContinue }: { t: (typeof T)[Lang]; onContinue: () =
 
 /* ─── Stage 4: Intake form ─── */
 function IntakeStage({
-  t, sessionId, onContinue,
+  t, sessionId, lang, onContinue,
 }: {
   t: (typeof T)[Lang];
   sessionId: string;
+  lang: Lang;
   onContinue: () => void;
 }) {
-  const [parentName, setParentName] = useState('');
-  const [childName, setChildName]   = useState('');
-  const [childAge, setChildAge]     = useState('');
-  const [childGender, setChildGender] = useState('');
-  const [email, setEmail]           = useState('');
-  const [errors, setErrors]         = useState<Record<string, string>>({});
-  const [apiError, setApiError]     = useState('');
-  const [loading, setLoading]       = useState(false);
+  const [age, setAge]             = useState('');
+  const [education, setEducation] = useState('');
+  const [country, setCountry]     = useState('');
+  const [loading, setLoading]     = useState(false);
 
-  function clearErr(field: string) {
-    setErrors(e => { const n = { ...e }; delete n[field]; return n; });
-  }
-
-  async function handleSubmit() {
-    const errs: Record<string, string> = {};
-    if (!parentName.trim())  errs.parentName  = t.intake_err_required;
-    if (!childName.trim())   errs.childName   = t.intake_err_required;
-    if (!childAge) {
-      errs.childAge = t.intake_err_required;
-    } else {
-      const age = parseInt(childAge, 10);
-      if (isNaN(age) || age < 6 || age > 16) errs.childAge = t.intake_err_age;
-    }
-    if (!childGender) errs.childGender = t.intake_err_required;
-    if (!email.trim()) {
-      errs.email = t.intake_err_required;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errs.email = t.intake_err_email;
-    }
-
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-
+  async function save(skip = false) {
     setLoading(true);
-    setApiError('');
     try {
-      const res = await fetch(`/api/reno/sessions/${sessionId}/intake`, {
+      await fetch(`/api/reno/sessions/${sessionId}/intake`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           consent: true,
-          parentName: parentName.trim(),
-          childName: childName.trim(),
-          childAge: parseInt(childAge, 10),
-          childGender,
-          email: email.trim(),
+          ...(!skip && age && !isNaN(parseInt(age, 10)) ? { age: parseInt(age, 10) } : {}),
+          ...(!skip && education ? { education } : {}),
+          ...(!skip && country.trim() ? { country: country.trim() } : {}),
         }),
       });
-      if (!res.ok) throw new Error('api');
-      onContinue();
     } catch {
-      setApiError(t.intake_err_save);
-    } finally {
-      setLoading(false);
+      // intake is optional — proceed regardless
     }
+    setLoading(false);
+    onContinue();
   }
 
   return (
     <div className="card" style={{ padding: 40 }}>
       <p className="eyebrow" style={{ marginBottom: 12 }}>{t.intake_eyebrow}</p>
-      <h2 className="serif" style={{ fontSize: 26, letterSpacing: '-0.02em', marginBottom: 28 }}>
+      <h2 className="serif" style={{ fontSize: 26, letterSpacing: '-0.02em', marginBottom: 8 }}>
         {t.intake_heading}
       </h2>
+      <p style={{ color: 'var(--ink-3)', fontSize: 14, lineHeight: 1.6, marginBottom: 28 }}>
+        {t.intake_note}
+      </p>
 
-      {/* API error banner */}
-      {apiError && (
-        <div style={{
-          background: '#FFF0F3', border: '1px solid var(--magenta)',
-          borderRadius: 10, padding: '11px 16px', marginBottom: 22,
-        }}>
-          <p style={{ color: 'var(--magenta)', fontSize: 14, margin: 0 }}>{apiError}</p>
-        </div>
-      )}
-
-      {/* Parent name */}
-      <div style={{ marginBottom: 20 }}>
-        <FieldLabel htmlFor="intake-parent">{t.intake_parent}</FieldLabel>
-        <input
-          id="intake-parent"
-          type="text"
-          autoComplete="name"
-          value={parentName}
-          onChange={e => { setParentName(e.target.value); clearErr('parentName'); }}
-          aria-describedby={errors.parentName ? 'err-parent' : undefined}
-          style={inputStyle(!!errors.parentName)}
-        />
-        <InlineError message={errors.parentName ?? ''} id="err-parent" />
-      </div>
-
-      {/* Child name */}
-      <div style={{ marginBottom: 20 }}>
-        <FieldLabel htmlFor="intake-child">{t.intake_child}</FieldLabel>
-        <input
-          id="intake-child"
-          type="text"
-          value={childName}
-          onChange={e => { setChildName(e.target.value); clearErr('childName'); }}
-          aria-describedby={errors.childName ? 'err-child' : undefined}
-          style={inputStyle(!!errors.childName)}
-        />
-        <InlineError message={errors.childName ?? ''} id="err-child" />
-      </div>
-
-      {/* Child age */}
+      {/* Age */}
       <div style={{ marginBottom: 20 }}>
         <FieldLabel htmlFor="intake-age">{t.intake_age}</FieldLabel>
         <input
           id="intake-age"
           type="number"
           inputMode="numeric"
-          min={6}
-          max={16}
+          min={16}
           placeholder={t.intake_age_ph}
-          value={childAge}
-          onChange={e => { setChildAge(e.target.value); clearErr('childAge'); }}
-          aria-describedby={errors.childAge ? 'err-age' : undefined}
-          style={{ ...inputStyle(!!errors.childAge), maxWidth: 140 }}
+          value={age}
+          onChange={e => setAge(e.target.value)}
+          style={{ ...inputStyle(false), maxWidth: 140 }}
         />
-        <InlineError message={errors.childAge ?? ''} id="err-age" />
       </div>
 
-      {/* Child gender */}
+      {/* Education */}
       <div style={{ marginBottom: 20 }}>
-        <p style={{ fontWeight: 600, fontSize: 13, color: 'var(--ink-2)', marginBottom: 10 }}>
-          {t.intake_gender}
-        </p>
-        <div style={{ display: 'flex', gap: 12 }} role="radiogroup" aria-label={t.intake_gender}>
-          {([
-            { value: 'male',   label: t.intake_gender_m },
-            { value: 'female', label: t.intake_gender_f },
-          ] as const).map(opt => (
-            <label
-              key={opt.value}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 9,
-                padding: '12px 20px', borderRadius: 12, cursor: 'pointer',
-                border: `2px solid ${
-                  childGender === opt.value ? 'var(--violet)'
-                  : errors.childGender ? 'var(--magenta)'
-                  : 'var(--line)'
-                }`,
-                background: childGender === opt.value ? 'var(--bg-2)' : 'white',
-                flex: 1, fontSize: 14, fontWeight: 500, color: 'var(--ink)',
-                transition: 'all 0.2s',
-              }}
-            >
-              <input
-                type="radio"
-                name="child-gender"
-                value={opt.value}
-                checked={childGender === opt.value}
-                onChange={() => { setChildGender(opt.value); clearErr('childGender'); }}
-                style={{ accentColor: 'var(--violet)', cursor: 'pointer', width: 16, height: 16 }}
-              />
-              {opt.label}
-            </label>
+        <FieldLabel htmlFor="intake-education">{t.intake_education}</FieldLabel>
+        <select
+          id="intake-education"
+          value={education}
+          onChange={e => setEducation(e.target.value)}
+          style={inputStyle(false)}
+        >
+          <option value="">{t.intake_select_ph}</option>
+          {EDUCATION_OPTIONS[lang].map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
           ))}
-        </div>
-        <InlineError message={errors.childGender ?? ''} id="err-gender" />
+        </select>
       </div>
 
-      {/* Email */}
-      <div style={{ marginBottom: 32 }}>
-        <FieldLabel htmlFor="intake-email">{t.intake_email}</FieldLabel>
+      {/* Country */}
+      <div style={{ marginBottom: 36 }}>
+        <FieldLabel htmlFor="intake-country">{t.intake_country}</FieldLabel>
         <input
-          id="intake-email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          placeholder={t.intake_email_ph}
-          value={email}
-          onChange={e => { setEmail(e.target.value); clearErr('email'); }}
-          aria-describedby={errors.email ? 'err-email' : undefined}
-          style={inputStyle(!!errors.email)}
+          id="intake-country"
+          type="text"
+          autoComplete="country-name"
+          placeholder={t.intake_country_ph}
+          value={country}
+          onChange={e => setCountry(e.target.value)}
+          style={inputStyle(false)}
         />
-        <InlineError message={errors.email ?? ''} id="err-email" />
       </div>
 
-      <PrimaryBtn onClick={handleSubmit} loading={loading} fullWidth>
+      <PrimaryBtn onClick={() => save()} loading={loading} fullWidth>
         {loading ? '…' : t.btn_continue}
       </PrimaryBtn>
+
+      <button
+        onClick={() => save(true)}
+        style={{
+          display: 'block', margin: '14px auto 0', background: 'none', border: 'none',
+          color: 'var(--ink-3)', fontSize: 14, cursor: 'pointer', padding: '4px 8px',
+          textDecoration: 'underline',
+        }}
+      >
+        {t.intake_skip}
+      </button>
     </div>
   );
 }
@@ -1210,7 +1113,7 @@ export default function RenoPage() {
           {stage === 'code'       && <CodeStage t={t} onSuccess={handleCodeSuccess} />}
           {stage === 'disclaimer' && <DisclaimerStage t={t} onContinue={() => goToStage('consent')} />}
           {stage === 'consent'    && <ConsentStage t={t} onContinue={() => goToStage('intake')} />}
-          {stage === 'intake'     && <IntakeStage t={t} sessionId={sessionId!} onContinue={() => goToStage('test')} />}
+          {stage === 'intake'     && <IntakeStage t={t} sessionId={sessionId!} lang={lang} onContinue={() => goToStage('test')} />}
           {stage === 'test'       && <TestStage t={t} sessionId={sessionId!} onComplete={() => goToStage('complete')} />}
           {stage === 'complete'   && <CompleteStage t={t} sessionId={sessionId} />}
         </div>
