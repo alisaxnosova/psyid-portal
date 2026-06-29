@@ -105,14 +105,14 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
   const { t, lang, setLang } = useAdminLang();
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#F6F1EA', fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: '#F6F1EA', fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
 
       {/* ── Sidebar ── */}
       <aside style={{
         width: 240, flexShrink: 0,
         background: 'linear-gradient(180deg, #050C2E 0%, #0B1A56 100%)',
         color: 'white', display: 'flex', flexDirection: 'column',
-        position: 'sticky', top: 0, height: '100vh', overflowY: 'auto',
+        height: '100vh', overflowY: 'auto',
       }}>
         {/* Brand */}
         <div style={{ padding: '24px 20px 20px' }}>
@@ -213,7 +213,7 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
       </aside>
 
       {/* ── Content ── */}
-      <div style={{ flex: 1, minWidth: 0, padding: 32, overflowY: 'auto' }}>
+      <div style={{ flex: 1, minWidth: 0, overflowY: 'auto', padding: '32px 36px' }}>
         {children}
       </div>
     </div>
