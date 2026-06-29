@@ -53,8 +53,18 @@ export default function PortalPage() {
             Psy<span style={{ color: C.orangeHot }}>ID</span>
           </Link>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <span style={{ fontSize: 14, color: C.inkSoft }}>{user?.email}</span>
+            {user?.accessCode && (
+              <span style={{
+                fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800,
+                letterSpacing: '0.12em', color: C.ink,
+                background: C.bone, border: `1px solid ${C.line}`,
+                borderRadius: 8, padding: '4px 10px',
+              }}>
+                {user.accessCode}
+              </span>
+            )}
             <button onClick={logout} style={{
               fontSize: 13, fontWeight: 600, color: C.inkSoft, background: 'none',
               border: `1px solid ${C.line}`, borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit',

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSession, getPortalUser } from '@/lib/portalAuth';
+import { getSession, getPortalUser, ensureAccessCode } from '@/lib/portalAuth';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://159.194.222.35:3010/api';
 
@@ -14,13 +14,14 @@ export async function GET(req: Request) {
     const session = await getSession(token);
     if (session) {
       const portalUser = await getPortalUser(session.email);
+      const accessCode = portalUser ? await ensureAccessCode(portalUser) : null;
       return NextResponse.json({
         id: session.userId,
         email: session.email,
         fullName: session.name || null,
         firstName: session.name ? session.name.split(' ')[0] : null,
         createdAt: portalUser?.createdAt ?? '',
-        accessCode: portalUser?.accessCode ?? null,
+        accessCode,
       });
     }
 

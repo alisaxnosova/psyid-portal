@@ -2,6 +2,11 @@ import bcrypt from 'bcryptjs';
 import { kvGet, kvSet, kvDel } from './upstash';
 import { randomBytes } from 'crypto';
 
+const CODES_KEY = 'psyid:codes';
+
+interface StoredCode { id: string; code: string; portalUserEmail?: string; }
+interface StoredPortalUserRecord { email: string; name: string; userId: string; accessCode?: string; registeredAt: string; }
+
 export interface PortalUser {
   email: string;
   name: string;
@@ -73,4 +78,61 @@ export async function getSession(token: string): Promise<PortalSession | null> {
 
 export async function deleteSession(token: string): Promise<void> {
   await kvDel(sessionKey(token));
+}
+
+function newId(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+// Ensures a portal user has an access code; generates and saves one if missing.
+export async function ensureAccessCode(user: PortalUser): Promise<string> {
+  if (user.accessCode) return user.accessCode;
+
+  // Generate a unique 6-digit code not already in psyid:codes
+  const allCodes = await kvGet<StoredCode[]>(CODES_KEY) ?? [];
+  const used = new Set(allCodes.map(c => c.code));
+  let code: string;
+  do {
+    code = String(Math.floor(100000 + Math.random() * 900000));
+  } while (used.has(code));
+
+  // Save to psyid:codes
+  const fullCode = {
+    id: newId(),
+    code,
+    status: 'UNUSED',
+    user_name: user.name || user.email,
+    invoice_ref: null,
+    note: 'Auto-generated for portal registration',
+    created_at: new Date().toISOString(),
+    used_at: null,
+    portalUserEmail: user.email,
+  };
+  allCodes.unshift(fullCode);
+  await kvSet(CODES_KEY, allCodes);
+
+  // Update portal user record
+  const updated: PortalUser = { ...user, accessCode: code };
+  await kvSet(userKey(user.email), updated);
+
+  // Update psyid:portal-users list
+  const portalUsers = await kvGet<StoredPortalUserRecord[]>('psyid:portal-users') ?? [];
+  const idx = portalUsers.findIndex(u => u.email === user.email);
+  if (idx >= 0) {
+    portalUsers[idx] = { ...portalUsers[idx], accessCode: code };
+  } else {
+    portalUsers.push({
+      email: user.email,
+      name: user.name,
+      userId: user.backendUserId ?? `portal_${user.email}`,
+      accessCode: code,
+      registeredAt: user.createdAt,
+    });
+  }
+  await kvSet('psyid:portal-users', portalUsers);
+
+  return code;
 }
