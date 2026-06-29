@@ -1038,7 +1038,7 @@ function TestStage({
 
 /* ─── Stage 6: Complete ─── */
 function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: string | null }) {
-  const [redirectUrl, setRedirectUrl] = useState('https://psyid.com');
+  const [redirectUrl, setRedirectUrl] = useState('https://psyid.me');
   const [apiErr, setApiErr]           = useState(false);
   const [retrying, setRetrying]       = useState(false);
 

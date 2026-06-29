@@ -27,5 +27,5 @@ export async function POST(
     kvSet(CODES_KEY, codes),
   ]);
 
-  return NextResponse.json({ ok: true, redirectUrl: 'https://psyid.com' });
+  return NextResponse.json({ ok: true, redirectUrl: 'https://psyid.me' });
 }

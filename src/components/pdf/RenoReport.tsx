@@ -153,7 +153,7 @@ export default function RenoReport({
 
         {/* Footer */}
         <View style={styles.footer} fixed>
-          <Text style={styles.footerText}>psyid.com</Text>
+          <Text style={styles.footerText}>psyid.me</Text>
           <Text style={styles.footerBrand}>PsyID</Text>
           <Text style={styles.footerText}>{mbtiType} · {date}</Text>
         </View>

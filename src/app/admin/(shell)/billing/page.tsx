@@ -22,8 +22,8 @@ const FEATURES = [
   },
   {
     icon: '🛒',
-    en: { title: 'Direct Website Sales', desc: 'Track upgrades purchased on psyid.com — by tier, by date, by user segment.' },
-    ru: { title: 'Прямые продажи с сайта', desc: 'Отслеживайте апгрейды, купленные на psyid.com — по тарифу, дате и сегменту пользователей.' },
+    en: { title: 'Direct Website Sales', desc: 'Track upgrades purchased on psyid.me — by tier, by date, by user segment.' },
+    ru: { title: 'Прямые продажи с сайта', desc: 'Отслеживайте апгрейды, купленные на psyid.me — по тарифу, дате и сегменту пользователей.' },
   },
   {
     icon: '📆',
