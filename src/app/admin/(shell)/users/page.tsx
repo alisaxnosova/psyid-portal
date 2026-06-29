@@ -198,20 +198,30 @@ function ExternalUsersTab() {
 
 // ─── Portal Users tab ────────────────────────────────────────────────────────
 
+interface PortalUser { email: string; name: string; userId: string; registeredAt: string; }
+
 function PortalUsersTab() {
   const { t, lang } = useAdminLang();
-  const [users, setUsers]   = useState<AdminUser[]>([]);
+  const [users, setUsers]     = useState<PortalUser[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState('');
-  const [search, setSearch] = useState('');
+  const [error, setError]     = useState('');
+  const [search, setSearch]   = useState('');
 
   useEffect(() => {
-    admin.users().then(setUsers).catch(e => setError(e.message)).finally(() => setLoading(false));
+    const token = getToken();
+    fetch('/api/admin/portal-users', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then(r => r.json())
+      .then((d: { users?: PortalUser[]; error?: string }) => {
+        if (d.error) throw new Error(d.error);
+        setUsers(d.users ?? []);
+      })
+      .catch(e => setError(e.message))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = users.filter(u =>
     u.email.toLowerCase().includes(search.toLowerCase()) ||
-    (u.fullName ?? '').toLowerCase().includes(search.toLowerCase())
+    u.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -237,23 +247,17 @@ function PortalUsersTab() {
         )}
 
         {!loading && !error && filtered.map((user, i) => (
-          <Link key={user.id} href={`/admin/users/${user.id}`}
-            style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '14px 20px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.bone}` : 'none', alignItems: 'center', color: 'inherit', transition: 'background .12s' }}
-            onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          <div key={user.userId}
+            style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '14px 20px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.bone}` : 'none', alignItems: 'center' }}
           >
             <div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: C.ink }}>{user.fullName ?? user.firstName ?? '—'}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: C.ink }}>{user.name || '—'}</div>
               <div style={{ fontSize: 12, color: C.inkMute, marginTop: 2 }}>{user.email}</div>
             </div>
-            <div style={{ fontSize: 14, color: C.inkSoft }}>{user.attemptsCount}</div>
-            <div>
-              {user.completedCount > 0
-                ? <Pill label={String(user.completedCount)} bg="rgba(255,149,64,0.12)" color={C.orangeHot} />
-                : <span style={{ fontSize: 14, color: C.inkMute }}>—</span>}
-            </div>
-            <div style={{ fontSize: 13, color: C.inkMute }}>{formatDate(user.createdAt, lang)}</div>
-          </Link>
+            <div style={{ fontSize: 14, color: C.inkSoft }}>—</div>
+            <div><span style={{ fontSize: 14, color: C.inkMute }}>—</span></div>
+            <div style={{ fontSize: 13, color: C.inkMute }}>{formatDate(user.registeredAt, lang)}</div>
+          </div>
         ))}
       </div>
     </div>

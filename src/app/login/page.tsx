@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { auth, saveTokens } from '@/lib/renoApi';
 
@@ -19,6 +19,8 @@ const iStyle: React.CSSProperties = {
 
 export default function LoginPage() {
   const router = useRouter();
+  const params = useSearchParams();
+  const accountExists = params.get('hint') === 'exists';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -67,6 +69,12 @@ export default function LoginPage() {
             Sign in to access your passport and results.
           </p>
         </div>
+
+        {accountExists && (
+          <div style={{ padding: '11px 15px', borderRadius: 10, background: '#EFF6FF', color: C.blue, fontSize: 14, lineHeight: 1.4, marginBottom: 20, border: `1px solid ${C.blue}22` }}>
+            An account with that email already exists — sign in below.
+          </div>
+        )}
 
         <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div>

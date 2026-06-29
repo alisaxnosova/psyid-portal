@@ -160,7 +160,10 @@ function StepVerify({ email, onBack }: { email: string; onBack: () => void }) {
       });
       const data = await res.json() as { tokens?: { accessToken: string; refreshToken: string; userId: string }; error?: string };
       if (!res.ok) {
-        // If code expired or too many attempts, go back to form
+        if (res.status === 409 && data.error === 'account_exists') {
+          router.push('/login?hint=exists');
+          return;
+        }
         if (res.status === 400 && data.error?.includes('again')) {
           setError(data.error);
           setTimeout(() => onBack(), 2500);

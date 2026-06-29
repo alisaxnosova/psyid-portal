@@ -2,8 +2,17 @@ import { NextResponse } from 'next/server';
 import { kvGet, kvSet, kvDel } from '@/lib/upstash';
 import type { PendingRegistration } from '../pre-register/route';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3010/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? process.env.BACKEND_URL
+  ? `${process.env.BACKEND_URL}/api`
+  : 'http://159.194.222.35:3010/api';
 const MAX_ATTEMPTS = 5;
+
+interface PortalUser {
+  email: string;
+  name: string;
+  userId: string;
+  registeredAt: string;
+}
 
 export async function POST(req: Request) {
   try {
@@ -54,13 +63,25 @@ export async function POST(req: Request) {
       const body = await res.json().catch(() => ({} as { message?: string })) as { message?: string };
       if (res.status === 409) {
         await kvDel(key);
-        return NextResponse.json({ error: 'An account with this email already exists. Please sign in.' }, { status: 409 });
+        return NextResponse.json({ error: 'account_exists' }, { status: 409 });
       }
       return NextResponse.json({ error: body.message ?? 'Account creation failed. Please try again.' }, { status: res.status });
     }
 
-    const tokens = await res.json();
+    const tokens = await res.json() as { accessToken: string; refreshToken: string; userId: string };
     await kvDel(key);
+
+    // Store user in Redis so admin portal can list them
+    const portalUsers = await kvGet<PortalUser[]>('psyid:portal-users') ?? [];
+    if (!portalUsers.find(u => u.email === pending.email)) {
+      portalUsers.push({
+        email: pending.email,
+        name: pending.name,
+        userId: tokens.userId,
+        registeredAt: new Date().toISOString(),
+      });
+      await kvSet('psyid:portal-users', portalUsers);
+    }
 
     return NextResponse.json({ tokens });
   } catch (err) {
