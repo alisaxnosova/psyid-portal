@@ -18,6 +18,7 @@ export interface AccessCode {
   status: 'UNUSED' | 'IN_PROGRESS' | 'USED';
   invoice_ref: string | null;
   note: string | null;
+  user_name: string | null;
   created_at: string;
   used_at: string | null;
 }
@@ -58,6 +59,7 @@ export default function AdminCodesPage() {
 
   const [codes, setCodes]             = useState<AccessCode[]>([]);
   const [kvReady, setKvReady]         = useState<boolean | null>(null); // null = loading
+  const [userName, setUserName]       = useState('');
   const [invoiceRef, setInvoiceRef]   = useState('');
   const [note, setNote]               = useState('');
   const [lastCode, setLastCode]       = useState<string | null>(null);
@@ -119,6 +121,7 @@ export default function AdminCodesPage() {
       id: generateId(),
       code: generateCode(),
       status: 'UNUSED',
+      user_name: userName.trim() || null,
       invoice_ref: invoiceRef.trim() || null,
       note: note.trim() || null,
       created_at: new Date().toISOString(),
@@ -138,6 +141,7 @@ export default function AdminCodesPage() {
       setCodes(updated);
     }
     setLastCode(code.code);
+    setUserName('');
     setInvoiceRef('');
     setNote('');
     setGenerating(false);
@@ -226,6 +230,22 @@ export default function AdminCodesPage() {
         <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, padding: 24 }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 18 }}>
             {t('codes_gen_heading')}
+          </div>
+
+          <div style={{ marginBottom: 14 }}>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: C.inkMute, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6, fontFamily: "'Geist Mono', monospace" }}>
+              {t('codes_user')}
+            </label>
+            <input
+              value={userName}
+              onChange={e => setUserName(e.target.value)}
+              placeholder={t('codes_user_ph')}
+              style={{
+                width: '100%', padding: '10px 14px', borderRadius: 10,
+                border: `1.5px solid ${C.line}`, fontSize: 14, color: C.ink,
+                background: C.bone, outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
+              }}
+            />
           </div>
 
           <div style={{ marginBottom: 14 }}>
@@ -340,7 +360,7 @@ export default function AdminCodesPage() {
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    {(['codes_col_code', 'codes_col_status', 'codes_col_invoice', 'codes_col_note', 'codes_col_created', 'codes_col_used', ''] as (TKey | '')[]).map((k, i) => (
+                    {(['codes_col_code', 'codes_col_user', 'codes_col_status', 'codes_col_invoice', 'codes_col_note', 'codes_col_created', 'codes_col_used', ''] as (TKey | '')[]).map((k, i) => (
                       <th key={i} style={{
                         padding: '11px 16px', textAlign: 'left',
                         fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700,
@@ -363,6 +383,9 @@ export default function AdminCodesPage() {
                         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 18, fontWeight: 900, letterSpacing: '0.10em', color: C.ink }}>
                           {c.code}
                         </span>
+                      </td>
+                      <td style={{ padding: '13px 16px', fontSize: 13, color: C.ink, fontWeight: 600, borderBottom: `1px solid ${C.bone}` }}>
+                        {c.user_name || <span style={{ color: C.inkMute }}>—</span>}
                       </td>
                       <td style={{ padding: '13px 16px', borderBottom: `1px solid ${C.bone}` }}>
                         <span style={{

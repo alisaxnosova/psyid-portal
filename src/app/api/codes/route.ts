@@ -7,6 +7,7 @@ export interface AccessCode {
   status: 'UNUSED' | 'IN_PROGRESS' | 'USED';
   invoice_ref: string | null;
   note: string | null;
+  user_name: string | null;
   created_at: string;
   used_at: string | null;
 }
