@@ -26,7 +26,7 @@ const C = {
 const T = {
   en: {
     nav_how: 'How it works', nav_explore: 'Explore', nav_passport: 'Passport',
-    nav_price: 'Pricing', nav_faq: 'FAQ', nav_cta: 'Take test →',
+    nav_price: 'Pricing', nav_faq: 'FAQ', nav_cta: 'Take test →', nav_specialists: 'For Specialists',
     badge: 'PSYID · Your Psychological Passport',
     hero_h1a: 'Discover who you are', hero_h1b: 'and what career fits you',
     hero_p: 'A 15-minute assessment maps your 4 character axes, surfaces your core strengths, and shows the careers where you\'ll naturally excel.',
@@ -110,11 +110,12 @@ const T = {
     foot_link_email: 'hello@psyid.com', foot_link_tg: 'Telegram',
     foot_link_ig: 'Instagram', foot_link_press: 'Press Kit',
     foot_copy: '© 2026 PsyID · Tbilisi · Berlin', foot_legal: 'Privacy · Terms',
+    foot_admin: 'Admin Portal',
     lang_toggle: 'RU',
   },
   ru: {
     nav_how: 'Как работает', nav_explore: 'Подобрать', nav_passport: 'Паспорт',
-    nav_price: 'Цены', nav_faq: 'Вопросы', nav_cta: 'Пройти тест →',
+    nav_price: 'Цены', nav_faq: 'Вопросы', nav_cta: 'Пройти тест →', nav_specialists: 'Специалистам',
     badge: 'PSYID · Ваш психологический паспорт',
     hero_h1a: 'Узнайте кто вы', hero_h1b: 'и какая карьера вам подходит',
     hero_p: 'Тест за 15 минут строит психологический паспорт: 4 оси характера, ваши сильные стороны и карьерные направления, в которых вы будете по-настоящему эффективны.',
@@ -198,6 +199,7 @@ const T = {
     foot_link_email: 'hello@psyid.com', foot_link_tg: 'Telegram',
     foot_link_ig: 'Instagram', foot_link_press: 'Пресс-кит',
     foot_copy: '© 2026 PsyID · Тбилиси · Берлин', foot_legal: 'Приватность · Условия',
+    foot_admin: 'Портал администратора',
     lang_toggle: 'EN',
   },
 } as const;
@@ -311,26 +313,31 @@ export default function Landing() {
         {/* ── Nav ── */}
         <nav style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 60, padding: '20px 28px' }}>
           <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            display: 'flex', alignItems: 'center',
             background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,255,255,0.12)', borderRadius: 999,
             padding: '8px 8px 8px 20px',
           }}>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 800, fontSize: 20, letterSpacing: '-0.03em', color: '#fff', flexShrink: 0 }}>
-              <span style={{ width: 30, height: 30, borderRadius: 9, background: '#fff', position: 'relative', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
-                <span style={{ position: 'absolute', left: 5, top: 5, width: 9, height: 9, borderRadius: '50%', background: C.blue }}/>
-                <span style={{ position: 'absolute', right: 5, bottom: 5, width: 9, height: 9, borderRadius: 3, background: C.orangeHot }}/>
-              </span>
-              Psy<span style={{ color: C.orangeHot }}>ID</span>
-            </Link>
+            {/* Logo — flex:1 left */}
+            <div style={{ flex: 1 }}>
+              <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontWeight: 800, fontSize: 20, letterSpacing: '-0.03em', color: '#fff' }}>
+                <span style={{ width: 30, height: 30, borderRadius: 9, background: '#fff', position: 'relative', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
+                  <span style={{ position: 'absolute', left: 5, top: 5, width: 9, height: 9, borderRadius: '50%', background: C.blue }}/>
+                  <span style={{ position: 'absolute', right: 5, bottom: 5, width: 9, height: 9, borderRadius: 3, background: C.orangeHot }}/>
+                </span>
+                Psy<span style={{ color: C.orangeHot }}>ID</span>
+              </Link>
+            </div>
 
+            {/* Nav links — truly centered */}
             <div className="r-nav-links">
               {([[`#how`, t.nav_how],[`#explore`, t.nav_explore],[`#inside`, t.nav_passport],[`#price`, t.nav_price],[`#faq`, t.nav_faq]] as [string,string][]).map(([h, l]) => (
                 <a key={h} href={h} style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.78)' }}>{l}</a>
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+            {/* Actions — flex:1 right */}
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
               <button
                 onClick={() => setLang(lang === 'en' ? 'ru' : 'en')}
                 style={{
@@ -342,17 +349,14 @@ export default function Landing() {
               >
                 {t.lang_toggle}
               </button>
-              <Link href="/admin" title="Admin" style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: 32, height: 32, borderRadius: '50%',
-                background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.18)',
-                color: 'rgba(255,255,255,0.65)',
+              <Link href="/admin" style={{
+                background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.22)',
+                color: 'rgba(255,255,255,0.82)', borderRadius: 999, padding: '6px 14px',
+                fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap',
               }}>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M13.5 2.5a2.5 2.5 0 0 0-3.45 2.3l-6.3 6.3a2.5 2.5 0 1 0 1.15 1.15l6.3-6.3A2.5 2.5 0 0 0 13.5 2.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                {t.nav_specialists}
               </Link>
-              <Link href="/test" style={{ background: '#fff', color: C.ink, padding: '9px 18px', borderRadius: 999, fontWeight: 600, fontSize: 13, whiteSpace: 'nowrap' }}>
+              <Link href="/register" style={{ background: '#fff', color: C.ink, padding: '9px 18px', borderRadius: 999, fontWeight: 600, fontSize: 13, whiteSpace: 'nowrap' }}>
                 {t.nav_cta}
               </Link>
             </div>
@@ -361,7 +365,7 @@ export default function Landing() {
 
         {/* ── Hero body ── */}
         <div className="r-wrap r-hero">
-          <div>
+          <div className="r-hero-text">
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(14px)',
@@ -373,7 +377,7 @@ export default function Landing() {
               {t.badge}
             </div>
 
-            <h1 style={{ fontSize: 'clamp(40px, 5.5vw, 82px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.02, color: '#fff', maxWidth: '14ch', margin: 0 }}>
+            <h1 style={{ fontSize: 'clamp(40px, 5.5vw, 82px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.02, color: '#fff', margin: 0 }}>
               {t.hero_h1a}{' '}
               <span style={{ background: 'linear-gradient(95deg, #FF6385, #FF7E6B)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>—</span>
               <br/>
@@ -384,8 +388,8 @@ export default function Landing() {
               {t.hero_p}
             </p>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-              <Link href="/test" style={{
+            <div className="r-hero-cta" style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+              <Link href="/register" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999,
                 padding: '14px 24px', fontWeight: 700, fontSize: 15, color: '#fff',
                 background: 'linear-gradient(95deg, #FF5C72, #FF8A45)',
@@ -486,7 +490,7 @@ export default function Landing() {
       {/* ════════════════ HOW IT WORKS ════════════════ */}
       <section id="how" className="r-section">
         <div className="r-wrap">
-          <div style={{ maxWidth: 680, marginBottom: 48 }}>
+          <div style={{ maxWidth: 680, marginBottom: 48, margin: '0 auto 48px' }}>
             <div style={TAG}>{DOT}{t.how_tag}</div>
             <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.05, margin: '16px 0 0' }}>
               {t.how_h2a}{' '}
@@ -518,7 +522,7 @@ export default function Landing() {
       <section id="explore" className="r-section" style={{ background: C.ink, color: '#fff', position: 'relative', overflow: 'hidden', isolation: 'isolate' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: `radial-gradient(ellipse 50% 50% at 80% 30%, rgba(255,128,72,0.25) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 20% 80%, rgba(48,87,224,0.30) 0%, transparent 60%)` }}/>
         <div className="r-wrap">
-          <div style={{ maxWidth: 680, marginBottom: 48 }}>
+          <div style={{ maxWidth: 680, margin: '0 auto 48px' }}>
             <div style={{ ...TAG, color: 'rgba(255,255,255,0.55)' }}>{DOT}{t.explore_tag}</div>
             <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.05, color: '#fff', margin: '16px 0 0' }}>
               {t.explore_h2a}{' '}
@@ -663,9 +667,9 @@ export default function Landing() {
       <section className="r-section" style={{ position: 'relative', overflow: 'hidden', color: '#fff' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: 'linear-gradient(95deg, #1228A0 0%, #2244E0 35%, #FF5A6E 70%, #FF823F 100%)' }}/>
         <div className="r-wrap">
-          <div style={{ maxWidth: 640, marginBottom: 0 }}>
+          <div style={{ maxWidth: 640, margin: '0 auto 0' }}>
             <div style={{ ...TAG, color: 'rgba(255,255,255,0.65)' }}>{DOT}{t.stats_tag}</div>
-            <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.05, color: '#fff', margin: '16px 0 18px', maxWidth: '18ch' }}>
+            <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.05, color: '#fff', margin: '16px 0 18px' }}>
               {t.stats_h2}
             </h2>
             <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0 }}>{t.stats_p}</p>
@@ -701,7 +705,7 @@ export default function Landing() {
       {/* ════════════════ PRICING ════════════════ */}
       <section id="price" style={{ padding: '0 0 90px' }}>
         <div className="r-wrap">
-          <div style={{ maxWidth: 640, marginBottom: 48 }}>
+          <div style={{ maxWidth: 640, margin: '0 auto 48px' }}>
             <div style={TAG}>{DOT}{t.price_tag}</div>
             <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.05, margin: '16px 0 0' }}>
               {t.price_h2a}{' '}
@@ -805,7 +809,7 @@ export default function Landing() {
               {t.cta_p}
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/test" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999, padding: '14px 24px', fontWeight: 700, fontSize: 15, background: 'linear-gradient(95deg, #FF5C72, #FF8A45)', color: '#fff', boxShadow: '0 12px 28px -8px rgba(255,114,80,.6)' }}>
+              <Link href="/register" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999, padding: '14px 24px', fontWeight: 700, fontSize: 15, background: 'linear-gradient(95deg, #FF5C72, #FF8A45)', color: '#fff', boxShadow: '0 12px 28px -8px rgba(255,114,80,.6)' }}>
                 {t.cta_btn}
               </Link>
               <button style={{ borderRadius: 999, padding: '12px 20px', fontWeight: 600, fontSize: 14, background: 'transparent', color: '#fff', border: '1.5px solid rgba(255,255,255,.4)', cursor: 'pointer', fontFamily: 'inherit' }}>
@@ -845,7 +849,10 @@ export default function Landing() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, marginTop: 40, paddingTop: 20, borderTop: `1px solid ${C.line}`, fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: C.inkMute }}>
             <span>{t.foot_copy}</span>
-            <span>{t.foot_legal}</span>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <span>{t.foot_legal}</span>
+              <Link href="/admin" style={{ color: C.inkMute, opacity: 0.6 }}>{t.foot_admin}</Link>
+            </div>
           </div>
         </div>
       </footer>

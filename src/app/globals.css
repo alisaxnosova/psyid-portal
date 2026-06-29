@@ -170,6 +170,8 @@ a { text-decoration: none; color: inherit; }
   .r-feat   { grid-template-columns: repeat(2, 1fr); }
   .r-steps  { grid-template-columns: repeat(2, 1fr); }
   .r-hero .radar-stage { display: none; }
+  .r-hero-text { text-align: center; }
+  .r-hero-cta { justify-content: center; }
 }
 
 @media (max-width: 720px) {
