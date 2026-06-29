@@ -7,6 +7,7 @@ export interface PortalUser {
   name: string;
   passwordHash: string;
   backendUserId: string | null;
+  accessCode: string | null;
   createdAt: string;
 }
 
@@ -29,6 +30,7 @@ export async function createPortalUser(
   name: string,
   password: string,
   backendUserId: string | null,
+  accessCode: string | null = null,
 ): Promise<void> {
   const passwordHash = await bcrypt.hash(password, 10);
   const user: PortalUser = {
@@ -36,6 +38,7 @@ export async function createPortalUser(
     name,
     passwordHash,
     backendUserId,
+    accessCode,
     createdAt: new Date().toISOString(),
   };
   await kvSet(userKey(email), user);

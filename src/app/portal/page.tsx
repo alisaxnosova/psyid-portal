@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth, logout } from '@/lib/useAuth';
 
 const C = {
@@ -14,10 +14,18 @@ const C = {
 export default function PortalPage() {
   const { user, loading, isLoggedIn } = useAuth();
   const router = useRouter();
+  const [codeCopied, setCodeCopied] = useState(false);
 
   useEffect(() => {
     if (!loading && !isLoggedIn) router.push('/login');
   }, [loading, isLoggedIn, router]);
+
+  function copyCode() {
+    if (!user?.accessCode) return;
+    navigator.clipboard.writeText(user.accessCode).catch(() => {});
+    setCodeCopied(true);
+    setTimeout(() => setCodeCopied(false), 2000);
+  }
 
   if (loading) {
     return (
@@ -85,10 +93,32 @@ export default function PortalPage() {
           <h2 style={{ fontSize: 'clamp(22px, 2.5vw, 34px)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 10px' }}>
             Ready to discover who you are?
           </h2>
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.78)', margin: '0 0 28px', maxWidth: '52ch', lineHeight: 1.55 }}>
+          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.78)', margin: '0 0 24px', maxWidth: '52ch', lineHeight: 1.55 }}>
             A 15-minute scenario-based assessment that maps your 4 character axes and shows the careers where you&apos;ll naturally excel.
           </p>
-          <Link href="/reno" style={{
+
+          {user?.accessCode && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
+              <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '12px 20px', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.18)' }}>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>
+                  Your Access Code
+                </div>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 28, fontWeight: 900, letterSpacing: '0.18em', color: '#fff' }}>
+                  {user.accessCode}
+                </div>
+              </div>
+              <button onClick={copyCode} style={{
+                padding: '10px 18px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.3)',
+                background: codeCopied ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.10)',
+                color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+                transition: 'all .15s',
+              }}>
+                {codeCopied ? 'Copied!' : 'Copy code'}
+              </button>
+            </div>
+          )}
+
+          <Link href="/start" style={{
             display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999,
             padding: '13px 24px', fontWeight: 700, fontSize: 14, color: '#fff',
             background: 'linear-gradient(95deg, #FF5C72, #FF8A45)',

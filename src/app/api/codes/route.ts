@@ -10,6 +10,7 @@ export interface AccessCode {
   user_name: string | null;
   created_at: string;
   used_at: string | null;
+  portalUserEmail?: string; // set for auto-generated codes — cannot be deleted
 }
 
 const CODES_KEY = 'psyid:codes';

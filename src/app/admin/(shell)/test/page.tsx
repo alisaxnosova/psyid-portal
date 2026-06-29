@@ -416,11 +416,19 @@ export default function AdminCodesPage() {
                             background: 'transparent', color: C.inkMute, fontSize: 11, fontWeight: 600,
                             cursor: 'pointer', fontFamily: 'inherit',
                           }}>{t('codes_copy')}</button>
-                          <button onClick={() => handleDelete(c.id)} style={{
-                            padding: '5px 10px', borderRadius: 8, border: `1px solid rgba(255,90,90,0.2)`,
-                            background: 'transparent', color: C.coral, fontSize: 11, fontWeight: 600,
-                            cursor: 'pointer', fontFamily: 'inherit',
-                          }}>{t('codes_del')}</button>
+                          {(c as { portalUserEmail?: string }).portalUserEmail ? (
+                            <span title={`Tied to ${(c as { portalUserEmail?: string }).portalUserEmail} — cannot be deleted`} style={{
+                              padding: '5px 10px', borderRadius: 8, border: `1px solid ${C.line}`,
+                              background: 'transparent', color: C.inkMute, fontSize: 11, fontWeight: 600,
+                              cursor: 'not-allowed', fontFamily: 'inherit', userSelect: 'none',
+                            }}>🔒</span>
+                          ) : (
+                            <button onClick={() => handleDelete(c.id)} style={{
+                              padding: '5px 10px', borderRadius: 8, border: `1px solid rgba(255,90,90,0.2)`,
+                              background: 'transparent', color: C.coral, fontSize: 11, fontWeight: 600,
+                              cursor: 'pointer', fontFamily: 'inherit',
+                            }}>{t('codes_del')}</button>
+                          )}
                         </div>
                       </td>
                     </tr>

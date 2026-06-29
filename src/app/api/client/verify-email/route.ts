@@ -1,16 +1,36 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvSet, kvDel } from '@/lib/upstash';
 import { createPortalUser, createSession, getPortalUser } from '@/lib/portalAuth';
+import type { AccessCode } from '@/app/api/codes/route';
 import type { PendingRegistration } from '../pre-register/route';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://159.194.222.35:3010/api';
+const CODES_KEY = 'psyid:codes';
 const MAX_ATTEMPTS = 5;
 
 interface PortalUserRecord {
   email: string;
   name: string;
   userId: string;
+  accessCode: string;
   registeredAt: string;
+}
+
+function newId(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+async function generateUniqueTestCode(): Promise<string> {
+  const existing = await kvGet<AccessCode[]>(CODES_KEY) ?? [];
+  const used = new Set(existing.map(c => c.code));
+  let code: string;
+  do {
+    code = String(Math.floor(100000 + Math.random() * 900000));
+  } while (used.has(code));
+  return code;
 }
 
 export async function POST(req: Request) {
@@ -67,37 +87,64 @@ export async function POST(req: Request) {
         backendTokens = await res.json() as BackendTokens;
         backendUserId = backendTokens.userId;
       }
-      // 409 = account already exists on backend — we'll create/update Redis credentials below
+      // 409 = account already exists on backend — fall through to Redis-only auth
     } catch {
       // Backend unreachable — fall through to Redis-only auth
     }
 
     await kvDel(key);
 
-    // Always store/update credentials in Redis so user can log in via Redis auth
+    // Generate or reuse test access code for this user
     const existing = await getPortalUser(pending.email);
+    let testCode = existing?.accessCode ?? null;
+
+    if (!testCode) {
+      testCode = await generateUniqueTestCode();
+
+      // Persist the test access code in psyid:codes
+      const allCodes = await kvGet<AccessCode[]>(CODES_KEY) ?? [];
+      const newEntry: AccessCode = {
+        id: newId(),
+        code: testCode,
+        status: 'UNUSED',
+        user_name: pending.name || pending.email,
+        invoice_ref: null,
+        note: 'Auto-generated for portal registration',
+        created_at: new Date().toISOString(),
+        used_at: null,
+        portalUserEmail: pending.email,
+      };
+      allCodes.unshift(newEntry);
+      await kvSet(CODES_KEY, allCodes);
+    }
+
+    // Store/update credentials in Redis
     if (!existing) {
-      await createPortalUser(pending.email, pending.name, pending.password, backendUserId);
+      await createPortalUser(pending.email, pending.name, pending.password, backendUserId, testCode);
     }
 
-    // Store in portal-users list for admin view
+    // Store in portal-users list for admin view (with access code)
     const portalUsers = await kvGet<PortalUserRecord[]>('psyid:portal-users') ?? [];
-    if (!portalUsers.find(u => u.email === pending.email)) {
-      portalUsers.push({
-        email: pending.email,
-        name: pending.name,
-        userId: backendUserId ?? `portal_${pending.email}`,
-        registeredAt: new Date().toISOString(),
-      });
-      await kvSet('psyid:portal-users', portalUsers);
+    const portalIdx = portalUsers.findIndex(u => u.email === pending.email);
+    const portalEntry: PortalUserRecord = {
+      email: pending.email,
+      name: pending.name,
+      userId: backendUserId ?? `portal_${pending.email}`,
+      accessCode: testCode,
+      registeredAt: new Date().toISOString(),
+    };
+    if (portalIdx < 0) {
+      portalUsers.push(portalEntry);
+    } else {
+      portalUsers[portalIdx] = { ...portalUsers[portalIdx], accessCode: testCode };
     }
+    await kvSet('psyid:portal-users', portalUsers);
 
-    // If backend gave us tokens, use them; otherwise create a Redis session
+    // Return backend tokens if available, otherwise create a Redis session
     if (backendTokens) {
       return NextResponse.json({ tokens: backendTokens });
     }
 
-    // Create a Redis session so user is logged in immediately after registration
     const user = await getPortalUser(pending.email);
     if (!user) {
       return NextResponse.json({ error: 'Registration failed. Please try again.' }, { status: 500 });

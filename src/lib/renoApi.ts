@@ -64,6 +64,7 @@ export interface MeResponse {
   fullName: string | null;
   firstName: string | null;
   createdAt: string;
+  accessCode?: string | null;
 }
 
 export function saveTokens(data: TokenResponse) {

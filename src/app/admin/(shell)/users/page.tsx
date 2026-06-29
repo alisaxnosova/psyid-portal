@@ -198,7 +198,7 @@ function ExternalUsersTab() {
 
 // ─── Portal Users tab ────────────────────────────────────────────────────────
 
-interface PortalUser { email: string; name: string; userId: string; registeredAt: string; }
+interface PortalUser { email: string; name: string; userId: string; accessCode?: string; registeredAt: string; }
 
 function PortalUsersTab() {
   const { t, lang } = useAdminLang();
@@ -236,8 +236,8 @@ function PortalUsersTab() {
       </div>
 
       <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, overflow: 'hidden' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '11px 20px', background: C.bone, borderBottom: `1px solid ${C.line}`, fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700, color: C.inkMute, textTransform: 'uppercase', letterSpacing: '0.10em' }}>
-          <div>{t('users_user')}</div><div>{t('users_tests')}</div><div>{t('users_done')}</div><div>{t('users_joined')}</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 130px 1fr 1fr', padding: '11px 20px', background: C.bone, borderBottom: `1px solid ${C.line}`, fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700, color: C.inkMute, textTransform: 'uppercase', letterSpacing: '0.10em' }}>
+          <div>{t('users_user')}</div><div>Access Code</div><div>Status</div><div>{t('users_joined')}</div>
         </div>
 
         {loading && <div style={{ padding: 48, textAlign: 'center', color: C.inkMute }}>{t('loading')}</div>}
@@ -248,14 +248,20 @@ function PortalUsersTab() {
 
         {!loading && !error && filtered.map((user, i) => (
           <div key={user.userId}
-            style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '14px 20px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.bone}` : 'none', alignItems: 'center' }}
+            style={{ display: 'grid', gridTemplateColumns: '2fr 130px 1fr 1fr', padding: '14px 20px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.bone}` : 'none', alignItems: 'center' }}
           >
             <div>
               <div style={{ fontSize: 14, fontWeight: 600, color: C.ink }}>{user.name || '—'}</div>
               <div style={{ fontSize: 12, color: C.inkMute, marginTop: 2 }}>{user.email}</div>
             </div>
-            <div style={{ fontSize: 14, color: C.inkSoft }}>—</div>
-            <div><span style={{ fontSize: 14, color: C.inkMute }}>—</span></div>
+            <div>
+              {user.accessCode
+                ? <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 16, fontWeight: 900, letterSpacing: '0.10em', color: C.ink }}>{user.accessCode}</span>
+                : <span style={{ fontSize: 13, color: C.inkMute }}>—</span>}
+            </div>
+            <div>
+              <Pill label="Portal" bg="rgba(29,163,106,0.10)" color={C.green} />
+            </div>
             <div style={{ fontSize: 13, color: C.inkMute }}>{formatDate(user.registeredAt, lang)}</div>
           </div>
         ))}

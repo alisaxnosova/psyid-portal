@@ -41,6 +41,10 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
   const { id } = await params;
   const codes: AccessCode[] = (await kvGet<AccessCode[]>(CODES_KEY)) ?? [];
+  const target = codes.find(c => c.id === id);
+  if (target?.portalUserEmail) {
+    return NextResponse.json({ error: 'Cannot delete a code tied to a registered portal user.' }, { status: 403 });
+  }
   const updated = codes.filter(c => c.id !== id);
   await kvSet(CODES_KEY, updated);
   return NextResponse.json({ ok: true });
