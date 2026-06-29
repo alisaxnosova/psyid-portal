@@ -1197,7 +1197,7 @@ export default function RenoPage() {
         top: 0,
         zIndex: 10,
       }}>
-        <Logo />
+        <Logo light />
         <LangPicker lang={lang} onChange={setLang} />
       </div>
 

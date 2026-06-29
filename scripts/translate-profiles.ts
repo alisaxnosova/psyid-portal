@@ -1,95 +1,62 @@
 /**
- * One-time translation script.
+ * One-time translation script — resumes from checkpoint if interrupted.
  * Run: npx tsx scripts/translate-profiles.ts
- *
- * For each axis level it sends all 10 Russian dim descriptions + the level label
- * to Claude in one call, getting back EN / ES / FR / AR translations.
- * Writes the fully-translated profiles.ts when done.
  */
 
 import Anthropic from '@anthropic-ai/sdk';
-import { readFileSync, writeFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { profiles } from '../src/app/reno/data/profiles';
 import type { AxisProfiles, ProfileLevel, Lang } from '../src/app/reno/data/profiles';
 
 const client = new Anthropic();
+const CHECKPOINT_PATH = join(__dirname, '.translate-checkpoint.json');
+const PROFILES_PATH   = join(__dirname, '../src/app/reno/data/profiles.ts');
 
-interface TranslatedLevel {
-  label: Record<Lang, string>;
-  dims: Record<Lang, string[]>;
+function stripFences(text: string): string {
+  return text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/m, '').trim();
 }
 
-async function translateLevel(
-  axisName: string,
-  level: ProfileLevel,
-): Promise<TranslatedLevel> {
-  const payload = {
-    label: level.label.ru,
-    dims: level.dims.ru,
-  };
-
-  const prompt = `You are a professional psychology assessment translator. Translate the following MBTI personality profile content from Russian to English, Spanish, French, and Arabic.
-
-The content is for the ${axisName} axis, level "${payload.label}".
-
-Return ONLY a JSON object with this exact shape (no markdown, no explanation):
-{
-  "label": { "en": "...", "es": "...", "fr": "...", "ar": "..." },
-  "dims": {
-    "en": ["dim1", "dim2", "dim3", "dim4", "dim5", "dim6", "dim7", "dim8", "dim9", "dim10"],
-    "es": [...],
-    "fr": [...],
-    "ar": [...]
+async function callClaude(prompt: string, maxRetries = 3): Promise<string> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const msg = await client.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 4096,
+        messages: [{ role: 'user', content: prompt }],
+      });
+      return (msg.content[0] as { text: string }).text;
+    } catch (e) {
+      if (attempt === maxRetries) throw e;
+      console.log(`  ↺ retry ${attempt}/${maxRetries}...`);
+      await new Promise(r => setTimeout(r, 1500 * attempt));
+    }
   }
+  throw new Error('unreachable');
 }
 
-Source JSON:
-${JSON.stringify(payload, null, 2)}
-
-Rules:
-- Translate naturally — do not be overly literal
-- Maintain the second-person or third-person perspective of the original
-- Keep the same tone (descriptive, behavioral, neutral)
-- Each dims array must have exactly ${payload.dims.length} elements
-- The label should be a concise personality level name (e.g. "Maximum Extrovert")`;
-
-  const message = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = (message.content[0] as { text: string }).text.trim();
-  const parsed = JSON.parse(text) as {
-    label: { en: string; es: string; fr: string; ar: string };
-    dims: { en: string[]; es: string[]; fr: string[]; ar: string[] };
-  };
-
-  return {
-    label: {
-      ru: level.label.ru,
-      en: parsed.label.en,
-      es: parsed.label.es,
-      fr: parsed.label.fr,
-      ar: parsed.label.ar,
-    },
-    dims: {
-      ru: level.dims.ru,
-      en: parsed.dims.en,
-      es: parsed.dims.es,
-      fr: parsed.dims.fr,
-      ar: parsed.dims.ar,
-    },
-  };
+interface Checkpoint {
+  // axis → 'done' (for dimLabels) or level index → translated data
+  [axisKey: string]: unknown;
 }
 
-async function translateDimLabels(
-  axis: AxisProfiles,
-): Promise<Record<Lang, string[]>> {
+function loadCheckpoint(): Checkpoint {
+  if (existsSync(CHECKPOINT_PATH)) {
+    return JSON.parse(readFileSync(CHECKPOINT_PATH, 'utf8')) as Checkpoint;
+  }
+  return {};
+}
+
+function saveCheckpoint(cp: Checkpoint) {
+  writeFileSync(CHECKPOINT_PATH, JSON.stringify(cp, null, 2), 'utf8');
+}
+
+// ── Translation helpers ───────────────────────────────────────────────────────
+
+async function translateDimLabels(axis: AxisProfiles): Promise<Record<Lang, string[]>> {
   const prompt = `Translate these 10 MBTI ${axis.axis} axis dimension header labels from Russian to English, Spanish, French, and Arabic.
 
-Return ONLY a JSON object:
+Return ONLY valid JSON (no markdown, no explanation):
 {
   "en": ["label1", ..., "label10"],
   "es": [...],
@@ -100,67 +67,88 @@ Return ONLY a JSON object:
 Source (Russian):
 ${JSON.stringify(axis.dimLabels.ru, null, 2)}`;
 
-  const message = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: prompt }],
-  });
+  const raw = await callClaude(prompt);
+  const parsed = JSON.parse(stripFences(raw)) as Record<string, string[]>;
+  return { ru: axis.dimLabels.ru, en: parsed.en, es: parsed.es, fr: parsed.fr, ar: parsed.ar };
+}
 
-  const text = (message.content[0] as { text: string }).text.trim();
-  const parsed = JSON.parse(text) as Record<string, string[]>;
+async function translateLevel(axisName: string, level: ProfileLevel): Promise<{
+  label: Record<Lang, string>;
+  dims: Record<Lang, string[]>;
+}> {
+  const prompt = `Translate the following MBTI personality profile content from Russian to English, Spanish, French, and Arabic.
 
+This is for the ${axisName} axis, level "${level.label.ru}".
+
+Return ONLY valid JSON (no markdown fences, no explanation):
+{
+  "label": { "en": "...", "es": "...", "fr": "...", "ar": "..." },
+  "dims": {
+    "en": ["dim1","dim2","dim3","dim4","dim5","dim6","dim7","dim8","dim9","dim10"],
+    "es": ["...","...","...","...","...","...","...","...","...","..."],
+    "fr": ["...","...","...","...","...","...","...","...","...","..."],
+    "ar": ["...","...","...","...","...","...","...","...","...","..."]
+  }
+}
+
+Source:
+${JSON.stringify({ label: level.label.ru, dims: level.dims.ru }, null, 2)}
+
+Rules:
+- Translate naturally, not word-for-word
+- Keep behavioral, descriptive, neutral tone
+- Each dims array must have exactly ${level.dims.ru.length} strings
+- The label is a concise personality level name`;
+
+  const raw = await callClaude(prompt);
+  const parsed = JSON.parse(stripFences(raw)) as {
+    label: { en: string; es: string; fr: string; ar: string };
+    dims: { en: string[]; es: string[]; fr: string[]; ar: string[] };
+  };
   return {
-    ru: axis.dimLabels.ru,
-    en: parsed.en,
-    es: parsed.es,
-    fr: parsed.fr,
-    ar: parsed.ar,
+    label: { ru: level.label.ru, en: parsed.label.en, es: parsed.label.es, fr: parsed.label.fr, ar: parsed.label.ar },
+    dims:  { ru: level.dims.ru,  en: parsed.dims.en,  es: parsed.dims.es,  fr: parsed.dims.fr,  ar: parsed.dims.ar  },
   };
 }
 
-function formatString(s: string): string {
-  return JSON.stringify(s);
-}
+// ── File generation ───────────────────────────────────────────────────────────
 
-function formatStringArray(arr: string[], indent: number): string {
+function q(s: string)  { return JSON.stringify(s); }
+function arr(a: string[], indent: number) {
   const pad = ' '.repeat(indent);
-  const inner = arr.map(s => `${pad}  ${formatString(s)}`).join(',\n');
-  return `[\n${inner},\n${pad}]`;
+  return `[\n${a.map(s => `${pad}  ${q(s)}`).join(',\n')},\n${pad}]`;
 }
-
-function formatLangRecord(record: Record<Lang, string>, indent: number): string {
+function langRecord5(r: Record<Lang, string>) {
+  return `{ ru: ${q(r.ru)}, en: ${q(r.en)}, es: ${q(r.es)}, fr: ${q(r.fr)}, ar: ${q(r.ar)} }`;
+}
+function dimsBlock(d: Record<Lang, string[]>, indent: number) {
   const pad = ' '.repeat(indent);
-  return `{ ru: ${formatString(record.ru)}, en: ${formatString(record.en)}, es: ${formatString(record.es)}, fr: ${formatString(record.fr)}, ar: ${formatString(record.ar)} }`;
+  const langs: Lang[] = ['ru','en','es','fr','ar'];
+  return `{\n${langs.map(l => `${pad}  ${l}: ${arr(d[l] ?? [], indent + 4)}`).join(',\n')},\n${pad}}`;
 }
 
-function formatDims(dims: Record<Lang, string[]>, indent: number): string {
-  const pad = ' '.repeat(indent);
-  const langs: Lang[] = ['ru', 'en', 'es', 'fr', 'ar'];
-  const entries = langs.map(l => {
-    return `${pad}  ${l}: ${formatStringArray(dims[l] ?? [], indent + 4)}`;
-  });
-  return `{\n${entries.join(',\n')},\n${pad}}`;
-}
-
-function generateProfilesTs(translatedProfiles: AxisProfiles[]): string {
-  const axisBlocks = translatedProfiles.map(axis => {
-    const levelBlocks = axis.levels.map(level => {
-      return `    {
+function generateFile(translatedProfiles: AxisProfiles[]): string {
+  const axisNames = ['E / I', 'S / N', 'T / F', 'J / P'];
+  const axisBlocks = translatedProfiles.map((axis, ai) => {
+    const levelBlocks = axis.levels.map(level => `    {
       pole: '${level.pole}', min: ${level.min}, max: ${level.max},
-      label: ${formatLangRecord(level.label, 6)},
-      dims: ${formatDims(level.dims, 6)},
-    }`;
-    });
+      label: ${langRecord5(level.label)},
+      dims: ${dimsBlock(level.dims, 6)},
+    }`);
 
+    const dl = axis.dimLabels;
     const dimLabelBlock = `{
-    ru: ${formatStringArray(axis.dimLabels.ru, 4)},
-    en: ${formatStringArray(axis.dimLabels.en ?? [], 4)},
-    es: ${formatStringArray(axis.dimLabels.es ?? [], 4)},
-    fr: ${formatStringArray(axis.dimLabels.fr ?? [], 4)},
-    ar: ${formatStringArray(axis.dimLabels.ar ?? [], 4)},
+    ru: ${arr(dl.ru, 4)},
+    en: ${arr(dl.en ?? [], 4)},
+    es: ${arr(dl.es ?? [], 4)},
+    fr: ${arr(dl.fr ?? [], 4)},
+    ar: ${arr(dl.ar ?? [], 4)},
   }`;
 
-    return `const ${axis.axis}: AxisProfiles = {
+    return `// ${'─'.repeat(60)}
+// ${axisNames[ai]}  AXIS
+// ${'─'.repeat(60)}
+const ${axis.axis}: AxisProfiles = {
   axis: '${axis.axis}',
   leftPole: '${axis.leftPole}',
   rightPole: '${axis.rightPole}',
@@ -189,36 +177,17 @@ export interface AxisProfiles {
   levels: ProfileLevel[];
 }
 
-// ─────────────────────────────────────────────────────────────
-// E / I  AXIS
-// ─────────────────────────────────────────────────────────────
-${axisBlocks[0]}
+${axisBlocks.join('\n\n')}
 
-// ─────────────────────────────────────────────────────────────
-// S / N  AXIS
-// ─────────────────────────────────────────────────────────────
-${axisBlocks[1]}
-
-// ─────────────────────────────────────────────────────────────
-// T / F  AXIS
-// ─────────────────────────────────────────────────────────────
-${axisBlocks[2]}
-
-// ─────────────────────────────────────────────────────────────
-// J / P  AXIS
-// ─────────────────────────────────────────────────────────────
-${axisBlocks[3]}
-
-// ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // Exports
-// ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 export const profiles: AxisProfiles[] = [EI, SN, TF, JP];
 
 export function getAxisProfiles(axis: 'EI' | 'SN' | 'TF' | 'JP'): AxisProfiles {
   return profiles.find(a => a.axis === axis)!;
 }
 
-/** Looks up a level from a score (0–100) and pole letter, or 'balanced' when score === 0. */
 export function getLevelByScore(axis: AxisProfiles, score: number, pole: string): ProfileLevel {
   if (score === 0 || pole === 'balanced') {
     return axis.levels.find(l => l.pole === 'balanced')!;
@@ -229,11 +198,6 @@ export function getLevelByScore(axis: AxisProfiles, score: number, pole: string)
   );
 }
 
-/**
- * Derives a ProfileLevel from the pct map produced by renoScore.ts.
- * pct.E + pct.I === 100, etc.
- * The "score" fed into getLevelByScore is (dominantPct - 50) * 2, mapping 50%→0 and 100%→100.
- */
 export function getLevelFromPct(
   axis: AxisProfiles,
   pct: Record<string, number>,
@@ -249,7 +213,6 @@ export function getLevelFromPct(
   return getLevelByScore(axis, score, dominant);
 }
 
-/** Converts a slider value (−100 … +100) to a ProfileLevel. */
 export function getLevelFromSlider(axis: AxisProfiles, sliderValue: number): ProfileLevel {
   if (sliderValue === 0) return axis.levels.find(l => l.pole === 'balanced')!;
   const pole = sliderValue < 0 ? axis.leftPole : axis.rightPole;
@@ -259,49 +222,66 @@ export function getLevelFromSlider(axis: AxisProfiles, sliderValue: number): Pro
 `;
 }
 
-async function main() {
-  const profilesPath = join(__dirname, '../src/app/reno/data/profiles.ts');
-  const total = profiles.reduce((acc, ax) => acc + ax.levels.length + 1, 0); // +1 for dimLabels per axis
-  let done = 0;
+// ── Main ──────────────────────────────────────────────────────────────────────
 
-  console.log(`Starting translation: ${profiles.length} axes, ${profiles.reduce((a, ax) => a + ax.levels.length, 0)} levels total`);
-  console.log('Each call translates 10 dim descriptions + 1 label into EN/ES/FR/AR');
-  console.log('---');
+async function main() {
+  const cp = loadCheckpoint();
+  const total = profiles.reduce((a, ax) => a + ax.levels.length, 0) + profiles.length; // levels + dimLabels
+  let done = Object.keys(cp).reduce((a, k) => {
+    const v = cp[k];
+    if (v === 'done') return a + 1; // dimLabels key
+    return a + Object.keys(v as object).length;
+  }, 0);
+
+  console.log(`Starting translation — 4 axes, ${total} API calls total`);
+  console.log(`Checkpoint: ${done} already done, ${total - done} remaining\n${'─'.repeat(50)}`);
 
   const translatedProfiles: AxisProfiles[] = [];
 
   for (const axis of profiles) {
-    console.log(`\n▸ Axis ${axis.axis}: translating dim labels...`);
-    const translatedDimLabels = await translateDimLabels(axis);
-    done++;
-    console.log(`  ✓ dim labels done (${done}/${total})`);
+    const dimKey = `${axis.axis}:dimLabels`;
+    let dimLabels: Record<Lang, string[]>;
 
-    const translatedLevels: ProfileLevel[] = [];
-    for (const level of axis.levels) {
-      console.log(`  translating ${level.label.ru}...`);
-      const translated = await translateLevel(axis.axis, level);
-      translatedLevels.push({
-        ...level,
-        label: translated.label,
-        dims: translated.dims,
-      });
+    if (cp[dimKey] === 'done' && cp[`${axis.axis}:dimLabels:data`]) {
+      dimLabels = cp[`${axis.axis}:dimLabels:data`] as Record<Lang, string[]>;
+      console.log(`▸ ${axis.axis} dim labels — skipped (cached)`);
+    } else {
+      process.stdout.write(`▸ ${axis.axis} dim labels... `);
+      dimLabels = await translateDimLabels(axis);
+      cp[dimKey] = 'done';
+      cp[`${axis.axis}:dimLabels:data`] = dimLabels;
+      saveCheckpoint(cp);
       done++;
-      console.log(`  ✓ ${translated.label.en} (${done}/${total})`);
+      console.log(`✓ (${done}/${total})`);
     }
 
-    translatedProfiles.push({
-      ...axis,
-      dimLabels: translatedDimLabels,
-      levels: translatedLevels,
-    });
+    const translatedLevels: ProfileLevel[] = [];
+
+    for (let i = 0; i < axis.levels.length; i++) {
+      const level = axis.levels[i];
+      const levelKey = `${axis.axis}:level:${i}`;
+
+      if (cp[levelKey]) {
+        const cached = cp[levelKey] as { label: Record<Lang, string>; dims: Record<Lang, string[]> };
+        translatedLevels.push({ ...level, label: cached.label, dims: cached.dims });
+        console.log(`  ${axis.axis}[${i}] ${level.label.ru} — skipped (cached)`);
+      } else {
+        process.stdout.write(`  ${axis.axis}[${i}] ${level.label.ru}... `);
+        const translated = await translateLevel(axis.axis, level);
+        cp[levelKey] = translated;
+        saveCheckpoint(cp);
+        done++;
+        translatedLevels.push({ ...level, label: translated.label, dims: translated.dims });
+        console.log(`✓ ${translated.label.en} (${done}/${total})`);
+      }
+    }
+
+    translatedProfiles.push({ ...axis, dimLabels, levels: translatedLevels });
   }
 
-  const output = generateProfilesTs(translatedProfiles);
-  writeFileSync(profilesPath, output, 'utf8');
-  console.log(`\n✅ Done. Updated ${profilesPath}`);
+  writeFileSync(PROFILES_PATH, generateFile(translatedProfiles), 'utf8');
+  console.log(`\n✅ Done! profiles.ts updated with all 5 languages.`);
+  console.log(`   You can delete the checkpoint: ${CHECKPOINT_PATH}`);
 }
 
-main().catch(e => {
-  console.error(e);
-  process.exit(1);
-});
+main().catch(e => { console.error('\n✗', e.message); process.exit(1); });
