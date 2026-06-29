@@ -26,7 +26,7 @@ const C = {
 const T = {
   en: {
     nav_how: 'How it works', nav_explore: 'Explore', nav_passport: 'Passport',
-    nav_price: 'Pricing', nav_faq: 'FAQ', nav_cta: 'Take test →', nav_specialists: 'For Specialists',
+    nav_price: 'Pricing', nav_faq: 'FAQ', nav_cta: 'Take test →', nav_specialists: 'Admins',
     badge: 'PSYID · Your Psychological Passport',
     hero_h1a: 'Discover who you are', hero_h1b: 'and what career fits you',
     hero_p: 'A 15-minute assessment maps your 4 character axes, surfaces your core strengths, and shows the careers where you\'ll naturally excel.',
@@ -115,7 +115,7 @@ const T = {
   },
   ru: {
     nav_how: 'Как работает', nav_explore: 'Подобрать', nav_passport: 'Паспорт',
-    nav_price: 'Цены', nav_faq: 'Вопросы', nav_cta: 'Пройти тест →', nav_specialists: 'Специалистам',
+    nav_price: 'Цены', nav_faq: 'Вопросы', nav_cta: 'Пройти тест →', nav_specialists: 'Admins',
     badge: 'PSYID · Ваш психологический паспорт',
     hero_h1a: 'Узнайте кто вы', hero_h1b: 'и какая карьера вам подходит',
     hero_p: 'Тест за 15 минут строит психологический паспорт: 4 оси характера, ваши сильные стороны и карьерные направления, в которых вы будете по-настоящему эффективны.',
