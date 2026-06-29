@@ -1,8 +1,7 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function sendVerificationCode(to: string, code: string): Promise<void> {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: 'PsyID <support@psyid.me>',
     to,
