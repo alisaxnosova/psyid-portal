@@ -11,7 +11,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  tls: { ciphers: 'SSLv3', rejectUnauthorized: false },
+  tls: { minVersion: 'TLSv1.2', rejectUnauthorized: false },
+  requireTLS: true,
 });
 
 export async function sendVerificationCode(to: string, code: string): Promise<void> {
