@@ -52,6 +52,8 @@ export async function POST(req: Request) {
   const newSession: RenoSession = {
     id: sessionId,
     codeId: found.id,
+    userType: 'third_party',
+    source: 'direct',
     status: 'started',
     device: detectDevice(req),
     answers: [],

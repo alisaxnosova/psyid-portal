@@ -1,6 +1,8 @@
 export interface RenoSession {
   id: string;
   codeId: string;
+  userType: 'third_party' | 'portal' | 'youth';
+  source: 'etsy' | 'fiverr' | 'direct';
   status: 'started' | 'intake_done' | 'in_progress' | 'completed';
   device?: 'mobile' | 'desktop' | 'unknown';
   isRetake?: boolean;
