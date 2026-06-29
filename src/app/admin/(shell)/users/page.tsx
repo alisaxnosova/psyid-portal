@@ -273,7 +273,7 @@ function AdminsTab() {
         <span style={{ width: 36, height: 36, borderRadius: '50%', background: `linear-gradient(135deg, #050C2E, #2244E0)`, display: 'grid', placeItems: 'center', color: '#fff', fontWeight: 800, fontSize: 14 }}>A</span>
         <div>
           <div style={{ fontWeight: 700, fontSize: 14, color: C.ink }}>Admin</div>
-          <div style={{ fontSize: 12, color: C.inkMute, marginTop: 1 }}>alisa@nosova.pro</div>
+          <div style={{ fontSize: 12, color: C.inkMute, marginTop: 1 }}>support@psyid.me</div>
         </div>
         <div style={{ marginLeft: 'auto' }}>
           <Pill label="Admin" bg="rgba(34,68,224,0.10)" color={C.blue} />
