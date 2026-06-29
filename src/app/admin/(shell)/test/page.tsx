@@ -392,9 +392,9 @@ export default function AdminCodesPage() {
                           padding: '3px 10px', borderRadius: 999,
                           background: c.status === 'USED' ? C.bone : c.status === 'IN_PROGRESS' ? 'rgba(34,68,224,0.10)' : 'rgba(255,149,64,0.12)',
                           color: c.status === 'USED' ? C.inkMute : c.status === 'IN_PROGRESS' ? '#2244E0' : C.orangeHot,
-                          fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono', monospace",
+                          fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono', monospace", whiteSpace: 'nowrap',
                         }}>
-                          {c.status === 'USED' ? t('codes_used') : c.status === 'IN_PROGRESS' ? 'IN PROGRESS' : t('codes_unused')}
+                          {c.status === 'USED' ? t('codes_used') : c.status === 'IN_PROGRESS' ? 'In Progress' : t('codes_unused')}
                         </span>
                       </td>
                       <td style={{ padding: '13px 16px', fontSize: 13, color: C.inkSoft, borderBottom: `1px solid ${C.bone}` }}>
