@@ -1,24 +1,10 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
-// Microsoft SMTP — works with Outlook.com and Microsoft 365 (Office 365)
-// Personal Outlook.com: host smtp-mail.outlook.com, port 587
-// Microsoft 365 / O365: host smtp.office365.com, port 587
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_SMTP_HOST ?? 'smtpout.secureserver.net',
-  port: Number(process.env.EMAIL_SMTP_PORT ?? '465'),
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: { rejectUnauthorized: false },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendVerificationCode(to: string, code: string): Promise<void> {
-  const from = process.env.EMAIL_FROM ?? `"PsyID" <${process.env.EMAIL_USER}>`;
-
-  await transporter.sendMail({
-    from,
+  const { error } = await resend.emails.send({
+    from: 'PsyID <support@psyid.me>',
     to,
     subject: `Your PsyID verification code: ${code}`,
     text: [
@@ -38,8 +24,7 @@ export async function sendVerificationCode(to: string, code: string): Promise<vo
     <tr><td align="center">
       <table width="480" cellpadding="0" cellspacing="0" style="background:#FBF7F1;border-radius:20px;padding:44px 40px;border:1px solid #E5DED2;">
         <tr><td>
-          <!-- Logo -->
-          <div style="display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:-0.03em;color:#0E1230;margin-bottom:28px;">
+          <div style="font-weight:800;font-size:18px;letter-spacing:-0.03em;color:#0E1230;margin-bottom:28px;">
             PsyID
           </div>
 
@@ -50,7 +35,6 @@ export async function sendVerificationCode(to: string, code: string): Promise<vo
             Enter this code on the registration page to complete your account setup.
           </p>
 
-          <!-- Code box -->
           <div style="text-align:center;padding:28px 24px;background:#fff;border-radius:16px;border:1px solid #E5DED2;margin-bottom:28px;">
             <div style="font-size:48px;font-weight:800;letter-spacing:0.18em;color:#2244E0;font-family:'Courier New',monospace;">
               ${code}
@@ -72,4 +56,6 @@ export async function sendVerificationCode(to: string, code: string): Promise<vo
 </html>
     `.trim(),
   });
+
+  if (error) throw new Error(error.message);
 }
