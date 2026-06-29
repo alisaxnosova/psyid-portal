@@ -145,7 +145,64 @@ function IntakeField({ label, value }: { label: string; value?: string | number 
   );
 }
 
+type ReportLang = 'ru' | 'en' | 'es' | 'fr' | 'ar';
+const REPORT_LANGS: ReportLang[] = ['ru', 'en', 'es', 'fr', 'ar'];
+
 function ExpandedRow({ r }: { r: ResultRow }) {
+  const [reportLang, setReportLang] = useState<ReportLang>('en');
+  const [narrative, setNarrative]   = useState('');
+  const [genLoading, setGenLoading] = useState(false);
+  const [genError, setGenError]     = useState('');
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const generateReport = async () => {
+    setGenLoading(true);
+    setGenError('');
+    try {
+      const token = getAdminToken();
+      const res = await fetch(`/api/admin/sessions/${r.sessionId}/report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ lang: reportLang }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json() as { narrative: string };
+      setNarrative(data.narrative);
+    } catch (e) {
+      setGenError((e as Error).message);
+    } finally {
+      setGenLoading(false);
+    }
+  };
+
+  const downloadPdf = async () => {
+    if (!narrative) return;
+    setPdfLoading(true);
+    try {
+      const { pdf } = await import('@react-pdf/renderer');
+      const { default: RenoReport } = await import('@/components/pdf/RenoReport');
+      const blob = await pdf(
+        <RenoReport
+          mbtiType={r.type}
+          narrative={narrative}
+          codeRef={r.code}
+          date={r.completedAt ? new Date(r.completedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) : ''}
+          lang={reportLang}
+        />
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `psyid-report-${r.type}-${r.code}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      alert('PDF generation failed: ' + (e as Error).message);
+    } finally {
+      setPdfLoading(false);
+    }
+  };
+
   const axes = [
     { left: 'E' as const, right: 'I' as const },
     { left: 'S' as const, right: 'N' as const },
@@ -205,6 +262,74 @@ function ExpandedRow({ r }: { r: ResultRow }) {
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Avg response: {ms(r.avgResponseTimeMs)}</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Device: {r.device}</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute }}>Started: {fmt(r.createdAt)}</div>
+          </div>
+
+          {/* Report generation */}
+          <div style={{ flex: '1 1 320px', maxWidth: 480 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>AI Report</div>
+
+            {/* Language */}
+            <div style={{ display: 'flex', gap: 4, marginBottom: 12 }}>
+              {REPORT_LANGS.map(l => {
+                const active = l === reportLang;
+                return (
+                  <button key={l} onClick={() => { setReportLang(l); setNarrative(''); }} style={{
+                    padding: '5px 10px', borderRadius: 7, border: '1.5px solid',
+                    borderColor: active ? C.orangeHot : C.line,
+                    background: active ? 'rgba(255,149,64,0.10)' : 'white',
+                    color: active ? C.orangeHot : C.inkSoft,
+                    fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono',monospace",
+                    cursor: 'pointer', transition: 'all .12s',
+                  }}>{l.toUpperCase()}</button>
+                );
+              })}
+            </div>
+
+            {/* Generate / Download buttons */}
+            <div style={{ display: 'flex', gap: 8, marginBottom: narrative ? 14 : 0 }}>
+              <button
+                onClick={e => { e.stopPropagation(); generateReport(); }}
+                disabled={genLoading}
+                style={{
+                  padding: '8px 16px', borderRadius: 10, border: 'none',
+                  background: genLoading ? C.inkMute : C.orangeHot, color: 'white',
+                  fontSize: 12, fontWeight: 700, cursor: genLoading ? 'not-allowed' : 'pointer',
+                  fontFamily: 'inherit', transition: 'background .15s',
+                }}
+              >
+                {genLoading ? 'Generating…' : narrative ? 'Regenerate' : 'Generate Report'}
+              </button>
+
+              {narrative && (
+                <button
+                  onClick={e => { e.stopPropagation(); downloadPdf(); }}
+                  disabled={pdfLoading}
+                  style={{
+                    padding: '8px 16px', borderRadius: 10,
+                    border: `1.5px solid ${C.blue}`,
+                    background: 'rgba(34,68,224,0.08)', color: C.blue,
+                    fontSize: 12, fontWeight: 700, cursor: pdfLoading ? 'not-allowed' : 'pointer',
+                    fontFamily: 'inherit', transition: 'all .15s',
+                  }}
+                >
+                  {pdfLoading ? 'Generating PDF…' : '↓ Download PDF'}
+                </button>
+              )}
+            </div>
+
+            {genError && <div style={{ fontSize: 11, color: C.coral, marginTop: 6 }}>{genError}</div>}
+
+            {narrative && (
+              <div style={{
+                marginTop: 12, padding: '12px 16px', borderRadius: 12,
+                background: 'white', border: `1px solid ${C.line}`,
+                fontSize: 12, lineHeight: 1.65, color: C.inkSoft,
+                maxHeight: 200, overflowY: 'auto',
+                whiteSpace: 'pre-line',
+              }}>
+                {narrative}
+              </div>
+            )}
           </div>
         </div>
       </td>

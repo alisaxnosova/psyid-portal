@@ -35,6 +35,11 @@ export function isAdminLoggedIn(): boolean {
   return !!localStorage.getItem('admin_access_token');
 }
 
+export function getAdminToken(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem('admin_access_token') ?? '';
+}
+
 export function adminLogout() {
   localStorage.removeItem('admin_access_token');
   document.cookie = 'admin_session=; path=/admin; max-age=0';

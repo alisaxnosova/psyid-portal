@@ -7,8 +7,10 @@ import { useAdminLang, TKey, AdminLang } from '@/lib/adminLang';
 
 const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean; newTab?: boolean }[] = [
   { href: '/admin',                      key: 'nav_dashboard',    icon: 'dashboard', exact: true, built: true  },
-  { href: '/admin/questions',            key: 'nav_assessments',  icon: 'questions',              built: true  },
-  { href: '/admin/test',                  key: 'nav_test',         icon: 'test',                   built: true  },
+  { href: '/admin/assessments',          key: 'nav_assessments',  icon: 'sliders',                built: true  },
+  { href: '/admin/answer-key',           key: 'nav_answer_key',   icon: 'questions',              built: true  },
+  { href: '/admin/questions',            key: 'nav_questions',    icon: 'pencil',                 built: true  },
+  { href: '/admin/test',                 key: 'nav_test',         icon: 'test',                   built: true  },
   { href: '/admin/report-templates',     key: 'nav_report_tmpls', icon: 'report',                 built: false },
   { href: '/admin/users',                key: 'nav_users',        icon: 'users',                  built: false },
   { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: true  },
@@ -90,6 +92,22 @@ function NavIcon({ type }: { type: string }) {
       <circle cx="5"  cy="7"   r="1.5" fill="currentColor"/>
       <circle cx="9"  cy="9.5" r="1.5" fill="currentColor"/>
       <circle cx="13" cy="3"   r="1.5" fill="currentColor"/>
+    </svg>
+  );
+  if (type === 'sliders') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="1" y1="4" x2="15" y2="4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="5" cy="4" r="2" fill="none" stroke="currentColor" strokeWidth="1.4"/>
+      <line x1="1" y1="12" x2="15" y2="12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="11" cy="12" r="2" fill="none" stroke="currentColor" strokeWidth="1.4"/>
+      <line x1="1" y1="8" x2="15" y2="8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" strokeWidth="1.4"/>
+    </svg>
+  );
+  if (type === 'pencil') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M11 2.5l2.5 2.5-8 8-3 .5.5-3 8-8z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9.5 4l2.5 2.5" stroke="currentColor" strokeWidth="1.4"/>
     </svg>
   );
   return (

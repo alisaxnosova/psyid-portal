@@ -8,7 +8,9 @@ export const T = {
   // Sidebar nav
   nav_section:      { en: 'Navigation',           ru: 'Навигация'           },
   nav_dashboard:    { en: 'Dashboard',            ru: 'Обзор'               },
-  nav_assessments:  { en: 'Assessments',          ru: 'Тест'                },
+  nav_assessments:  { en: 'Assessments',          ru: 'Ассессмент'          },
+  nav_answer_key:   { en: 'Answer Key',           ru: 'Ключ ответов'        },
+  nav_questions:    { en: 'Questions',            ru: 'Вопросы'             },
   nav_report_tmpls: { en: 'Report Templates',     ru: 'Шаблоны отчётов'     },
   nav_users:        { en: 'Users',                ru: 'Пользователи'        },
   nav_results:      { en: 'Results',              ru: 'Результаты'          },
@@ -68,6 +70,22 @@ export const T = {
   ass_title:   { en: 'Test Questions',            ru: 'Вопросы теста'             },
   ass_sub:     { en: 'questions · TestPersonal v1', ru: 'вопросов · TestPersonal v1' },
   ass_search:  { en: 'Search...',                 ru: 'Поиск...'                  },
+  ass_save:    { en: 'Save',                      ru: 'Сохранить'                 },
+  ass_saved:   { en: 'Saved',                     ru: 'Сохранено'                 },
+  ass_edit:    { en: 'Edit',                      ru: 'Редактировать'             },
+  ass_cancel:  { en: 'Cancel',                    ru: 'Отмена'                    },
+  // Answer Key page
+  ak_title:    { en: 'Answer Key',                ru: 'Ключ ответов'              },
+  ak_sub:      { en: 'Reference grid for all profile descriptions', ru: 'Справочная таблица описаний профилей' },
+  // Assessments (slider) page
+  sliders_title:  { en: 'Assessments',            ru: 'Ассессмент'                },
+  sliders_sub:    { en: 'Preview profile report with custom scores', ru: 'Предпросмотр отчёта профиля' },
+  sliders_gen:    { en: 'Generate Report Preview', ru: 'Сгенерировать отчёт'      },
+  sliders_regen:  { en: 'Regenerate',             ru: 'Перегенерировать'          },
+  sliders_lang:   { en: 'Report Language',        ru: 'Язык отчёта'              },
+  sliders_preview:{ en: 'Report Preview',         ru: 'Предпросмотр отчёта'       },
+  sliders_gen_report: { en: 'Generate Report',    ru: 'Создать отчёт'             },
+  sliders_dl_pdf: { en: 'Download PDF',           ru: 'Скачать PDF'               },
   // Access Codes page
   codes_title:       { en: 'Access Codes',                       ru: 'Коды доступа'                        },
   codes_sub:         { en: 'Generate single-use test access codes', ru: 'Создание одноразовых кодов доступа'  },
