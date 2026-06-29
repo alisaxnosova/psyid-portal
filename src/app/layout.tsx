@@ -3,8 +3,8 @@ import './globals.css';
 import { Nav } from '@/components/shared/Nav';
 
 export const metadata: Metadata = {
-  title: 'PsyID — Психологический паспорт ребёнка',
-  description: 'Узнайте психотип, сильные стороны и подходящие профессии вашего ребёнка. Бесплатный тест за 15 минут.',
+  title: 'PsyID — Your Personality Passport',
+  description: 'Discover your personality type, strengths, and the careers where you\'ll naturally excel. Free 15-minute assessment.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
