@@ -84,19 +84,31 @@ export function isLoggedIn(): boolean {
   return !!localStorage.getItem('reno_access_token');
 }
 
-// Auth
+// Auth — login and me go through Next.js proxy to avoid CORS
 export const auth = {
   register: (email: string, password: string, name?: string) =>
     apiFetch<TokenResponse>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
     }),
-  login: (email: string, password: string) =>
-    apiFetch<TokenResponse>('/auth/login', {
+  login: async (email: string, password: string): Promise<TokenResponse> => {
+    const res = await fetch('/api/client/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
-    }),
-  me: () => apiFetch<MeResponse>('/auth/me'),
+    });
+    const data = await res.json() as TokenResponse & { message?: string };
+    if (!res.ok) throw new Error(data.message ?? 'Incorrect email or password.');
+    return data;
+  },
+  me: async (): Promise<MeResponse> => {
+    const token = getToken();
+    const res = await fetch('/api/client/me', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    if (!res.ok) throw new Error('Unauthorized');
+    return res.json() as Promise<MeResponse>;
+  },
 };
 
 // Methodologies
