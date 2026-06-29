@@ -4,15 +4,14 @@ import nodemailer from 'nodemailer';
 // Personal Outlook.com: host smtp-mail.outlook.com, port 587
 // Microsoft 365 / O365: host smtp.office365.com, port 587
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_SMTP_HOST ?? 'smtp.office365.com',
-  port: Number(process.env.EMAIL_SMTP_PORT ?? '587'),
-  secure: false,
+  host: process.env.EMAIL_SMTP_HOST ?? 'smtpout.secureserver.net',
+  port: Number(process.env.EMAIL_SMTP_PORT ?? '465'),
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  tls: { minVersion: 'TLSv1.2', rejectUnauthorized: false },
-  requireTLS: true,
+  tls: { rejectUnauthorized: false },
 });
 
 export async function sendVerificationCode(to: string, code: string): Promise<void> {
