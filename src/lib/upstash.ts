@@ -28,11 +28,15 @@ export async function kvGet<T>(key: string): Promise<T | null> {
   }
 }
 
-export async function kvSet(key: string, value: unknown): Promise<void> {
+export async function kvSet(key: string, value: unknown, ttlSeconds?: number): Promise<void> {
   const redis = getClient();
   if (!redis) return;
   try {
-    await redis.set(key, JSON.stringify(value));
+    if (ttlSeconds) {
+      await redis.setex(key, ttlSeconds, JSON.stringify(value));
+    } else {
+      await redis.set(key, JSON.stringify(value));
+    }
   } catch {
     // silent — callers handle missing data gracefully
   }

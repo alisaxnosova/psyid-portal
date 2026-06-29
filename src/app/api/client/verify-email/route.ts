@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvSet, kvDel } from '@/lib/upstash';
+import { createPortalUser, createSession, getPortalUser } from '@/lib/portalAuth';
 import type { PendingRegistration } from '../pre-register/route';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? process.env.BACKEND_URL
-  ? `${process.env.BACKEND_URL}/api`
-  : 'http://159.194.222.35:3010/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://159.194.222.35:3010/api';
 const MAX_ATTEMPTS = 5;
 
-interface PortalUser {
+interface PortalUserRecord {
   email: string;
   name: string;
   userId: string;
@@ -47,43 +46,70 @@ export async function POST(req: Request) {
       }, { status: 400 });
     }
 
-    // Code valid — create account in backend
-    const res = await fetch(`${API_BASE}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: pending.email,
-        password: pending.password,
-        name: pending.name || undefined,
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
+    // Code is valid — attempt backend registration
+    type BackendTokens = { accessToken: string; refreshToken: string; userId: string };
+    let backendUserId: string | null = null;
+    let backendTokens: BackendTokens | null = null;
 
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({} as { message?: string })) as { message?: string };
-      if (res.status === 409) {
-        await kvDel(key);
-        return NextResponse.json({ error: 'account_exists' }, { status: 409 });
+    try {
+      const res = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: pending.email,
+          password: pending.password,
+          name: pending.name || undefined,
+        }),
+        signal: AbortSignal.timeout(8000),
+      });
+
+      if (res.ok) {
+        backendTokens = await res.json() as BackendTokens;
+        backendUserId = backendTokens.userId;
       }
-      return NextResponse.json({ error: body.message ?? 'Account creation failed. Please try again.' }, { status: res.status });
+      // 409 = account already exists on backend — we'll create/update Redis credentials below
+    } catch {
+      // Backend unreachable — fall through to Redis-only auth
     }
 
-    const tokens = await res.json() as { accessToken: string; refreshToken: string; userId: string };
     await kvDel(key);
 
-    // Store user in Redis so admin portal can list them
-    const portalUsers = await kvGet<PortalUser[]>('psyid:portal-users') ?? [];
+    // Always store/update credentials in Redis so user can log in via Redis auth
+    const existing = await getPortalUser(pending.email);
+    if (!existing) {
+      await createPortalUser(pending.email, pending.name, pending.password, backendUserId);
+    }
+
+    // Store in portal-users list for admin view
+    const portalUsers = await kvGet<PortalUserRecord[]>('psyid:portal-users') ?? [];
     if (!portalUsers.find(u => u.email === pending.email)) {
       portalUsers.push({
         email: pending.email,
         name: pending.name,
-        userId: tokens.userId,
+        userId: backendUserId ?? `portal_${pending.email}`,
         registeredAt: new Date().toISOString(),
       });
       await kvSet('psyid:portal-users', portalUsers);
     }
 
-    return NextResponse.json({ tokens });
+    // If backend gave us tokens, use them; otherwise create a Redis session
+    if (backendTokens) {
+      return NextResponse.json({ tokens: backendTokens });
+    }
+
+    // Create a Redis session so user is logged in immediately after registration
+    const user = await getPortalUser(pending.email);
+    if (!user) {
+      return NextResponse.json({ error: 'Registration failed. Please try again.' }, { status: 500 });
+    }
+    const sessionToken = await createSession(user);
+    return NextResponse.json({
+      tokens: {
+        accessToken: sessionToken,
+        refreshToken: sessionToken,
+        userId: user.backendUserId ?? `portal_${user.email}`,
+      },
+    });
   } catch (err) {
     console.error('[verify-email]', err);
     return NextResponse.json({ error: 'Verification failed. Please try again.' }, { status: 500 });
