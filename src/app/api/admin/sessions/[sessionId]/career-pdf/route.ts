@@ -8,10 +8,6 @@ function verifyAdmin(req: NextRequest): boolean {
   return !!token && !!process.env.ADMIN_SECRET && token === process.env.ADMIN_SECRET;
 }
 
-// Matches installed @sparticuz/chromium-min@131.0.1
-const CHROMIUM_URL =
-  'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar';
-
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ sessionId: string }> },
@@ -23,13 +19,13 @@ export async function GET(
   if (!html) return NextResponse.json({ error: 'Report not found — generate it first' }, { status: 404 });
 
   try {
-    const chromium = (await import('@sparticuz/chromium-min')).default;
+    const chromium = (await import('@sparticuz/chromium')).default;
     const puppeteer = (await import('puppeteer-core')).default;
 
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: { width: 794, height: 1123, deviceScaleFactor: 2 },
-      executablePath: await chromium.executablePath(CHROMIUM_URL),
+      executablePath: await chromium.executablePath(),
       headless: true,
     });
 
