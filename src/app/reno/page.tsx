@@ -2,8 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Logo } from '@/components/shared/Logo';
-import questionsData from './data/questions.json';
-
 /* ─── Questions ─── */
 interface QuestionOption {
   id: string;
@@ -18,8 +16,6 @@ interface Question {
   text: Record<Lang, string>;
   options: QuestionOption[];
 }
-const QUESTIONS = questionsData as unknown as Question[];
-const TOTAL = QUESTIONS.length; // 94
 
 /* ─── Lang ─── */
 type Lang = 'en' | 'ru' | 'es' | 'fr' | 'ar';
@@ -891,6 +887,8 @@ function TestStage({
   lang: Lang;
   onComplete: () => void;
 }) {
+  const [questions, setQuestions]              = useState<Question[]>([]);
+  const [questionsReady, setQuestionsReady]    = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [selectedAnswer, setSelectedAnswer]   = useState<string | null>(null);
   const [locked, setLocked]                   = useState(false);
@@ -898,18 +896,30 @@ function TestStage({
   const [offline, setOffline]                 = useState(false);
   const questionShownAt = useRef<number>(Date.now());
 
+  // Fetch live questions from Redis (falls back to bundled JSON on server)
+  useEffect(() => {
+    fetch('/api/reno/questions')
+      .then(r => r.json())
+      .then((d: { questions: Question[] }) => {
+        setQuestions(d.questions);
+        setQuestionsReady(true);
+      })
+      .catch(() => setQuestionsReady(true)); // if fetch fails, questionsReady stays false → loading shown
+  }, []);
+
   useEffect(() => { questionShownAt.current = Date.now(); }, [currentIndex]);
 
-  // Load progress on mount → resume from last saved index
+  // Load progress once questions are ready
   useEffect(() => {
+    if (!questionsReady || questions.length === 0) return;
     fetch(`/api/reno/sessions/${sessionId}/progress`)
       .then(r => r.json())
       .then((data: { answers?: { questionId: string; answerId: string }[] }) => {
         const answered = data.answers?.length ?? 0;
-        setCurrentIndex(Math.min(answered, TOTAL - 1));
+        setCurrentIndex(Math.min(answered, questions.length - 1));
       })
       .catch(() => setCurrentIndex(0));
-  }, [sessionId]);
+  }, [sessionId, questionsReady, questions.length]);
 
   async function saveAnswer(questionId: string, answerId: string, index: number, responseTimeMs: number): Promise<boolean> {
     for (let attempt = 0; attempt < 3; attempt++) {
@@ -934,7 +944,7 @@ function TestStage({
 
   async function handleAnswer(answerId: string) {
     if (locked || currentIndex === null) return;
-    const question = QUESTIONS[currentIndex];
+    const question = questions[currentIndex];
     const responseTimeMs = Date.now() - questionShownAt.current;
 
     setSelectedAnswer(answerId);
@@ -953,7 +963,7 @@ function TestStage({
     // 380ms confirmation flash, then advance or complete
     await new Promise(r => setTimeout(r, 380));
 
-    if (currentIndex >= TOTAL - 1) {
+    if (currentIndex >= questions.length - 1) {
       onComplete();
     } else {
       setQuestionFading(true);
@@ -965,7 +975,7 @@ function TestStage({
     }
   }
 
-  if (currentIndex === null) {
+  if (!questionsReady || questions.length === 0 || currentIndex === null) {
     return (
       <div style={{ padding: 60, textAlign: 'center' }}>
         <p style={{ color: 'var(--ink-3)', fontSize: 14 }}>…</p>
@@ -973,8 +983,8 @@ function TestStage({
     );
   }
 
-  const question = QUESTIONS[currentIndex];
-  const progress  = (currentIndex / TOTAL) * 100;
+  const question = questions[currentIndex];
+  const progress  = (currentIndex / questions.length) * 100;
   const label     = t.test_question.replace('{n}', String(currentIndex + 1));
 
   return (

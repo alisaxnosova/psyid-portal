@@ -170,7 +170,10 @@ function ExpandedRow({ r }: { r: ResultRow }) {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ force }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({})) as { detail?: string; error?: string };
+        throw new Error(body.detail ?? body.error ?? `HTTP ${res.status}`);
+      }
       setCompassReady(true);
     } catch (e) {
       setCompassError((e as Error).message);
