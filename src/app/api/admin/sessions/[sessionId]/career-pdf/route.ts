@@ -38,27 +38,37 @@ export async function GET(
     try {
       const page = await browser.newPage();
 
-      // Strip the viewer wrapper for PDF — render each .page at its natural size
+      // For PDF: let each .page expand to its full content height.
+      // The original HTML clips overflow with overflow:hidden — that hides
+      // content in the browser but cuts it off in the PDF. Removing the
+      // height cap and overflow:hidden lets content breathe; page-break-after
+      // still ensures each section starts on a new PDF page.
       const pdfHtml = html.replace('</head>', `<style>
         html,body{margin:0;padding:0;background:#fff}
         .viewer{display:block!important;gap:0!important;padding:0!important;background:#fff!important}
         .page-label{display:none!important}
         .page{
-          width:794px!important;height:1123px!important;
-          min-height:0!important;max-height:1123px!important;
-          overflow:hidden!important;
+          width:794px!important;
+          height:auto!important;
+          min-height:1123px!important;
+          max-height:none!important;
+          overflow:visible!important;
           page-break-after:always;break-after:page;
           margin:0!important;
+          box-sizing:border-box!important;
         }
         .page.back{page-break-after:auto!important;break-after:auto!important}
+        /* Prevent cards/callouts from splitting mid-element across pages */
+        .card,.callout,.tip,.career,.week,.check,.dicho,.tbl tr{
+          break-inside:avoid;page-break-inside:avoid;
+        }
       </style></head>`);
 
       await page.setContent(pdfHtml, { waitUntil: 'networkidle0', timeout: 30000 });
       await new Promise(r => setTimeout(r, 1500));
 
       const pdf = await page.pdf({
-        width: '794px',
-        height: '1123px',
+        format: 'A4',
         printBackground: true,
         displayHeaderFooter: false,
         margin: { top: 0, right: 0, bottom: 0, left: 0 },
