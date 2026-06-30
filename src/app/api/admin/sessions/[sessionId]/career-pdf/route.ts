@@ -8,9 +8,9 @@ function verifyAdmin(req: NextRequest): boolean {
   return !!token && !!process.env.ADMIN_SECRET && token === process.env.ADMIN_SECRET;
 }
 
-// Must match the installed @sparticuz/chromium-min version (149.0.0)
+// Matches installed @sparticuz/chromium-min@131.0.1
 const CHROMIUM_URL =
-  'https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.tar';
+  'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar';
 
 export async function GET(
   req: NextRequest,
@@ -28,7 +28,7 @@ export async function GET(
 
     const browser = await puppeteer.launch({
       args: chromium.args,
-      defaultViewport: { width: 794, height: 1123, deviceScaleFactor: 1 },
+      defaultViewport: { width: 794, height: 1123, deviceScaleFactor: 2 },
       executablePath: await chromium.executablePath(CHROMIUM_URL),
       headless: true,
     });
@@ -36,43 +36,30 @@ export async function GET(
     try {
       const page = await browser.newPage();
 
-      // Inject PDF overrides directly — more reliable than @media print in Puppeteer
-      const PDF_OVERRIDES = `<style>
-        html, body { background: white !important; margin: 0 !important; padding: 0 !important; }
-        .viewer {
-          display: block !important;
-          gap: 0 !important;
-          padding: 0 !important;
-          background: white !important;
-          width: 794px !important;
-          align-items: unset !important;
+      // Strip the viewer wrapper for PDF — render each .page at its natural size
+      const pdfHtml = html.replace('</head>', `<style>
+        html,body{margin:0;padding:0;background:#fff}
+        .viewer{display:block!important;gap:0!important;padding:0!important;background:#fff!important}
+        .page-label{display:none!important}
+        .page{
+          width:794px!important;height:1123px!important;
+          min-height:0!important;max-height:1123px!important;
+          overflow:hidden!important;
+          page-break-after:always;break-after:page;
+          margin:0!important;
         }
-        .page-label { display: none !important; }
-        .page {
-          width: 794px !important;
-          height: 1123px !important;
-          min-height: 0 !important;
-          max-height: 1123px !important;
-          overflow: hidden !important;
-          break-after: page !important;
-          page-break-after: always !important;
-          margin: 0 !important;
-          box-sizing: border-box !important;
-        }
-        .page.back { break-after: auto !important; page-break-after: auto !important; }
-      </style>`;
-      const pdfHtml = html.replace('</head>', PDF_OVERRIDES + '</head>');
+        .page.back{page-break-after:auto!important;break-after:auto!important}
+      </style></head>`);
 
-      await page.setContent(pdfHtml, { waitUntil: 'load', timeout: 30000 });
-      // Wait for Google Fonts to load
-      await new Promise(r => setTimeout(r, 2000));
+      await page.setContent(pdfHtml, { waitUntil: 'networkidle0', timeout: 30000 });
+      await new Promise(r => setTimeout(r, 1500));
 
       const pdf = await page.pdf({
         width: '794px',
         height: '1123px',
         printBackground: true,
-        margin: { top: 0, right: 0, bottom: 0, left: 0 },
         displayHeaderFooter: false,
+        margin: { top: 0, right: 0, bottom: 0, left: 0 },
       });
 
       return new NextResponse(pdf as unknown as BodyInit, {
