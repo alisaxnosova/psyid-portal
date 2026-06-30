@@ -276,7 +276,6 @@ export function careersPrompt(ctx: PromptCtx): string {
 Person's profile:
 - Type: ${typeCode}
 - ${energy.label} ${energy.pct}%, ${world.label} ${world.pct}%, ${decisions.label} ${decisions.pct}%, ${structure.label} ${structure.pct}%
-${input.intake?.occupation ? `- Current occupation: ${input.intake.occupation}` : ''}
 
 Generate exactly 12 career directions ranked by fit percentage, highest to lowest. These should be specific career directions (not vague categories like "creative fields") where this type's combination of traits becomes a real competitive advantage. Fit % is how well the day-to-day shape of the work matches their wiring — not earning potential.
 
@@ -421,7 +420,6 @@ export function actionPlanPrompt(ctx: PromptCtx): string {
   return `Write page 18: "Your 30-day plan."
 
 Person's type: ${typeCode}
-${input.intake?.occupation ? `Current occupation: ${input.intake.occupation}` : ''}
 
 Write a realistic 30-day action plan — designed knowing this type's tendencies (including their weaknesses). The plan has 4 weeks with 3 tasks each. Each week's tasks should be doable but not trivial.
 
