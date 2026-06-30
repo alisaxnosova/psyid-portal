@@ -51,3 +51,22 @@ export async function kvDel(key: string): Promise<void> {
     // silent
   }
 }
+
+// Scan for all keys matching a glob pattern. More reliable than maintaining
+// a manual index map (which can lose entries under concurrent writes).
+export async function kvKeys(pattern: string): Promise<string[]> {
+  const redis = getClient();
+  if (!redis) return [];
+  const keys: string[] = [];
+  let cursor = '0';
+  try {
+    do {
+      const [next, batch] = await redis.scan(cursor, 'MATCH', pattern, 'COUNT', '200');
+      keys.push(...batch);
+      cursor = next;
+    } while (cursor !== '0');
+  } catch {
+    // silent
+  }
+  return keys;
+}

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { kvGet } from '@/lib/upstash';
+import { kvGet, kvKeys } from '@/lib/upstash';
 import { scoreSession } from '@/lib/renoScore';
-import type { RenoSession, RenoSessionsMap } from '@/app/api/reno/types';
+import type { RenoSession } from '@/app/api/reno/types';
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
 
@@ -46,15 +46,13 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const sessionMap = await kvGet<RenoSessionsMap>('psyid:reno-sessions');
-  if (!sessionMap) {
+  const sessionKeys = await kvKeys('psyid:reno-session:*');
+  if (sessionKeys.length === 0) {
     return NextResponse.json(emptyResponse());
   }
 
   const sessions = (
-    await Promise.all(
-      Object.values(sessionMap).map(id => kvGet<RenoSession>(`psyid:reno-session:${id}`))
-    )
+    await Promise.all(sessionKeys.map(key => kvGet<RenoSession>(key)))
   ).filter((s): s is RenoSession => !!s && s.userType !== 'youth');
 
   const today     = dayStr(0);
