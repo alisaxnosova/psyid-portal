@@ -19,14 +19,20 @@ export async function GET(
   if (!html) return NextResponse.json({ error: 'Report not found — generate it first' }, { status: 404 });
 
   try {
+    // @sparticuz/chromium checks AWS_EXECUTION_ENV to decide which lib bundle to
+    // extract (al2.tar.br vs al2023.tar.br) and whether to set LD_LIBRARY_PATH.
+    // Vercel doesn't set this var, so the libs never unpack and libnss3.so is
+    // missing at runtime. Setting it before the first import fixes cold starts.
+    process.env['AWS_EXECUTION_ENV'] ??= 'AWS_Lambda_nodejs20.x';
+
     const chromium = (await import('@sparticuz/chromium')).default;
     const puppeteer = (await import('puppeteer-core')).default;
 
     const browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: { width: 794, height: 1123, deviceScaleFactor: 2 },
       executablePath: await chromium.executablePath(),
-      headless: true,
+      headless: chromium.headless,
     });
 
     try {
