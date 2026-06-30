@@ -11,6 +11,9 @@ export async function generateSection(userPrompt: string): Promise<string> {
     messages: [{ role: 'user', content: userPrompt }],
   });
 
-  const text = (message.content[0] as { type: string; text: string }).text;
-  return text.trim();
+  const block = message.content[0];
+  if (!block || block.type !== 'text') {
+    throw new Error('Claude returned no text content');
+  }
+  return block.text.trim();
 }

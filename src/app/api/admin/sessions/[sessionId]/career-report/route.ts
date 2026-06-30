@@ -4,9 +4,12 @@ import { scoreSession } from '@/lib/renoScore';
 import { generateReport } from '@/lib/report-generator';
 import type { ReportInput } from '@/lib/report-generator';
 
+// Allow up to 5 minutes — 16 Claude calls with concurrency 4 can take 2-3 min
+export const maxDuration = 300;
+
 interface RenoSession {
   id: string;
-  answers: { questionId: string; answerId: string }[];
+  answers: { questionId: string; answerId: string; answeredAt?: string; responseTimeMs?: number }[];
   status: string;
   code?: string;
   intake?: {
@@ -57,20 +60,26 @@ export async function POST(
     return NextResponse.json({ error: 'Session not completed' }, { status: 400 });
   }
 
-  const score = scoreSession(session.answers);
+  try {
+    const score = scoreSession(session.answers);
 
-  const input: ReportInput = {
-    sessionId,
-    score,
-    code: session.code,
-    intake: session.intake,
-    completedAt: session.completedAt,
-  };
+    const input: ReportInput = {
+      sessionId,
+      score,
+      code: session.code,
+      intake: session.intake,
+      completedAt: session.completedAt,
+    };
 
-  const html = await generateReport(input);
+    const html = await generateReport(input);
 
-  // Cache for 30 days (TTL in seconds)
-  await kvSet(`psyid:career-report:${sessionId}`, html, 60 * 60 * 24 * 30);
+    // Cache for 30 days (TTL in seconds)
+    await kvSet(`psyid:career-report:${sessionId}`, html, 60 * 60 * 24 * 30);
 
-  return NextResponse.json({ ok: true, cached: false });
+    return NextResponse.json({ ok: true, cached: false });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('[career-report] generation failed:', message);
+    return NextResponse.json({ error: 'Generation failed', detail: message }, { status: 500 });
+  }
 }
