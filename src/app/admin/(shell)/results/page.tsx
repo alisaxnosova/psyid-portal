@@ -159,6 +159,7 @@ function ExpandedRow({ r }: { r: ResultRow }) {
   const [compassLoading, setCompassLoading] = useState(false);
   const [compassReady, setCompassReady]     = useState(false);
   const [compassError, setCompassError]     = useState('');
+  const [pdfDownloading, setPdfDownloading] = useState(false);
 
   const generateCompass = async (force = false) => {
     setCompassLoading(true);
@@ -179,6 +180,32 @@ function ExpandedRow({ r }: { r: ResultRow }) {
       setCompassError((e as Error).message);
     } finally {
       setCompassLoading(false);
+    }
+  };
+
+  const downloadCompassPdf = async () => {
+    setPdfDownloading(true);
+    setCompassError('');
+    try {
+      const token = getAdminToken();
+      const res = await fetch(`/api/admin/sessions/${r.sessionId}/career-pdf`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({})) as { detail?: string; error?: string };
+        throw new Error(body.detail ?? body.error ?? `HTTP ${res.status}`);
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `career-compass-${r.code}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      setCompassError((e as Error).message);
+    } finally {
+      setPdfDownloading(false);
     }
   };
 
@@ -408,21 +435,20 @@ function ExpandedRow({ r }: { r: ResultRow }) {
                   >
                     ↗ View
                   </a>
-                  <a
-                    href={`/api/career-report/${r.sessionId}?print=true`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={e => e.stopPropagation()}
+                  <button
+                    onClick={e => { e.stopPropagation(); downloadCompassPdf(); }}
+                    disabled={pdfDownloading}
                     style={{
                       padding: '8px 14px', borderRadius: 10,
                       border: `1.5px solid ${C.blue}`,
                       background: 'rgba(34,68,224,0.08)', color: C.blue,
-                      fontSize: 12, fontWeight: 700, textDecoration: 'none',
-                      fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center',
+                      fontSize: 12, fontWeight: 700,
+                      cursor: pdfDownloading ? 'not-allowed' : 'pointer',
+                      fontFamily: 'inherit',
                     }}
                   >
-                    ↓ PDF
-                  </a>
+                    {pdfDownloading ? 'Generating…' : '↓ PDF'}
+                  </button>
                   <button
                     onClick={e => { e.stopPropagation(); generateCompass(true); }}
                     disabled={compassLoading}

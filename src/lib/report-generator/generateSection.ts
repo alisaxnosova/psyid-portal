@@ -14,5 +14,6 @@ export async function generateSection(userPrompt: string): Promise<string> {
   if (!block || block.type !== 'text') {
     throw new Error('Claude returned no text content');
   }
-  return block.text.trim();
+  // Strip markdown code fences if Claude wraps the response despite instructions
+  return block.text.trim().replace(/^```html\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '');
 }
