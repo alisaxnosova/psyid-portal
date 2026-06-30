@@ -1,9 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { getSystemPrompt } from './section-prompts';
 
-const client = new Anthropic();
-
 export async function generateSection(userPrompt: string): Promise<string> {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const message = await client.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 2048,
