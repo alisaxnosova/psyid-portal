@@ -159,7 +159,6 @@ function ExpandedRow({ r }: { r: ResultRow }) {
   const [compassLoading, setCompassLoading] = useState(false);
   const [compassReady, setCompassReady]     = useState(false);
   const [compassError, setCompassError]     = useState('');
-  const [pdfDownloading, setPdfDownloading] = useState(false);
 
   const generateCompass = async (force = false) => {
     setCompassLoading(true);
@@ -183,30 +182,16 @@ function ExpandedRow({ r }: { r: ResultRow }) {
     }
   };
 
-  const downloadCompassPdf = async () => {
-    setPdfDownloading(true);
-    setCompassError('');
-    try {
-      const token = getAdminToken();
-      const res = await fetch(`/api/admin/sessions/${r.sessionId}/career-pdf`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({})) as { detail?: string; error?: string };
-        throw new Error(body.detail ?? body.error ?? `HTTP ${res.status}`);
-      }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `career-compass-${r.code}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      setCompassError((e as Error).message);
-    } finally {
-      setPdfDownloading(false);
-    }
+  const openPdfPrint = () => {
+    // Open in a focused A4-sized popup — beforeprint JS hook will fix page layout
+    const w = 900, h = 700;
+    const left = Math.round(window.screenX + (window.outerWidth - w) / 2);
+    const top  = Math.round(window.screenY + (window.outerHeight - h) / 2);
+    window.open(
+      `/api/career-report/${r.sessionId}?print=true`,
+      '_blank',
+      `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=no`,
+    );
   };
 
   // Check on mount if a report already exists
@@ -436,18 +421,16 @@ function ExpandedRow({ r }: { r: ResultRow }) {
                     ↗ View
                   </a>
                   <button
-                    onClick={e => { e.stopPropagation(); downloadCompassPdf(); }}
-                    disabled={pdfDownloading}
+                    onClick={e => { e.stopPropagation(); openPdfPrint(); }}
                     style={{
                       padding: '8px 14px', borderRadius: 10,
                       border: `1.5px solid ${C.blue}`,
                       background: 'rgba(34,68,224,0.08)', color: C.blue,
                       fontSize: 12, fontWeight: 700,
-                      cursor: pdfDownloading ? 'not-allowed' : 'pointer',
-                      fontFamily: 'inherit',
+                      cursor: 'pointer', fontFamily: 'inherit',
                     }}
                   >
-                    {pdfDownloading ? 'Generating…' : '↓ PDF'}
+                    ↓ PDF
                   </button>
                   <button
                     onClick={e => { e.stopPropagation(); generateCompass(true); }}
