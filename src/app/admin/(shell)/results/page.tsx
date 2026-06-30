@@ -155,6 +155,41 @@ function ExpandedRow({ r }: { r: ResultRow }) {
   const [genError, setGenError]     = useState('');
   const [pdfLoading, setPdfLoading] = useState(false);
 
+  // Career Compass state
+  const [compassLoading, setCompassLoading] = useState(false);
+  const [compassReady, setCompassReady]     = useState(false);
+  const [compassError, setCompassError]     = useState('');
+
+  const generateCompass = async (force = false) => {
+    setCompassLoading(true);
+    setCompassError('');
+    try {
+      const token = getAdminToken();
+      const res = await fetch(`/api/admin/sessions/${r.sessionId}/career-report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ force }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setCompassReady(true);
+    } catch (e) {
+      setCompassError((e as Error).message);
+    } finally {
+      setCompassLoading(false);
+    }
+  };
+
+  // Check on mount if a report already exists
+  useEffect(() => {
+    const token = getAdminToken();
+    fetch(`/api/admin/sessions/${r.sessionId}/career-report`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(res => res.json())
+      .then((d: { exists?: boolean }) => { if (d.exists) setCompassReady(true); })
+      .catch(() => {});
+  }, [r.sessionId]);
+
   const generateReport = async () => {
     setGenLoading(true);
     setGenError('');
@@ -330,6 +365,78 @@ function ExpandedRow({ r }: { r: ResultRow }) {
                 {narrative}
               </div>
             )}
+          </div>
+
+          {/* ── Career Compass ── */}
+          <div style={{ flex: '0 0 260px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Career Compass</div>
+            <div style={{ fontSize: 11, color: C.inkMute, marginBottom: 10, lineHeight: 1.5 }}>
+              20-page visual report — AI-generated per session.
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button
+                onClick={e => { e.stopPropagation(); generateCompass(false); }}
+                disabled={compassLoading}
+                style={{
+                  padding: '8px 14px', borderRadius: 10, border: 'none',
+                  background: compassLoading ? C.inkMute : (compassReady ? C.green : C.violet),
+                  color: 'white', fontSize: 12, fontWeight: 700,
+                  cursor: compassLoading ? 'not-allowed' : 'pointer',
+                  fontFamily: 'inherit', transition: 'background .15s',
+                }}
+              >
+                {compassLoading ? 'Generating…' : compassReady ? '✓ Generated' : 'Generate Compass'}
+              </button>
+
+              {compassReady && (
+                <>
+                  <a
+                    href={`/results/report?session=${r.sessionId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    style={{
+                      padding: '8px 14px', borderRadius: 10,
+                      border: `1.5px solid ${C.violet}`,
+                      background: 'rgba(75,30,142,0.08)', color: C.violet,
+                      fontSize: 12, fontWeight: 700, textDecoration: 'none',
+                      fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center',
+                    }}
+                  >
+                    ↗ View
+                  </a>
+                  <a
+                    href={`/api/career-report/${r.sessionId}?print=true`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    style={{
+                      padding: '8px 14px', borderRadius: 10,
+                      border: `1.5px solid ${C.blue}`,
+                      background: 'rgba(34,68,224,0.08)', color: C.blue,
+                      fontSize: 12, fontWeight: 700, textDecoration: 'none',
+                      fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center',
+                    }}
+                  >
+                    ↓ PDF
+                  </a>
+                  <button
+                    onClick={e => { e.stopPropagation(); generateCompass(true); }}
+                    disabled={compassLoading}
+                    style={{
+                      padding: '8px 14px', borderRadius: 10,
+                      border: `1.5px solid ${C.line}`,
+                      background: 'white', color: C.inkMute,
+                      fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                      fontFamily: 'inherit',
+                    }}
+                  >
+                    ↺ Redo
+                  </button>
+                </>
+              )}
+            </div>
+            {compassError && <div style={{ fontSize: 11, color: C.coral, marginTop: 6 }}>{compassError}</div>}
           </div>
         </div>
       </td>
