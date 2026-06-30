@@ -135,11 +135,36 @@ strong{color:var(--ink);font-weight:700}
 .back .url{color:var(--orange);font-size:14px;letter-spacing:.06em;text-transform:lowercase;font-weight:700}
 
 @media print {
-  html { background: white; }
-  .viewer { gap: 0; padding: 0; background: white; }
+  @page { size: A4 portrait; margin: 0; }
+  html, body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .viewer { gap: 0; padding: 0; background: white; width: 210mm; }
   .page-label { display: none; }
-  .page { page-break-after: always; min-height: 0; height: 1123px; }
-  .page.back { page-break-after: auto; }
+  .page {
+    page-break-after: always;
+    break-after: page;
+    width: 210mm;
+    height: 297mm;
+    min-height: 0 !important;
+    max-height: 297mm;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page.back { page-break-after: auto; break-after: auto; }
+  .card, .callout, .tip, .career, .week, .check, .dicho, svg {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .cover, .dark, .back,
+  .cover *, .dark *, .back * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
 `;
 
