@@ -87,7 +87,7 @@ export function ProductCard({ product, featured }: { product: Product; featured?
           ))}
         </div>
 
-        <Link href="/test" style={{
+        <Link href="/reno" style={{
           display: 'block', width: '100%', padding: '14px', borderRadius: 100,
           background: featured ? 'white' : 'var(--ink)',
           color: featured ? 'var(--violet)' : 'white',

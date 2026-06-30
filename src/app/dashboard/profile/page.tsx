@@ -63,7 +63,7 @@ export default function ProfilePage() {
         }}>
           <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Тест ещё не пройден</div>
           <div style={{ fontSize: 14, color: 'var(--ink-3)', marginBottom: 20 }}>Пройдите тест, чтобы увидеть профиль</div>
-          <Link href="/test" style={{
+          <Link href="/reno" style={{
             display: 'inline-block', background: 'var(--violet)', color: 'white',
             padding: '12px 24px', borderRadius: 100, fontWeight: 700, fontSize: 14,
           }}>

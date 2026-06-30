@@ -86,7 +86,7 @@ export default function DashboardPage() {
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', marginBottom: 28, lineHeight: 1.6 }}>
           15 минут — и вы узнаете психотип, сильные стороны и подходящие профессии
         </div>
-        <Link href="/start" style={{
+        <Link href="/reno" style={{
           display: 'inline-block',
           background: 'linear-gradient(95deg, #FF9540 0%, #E6337C 100%)',
           color: 'white',

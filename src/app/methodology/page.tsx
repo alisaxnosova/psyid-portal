@@ -109,7 +109,7 @@ export default function MethodologyPage() {
             <p style={{ fontSize: 17, opacity: 0.85, maxWidth: 500, margin: '0 auto 32px', lineHeight: 1.5 }}>
               20–25 минут — и у вас полный профиль по всем семи осям с фасетами и компенсациями.
             </p>
-            <Link href="/test" className="btn-primary" style={{ padding: '16px 32px', fontSize: 15 }}>
+            <Link href="/reno" className="btn-primary" style={{ padding: '16px 32px', fontSize: 15 }}>
               Начать тест — 2 490 ₽
             </Link>
           </div>

@@ -127,7 +127,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Bottom */}
         <div style={{ padding: '12px 12px 20px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <Link href="/start" style={{
+          <Link href="/reno" style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '9px 10px', borderRadius: 10, marginBottom: 4,
             color: 'rgba(255,255,255,0.35)', fontSize: 13, transition: 'color .15s',

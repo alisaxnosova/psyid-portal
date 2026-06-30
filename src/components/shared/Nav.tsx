@@ -58,7 +58,7 @@ export function Nav() {
                 padding: '9px 18px', fontSize: 14, fontWeight: 500,
                 color: 'var(--ink-2)', borderRadius: 100,
               }}>Войти</Link>
-              <Link href="/test" className="btn-primary" style={{ padding: '10px 20px', fontSize: 14 }}>
+              <Link href="/reno" className="btn-primary" style={{ padding: '10px 20px', fontSize: 14 }}>
                 Пройти тест бесплатно
               </Link>
             </>
@@ -89,7 +89,7 @@ export function Nav() {
         }}>
           <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#5ED4E8', display: 'inline-block' }} />
           Бесплатный тест доступен прямо сейчас -{' '}
-          <Link href="/test" style={{ color: 'var(--violet)', fontWeight: 600 }}>
+          <Link href="/reno" style={{ color: 'var(--violet)', fontWeight: 600 }}>
             пройти за 15 минут →
           </Link>
         </div>

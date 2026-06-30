@@ -725,7 +725,7 @@ export default function Landing() {
                   </li>
                 ))}
               </ul>
-              <Link href="/test" style={{ display: 'flex', justifyContent: 'center', padding: '13px 20px', borderRadius: 999, background: 'transparent', color: C.ink, border: `1.5px solid ${C.ink}`, fontWeight: 600, fontSize: 14 }}>
+              <Link href="/reno" style={{ display: 'flex', justifyContent: 'center', padding: '13px 20px', borderRadius: 999, background: 'transparent', color: C.ink, border: `1.5px solid ${C.ink}`, fontWeight: 600, fontSize: 14 }}>
                 {t.plan1_cta}
               </Link>
             </div>
@@ -743,7 +743,7 @@ export default function Landing() {
                   </li>
                 ))}
               </ul>
-              <Link href="/test" style={{ display: 'flex', justifyContent: 'center', padding: '14px 20px', borderRadius: 999, background: 'linear-gradient(95deg, #FF5C72, #FF8A45)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: '0 12px 28px -8px rgba(255,114,80,.6)', position: 'relative' }}>
+              <Link href="/reno" style={{ display: 'flex', justifyContent: 'center', padding: '14px 20px', borderRadius: 999, background: 'linear-gradient(95deg, #FF5C72, #FF8A45)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: '0 12px 28px -8px rgba(255,114,80,.6)', position: 'relative' }}>
                 {t.plan2_cta}
               </Link>
             </div>

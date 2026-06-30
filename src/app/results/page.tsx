@@ -377,7 +377,7 @@ function ResultsContent() {
                 <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6 }}>Это демо-паспорт</div>
                 <div style={{ fontSize: 14, color: 'var(--ink-2)' }}>Пройдите тест, чтобы получить психологический паспорт вашего ребёнка</div>
               </div>
-              <Link href="/test" className="btn-primary" style={{ padding: '14px 28px' }}>
+              <Link href="/reno" className="btn-primary" style={{ padding: '14px 28px' }}>
                 Пройти тест бесплатно →
               </Link>
             </>

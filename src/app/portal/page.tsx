@@ -128,7 +128,7 @@ export default function PortalPage() {
             </div>
           )}
 
-          <Link href="/start" style={{
+          <Link href="/reno" style={{
             display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999,
             padding: '13px 24px', fontWeight: 700, fontSize: 14, color: '#fff',
             background: 'linear-gradient(95deg, #FF5C72, #FF8A45)',

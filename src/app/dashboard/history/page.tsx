@@ -69,7 +69,7 @@ export default function HistoryPage() {
           <div style={{ fontSize: 14, color: 'var(--ink-3)', marginBottom: 20 }}>
             Первое тестирование создаст историю
           </div>
-          <Link href="/test" style={{
+          <Link href="/reno" style={{
             display: 'inline-block', background: 'var(--violet)', color: 'white',
             padding: '12px 24px', borderRadius: 100, fontWeight: 700, fontSize: 14,
           }}>
@@ -109,7 +109,7 @@ export default function HistoryPage() {
                   </Link>
                 )}
                 {a.status === 'IN_PROGRESS' && (
-                  <Link href="/test" style={{
+                  <Link href="/reno" style={{
                     padding: '7px 14px', borderRadius: 100,
                     background: 'var(--bg-2)', color: 'var(--ink-2)',
                     fontSize: 13, fontWeight: 600,
