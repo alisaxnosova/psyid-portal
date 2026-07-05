@@ -33,6 +33,8 @@ interface ResultRow {
   sessionId: string;
   codeId: string;
   code: string;
+  userName: string | null;
+  invoiceRef: string | null;
   status: string;
   device: 'mobile' | 'desktop' | 'unknown';
   type: string;
@@ -56,6 +58,24 @@ function fmt(iso: string) {
 function ms(ms: number | null) {
   if (ms === null) return '—';
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
+}
+
+// Test-taker identity: prefer the attached name, fall back to the Etsy invoice /
+// reference, and only show the raw code when neither is set.
+function takerLabel(r: Pick<ResultRow, 'userName' | 'invoiceRef' | 'code'>): string {
+  return r.userName?.trim() || r.invoiceRef?.trim() || r.code;
+}
+
+function TakerCell({ r }: { r: ResultRow }) {
+  const label = takerLabel(r);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+      <span style={{ fontSize: 14, fontWeight: 700, color: C.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+      {label !== r.code && (
+        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: C.inkMute }}>{r.code}</span>
+      )}
+    </div>
+  );
 }
 
 function TH({ children, w }: { children: React.ReactNode; w?: number | string }) {
@@ -322,6 +342,8 @@ function ExpandedRow({ r }: { r: ResultRow }) {
           {/* Session meta */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10 }}>Session</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Taker: {takerLabel(r)}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Code: {r.code}{r.invoiceRef ? ` · ${r.invoiceRef}` : ''}</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>ID: {r.sessionId.slice(0, 22)}…</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Answers: {r.answersCount} / 94</div>
             <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Avg response: {ms(r.avgResponseTimeMs)}</div>
@@ -581,7 +603,7 @@ export default function AdminResultsPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
               <thead>
                 <tr>
-                  <TH w={70}>code</TH>
+                  <TH w={180}>test taker</TH>
                   <TH w={90}>type</TH>
                   <TH>E / I</TH>
                   <TH>S / N</TH>
@@ -617,9 +639,7 @@ export default function AdminResultsPage() {
                         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                         style={{ cursor: 'pointer', transition: 'background .1s' }}
                       >
-                        <TD>
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 15, fontWeight: 800, letterSpacing: '0.08em', color: C.ink }}>{r.code}</span>
-                        </TD>
+                        <TD><TakerCell r={r} /></TD>
                         <TD><TypeBadge type={r.type} /></TD>
                         <TD><AxisBar label={r.type[0]} pct={r.pct[r.type[0] as 'E' | 'I']} color={C.violet} /></TD>
                         <TD><AxisBar label={r.type[1]} pct={r.pct[r.type[1] as 'S' | 'N']} color={C.violet} /></TD>
@@ -665,7 +685,7 @@ export default function AdminResultsPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1100 }}>
               <thead>
                 <tr>
-                  <TH w={70}>code</TH>
+                  <TH w={160}>test taker</TH>
                   <TH w={80}>type</TH>
                   <TH>age</TH>
                   <TH>sex</TH>
@@ -698,7 +718,7 @@ export default function AdminResultsPage() {
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     style={{ transition: 'background .1s' }}
                   >
-                    <TD><span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800, letterSpacing: '0.08em' }}>{r.code}</span></TD>
+                    <TD><TakerCell r={r} /></TD>
                     <TD><TypeBadge type={r.type} /></TD>
                     <TD mono>{r.intake?.age ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
                     <TD>{r.intake?.sex ?? <span style={{ color: C.inkMute }}>—</span>}</TD>

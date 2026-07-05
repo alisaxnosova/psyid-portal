@@ -29,17 +29,20 @@ export async function GET(req: Request) {
     sessionKeys.map(key => kvGet<RenoSession>(key))
   );
 
-  const codesRaw = await kvGet<{ id: string; code: string }[]>('psyid:codes');
-  const codeMap = new Map((codesRaw ?? []).map(c => [c.id, c.code]));
+  const codesRaw = await kvGet<{ id: string; code: string; user_name?: string | null; invoice_ref?: string | null }[]>('psyid:codes');
+  const codeMap = new Map((codesRaw ?? []).map(c => [c.id, c]));
 
   const results = sessions
     .filter((s): s is RenoSession => !!s && s.status === 'completed')
     .map(s => {
       const score = scoreSession(s.answers);
+      const codeEntry = codeMap.get(s.codeId);
       return {
         sessionId: s.id,
         codeId: s.codeId,
-        code: codeMap.get(s.codeId) ?? '—',
+        code: codeEntry?.code ?? '—',
+        userName: codeEntry?.user_name ?? null,
+        invoiceRef: codeEntry?.invoice_ref ?? null,
         status: s.status,
         device: s.device ?? 'unknown',
         type: score.type,
