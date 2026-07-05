@@ -160,53 +160,25 @@ export default function PortalPage() {
           </Link>
         </div>
 
-        {/* Results grid */}
+        {/* What you'll unlock */}
+        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkMute, fontWeight: 700, marginBottom: 16 }}>
+          What you&apos;ll unlock once you finish
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18 }}>
 
-          {/* No results yet card */}
-          <div style={{ background: '#fff', border: `1px solid ${C.line}`, borderRadius: 20, padding: '32px 28px' }}>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkMute, marginBottom: 12 }}>
-              Assessment Results
+          {[
+            { t: 'Personality Passport', d: 'An interactive passport with a stamp for every assessment — your type, your four character axes, and a profile that’s yours.' },
+            { t: 'Your full report', d: '7 best-fit careers, your superpowers and blind spots, a 30-day growth plan and more — written to your exact profile.' },
+            { t: 'Grows every year', d: 'Retake once a year; each assessment adds a new stamp, so you can see how you’ve changed over time.' },
+          ].map((card, i) => (
+            <div key={i} style={{ background: '#fff', border: `1px solid ${C.line}`, borderRadius: 20, padding: '30px 28px' }}>
+              <div style={{ width: 34, height: 34, borderRadius: 10, background: C.bone, border: `1px solid ${C.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800, color: C.blue, marginBottom: 16 }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 8 }}>{card.t}</div>
+              <p style={{ fontSize: 14, color: C.inkSoft, margin: 0, lineHeight: 1.6 }}>{card.d}</p>
             </div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No results yet</div>
-            <p style={{ fontSize: 14, color: C.inkSoft, margin: '0 0 20px', lineHeight: 1.55 }}>
-              Complete the assessment to see your 4-axis profile, career directions, and strengths map.
-            </p>
-            <Link href="/reno" style={{ fontSize: 14, fontWeight: 600, color: C.blue }}>
-              Start assessment →
-            </Link>
-          </div>
-
-          {/* Passport card */}
-          <div style={{ background: '#fff', border: `1px solid ${C.line}`, borderRadius: 20, padding: '32px 28px' }}>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkMute, marginBottom: 12 }}>
-              Psychological Passport
-            </div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 8 }}>Not yet generated</div>
-            <p style={{ fontSize: 14, color: C.inkSoft, margin: '0 0 20px', lineHeight: 1.55 }}>
-              Your 24-page passport is created after you complete the assessment. Digital version same day; print within a week.
-            </p>
-            <span style={{ fontSize: 14, color: C.inkMute }}>Available after assessment</span>
-          </div>
-
-          {/* Account card */}
-          <div style={{ background: '#fff', border: `1px solid ${C.line}`, borderRadius: 20, padding: '32px 28px' }}>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkMute, marginBottom: 12 }}>
-              Account
-            </div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 8 }}>
-              {user?.fullName ?? user?.firstName ?? 'Your account'}
-            </div>
-            <p style={{ fontSize: 14, color: C.inkSoft, margin: '0 0 4px', lineHeight: 1.55 }}>
-              {user?.email}
-            </p>
-            <p style={{ fontSize: 13, color: C.inkMute, margin: '0 0 20px' }}>
-              Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
-            </p>
-            <button onClick={logout} style={{ fontSize: 14, fontWeight: 600, color: C.coral, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}>
-              Sign out
-            </button>
-          </div>
+          ))}
         </div>
       </main>
 

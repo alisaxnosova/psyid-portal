@@ -356,6 +356,13 @@ export default function Landing() {
               }}>
                 {t.nav_specialists}
               </Link>
+              <Link href="/login" style={{
+                background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.5)',
+                color: '#fff', borderRadius: 999, padding: '8px 18px',
+                fontSize: 13, fontWeight: 700, whiteSpace: 'nowrap',
+              }}>
+                {lang === 'ru' ? 'Войти' : 'Log in'}
+              </Link>
               <Link href="/register" style={{ background: '#fff', color: C.ink, padding: '9px 18px', borderRadius: 999, fontWeight: 600, fontSize: 13, whiteSpace: 'nowrap' }}>
                 {t.nav_cta}
               </Link>
@@ -401,6 +408,12 @@ export default function Landing() {
                 {t.hero_sample}
               </button>
             </div>
+            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.62)', margin: '18px 0 0' }}>
+              {lang === 'ru' ? 'Уже проходили тест? ' : 'Already have an account? '}
+              <Link href="/login" style={{ color: '#fff', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                {lang === 'ru' ? 'Войти' : 'Log in'}
+              </Link>
+            </p>
 
             <div style={{ marginTop: 24, fontFamily: "'Geist Mono', monospace", fontSize: 12, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.55)' }}>
               <b style={{ color: '#fff', fontWeight: 500 }}>{t.hero_free}</b>
