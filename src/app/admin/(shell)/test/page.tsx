@@ -324,7 +324,10 @@ export default function AdminCodesPage() {
         </div>
 
         {/* ── Codes list ── */}
-        <div>
+        {/* minWidth:0 lets this 1fr grid track shrink below the table's intrinsic
+            width so the table's own overflow-x scroll engages instead of the whole
+            page overflowing. */}
+        <div style={{ minWidth: 0 }}>
           <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
             {([
               { key: 'all' as const,    label: `All (${codes.length})`           },
