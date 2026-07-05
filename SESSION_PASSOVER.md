@@ -4,6 +4,38 @@ _Last updated: 2026-07-05_
 
 ---
 
+## 2026-07-05 (later) — Client portal: personality passport after first test
+
+`/portal` (the canonical client cabinet — register + login both redirect here) now
+transforms from the placeholder card layout into an **interactive "Паспорт личности"
+booklet** once the user has completed their first assessment. Ported from a Claude
+Design prototype (`PsyID Client Portal.html`).
+
+- **New:** `src/app/portal/PassportView.tsx` — page-turn book (cover → data page → visa
+  pages with per-assessment stamps → back cover), plus a navigable **ResultsReader**
+  overlay opened by clicking a stamp (Обзор / Оси / Сильные стороны / Рост). All CSS is
+  injected via a scoped `<style>` under `.portal` (vars scoped to `.portal`, not `:root`,
+  to avoid colliding with the app's global tokens). Tweaks-panel scaffold from the
+  prototype was dropped.
+- **New:** `GET /api/client/results` — Bearer (portal session token). Resolves the portal
+  user → their access code → `codeId`, scans `psyid:reno-session:*` for **completed**
+  sessions with that codeId, scores each via `scoreSession`, returns `{ hasResult, holder,
+  assessments[] }`. `vals = [pctE, pctN, pctF, pctJ]/100`; `code = score.type`.
+- **Gating:** `src/app/portal/page.tsx` fetches `/api/client/results` after auth; if
+  `hasResult` → `<PassportView>`, else the existing placeholder portal.
+- **Narrative is placeholder** (RU), derived client-side in `deriveNarrative()` from the
+  code/axes (profile label, summary, strengths, watch-outs, careers, 2 growth experiments).
+  Identity/code/radar/axis positions are REAL (from the scored session). User will refine
+  copy later ("going granular" on every page).
+- **Not done yet / follow-ups:** wire real report content into the narrative sections;
+  the reno completion funnel still tags portal takers as `third_party` and shows the Etsy
+  "results sent to your specialist" end screen — needs to branch on `code.portalUserEmail`
+  → tag session `portal` and redirect back to `/portal` after completion. `/results` CTA
+  still points at the stray `/dashboard` cabinet.
+- Bilingual (EN/RU) portal was requested earlier but the passport is RU-only for now.
+
+---
+
 ## 2026-07-05 (later session) — Admin portal: users/results/vault
 
 All shipped, committed, pushed (`alisa` remote), and deployed to https://psyid.me.

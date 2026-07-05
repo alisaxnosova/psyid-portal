@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth, logout } from '@/lib/useAuth';
+import PassportView, { type Holder, type ApiAssessment } from './PassportView';
+
+interface ResultsResponse { hasResult: boolean; holder: Holder; assessments: ApiAssessment[] }
 
 const C = {
   blue: '#2244E0', blueSoft: '#6A85F0', orangeHot: '#FF9540', coral: '#FF5A5A',
@@ -15,10 +18,24 @@ export default function PortalPage() {
   const { user, loading, isLoggedIn } = useAuth();
   const router = useRouter();
   const [codeCopied, setCodeCopied] = useState(false);
+  const [results, setResults] = useState<ResultsResponse | null>(null);
+  const [resLoading, setResLoading] = useState(true);
 
   useEffect(() => {
     if (!loading && !isLoggedIn) router.push('/login');
   }, [loading, isLoggedIn, router]);
+
+  // Once authenticated, check whether the user has a completed assessment.
+  // If so, the portal becomes the personality passport.
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('reno_access_token') : null;
+    fetch('/api/client/results', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then(r => (r.ok ? r.json() : null))
+      .then((d: ResultsResponse | null) => setResults(d))
+      .catch(() => {})
+      .finally(() => setResLoading(false));
+  }, [isLoggedIn]);
 
   function copyCode() {
     if (!user?.accessCode) return;
@@ -27,7 +44,7 @@ export default function PortalPage() {
     setTimeout(() => setCodeCopied(false), 2000);
   }
 
-  if (loading) {
+  if (loading || (isLoggedIn && resLoading)) {
     return (
       <div style={{ minHeight: '100vh', background: C.paper, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, color: C.inkMute, letterSpacing: '0.1em' }}>Loading…</div>
@@ -36,6 +53,11 @@ export default function PortalPage() {
   }
 
   if (!isLoggedIn) return null;
+
+  // Completed at least one assessment → show the personality passport.
+  if (results?.hasResult) {
+    return <PassportView holder={results.holder} assessments={results.assessments} />;
+  }
 
   const displayName = user?.fullName ?? user?.firstName ?? user?.email ?? 'there';
 
