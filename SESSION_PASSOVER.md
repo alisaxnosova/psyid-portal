@@ -2,6 +2,49 @@
 
 _Last updated: 2026-07-05_
 
+---
+
+## 2026-07-05 (later session) — Admin portal: users/results/vault
+
+All shipped, committed, pushed (`alisa` remote), and deployed to https://psyid.me.
+
+1. **External vs Portal users fixed** (`ca9e12e`). External Users tab was listing
+   portal/website registrants too, because portal registration auto-creates an
+   access code with a `user_name`. Fix: `ExternalUsersTab` now skips any code with a
+   `portalUserEmail` (that field is stamped only on portal-generated codes). External
+   = manual Etsy codes only. File: `src/app/admin/(shell)/users/page.tsx`.
+2. **Results tab shows test-taker identity** (`9ea22ad`) instead of raw code. Resolves
+   name → invoice/reference → code (helper `takerLabel`), raw code kept as a small
+   subtitle. `/api/admin/results` now joins `user_name` + `invoice_ref` from the code.
+   Files: `results/page.tsx`, `api/admin/results/route.ts`.
+3. **Access-codes table overflow fixed** (`76d631f`, `4e27952`). Real cause: the page
+   is a `360px 1fr` CSS grid; a `1fr` track defaults to `min-width:auto` and refused to
+   shrink below the table's width, overflowing the whole page. Fix: `min-width:0` on the
+   codes-list grid child + wrap table in `overflow-x:auto` w/ `minWidth`.
+   File: `test/page.tsx`.
+4. **Career Vault — NEW admin page** (`4c8746a` data, `a32c892` feature).
+   `/admin/career-vault`: visual repository of professions classified to personality
+   codes. The dataset lived at `~/career-database/healthcare.json` **outside the repo**
+   (why it seemed "lost") — now committed at `src/data/career-vault/healthcare.json`
+   (19 industries / 140 occupations). Schema: sphere → industry → function → occupation;
+   each occupation has `personality.mbti_fit.high/moderate` (ranked fit tiers),
+   `cognitive_demand`, `dichotomies`, `specializations`, `contexts`.
+   - Two views (toggle): **By Industry** and **By Personality Code** (inverted index).
+   - Add/edit/delete occupations; ranked-fit editor cycles each type High→Moderate→off.
+   - **Storage:** Redis `psyid:career-vault:*`, seeded from the committed JSON (git =
+     source of truth). **Export JSON** button downloads the live vault to re-commit.
+   - **IP:** cognitive-function notation (Ni/Te…) + `mbti_fit` are internal admin only —
+     never surface "MBTI"/function notation in public reports.
+   - Files: `src/lib/career-vault/{types,store}.ts`, `api/admin/career-vault/route.ts`,
+     `admin/(shell)/career-vault/page.tsx`, nav + i18n in `admin-layout.tsx` / `adminLang.tsx`.
+   - **TODO next:** add/edit of new industries & functions (only occupation-level CRUD so
+     far); auto/scheduled export-to-git so edits don't drift from the committed seed;
+     add more spheres beyond Healthcare (drop JSON in `src/data/career-vault/`, register
+     in `SEEDS` in `store.ts`).
+
+---
+
+
 ## Status: all work shipped, committed, pushed
 
 Everything below is **deployed to production** (https://psyid.me), **committed** to
