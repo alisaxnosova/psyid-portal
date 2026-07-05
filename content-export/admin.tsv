@@ -1,0 +1,116 @@
+surface	key	en	ru
+Admin	nav_section	Navigation	Навигация
+Admin	nav_dashboard	Dashboard	Обзор
+Admin	nav_assessments	Cognitive Profiles	Когнитивные профили
+Admin	nav_answer_key	Answer Key	Ключ ответов
+Admin	nav_questions	Questions	Вопросы
+Admin	nav_report_tmpls	Report Templates	Шаблоны отчётов
+Admin	nav_users	Users	Пользователи
+Admin	nav_results	Results	Результаты
+Admin	nav_career_vault	Career Vault	Хранилище профессий
+Admin	nav_orders	Third Party Orders	Сторонние заказы
+Admin	nav_billing	Billing	Финансы
+Admin	nav_analytics	Analytics	Аналитика
+Admin	nav_assess_ana	Assessment Analytics	Аналитика теста
+Admin	nav_test	Access Codes	Коды доступа
+Admin	nav_to_site	Go to site	На сайт
+Admin	nav_logout	Log out	Выйти
+Admin	loading	Loading...	Загрузка...
+Admin	nothing_found	Nothing found	Ничего не найдено
+Admin	coming_soon	Coming soon	В разработке
+Admin	in_dev	This section is being built	Этот раздел находится в разработке
+Admin	search	Search...	Поиск...
+Admin	all	All	Все
+Admin	filter_compl	Completed	Завершённые
+Admin	filter_prog	In Progress	В процессе
+Admin	dash_title	Dashboard	Обзор
+Admin	dash_sub	Overview · PsyID	Общая картина · PsyID
+Admin	dash_users	Total Users	Всего пользователей
+Admin	dash_started	Tests Started	Тестов начато
+Admin	dash_compl	Tests Completed	Тестов завершено
+Admin	dash_funnel	Funnel	Воронка
+Admin	dash_today	Today	Сегодня
+Admin	dash_reg	Registered	Зарегистрировались
+Admin	dash_started2	Started test	Начали тест
+Admin	dash_compl2	Completed test	Завершили тест
+Admin	dash_new_u	New users	Новых пользователей
+Admin	dash_t_start	Tests started	Тестов начато
+Admin	dash_t_compl	Tests completed	Тестов завершено
+Admin	users_title	Users	Пользователи
+Admin	users_count	accounts	аккаунтов
+Admin	users_ph	Search by email or name...	Поиск по email или имени...
+Admin	users_none	No users found	Пользователи не найдены
+Admin	users_user	User	Пользователь
+Admin	users_tests	Tests	Тестов
+Admin	users_done	Completed	Завершено
+Admin	users_joined	Joined	Регистрация
+Admin	res_title	Results	Результаты
+Admin	res_total	total	всего
+Admin	res_compl	completed	завершено
+Admin	res_prog	in progress	в процессе
+Admin	res_user	User	Пользователь
+Admin	res_profile	Profile	Профиль
+Admin	res_status	Status	Статус
+Admin	res_date	Date	Дата
+Admin	res_anon	Anonymous	Анонимный
+Admin	res_done	Completed	Завершён
+Admin	res_inprog	In Progress	В процессе
+Admin	res_created	Created	Создан
+Admin	ass_title	Test Questions	Вопросы теста
+Admin	ass_sub	questions · TestPersonal v1	вопросов · TestPersonal v1
+Admin	ass_search	Search...	Поиск...
+Admin	ass_save	Save	Сохранить
+Admin	ass_saved	Saved	Сохранено
+Admin	ass_edit	Edit	Редактировать
+Admin	ass_cancel	Cancel	Отмена
+Admin	users_tab_ext	External Users	Внешние пользователи
+Admin	users_tab_portal	Portal Users	Пользователи портала
+Admin	users_tab_admins	Admins	Администраторы
+Admin	users_ext_none	No external users yet. Assign a name when generating an access code to track them here.	Внешних пользователей нет. Укажите имя при создании кода доступа.
+Admin	users_ext_name	Name	Имя
+Admin	users_ext_codes	Codes	Кодов
+Admin	users_ext_used	Tests Taken	Тестов пройдено
+Admin	users_ext_refs	References	Источники
+Admin	users_ext_first	First Seen	Первый раз
+Admin	users_ext_last	Last Active	Последняя активность
+Admin	users_ext_type	Type	Тип
+Admin	users_ext_expand	History	История
+Admin	users_ext_code	Code	Код
+Admin	users_ext_result	Result	Результат
+Admin	users_ext_notest	Not taken	Не пройден
+Admin	codes_user	User (Optional)	Пользователь (необязательно)
+Admin	codes_user_ph	e.g. Alisa from Etsy	напр. Алиса с Etsy
+Admin	codes_col_user	User	Пользователь
+Admin	ak_title	Answer Key	Ключ ответов
+Admin	ak_sub	Reference grid for all profile descriptions	Справочная таблица описаний профилей
+Admin	sliders_title	Cognitive Profiles	Когнитивные профили
+Admin	sliders_sub	Preview cognitive profile report with custom scores	Предпросмотр когнитивного профиля
+Admin	sliders_gen	Generate Report Preview	Сгенерировать отчёт
+Admin	sliders_regen	Regenerate	Перегенерировать
+Admin	sliders_lang	Report Language	Язык отчёта
+Admin	sliders_preview	Report Preview	Предпросмотр отчёта
+Admin	sliders_gen_report	Generate Report	Создать отчёт
+Admin	sliders_dl_pdf	Download PDF	Скачать PDF
+Admin	codes_title	Access Codes	Коды доступа
+Admin	codes_sub	Generate single-use test access codes	Создание одноразовых кодов доступа
+Admin	codes_gen_heading	Generate a Code	Создать код
+Admin	codes_invoice	Invoice / Reference	Счёт / Источник
+Admin	codes_invoice_ph	e.g. Etsy Order #12345	напр. Etsy Заказ #12345
+Admin	codes_note	Note	Заметка
+Admin	codes_note_ph	Optional note	Необязательная заметка
+Admin	codes_gen_btn	Generate Code	Создать код
+Admin	codes_open_test	Open Test Page ↗	Открыть тест ↗
+Admin	codes_copy	Copy	Копировать
+Admin	codes_copied	Copied!	Скопировано!
+Admin	codes_list_title	Generated Codes	Созданные коды
+Admin	codes_col_code	Code	Код
+Admin	codes_col_status	Status	Статус
+Admin	codes_col_invoice	Invoice Ref	Счёт
+Admin	codes_col_note	Note	Заметка
+Admin	codes_col_created	Created	Создан
+Admin	codes_col_used	Used	Использован
+Admin	codes_none	No codes generated yet	Коды ещё не созданы
+Admin	codes_unused	Unused	Не использован
+Admin	codes_used	Used	Использован
+Admin	codes_local_note	Stored locally — backend sync coming	Хранится локально — синхронизация скоро
+Admin	codes_del	Delete	Удалить

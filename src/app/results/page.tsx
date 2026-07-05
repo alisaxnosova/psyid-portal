@@ -399,7 +399,7 @@ function ResultsContent() {
                 <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6 }}>Паспорт сохранён в кабинете</div>
                 <div style={{ fontSize: 14, color: 'var(--ink-2)' }}>Доступен в личном кабинете в любое время</div>
               </div>
-              <Link href="/dashboard" className="btn-dark" style={{ padding: '14px 28px' }}>
+              <Link href="/portal" className="btn-dark" style={{ padding: '14px 28px' }}>
                 Перейти в кабинет →
               </Link>
             </>

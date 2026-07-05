@@ -1,0 +1,150 @@
+surface	key	en	ru
+Landing	nav_how	How it works	Как работает
+Landing	nav_explore	Explore	Подобрать
+Landing	nav_passport	Passport	Паспорт
+Landing	nav_price	Pricing	Цены
+Landing	nav_faq	FAQ	Вопросы
+Landing	nav_cta	Take test →	Пройти тест →
+Landing	nav_specialists	Admins	Admins
+Landing	badge	PSYID · Your Psychological Passport	PSYID · Ваш психологический паспорт
+Landing	hero_h1a	Discover who you are	Узнайте кто вы
+Landing	hero_h1b	and what career fits you	и какая карьера вам подходит
+Landing	hero_p	A 15-minute assessment maps your 4 character axes, surfaces your core strengths, and shows the careers where you'll naturally excel.	Тест за 15 минут строит психологический паспорт: 4 оси характера, ваши сильные стороны и карьерные направления, в которых вы будете по-настоящему эффективны.
+Landing	hero_cta	Take the free assessment	Пройти тест бесплатно
+Landing	hero_sample	View sample	Смотреть пример
+Landing	hero_free	Free	Бесплатно
+Landing	hero_min	15 minutes	15 минут
+Landing	hero_instant	instant results	результат сразу
+Landing	radar_energy	Energy	Энергия
+Landing	radar_attention	Attention	Внимание
+Landing	radar_decisions	Decisions	Решения
+Landing	radar_structure	Structure	Структура
+Landing	profile_label	Profile ·	Профиль ·
+Landing	profile_demo	Dreamer-Explorer	Мечтатель-исследователь
+Landing	feat1_t	Psychological Passport	Психологический паспорт
+Landing	feat1_d	24 pages — digital and print. Clear, honest language — no clinical jargon.	24 страницы — печатный и цифровой. Понятный язык без клинического жаргона.
+Landing	feat2_t	Strengths Map	Карта сильных сторон
+Landing	feat2_d	What you genuinely do best, where to direct your energy, and where to stop forcing it.	Что вам на самом деле даётся лучше всего, куда направлять усилия, а где — отпустить.
+Landing	feat3_t	Career Directions	Карьерные направления
+Landing	feat3_d	Roles, industries, and work styles where you'll actually be at your best.	Роли, сферы и стили работы, в которых вы будете действительно эффективны.
+Landing	how_tag	How it works	Как это работает
+Landing	how_h2a	Three steps to a	Три шага — и у вас в руках
+Landing	how_h2b	passport	паспорт
+Landing	how_h2c	, not a label.	, а не ярлык.
+Landing	how_p	No clinical questionnaires or scary jargon. You work through a series of real-life scenarios.	Никаких клинических опросников и пугающей лексики. Вы проходите серию жизненных сценариев.
+Landing	step1_l	Step 01	Шаг 01
+Landing	step1_t	You take the assessment	Вы проходите тест
+Landing	step1_d	15 minutes on any device. Not a quiz — a series of real-life scenarios most people find surprisingly enjoyable.	15 минут на любом экране. Не опросник, а серия жизненных сценариев — большинству людей на удивление нравится.
+Landing	step2_l	Step 02	Шаг 02
+Landing	step2_t	We build your passport	Мы строим паспорт
+Landing	step2_d	Your answers map onto 4 character axes. Every statement is reviewed by a psychologist, with a confidence score for each insight.	Ответы ложатся в 4 оси характера. Каждое утверждение прошло экспертизу, у каждого вывода — оценка уверенности.
+Landing	step3_l	Step 03	Шаг 03
+Landing	step3_t	You see your map	Вы видите карту
+Landing	step3_d	Digital passport the same day. Print within a week. Inside: strengths, career directions, and 3 experiments to try this month.	Цифровой паспорт в тот же день. Печатный — через неделю. Внутри: сильные стороны, карьерные пути и 3 эксперимента на ближайший месяц.
+Landing	explore_tag	Try it · 20 seconds	Попробуйте · 20 секунд
+Landing	explore_h2a	Build your profile across	Соберите профиль по
+Landing	explore_h2b	4 axes	4 осям
+Landing	explore_p	Move the dots on each axis — the shape shifts and a live description appears. That's how the passport works, just 24 pages deeper.	Двигайте точки на каждой оси — фигура меняется и появляется живое описание. Так и работает паспорт, только на 24 страницы глубже.
+Landing	axis_energy_title	Energy	Энергия
+Landing	axis_energy_sub	how you recharge	как восстанавливаетесь
+Landing	axis_energy_left	Alone	В одиночестве
+Landing	axis_energy_right	With others	С другими
+Landing	axis_attn_title	Attention	Внимание
+Landing	axis_attn_sub	where it naturally goes	на что направлено
+Landing	axis_attn_left	Facts	Факты
+Landing	axis_attn_right	Ideas	Идеи
+Landing	axis_decs_title	Decisions	Решения
+Landing	axis_decs_sub	what they're based on	на чём основаны
+Landing	axis_decs_left	Logic	Логика
+Landing	axis_decs_right	Feelings	Чувства
+Landing	axis_struct_title	Structure	Структура
+Landing	axis_struct_sub	what feels natural	что комфортнее
+Landing	axis_struct_left	Plan	План
+Landing	axis_struct_right	Flow	Свобода
+Landing	inside_tag	Inside the Passport	Внутри паспорта
+Landing	inside_h2a	Six things you'll	Шесть вещей, которые вы
+Landing	inside_h2b	discover	узнаете
+Landing	inside_p	Each section answers a question people actually ask before taking the assessment.	Каждый раздел отвечает на вопрос, который нам задают до прохождения теста.
+Landing	chip1	How you connect with new people	Как вы знакомитесь с новыми людьми
+Landing	chip2	How you make decisions under pressure	Как принимаете решения под давлением
+Landing	chip3	What actually recharges you	Что на самом деле вас восстанавливает
+Landing	chip4	Where to push yourself, where to let go	Где давить на себя, где отпустить
+Landing	chip5	Careers you'd genuinely excel in	Карьеры, в которых вы будете эффективны
+Landing	chip6	Three experiments to try this month	Три эксперимента на ближайший месяц
+Landing	passport_page	Page 14 / 24	Страница 14 / 24
+Landing	passport_section	Section · Decisions	Раздел · Решения
+Landing	passport_quote	"Lisa makes decisions after sitting with two good options. Rushed choices go poorly.	«Маша принимает решения, посидев с двумя хорошими вариантами. Поспешные выборы идут плохо.
+Landing	passport_bold	Give her a night	Дайте ей ночь
+Landing	passport_footer1	PsyID · Psychological Passport	PsyID · Психологический паспорт
+Landing	passport_conf	Confidence · 0.82	Уверенность · 0.82
+Landing	stats_tag	Methodology	Методология
+Landing	stats_h2	Rigorous where it matters.	Строго там, где это важно.
+Landing	stats_p	Every item went through two rounds of expert review and field testing. No labels — just patterns.	Каждый пункт прошёл два круга экспертизы и серию полевых проверок. Никаких ярлыков — только паттерны.
+Landing	stat1_l	character axes calibrated for adult life and careers	оси характера, адаптированные под взрослую жизнь и карьеру
+Landing	stat2_l	psychologists review every statement	психолога рецензируют каждое утверждение
+Landing	stat3_l	people in the pre-release sample	человек в выборке до релиза
+Landing	stat4_l	average confidence score across passport statements	средняя уверенность утверждений в паспорте
+Landing	testi_q	"I expected another personality test. I got a document that finally explains how I think — and what I should be doing with my career."	«Я ждала очередного теста. И получила документ, который наконец объясняет, как я думаю — и куда мне идти в карьере».
+Landing	testi_author	Masha K.	Маша К.
+Landing	testi_meta	designer · Tbilisi	дизайнер · Тбилиси
+Landing	price_tag	Pricing	Цена
+Landing	price_h2a	Two ways to	Два способа
+Landing	price_h2b	start	начать
+Landing	price_sub	No subscription. Free delivery in Russia and Georgia.	Без подписки. Бесплатная доставка в РФ и Грузии.
+Landing	plan1_name	Standard	Стандарт
+Landing	plan1_price	₽4 900	₽4 900
+Landing	plan1_sub	Complete passport — digital and print.	Полный паспорт — печатный и цифровой.
+Landing	plan1_f1	24-page psychological passport	24-страничный психологический паспорт
+Landing	plan1_f2	Print version — delivery in 5 days	Печатная версия — доставка за 5 дней
+Landing	plan1_f3	Digital version + shareable card	Цифровая версия + карточка для пересылки
+Landing	plan1_f4	List of 3 experiments to try this month	Список из 3 экспериментов на месяц
+Landing	plan1_cta	Start →	Начать →
+Landing	plan2_name	Passport + Consultation	Паспорт + консультация
+Landing	plan2_price	₽7 900	₽7 900
+Landing	plan2_sub	Everything in Standard, plus a session with a psychology-trained career consultant.	Всё из Стандарта, плюс сессия с карьерным психологом.
+Landing	plan2_badge	Recommended	Рекомендуем
+Landing	plan2_f1	Everything in Standard	Всё из «Стандарта»
+Landing	plan2_f2	45-minute consultation with a psychologist	45-минутная консультация с психологом
+Landing	plan2_f3	Career next-steps plan	План карьерных следующих шагов
+Landing	plan2_f4	30 days of email support	Поддержка по почте в течение 30 дней
+Landing	plan2_cta	Start →	Начать →
+Landing	faq_tag	FAQ	Вопросы
+Landing	faq_h2a	Questions people	То, что нас
+Landing	faq_h2b	ask	спрашивают
+Landing	faq_h2c	most often.	чаще всего.
+Landing	faq_p	The things people write to us before taking the assessment.	То, о чём пишут до того, как пройти тест.
+Landing	faq_q1	Isn't this just another MBTI test?	Это не очередной тест MBTI?
+Landing	faq_a1	No. MBTI gives you a label. PsyID is a 24-page document reviewed by psychologists. Every statement is grounded in your specific answers and comes with a confidence score — so you always know how certain we are.	Нет. MBTI даёт ярлык. PsyID — это 24-страничный документ, прошедший экспертизу психологов. Каждое утверждение опирается на ваши конкретные ответы и сопровождается оценкой уверенности — вы всегда знаете, насколько мы в этом уверены.
+Landing	faq_q2	Won't this box me in?	Не загонит ли это меня в рамки?
+Landing	faq_a2	That's our concern too. The passport is a starting point, not a verdict. It opens a conversation: "here's what we noticed, here's what to try." You change and grow — it says so on the first page.	Это наш страх тоже. Паспорт — стартовая точка, а не приговор. Он открывает разговор: «вот что мы заметили, вот что можно попробовать». Вы меняетесь — об этом написано на первой странице.
+Landing	faq_q3	Is this for career changers or people just starting out?	Это для смены карьеры или тех, кто только начинает?
+Landing	faq_a3	Both — and everyone in between. Whether you're switching careers, choosing your first path, or just wanting more clarity about yourself, the passport meets you where you are.	Для всех — и для тех, кто посередине. Смена карьеры, первый выбор направления или просто желание лучше понять себя — паспорт встречает вас там, где вы сейчас.
+Landing	faq_q4	How long does it take?	Сколько занимает тест?
+Landing	faq_a4	About 15 minutes on any screen. Digital passport arrives the same day; the printed version within five days.	Около 15 минут на любом экране. Цифровой паспорт — в тот же день, печатный — в течение пяти дней.
+Landing	faq_q5	Who can see my results?	Кто увидит результаты?
+Landing	faq_a5	Only you. Your data is private by default. You decide whether to share your card with anyone — we never publish or sell anything, ever.	Только вы. По умолчанию данные приватны. Вы сами решаете, делиться ли с кем-то — мы не публикуем и не продаём ничего никогда.
+Landing	cta_h2a	Give yourself a chance to	Дайте себе шанс
+Landing	cta_h2b	know yourself	понять себя
+Landing	cta_p	15 minutes today — a map you'll use for years. The assessment is free.	15 минут сегодня — карта, которой можно пользоваться годами. Тест бесплатный.
+Landing	cta_btn	Take the free assessment ↗	Пройти тест бесплатно ↗
+Landing	cta_sample	View sample	Смотреть пример
+Landing	foot_tagline	Your psychological passport. Built with psychologists.	Ваш психологический паспорт. Разработан вместе с психологами.
+Landing	foot_prod	Product	Продукт
+Landing	foot_comp	Company	Компания
+Landing	foot_contact	Contact	Связаться
+Landing	foot_link_how	How it works	Как это работает
+Landing	foot_link_explore	Explore	Попробовать
+Landing	foot_link_passport	Passport	Паспорт
+Landing	foot_link_price	Pricing	Цены
+Landing	foot_link_about	About us	О нас
+Landing	foot_link_method	Methodology	Методология
+Landing	foot_link_schools	For Organizations	Для организаций
+Landing	foot_link_journal	Blog	Журнал
+Landing	foot_link_email	support@psyid.me	support@psyid.me
+Landing	foot_link_tg	Telegram	Telegram
+Landing	foot_link_ig	Instagram	Instagram
+Landing	foot_link_press	Press Kit	Пресс-кит
+Landing	foot_copy	© 2026 PsyID · psyid.me	© 2026 PsyID · psyid.me
+Landing	foot_legal	Privacy · Terms	Приватность · Условия
+Landing	foot_admin	Admin Portal	Портал администратора
+Landing	lang_toggle	RU	EN

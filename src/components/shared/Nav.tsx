@@ -10,7 +10,7 @@ export function Nav() {
   const { user, loading } = useAuth();
   const isHome = pathname === '/';
 
-  if (pathname === '/' || pathname.startsWith('/dashboard') || pathname.startsWith('/start') || pathname.startsWith('/reno') || pathname.startsWith('/admin') || pathname.startsWith('/register') || pathname.startsWith('/login') || pathname.startsWith('/portal')) return null;
+  if (pathname === '/' || pathname.startsWith('/start') || pathname.startsWith('/reno') || pathname.startsWith('/admin') || pathname.startsWith('/register') || pathname.startsWith('/login') || pathname.startsWith('/portal')) return null;
 
   return (
     <>
@@ -65,7 +65,7 @@ export function Nav() {
           )}
           {!loading && user && (
             <>
-              <Link href="/dashboard" style={{
+              <Link href="/portal" style={{
                 padding: '9px 18px', fontSize: 14, fontWeight: 500,
                 color: 'var(--ink-2)',
               }}>Личный кабинет</Link>
