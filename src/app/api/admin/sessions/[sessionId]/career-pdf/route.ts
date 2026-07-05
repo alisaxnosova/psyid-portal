@@ -38,34 +38,81 @@ export async function GET(
     try {
       const page = await browser.newPage();
 
-      // For PDF: let each .page expand to its full content height.
-      // The original HTML clips overflow with overflow:hidden — that hides
-      // content in the browser but cuts it off in the PDF. Removing the
-      // height cap and overflow:hidden lets content breathe; page-break-after
-      // still ensures each section starts on a new PDF page.
-      const pdfHtml = html.replace('</head>', `<style>
-        html,body{margin:0;padding:0;background:#fff}
-        .viewer{display:block!important;gap:0!important;padding:0!important;background:#fff!important}
-        .page-label{display:none!important}
-        .page{
-          width:794px!important;
-          height:auto!important;
-          min-height:1123px!important;
-          max-height:none!important;
-          overflow:visible!important;
-          page-break-after:always;break-after:page;
-          margin:0!important;
-          box-sizing:border-box!important;
-        }
-        .page.back{page-break-after:auto!important;break-after:auto!important}
-        /* Prevent cards/callouts from splitting mid-element across pages */
-        .card,.callout,.tip,.career,.week,.check,.dicho,.tbl tr{
-          break-inside:avoid;page-break-inside:avoid;
-        }
-      </style></head>`);
+      await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
+      // Make sure webfonts have loaded before we measure — otherwise heights
+      // are computed against fallback fonts and every measurement is wrong.
+      await page.evaluateHandle('document.fonts.ready');
+      await new Promise(r => setTimeout(r, 800));
 
-      await page.setContent(pdfHtml, { waitUntil: 'networkidle0', timeout: 30000 });
-      await new Promise(r => setTimeout(r, 1500));
+      // Each `.page` was designed to hold exactly one A4 page (794×1123px), but
+      // the body copy is AI-generated and its length varies. When a page's
+      // content is shorter it must still fill the sheet (footer pinned to the
+      // bottom); when it's taller it must be scaled down to fit — never clipped
+      // and never spilled onto a half-empty continuation page.
+      await page.evaluate(() => {
+        const PAGE_W = 794;
+        const PAGE_H = 1123;
+
+        // Flatten the on-screen viewer chrome (dark padding, gaps, labels).
+        const viewer = document.querySelector('.viewer');
+        if (viewer) {
+          viewer.setAttribute(
+            'style',
+            'display:block;margin:0;padding:0;gap:0;background:#fff;width:auto;align-items:stretch;',
+          );
+        }
+        document.querySelectorAll('.page-label').forEach(el => el.remove());
+
+        const pages = Array.from(document.querySelectorAll<HTMLElement>('.page'));
+        pages.forEach((el, idx) => {
+          const isLast = idx === pages.length - 1;
+
+          // Drop the 1123px floor and let the page collapse to its true content
+          // height so we can measure whether it over- or under-flows.
+          el.style.minHeight = '0';
+          el.style.height = 'auto';
+          el.style.maxHeight = 'none';
+          el.style.overflow = 'visible';
+          el.style.width = `${PAGE_W}px`;
+          el.style.margin = '0';
+
+          const naturalH = Math.ceil(el.getBoundingClientRect().height);
+
+          if (naturalH <= PAGE_H + 8) {
+            // Fits comfortably: lock to exactly one A4 page. The .body-pad
+            // flex:1 spacer then pushes the footer to the bottom as designed.
+            el.style.height = `${PAGE_H}px`;
+            el.style.overflow = 'hidden';
+            el.style.pageBreakAfter = isLast ? 'auto' : 'always';
+            el.style.breakAfter = isLast ? 'auto' : 'page';
+            return;
+          }
+
+          // Overflows: wrap in a fixed A4 frame and uniformly scale the whole
+          // page down until it fits. The frame background is matched to the
+          // page so the (small) side margins left by uniform scaling are
+          // invisible. transform-origin top-center keeps it horizontally
+          // centered and top-aligned, so it fills the sheet edge to edge.
+          const scale = PAGE_H / naturalH;
+          const bg = getComputedStyle(el).backgroundColor || '#F8F4ED';
+
+          const frame = document.createElement('div');
+          frame.setAttribute(
+            'style',
+            `width:${PAGE_W}px;height:${PAGE_H}px;overflow:hidden;margin:0;background:${bg};` +
+              (isLast ? '' : 'page-break-after:always;break-after:page;'),
+          );
+          el.parentNode!.insertBefore(frame, el);
+          frame.appendChild(el);
+
+          el.style.pageBreakAfter = 'auto';
+          el.style.breakAfter = 'auto';
+          el.style.transformOrigin = 'top center';
+          el.style.transform = `scale(${scale})`;
+        });
+      });
+
+      await new Promise(r => setTimeout(r, 400));
 
       const pdf = await page.pdf({
         format: 'A4',
