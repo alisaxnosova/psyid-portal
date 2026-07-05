@@ -69,7 +69,10 @@ function ExternalUsersTab() {
 
   const externalUsers: ExternalUser[] = Object.values(
     codes.reduce<Record<string, ExternalUser>>((acc, code) => {
-      if (!code.user_name) return acc;
+      // External = manually-generated Etsy codes only. Portal registrants get an
+      // auto-generated code stamped with portalUserEmail; those belong to the
+      // Portal tab, not here.
+      if (!code.user_name || code.portalUserEmail) return acc;
       const key = code.user_name.toLowerCase();
       if (!acc[key]) acc[key] = { name: code.user_name, codes: [], results: [] };
       acc[key].codes.push(code);
