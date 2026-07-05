@@ -20,6 +20,7 @@ export interface Holder {
   passportNo: string;
   nationality: string;
   handle: string;
+  plan?: 'basic' | 'full';
 }
 export interface ApiAssessment {
   id: string;
@@ -48,32 +49,52 @@ interface Assessment extends ApiAssessment {
 
 /* ── Axes (adult framing; no "MBTI"/function notation surfaced) ── */
 const AXES = [
-  { key: 'energy',    name: 'Энергия',   left: 'Интроверсия', right: 'Экстраверсия',  lp: 'I', rp: 'E' },
-  { key: 'attention', name: 'Внимание',  left: 'Сенсорика',   right: 'Интуиция',       lp: 'S', rp: 'N' },
-  { key: 'decisions', name: 'Решения',   left: 'Логика',      right: 'Чувства',        lp: 'T', rp: 'F' },
-  { key: 'structure', name: 'Структура', left: 'Гибкость',    right: 'Планирование',   lp: 'P', rp: 'J' },
+  { key: 'energy',    name: 'Energy',    left: 'Introversion', right: 'Extraversion', lp: 'I', rp: 'E' },
+  { key: 'attention', name: 'Attention', left: 'Sensing',      right: 'Intuition',    lp: 'S', rp: 'N' },
+  { key: 'decisions', name: 'Decisions', left: 'Thinking',     right: 'Feeling',      lp: 'T', rp: 'F' },
+  { key: 'structure', name: 'Structure', left: 'Flexibility',  right: 'Planning',     lp: 'P', rp: 'J' },
 ] as const;
 
 /* ── Narrative derivation from the 4-letter code ── */
 const PROFILE: Record<string, string> = {
-  INTJ: 'Стратег-архитектор', INTP: 'Архитектор-аналитик', ENTJ: 'Командир-стратег', ENTP: 'Изобретатель-полемист',
-  INFJ: 'Идеалист-наставник', INFP: 'Идеалист-исследователь', ENFJ: 'Наставник-организатор', ENFP: 'Вдохновитель-катализатор',
-  ISTJ: 'Хранитель-логист', ISFJ: 'Защитник-опекун', ESTJ: 'Управляющий-администратор', ESFJ: 'Дипломат-хозяин',
-  ISTP: 'Мастер-виртуоз', ISFP: 'Художник-созерцатель', ESTP: 'Деятель-предприниматель', ESFP: 'Артист-энтузиаст',
+  INTJ: 'The Strategist-Architect', INTP: 'The Analyst-Architect', ENTJ: 'The Commander-Strategist', ENTP: 'The Inventor-Debater',
+  INFJ: 'The Idealist-Mentor', INFP: 'The Idealist-Explorer', ENFJ: 'The Mentor-Organizer', ENFP: 'The Inspirer-Catalyst',
+  ISTJ: 'The Keeper-Logistician', ISFJ: 'The Protector-Caretaker', ESTJ: 'The Manager-Administrator', ESFJ: 'The Diplomat-Host',
+  ISTP: 'The Maker-Virtuoso', ISFP: 'The Artist-Observer', ESTP: 'The Doer-Entrepreneur', ESFP: 'The Performer-Enthusiast',
 };
 const L_STRENGTH: Record<string, string> = {
-  E: 'Заряжающий энтузиазм', I: 'Глубина мысли', S: 'Внимание к деталям', N: 'Воображение',
-  T: 'Системность', F: 'Эмпатия', J: 'Организованность', P: 'Гибкость',
+  E: 'Contagious enthusiasm', I: 'Depth of thought', S: 'Eye for detail', N: 'Imagination',
+  T: 'Systematic thinking', F: 'Empathy', J: 'Organization', P: 'Flexibility',
 };
 const L_WATCH: Record<string, string> = {
-  E: 'Распыляется на многое', I: 'Легко откладывает контакт', S: 'Недооценивает дальний горизонт', N: 'Перегружается идеями',
-  T: 'Может звучать резко', F: 'Берёт на себя чужое', J: 'Тяжело переносит хаос', P: 'Откладывает решения',
+  E: 'Spreads thin across too much', I: 'Slow to reach out', S: 'Underrates the long horizon', N: 'Overloaded by ideas',
+  T: 'Can come across as blunt', F: 'Takes on others’ burdens', J: 'Struggles with chaos', P: 'Puts off decisions',
 };
 const CAREERS: Record<string, Career[]> = {
-  NF: [{ n: 'UX-исследователь', d: 'Люди и мотивация', fit: 0.86 }, { n: 'Психолог / коуч', d: 'Глубина и эмпатия', fit: 0.83 }, { n: 'Автор / сценарист', d: 'Смысл и истории', fit: 0.80 }],
-  NT: [{ n: 'Продукт-стратег', d: 'Системы и гипотезы', fit: 0.90 }, { n: 'Инженер / архитектор', d: 'Модели и логика', fit: 0.87 }, { n: 'Аналитик данных', d: 'Паттерны и точность', fit: 0.84 }],
-  SF: [{ n: 'Наставник / педагог', d: 'Забота и структура', fit: 0.87 }, { n: 'HR / People-партнёр', d: 'Развитие людей', fit: 0.84 }, { n: 'Сервис-дизайнер', d: 'Практика и люди', fit: 0.80 }],
-  ST: [{ n: 'Операционный менеджер', d: 'Процессы и порядок', fit: 0.88 }, { n: 'Инженер-практик', d: 'Точность и результат', fit: 0.85 }, { n: 'Финансовый аналитик', d: 'Данные и дисциплина', fit: 0.82 }],
+  NF: [
+    { n: 'UX researcher', d: 'People and motivation', fit: 0.89 }, { n: 'Psychologist / coach', d: 'Depth and empathy', fit: 0.87 },
+    { n: 'Writer / content strategist', d: 'Meaning and stories', fit: 0.84 }, { n: 'Brand / creative lead', d: 'Ideas and audience', fit: 0.82 },
+    { n: 'People & culture partner', d: 'Growing people', fit: 0.80 }, { n: 'Teacher / facilitator', d: 'Mentorship', fit: 0.78 },
+    { n: 'Program lead (nonprofit)', d: 'Mission and impact', fit: 0.75 },
+  ],
+  NT: [
+    { n: 'Product strategist', d: 'Systems and hypotheses', fit: 0.91 }, { n: 'Software / systems architect', d: 'Models and logic', fit: 0.89 },
+    { n: 'Data scientist', d: 'Patterns and precision', fit: 0.87 }, { n: 'Management consultant', d: 'Structure and leverage', fit: 0.85 },
+    { n: 'R&D engineer', d: 'Building and testing', fit: 0.83 }, { n: 'Investment analyst', d: 'Theses and rigor', fit: 0.80 },
+    { n: 'Startup founder', d: 'Vision and systems', fit: 0.78 },
+  ],
+  SF: [
+    { n: 'Mentor / educator', d: 'Care and structure', fit: 0.88 }, { n: 'People (HR) partner', d: 'Growing people', fit: 0.86 },
+    { n: 'Healthcare professional', d: 'Service and precision', fit: 0.84 }, { n: 'Service designer', d: 'Practice and people', fit: 0.81 },
+    { n: 'Community manager', d: 'Connection and care', fit: 0.79 }, { n: 'Client / account manager', d: 'Trust and follow-through', fit: 0.77 },
+    { n: 'Event producer', d: 'People and logistics', fit: 0.74 },
+  ],
+  ST: [
+    { n: 'Operations manager', d: 'Process and order', fit: 0.89 }, { n: 'Project / delivery manager', d: 'Plans and results', fit: 0.87 },
+    { n: 'Financial analyst', d: 'Data and discipline', fit: 0.85 }, { n: 'Hands-on engineer', d: 'Precision and results', fit: 0.83 },
+    { n: 'Quality / process lead', d: 'Standards and rigor', fit: 0.80 }, { n: 'Logistics / supply manager', d: 'Systems and flow', fit: 0.78 },
+    { n: 'Systems administrator', d: 'Reliability and detail', fit: 0.75 },
+  ],
 };
 
 function deriveNarrative(a: ApiAssessment): Assessment {
@@ -83,32 +104,41 @@ function deriveNarrative(a: ApiAssessment): Assessment {
   const temperament = L.attn + L.dec; // NF | NT | SF | ST
 
   const energyPhrase = L.energy === 'E'
-    ? 'Энергию черпает вовне и заражает ею других'
-    : 'Черпает силу изнутри и мыслит вглубь';
+    ? 'You draw energy from the world around you and spark it in others'
+    : 'You draw strength from within and think deeply';
   const tempPhrase = {
-    NF: 'ведёт за смыслом и видит потенциал в людях',
-    NT: 'строит модели мира и проверяет их на прочность',
-    SF: 'заботится о людях и держит порядок вокруг',
-    ST: 'опирается на факты и доводит начатое до результата',
-  }[temperament] ?? 'сочетает разные грани характера по-своему';
+    NF: 'leading with meaning and seeing potential in people',
+    NT: 'building models of the world and stress-testing them',
+    SF: 'caring for people and keeping order around you',
+    ST: 'relying on facts and seeing things through to results',
+  }[temperament] ?? 'combining different facets of character in your own way';
 
-  const strExp: Experiment = L.str === 'P'
-    ? { l: 'Опыт 01', h: 'Малый дедлайн', p: 'Ставь себе мягкий срок на задачи, которые тянутся: ограничение освобождает, а не сковывает.' }
-    : { l: 'Опыт 01', h: 'День без плана', p: 'Раз в неделю оставляй пару часов совсем без плана — гибкость тоже навык.' };
-  const enExp: Experiment = L.energy === 'E'
-    ? { l: 'Опыт 02', h: 'Тихий час', p: 'Выдели 30 минут тишины в день без входящих — идеям нужна пауза, чтобы дозреть.' }
-    : { l: 'Опыт 02', h: 'Скажи вслух', p: 'Раз в неделю проговори вслух то, что обдумывал молча — так связь с людьми крепнет.' };
+  // Four growth experiments (one per axis), phrased by the dominant side.
+  const exps: Experiment[] = [
+    L.str === 'P'
+      ? { l: 'Experiment 01', h: 'A soft deadline', p: 'Give yourself a gentle deadline on tasks that drag on — for you, a limit frees rather than confines.' }
+      : { l: 'Experiment 01', h: 'A day without a plan', p: 'Once a week, leave a couple of hours completely unplanned — flexibility is a skill too.' },
+    L.energy === 'E'
+      ? { l: 'Experiment 02', h: 'A quiet hour', p: 'Set aside 30 minutes of silence a day with no notifications — ideas need a pause to ripen.' }
+      : { l: 'Experiment 02', h: 'Say it out loud', p: 'Once a week, say aloud what you’ve been mulling silently — connection grows that way.' },
+    L.dec === 'F'
+      ? { l: 'Experiment 03', h: 'Name the trade-off', p: 'Before a values-led call, say the logical cost out loud. Choose with your heart — but with both eyes open.' }
+      : { l: 'Experiment 03', h: 'Ask how they feel', p: 'Before a logic-led call, ask who it affects and how. The right answer usually includes the people in it.' },
+    L.attn === 'N'
+      ? { l: 'Experiment 04', h: 'Ship one small thing', p: 'Finish and release something tiny this week — grounding an idea beats polishing ten in your head.' }
+      : { l: 'Experiment 04', h: 'Zoom out once', p: 'Once a week, step back from the details and ask where this is all heading. The map matters too.' },
+  ];
 
   const letters = [L.energy, L.attn, L.dec, L.str];
   return {
     ...a,
     strong,
-    profile: PROFILE[a.code] ?? 'Личностный профиль',
+    profile: PROFILE[a.code] ?? 'Personality profile',
     summary: `${energyPhrase}, ${tempPhrase}.`,
     strengths: letters.map(l => L_STRENGTH[l]!),
-    watch: letters.filter((_, i) => !strong[i] || true).slice(0, 3).map(l => L_WATCH[l]!),
+    watch: letters.slice(0, 3).map(l => L_WATCH[l]!),
     careers: CAREERS[temperament] ?? CAREERS.NT!,
-    exps: [strExp, enExp],
+    exps,
   };
 }
 
@@ -161,13 +191,13 @@ function Overview({ a }: { a: Assessment }) {
     <div className="res-page">
       <div className="res-grid2">
         <div>
-          <div className="res-eye or">— Обзор профиля —</div>
+          <div className="res-eye or">— Profile overview —</div>
           <h2 className="res-h2">{a.profile}</h2>
           <CodeChips a={a} big />
           <p className="res-summary">{a.summary}</p>
           <div className="res-conf">
             <div className="cval">{a.confidence.toFixed(2)}</div>
-            <div className="clbl">Средняя уверенность<br />утверждений в профиле</div>
+            <div className="clbl">Average confidence<br />across your profile</div>
           </div>
         </div>
         <div className="res-radar-wrap">
@@ -189,8 +219,8 @@ function Overview({ a }: { a: Assessment }) {
 function AxesDetail({ a }: { a: Assessment }) {
   return (
     <div className="res-page">
-      <div className="res-eye bl">— Четыре оси характера —</div>
-      <h2 className="res-h2 sm">Где ты на каждой шкале</h2>
+      <div className="res-eye bl">— The four axes —</div>
+      <h2 className="res-h2 sm">Where you land on each scale</h2>
       <div className="dicho-list">
         {AXES.map((ax, i) => {
           const v = a.vals[i]!;
@@ -199,7 +229,7 @@ function AxesDetail({ a }: { a: Assessment }) {
             <div className="dicho" key={ax.key}>
               <div className="dicho-head">
                 <span className="dt">{ax.name}</span>
-                <span className="ds">{Math.round(dist)}% к «{v >= 0.5 ? ax.right : ax.left}»</span>
+                <span className="ds">{Math.round(dist)}% toward {v >= 0.5 ? ax.right : ax.left}</span>
               </div>
               <div className="spec">
                 <div className="spec-labels"><span>{ax.left}</span><span>{ax.right}</span></div>
@@ -216,18 +246,18 @@ function AxesDetail({ a }: { a: Assessment }) {
 function Strengths({ a }: { a: Assessment }) {
   return (
     <div className="res-page">
-      <div className="res-eye or">— Сильные стороны и путь —</div>
-      <h2 className="res-h2 sm">Что тебе даётся легко</h2>
+      <div className="res-eye or">— Superpowers & direction —</div>
+      <h2 className="res-h2 sm">What comes easily to you</h2>
       <div className="res-grid2 top">
         <div>
-          <div className="col-head or">Сильные стороны</div>
+          <div className="col-head or">Superpowers</div>
           <div className="chips">
             {a.strengths.map((s, i) => (
               <span key={i} className={'chip' + (i === 0 ? ' hi' : '')}>{s}</span>
             ))}
           </div>
           <div className="watchout">
-            <div className="wh">На чём стоит следить</div>
+            <div className="wh">What to watch for</div>
             <ul>
               {a.watch.map((w, i) => (
                 <li key={i}><span className="b" />{w}</li>
@@ -236,7 +266,7 @@ function Strengths({ a }: { a: Assessment }) {
           </div>
         </div>
         <div>
-          <div className="col-head bl">Направления, где ты в своей среде</div>
+          <div className="col-head bl">Careers where you’re in your element</div>
           <div className="careers">
             {a.careers.map((c, i) => (
               <div className="career" key={i}>
@@ -258,9 +288,9 @@ function Strengths({ a }: { a: Assessment }) {
 function Experiments({ a }: { a: Assessment }) {
   return (
     <div className="res-page res-exp">
-      <div className="res-eye lt">— Эксперименты роста —</div>
-      <h2 className="res-h2 white">Две вещи, чтобы попробовать</h2>
-      <p className="exp-sub">Не задания и не диагноз — маленькие опыты на ближайшую пару недель.</p>
+      <div className="res-eye lt">— Growth experiments —</div>
+      <h2 className="res-h2 white">A few things to try</h2>
+      <p className="exp-sub">Not tasks, and not a diagnosis — small experiments for the next couple of weeks.</p>
       <div className="exp-cards">
         {a.exps.map((e, i) => (
           <div className="exp-card" key={i}>
@@ -278,10 +308,10 @@ function Experiments({ a }: { a: Assessment }) {
 }
 
 const SECTIONS = [
-  { id: 'overview', label: 'Обзор', C: Overview },
-  { id: 'axes', label: 'Оси', C: AxesDetail },
-  { id: 'strengths', label: 'Сильные стороны', C: Strengths },
-  { id: 'exp', label: 'Рост', C: Experiments },
+  { id: 'overview', label: 'Overview', C: Overview },
+  { id: 'axes', label: 'Axes', C: AxesDetail },
+  { id: 'strengths', label: 'Superpowers', C: Strengths },
+  { id: 'exp', label: 'Growth', C: Experiments },
 ] as const;
 
 function ResultsReader({ assessment, onClose }: { assessment: Assessment; onClose: () => void }) {
@@ -305,7 +335,7 @@ function ResultsReader({ assessment, onClose }: { assessment: Assessment; onClos
     <div className="results-overlay">
       <div className="res-top">
         <button className="res-back" onClick={onClose}>
-          <span className="ar">←</span> Паспорт
+          <span className="ar">←</span> Passport
         </button>
         <div className="res-id">
           <span className="brand">Psy<i>ID</i></span>
@@ -370,14 +400,14 @@ function Crest({ color, size = 66 }: { color: string; size?: number }) {
 
 function Stamp({ a, style, ink, rot, onOpen }: { a: Assessment; style: string; ink: string; rot: number; onOpen: (a: Assessment) => void }) {
   const common: React.CSSProperties = { ['--ink' as string]: ink, transform: `rotate(${rot}deg)` };
-  const label = 'Открыть результаты →';
+  const label = 'Open results →';
   let inner: React.ReactNode;
   if (style === 'wax') {
     inner = (
       <div className="stamp stamp-wax" style={common} onClick={() => onOpen(a)} title={label}>
         <div className="sw-blob">
           <div className="sw-code">{a.code}</div>
-          <div className="sw-ring">PSYID · ОЦЕНКА · {a.tierCode}</div>
+          <div className="sw-ring">PSYID · PROFILE · {a.tierCode}</div>
         </div>
         <div className="sw-date">{a.date}</div>
       </div>
@@ -391,8 +421,8 @@ function Stamp({ a, style, ink, rot, onOpen }: { a: Assessment; style: string; i
           </defs>
           <circle cx="60" cy="60" r="55" fill="none" stroke="var(--ink)" strokeWidth="1.4" />
           <circle cx="60" cy="60" r="47" fill="none" stroke="var(--ink)" strokeWidth="2.4" />
-          <text className="ss-arc-top"><textPath href={'#arc-' + a.id} startOffset="25%" textAnchor="middle">PSYID · ЛИЧНОСТЬ</textPath></text>
-          <text className="ss-arc-bot"><textPath href={'#arc-' + a.id} startOffset="75%" textAnchor="middle">ОЦЕНКА · {a.tierCode}</textPath></text>
+          <text className="ss-arc-top"><textPath href={'#arc-' + a.id} startOffset="25%" textAnchor="middle">PSYID · PERSONALITY</textPath></text>
+          <text className="ss-arc-bot"><textPath href={'#arc-' + a.id} startOffset="75%" textAnchor="middle">PROFILE · {a.tierCode}</textPath></text>
         </svg>
         <div className="ss-center">
           <div className="ss-code">{a.code}</div>
@@ -422,13 +452,13 @@ function Cover({ holder, onOpen }: { holder: Holder; onOpen: () => void }) {
       </div>
       <div className="cover-crest"><Crest color={COVER.foil} size={78} /></div>
       <div className="cover-title">
-        <div className="ct-1">ПАСПОРТ</div>
-        <div className="ct-2">ЛИЧНОСТИ</div>
+        <div className="ct-1">PERSONALITY</div>
+        <div className="ct-2">PASSPORT</div>
       </div>
       <div className="cover-sub">Psy<i>ID</i> · PERSONALITY PASSPORT</div>
       <div className="cover-foot">
         <span className="cf-no">{holder.passportNo}</span>
-        <span className="cf-hint">нажмите, чтобы открыть →</span>
+        <span className="cf-hint">tap to open →</span>
       </div>
     </div>
   );
@@ -440,14 +470,14 @@ function Endpaper({ holder, back }: { holder: Holder; back?: boolean }) {
       <div className="ep-water"><Crest color="#0E1230" size={220} /></div>
       {!back ? (
         <div className="ep-note">
-          <div className="ep-eye">— Личный документ —</div>
-          <p>Этот паспорт принадлежит <b>{holder.name}</b> и описывает личность так, как её увидел тест PsyID. Он растёт вместе с вами: каждая новая оценка добавляет штамп.</p>
+          <div className="ep-eye">— Personal document —</div>
+          <p>This passport belongs to <b>{holder.name}</b> and describes your personality as seen by the PsyID assessment. It grows with you — every new assessment adds a stamp.</p>
           <div className="ep-handle">{holder.handle}</div>
         </div>
       ) : (
         <div className="ep-note center">
-          <div className="ep-eye">— Продолжение следует —</div>
-          <p>Свободные страницы ждут ваших следующих оценок. Личность — это не диагноз, а маршрут.</p>
+          <div className="ep-eye">— To be continued —</div>
+          <p>Blank pages await your next assessments. Personality is a route, not a diagnosis.</p>
         </div>
       )}
     </div>
@@ -471,24 +501,24 @@ function Identity({ holder, assessments }: { holder: Holder; assessments: Assess
     <div className="face id-page">
       <div className="page-band">
         <span className="brand">Psy<i>ID</i></span>
-        <span className="pb-r">СТРАНИЦА ДАННЫХ</span>
+        <span className="pb-r">DATA PAGE</span>
       </div>
       <div className="id-body">
         <div className="id-photo">
           <div className="id-photo-inner">{holder.initials}</div>
-          <div className="id-photo-cap">ФОТО</div>
+          <div className="id-photo-cap">PHOTO</div>
         </div>
         <div className="id-fields">
-          <Field k="Владелец / Holder" v={holder.name} />
-          <Field k="Тип документа" v="Личностный профиль" />
+          <Field k="Holder" v={holder.name} />
+          <Field k="Document type" v="Personality profile" />
           <div className="id-row2">
-            <Field k="Участник с" v={holder.memberSince} sm />
-            <Field k="Оценок" v={String(assessments.length)} sm />
+            <Field k="Member since" v={holder.memberSince} sm />
+            <Field k="Assessments" v={String(assessments.length)} sm />
           </div>
-          <Field k="№ паспорта" v={holder.passportNo} mono />
+          <Field k="Passport №" v={holder.passportNo} mono />
           <div className="id-sign">
             <div className="sig-line" />
-            <span>Подпись владельца</span>
+            <span>Holder signature</span>
           </div>
         </div>
       </div>
@@ -505,18 +535,18 @@ function Intro() {
     <div className="face intro-page">
       <div className="page-band">
         <span className="brand">Psy<i>ID</i></span>
-        <span className="pb-r">КАК ЧИТАТЬ ПАСПОРТ</span>
+        <span className="pb-r">HOW TO READ IT</span>
       </div>
       <div className="intro-body">
-        <div className="ep-eye or">— Штампы оценок —</div>
-        <h3 className="intro-h">Каждый штамп —<br />одна пройденная оценка.</h3>
+        <div className="ep-eye or">— Assessment stamps —</div>
+        <h3 className="intro-h">Each stamp is<br />one completed assessment.</h3>
         <ol className="intro-list">
-          <li><span className="il-n">01</span><div><b>Листайте страницы</b> — нажимайте на угол или на стрелки внизу.</div></li>
-          <li><span className="il-n">02</span><div><b>Нажмите на штамп</b> — откроется полный разбор этой оценки.</div></li>
-          <li><span className="il-n">03</span><div><b>Свободные страницы</b> заполняются, когда вы проходите новую оценку.</div></li>
+          <li><span className="il-n">01</span><div><b>Turn the pages</b> — tap a corner or the arrows below.</div></li>
+          <li><span className="il-n">02</span><div><b>Tap a stamp</b> — the full breakdown of that assessment opens.</div></li>
+          <li><span className="il-n">03</span><div><b>Blank pages</b> fill in as you take new assessments.</div></li>
         </ol>
         <div className="intro-legend">
-          На штампе — дата, код личности и уровень оценки.
+          A stamp shows the date, your personality code and profile level.
         </div>
       </div>
     </div>
@@ -555,8 +585,8 @@ function VisaPage({ label, stamps, locked, stampStyle, onOpen, gridOffset }: {
           <div key={'lock' + i} className="stamp-slot locked" style={slotPos(stamps.length + i, gridOffset)}>
             <div className="lock-stamp">
               <div className="lk-ico">＋</div>
-              <div className="lk-t">Свободно</div>
-              <div className="lk-s">Пройти оценку</div>
+              <div className="lk-t">Empty</div>
+              <div className="lk-s">Take assessment</div>
             </div>
           </div>
         ))}
@@ -574,7 +604,7 @@ function BackCover({ holder }: { holder: Holder }) {
       <div className="bc-top">
         <div>
           <div className="bc-brand">Psy<i>ID</i></div>
-          <div className="bc-tag">Личность — это маршрут, а не диагноз.</div>
+          <div className="bc-tag">Personality is a route, not a diagnosis.</div>
         </div>
         <div className="bc-code">
           <div className="bc-lines">{bars.map((h, i) => <span key={i} style={{ height: h * 9 }} />)}</div>
@@ -603,9 +633,9 @@ function Passport({ holder, assessments, stampStyle, onOpenResults }: {
   const leaves: [React.ReactNode, React.ReactNode][] = [
     [<Cover holder={holder} onOpen={() => turn(1)} />, <Endpaper holder={holder} />],
     [<Identity holder={holder} assessments={assessments} />, <Intro />],
-    [<VisaPage label="ОЦЕНКИ · I" stamps={visaA} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={0} />,
-     <VisaPage label="ОЦЕНКИ · II" stamps={visaB} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={2} />],
-    [<VisaPage label="ОЦЕНКИ · III" stamps={visaC} locked={['', '']} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={1} />,
+    [<VisaPage label="ASSESSMENTS · I" stamps={visaA} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={0} />,
+     <VisaPage label="ASSESSMENTS · II" stamps={visaB} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={2} />],
+    [<VisaPage label="ASSESSMENTS · III" stamps={visaC} locked={['', '']} stampStyle={stampStyle} onOpen={onOpenResults} gridOffset={1} />,
      <Endpaper holder={holder} back />],
     [<BackCover holder={holder} />, <div className="face blank-cover" />],
   ];
@@ -647,12 +677,12 @@ function Passport({ holder, assessments, stampStyle, onOpenResults }: {
               style={{ width: PAGE_W, height: PAGE_H, zIndex: zFor(k) }}>
               <div className="leaf-face leaf-front">
                 {lf[0]}
-                <div className="turn-corner" onClick={next} title="Следующая страница" />
+                <div className="turn-corner" onClick={next} title="Next page" />
                 <div className="page-shade sh-front" />
               </div>
               <div className="leaf-face leaf-back">
                 {lf[1]}
-                <div className="turn-corner tc-left" onClick={prev} title="Предыдущая страница" />
+                <div className="turn-corner tc-left" onClick={prev} title="Previous page" />
                 <div className="page-shade sh-back" />
               </div>
             </div>
@@ -669,7 +699,7 @@ function Passport({ holder, assessments, stampStyle, onOpenResults }: {
         </div>
         <button className="bc-btn" onClick={next} disabled={atEnd}>→</button>
       </div>
-      {isClosed && <div className="open-hint" onClick={next}>Нажмите на паспорт, чтобы открыть</div>}
+      {isClosed && <div className="open-hint" onClick={next}>Tap the passport to open</div>}
     </div>
   );
 }
@@ -715,12 +745,13 @@ export default function PassportView({ holder, assessments: apiAssessments }: { 
           <span className="tn-mk" />
           <span>Psy<i>ID</i></span>
           <span className="tn-div" />
-          <span className="tn-sub">Портал</span>
+          <span className="tn-sub">Portal</span>
         </div>
         <div className="tn-right">
-          <span className="tn-link">Мой паспорт</span>
-          <a className="tn-link" href="/reno">Новая оценка</a>
-          <button className="tn-link" onClick={logout} style={{ background: 'none', border: 'none' }}>Выйти</button>
+          <span className="tn-link">My passport</span>
+          <a className="tn-link" href="/reno">New assessment</a>
+          <button className="tn-link" onClick={logout} style={{ background: 'none', border: 'none' }}>Sign out</button>
+          <span className="tn-plan">{holder.plan === 'basic' ? 'Basic' : 'Full'}</span>
           <div className="tn-avatar" title={holder.name}>{holder.initials}</div>
         </div>
       </nav>
@@ -774,6 +805,7 @@ const PASSPORT_CSS = `
 .tn-right{ display:flex; align-items:center; gap:22px; }
 .tn-link{ font-size:14px; font-weight:500; color:var(--ink-s); cursor:pointer; transition:color .15s; text-decoration:none; padding:0; }
 .tn-link:hover{ color:var(--ink); }
+.tn-plan{ font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:#fff; background:linear-gradient(135deg,var(--blue),var(--coral)); padding:5px 11px; border-radius:999px; }
 .tn-avatar{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--coral)); color:#fff; display:grid; place-items:center; font-size:13px; font-weight:700; letter-spacing:.02em; }
 
 .stage{ flex:1; display:grid; place-items:center; min-height:0; position:relative; }

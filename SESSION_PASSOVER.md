@@ -4,6 +4,37 @@ _Last updated: 2026-07-05_
 
 ---
 
+## 2026-07-05 (latest) — Passport English, retake cooldown, funnel, plan tier, Full mockup
+
+- **Passport → English** + terminology fix: "assessment / profile" everywhere; killed
+  every «оценка» (reads as "grade" in RU). `PassportView.tsx` copy is now EN.
+- **Careers 7 / growth 4:** `deriveNarrative()` now yields 7 best-fit careers per
+  temperament (NF/NT/SF/ST) and 4 growth experiments (one per axis, phrased by dominant
+  side).
+- **Yearly retake cooldown:** `reno/sessions/validate` — portal codes (`portalUserEmail`
+  set) are no longer permanently locked on `USED`; blocked only if `used_at` is < 365 days
+  ago (`reason:'cooldown'`, returns `availableAt`). External/Etsy codes still permanent.
+  Reno code screen shows `err_cooldown` with the available date (all 5 langs).
+- **Completion funnel branches by userType:** validate tags portal sessions
+  `userType:'portal'`; `complete` route returns `isPortal` + `redirectUrl` →
+  `/portal` for portal takers (see their passport), `https://psyid.me` for Etsy. Reno
+  `CompleteStage` shows `complete_portal_body` + "View your passport" for portal users.
+- **Plan tier:** `PortalUser.plan?: 'basic'|'full'`. `/api/client/results` returns
+  `holder.plan` (defaults to `'full'` — everyone who's completed so far is grandfathered);
+  passport nav shows a Full/Basic badge; tier/tierCode on stamps derive from plan.
+- **Full-plan vision mocked up:** `mockups/personality-portal.html` (also copied to
+  `public/personality-portal.html` → live at https://psyid.me/personality-portal.html).
+  A separate per-user "personality portal" (NOT a booklet) that a stamp opens into — the
+  20-pager adapted to web, standardized sections, with a live Basic⇄Full toggle. Basic =
+  snapshot/type/axes/superpowers/7 careers/4 growth; Full unlocks blind spots, misreads,
+  work environments, money & risk, relationships, full 30-day plan + 20-page PDF download.
+  **Next build:** turn this mockup into a real `/portal/report/[sessionId]` page wired to
+  the generated per-type content, gated by `plan`. Data-source decision still open (the
+  20-pager is AI-generated HTML per session; either restructure the generator to emit
+  structured sections or generate on demand).
+
+---
+
 ## 2026-07-05 (later) — Client portal: personality passport after first test
 
 `/portal` (the canonical client cabinet — register + login both redirect here) now

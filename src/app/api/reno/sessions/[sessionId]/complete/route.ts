@@ -27,5 +27,12 @@ export async function POST(
     kvSet(CODES_KEY, codes),
   ]);
 
-  return NextResponse.json({ ok: true, redirectUrl: 'https://psyid.me' });
+  // Portal (registered) users go back to their portal to see the personality
+  // passport; external/Etsy takers see the "results sent to your specialist" screen.
+  const isPortal = session.userType === 'portal';
+  return NextResponse.json({
+    ok: true,
+    isPortal,
+    redirectUrl: isPortal ? 'https://psyid.me/portal' : 'https://psyid.me',
+  });
 }

@@ -6,6 +6,9 @@ import type { RenoSession, RenoSessionsMap } from '@/app/api/reno/types';
 const CODES_KEY = 'psyid:codes';
 const RENO_SESSIONS_MAP_KEY = 'psyid:reno-sessions';
 
+// Registered portal users may retake the assessment at most once per year.
+const PORTAL_COOLDOWN_MS = 365 * 24 * 60 * 60 * 1000;
+
 function detectDevice(req: Request): 'mobile' | 'desktop' | 'unknown' {
   const ua = req.headers.get('user-agent') ?? '';
   if (/mobile|android|iphone|ipad|ipod/i.test(ua)) return 'mobile';
@@ -28,10 +31,25 @@ export async function POST(req: Request) {
 
   if (!found) return NextResponse.json({ valid: false, reason: 'not_found' });
 
+  const isPortal = !!found.portalUserEmail;
   const sessionsMap: RenoSessionsMap = (await kvGet<RenoSessionsMap>(RENO_SESSIONS_MAP_KEY)) ?? {};
 
-  // Completed — permanently blocked
-  if (found.status === 'USED') {
+  // Portal (registered) users: yearly cooldown instead of a permanent lock.
+  // On completion the code's `used_at` is set to the completion time.
+  if (isPortal && found.status === 'USED') {
+    const last = found.used_at ? new Date(found.used_at).getTime() : null;
+    if (last && Date.now() - last < PORTAL_COOLDOWN_MS) {
+      return NextResponse.json({
+        valid: false,
+        reason: 'cooldown',
+        availableAt: new Date(last + PORTAL_COOLDOWN_MS).toISOString(),
+      });
+    }
+    // Cooldown elapsed → allow a fresh retake (falls through to session creation below).
+  }
+
+  // Completed — permanently blocked (external/Etsy codes only).
+  if (found.status === 'USED' && !isPortal) {
     return NextResponse.json({ valid: false, reason: 'already_used' });
   }
 
@@ -47,14 +65,16 @@ export async function POST(req: Request) {
     // Session missing or completed — treat as fresh
   }
 
-  // Fresh code — create session, mark IN_PROGRESS (not USED until completed)
+  // Fresh code (or portal retake past cooldown) — create session, mark IN_PROGRESS.
+  const isRetake = found.status === 'USED';
   const sessionId = `reno_${found.id}_${Date.now()}`;
   const newSession: RenoSession = {
     id: sessionId,
     codeId: found.id,
-    userType: 'third_party',
+    userType: isPortal ? 'portal' : 'third_party',
     source: 'direct',
     status: 'started',
+    ...(isRetake ? { isRetake: true } : {}),
     device: detectDevice(req),
     answers: [],
     lastIndex: 0,

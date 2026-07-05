@@ -7,12 +7,12 @@ import type { RenoSession } from '@/app/api/reno/types';
 
 const CODES_KEY = 'psyid:codes';
 
-const RU_MONTHS = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-function ruDate(iso: string): string {
+function fmtDate(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return '';
-  return `${String(d.getDate()).padStart(2, '0')} ${RU_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+  return `${String(d.getDate()).padStart(2, '0')} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 function initialsFrom(name: string): string {
@@ -79,6 +79,12 @@ export async function GET(req: Request) {
       return ta - tb;
     });
 
+    // Everyone who has completed an assessment so far is grandfathered onto the
+    // Full plan. When paid tiers exist, set `plan` explicitly on the portal user.
+    const plan = portalUser.plan ?? 'full';
+    const tier = plan === 'full' ? 'Full' : 'Basic';
+    const tierCode = plan === 'full' ? 'FULL' : 'STD';
+
     const assessments: AssessmentPayload[] = sessions.map((s, i) => {
       const score = scoreSession(s.answers);
       const p = score.pct;
@@ -92,9 +98,9 @@ export async function GET(req: Request) {
         id: s.id,
         no: String(i + 1).padStart(4, '0'),
         dateISO: when,
-        date: ruDate(when),
-        tier: 'Базовый',
-        tierCode: 'STD',
+        date: fmtDate(when),
+        tier,
+        tierCode,
         code: score.type,
         vals,
         nearBoundary: score.nearBoundary,
@@ -109,8 +115,9 @@ export async function GET(req: Request) {
       initials: initialsFrom(portalUser.name || session.email),
       memberSince: String(year),
       passportNo: `PSY-${year}-${accessCode}`,
-      nationality: 'PSYID · ЛИЧНОСТЬ',
+      nationality: 'PSYID · PERSONALITY',
       handle: '@' + session.email.split('@')[0],
+      plan,
     };
 
     return NextResponse.json({ hasResult: assessments.length > 0, holder, assessments });

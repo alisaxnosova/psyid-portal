@@ -95,6 +95,7 @@ const T = {
     err_already_used: 'This code has already been used. Please contact your provider.',
     err_expired: 'This code has expired.',
     err_network: 'Something went wrong. Please try again.',
+    err_cooldown: 'You have already completed the assessment. You can take it again after {date}.',
     footer: 'Your answers are confidential and secure.',
 
     disclaimer_eyebrow: 'Step 1 of 2',
@@ -137,6 +138,8 @@ const T = {
     complete_heading: 'Thank you!',
     complete_body: 'You have completed the assessment. Your results will be sent to your specialist.',
     complete_btn: 'Return',
+    complete_portal_body: 'Your personality passport is ready. Open your portal to explore your profile.',
+    complete_portal_btn: 'View your passport',
 
     resume_note: 'Your previous session was found. Continuing from where you left off.',
   },
@@ -152,6 +155,7 @@ const T = {
     err_already_used: 'Этот код уже был использован. Свяжитесь с вашим специалистом.',
     err_expired: 'Срок действия кода истёк.',
     err_network: 'Что-то пошло не так. Попробуйте ещё раз.',
+    err_cooldown: 'Вы уже проходили тест. Пройти его снова можно после {date}.',
     footer: 'Ваши ответы конфиденциальны и защищены.',
 
     disclaimer_eyebrow: 'Шаг 1 из 2',
@@ -194,6 +198,8 @@ const T = {
     complete_heading: 'Спасибо!',
     complete_body: 'Вы завершили тест. Результаты будут отправлены вашему специалисту.',
     complete_btn: 'Вернуться',
+    complete_portal_body: 'Ваш паспорт личности готов. Откройте портал, чтобы изучить свой профиль.',
+    complete_portal_btn: 'Открыть паспорт',
 
     resume_note: 'Найдена предыдущая сессия. Продолжаем с того места, где вы остановились.',
   },
@@ -209,6 +215,7 @@ const T = {
     err_already_used: 'Este código ya fue utilizado. Contacte a su especialista.',
     err_expired: 'Este código ha expirado.',
     err_network: 'Algo salió mal. Por favor, inténtelo de nuevo.',
+    err_cooldown: 'Ya has completado la evaluación. Podrás repetirla después del {date}.',
     footer: 'Sus respuestas son confidenciales y seguras.',
 
     disclaimer_eyebrow: 'Paso 1 de 2',
@@ -251,6 +258,8 @@ const T = {
     complete_heading: '¡Gracias!',
     complete_body: 'Ha completado la evaluación. Sus resultados serán enviados a su especialista.',
     complete_btn: 'Volver',
+    complete_portal_body: 'Tu pasaporte de personalidad está listo. Abre tu portal para explorar tu perfil.',
+    complete_portal_btn: 'Ver tu pasaporte',
 
     resume_note: 'Se encontró su sesión anterior. Continuando desde donde lo dejó.',
   },
@@ -266,6 +275,7 @@ const T = {
     err_already_used: 'Ce code a déjà été utilisé. Veuillez contacter votre spécialiste.',
     err_expired: 'Ce code a expiré.',
     err_network: 'Quelque chose s\'est mal passé. Veuillez réessayer.',
+    err_cooldown: 'Vous avez déjà passé l\'évaluation. Vous pourrez la refaire après le {date}.',
     footer: 'Vos réponses sont confidentielles et sécurisées.',
 
     disclaimer_eyebrow: 'Étape 1 sur 2',
@@ -308,6 +318,8 @@ const T = {
     complete_heading: 'Merci !',
     complete_body: 'Vous avez terminé l\'évaluation. Vos résultats seront envoyés à votre spécialiste.',
     complete_btn: 'Retour',
+    complete_portal_body: 'Votre passeport de personnalité est prêt. Ouvrez votre portail pour explorer votre profil.',
+    complete_portal_btn: 'Voir votre passeport',
 
     resume_note: 'Votre session précédente a été trouvée. Reprise en cours.',
   },
@@ -323,6 +335,7 @@ const T = {
     err_already_used: 'هذا الرمز مستخدم بالفعل. يرجى التواصل مع متخصصك.',
     err_expired: 'انتهت صلاحية هذا الرمز.',
     err_network: 'حدث خطأ ما. يرجى المحاولة مجدداً.',
+    err_cooldown: 'لقد أكملت الاختبار بالفعل. يمكنك إعادته بعد {date}.',
     footer: 'إجاباتك سرية ومحمية.',
 
     disclaimer_eyebrow: 'الخطوة 1 من 2',
@@ -365,6 +378,8 @@ const T = {
     complete_heading: 'شكراً لك!',
     complete_body: 'لقد أكملت الاختبار. ستُرسَل نتائجك إلى متخصصك.',
     complete_btn: 'العودة',
+    complete_portal_body: 'جواز شخصيتك جاهز. افتح بوابتك لاستكشاف ملفك.',
+    complete_portal_btn: 'عرض جوازك',
 
     resume_note: 'تم العثور على جلستك السابقة. نستأنف من حيث توقفت.',
   },
@@ -532,14 +547,20 @@ function CodeStage({
       if (!res.ok) throw new Error('network');
       const data = (await res.json()) as {
         valid: boolean;
-        reason?: 'not_found' | 'already_used' | 'expired' | 'server_error';
+        reason?: 'not_found' | 'already_used' | 'expired' | 'server_error' | 'cooldown';
         sessionId?: string;
         resumable?: boolean;
+        availableAt?: string;
       };
 
       if (data.valid && data.sessionId) {
         sessionStorage.setItem('reno_session_id', data.sessionId);
         onSuccess(data.sessionId, !!data.resumable);
+      } else if (data.reason === 'cooldown') {
+        const when = data.availableAt
+          ? new Date(data.availableAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })
+          : '';
+        setError(t.err_cooldown.replace('{date}', when));
       } else {
         const msgs: Partial<Record<string, string>> = {
           not_found:    t.err_not_found,
@@ -1049,6 +1070,7 @@ function TestStage({
 /* ─── Stage 6: Complete ─── */
 function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: string | null }) {
   const [redirectUrl, setRedirectUrl] = useState('https://psyid.me');
+  const [isPortal, setIsPortal]       = useState(false);
   const [apiErr, setApiErr]           = useState(false);
   const [retrying, setRetrying]       = useState(false);
 
@@ -1060,8 +1082,9 @@ function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: strin
       try {
         const res = await fetch(`/api/reno/sessions/${sessionId}/complete`, { method: 'POST' });
         if (res.ok) {
-          const data = (await res.json()) as { redirectUrl?: string };
+          const data = (await res.json()) as { redirectUrl?: string; isPortal?: boolean };
           if (data.redirectUrl) setRedirectUrl(data.redirectUrl);
+          setIsPortal(!!data.isPortal);
         } else {
           setApiErr(true);
         }
@@ -1077,8 +1100,9 @@ function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: strin
     try {
       const res = await fetch(`/api/reno/sessions/${sessionId}/complete`, { method: 'POST' });
       if (res.ok) {
-        const data = (await res.json()) as { redirectUrl?: string };
+        const data = (await res.json()) as { redirectUrl?: string; isPortal?: boolean };
         if (data.redirectUrl) setRedirectUrl(data.redirectUrl);
+        setIsPortal(!!data.isPortal);
       } else {
         setApiErr(true);
       }
@@ -1114,7 +1138,7 @@ function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: strin
         {t.complete_heading}
       </h2>
       <p style={{ color: 'var(--ink-3)', fontSize: 15, lineHeight: 1.7, marginBottom: 32, maxWidth: 360, margin: '0 auto 32px' }}>
-        {t.complete_body}
+        {isPortal ? t.complete_portal_body : t.complete_body}
       </p>
 
       {apiErr && (
@@ -1131,7 +1155,7 @@ function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: strin
           className="btn-primary"
           style={{ padding: '14px 32px', fontSize: 15, display: 'inline-block', textDecoration: 'none' }}
         >
-          {t.complete_btn}
+          {isPortal ? t.complete_portal_btn : t.complete_btn}
         </a>
       )}
     </div>

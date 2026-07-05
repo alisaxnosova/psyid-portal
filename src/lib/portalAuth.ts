@@ -14,6 +14,9 @@ export interface PortalUser {
   backendUserId: string | null;
   accessCode: string | null;
   createdAt: string;
+  // Plan tier. Absent = grandfathered to 'full' (everyone who has completed so far).
+  // Set explicitly once paid tiers exist.
+  plan?: 'basic' | 'full';
 }
 
 export interface PortalSession {
