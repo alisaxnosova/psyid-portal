@@ -357,7 +357,8 @@ export default function AdminCodesPage() {
               </div>
             )}
             {kvReady !== null && filtered.length > 0 && (
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 880 }}>
                 <thead>
                   <tr>
                     {(['codes_col_code', 'codes_col_user', 'codes_col_status', 'codes_col_invoice', 'codes_col_note', 'codes_col_created', 'codes_col_used', ''] as (TKey | '')[]).map((k, i) => (
@@ -435,6 +436,7 @@ export default function AdminCodesPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         </div>
