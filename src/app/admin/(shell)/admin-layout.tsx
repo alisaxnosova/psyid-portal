@@ -13,6 +13,7 @@ const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: bool
   { href: '/admin/test',                 key: 'nav_test',         icon: 'test',                   built: true  },
   { href: '/admin/users',                key: 'nav_users',        icon: 'users',                  built: true  },
   { href: '/admin/results',              key: 'nav_results',      icon: 'results',                built: true  },
+  { href: '/admin/career-vault',         key: 'nav_career_vault', icon: 'vault',                  built: true  },
   { href: '/admin/orders',               key: 'nav_orders',       icon: 'orders',                 built: false },
   { href: '/admin/billing',              key: 'nav_billing',      icon: 'billing',                built: false },
   { href: '/admin/analytics',            key: 'nav_analytics',    icon: 'analytics',              built: false },
@@ -107,6 +108,13 @@ function NavIcon({ type }: { type: string }) {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path d="M11 2.5l2.5 2.5-8 8-3 .5.5-3 8-8z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M9.5 4l2.5 2.5" stroke="currentColor" strokeWidth="1.4"/>
+    </svg>
+  );
+  if (type === 'vault') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="1.5" y="2.5" width="13" height="11" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+      <circle cx="8" cy="8" r="2.6" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M8 3.5v1.9M8 10.6v1.9M12.5 8h-1.9M5.4 8H3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
     </svg>
   );
   return (

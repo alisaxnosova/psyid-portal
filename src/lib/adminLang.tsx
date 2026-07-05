@@ -14,6 +14,7 @@ export const T = {
   nav_report_tmpls: { en: 'Report Templates',     ru: 'Шаблоны отчётов'     },
   nav_users:        { en: 'Users',                ru: 'Пользователи'        },
   nav_results:      { en: 'Results',              ru: 'Результаты'          },
+  nav_career_vault: { en: 'Career Vault',         ru: 'Хранилище профессий' },
   nav_orders:       { en: 'Third Party Orders',   ru: 'Сторонние заказы'    },
   nav_billing:      { en: 'Billing',              ru: 'Финансы'             },
   nav_analytics:    { en: 'Analytics',            ru: 'Аналитика'           },
