@@ -135,6 +135,25 @@ section{ padding:52px 0; border-bottom:1px solid var(--line); position:relative;
 .step h4{ font-size:17px; font-weight:700; margin-bottom:6px; letter-spacing:-.01em; }
 .step p{ font-size:14.5px; color:var(--ink-s); line-height:1.6; }
 
+/* richer report components */
+.lead{ font-size:19px; line-height:1.6; color:var(--ink); max-width:64ch; margin-bottom:20px; }
+.subhead{ font-size:12px; font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-m); margin:30px 0 14px; }
+.callout{ border-left:3px solid var(--orange); background:var(--page-2); border-radius:0 14px 14px 0; padding:18px 22px; margin:22px 0; }
+.callout .cl-lab{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); margin-bottom:7px; }
+.callout p{ font-size:15px; line-height:1.6; color:var(--ink-s); margin:0; }
+.quote{ font-size:26px; line-height:1.35; font-weight:700; letter-spacing:-.025em; color:var(--ink); max-width:26ch; margin:32px 0; }
+.quote span{ color:var(--orange); }
+.grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:8px 0 6px; }
+.mini{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 22px; }
+.mini .mt{ font-size:16px; font-weight:700; margin-bottom:8px; letter-spacing:-.01em; }
+.mini p{ font-size:13.5px; color:var(--ink-s); line-height:1.55; }
+.weeks{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.week{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; }
+.week .wk{ font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); margin-bottom:8px; }
+.week h5{ font-size:15px; font-weight:700; margin-bottom:6px; }
+.week p{ font-size:13px; color:var(--ink-s); line-height:1.5; }
+@media(max-width:860px){ .grid3,.weeks{ grid-template-columns:1fr; } }
+
 /* dark closing */
 .closing{ background:
   radial-gradient(ellipse 50% 45% at 85% 85%, rgba(255,165,72,.4) 0%, transparent 55%),
@@ -249,9 +268,18 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
   <section id="type">
     <div class="sec-head"><span class="sec-kicker">Your type</span></div>
     <h2 class="sec-h">A quick read on how you're wired</h2>
+    <p class="lead">You're an <b>ideas-first connector</b> — someone who sees possibility where others see a to-do list, and who's at their best when a plan is still loose enough to improve.</p>
     <div class="prose">
-      <p>You're an <b>ideas-first connector</b>. Where others see a to-do list, you see possibility — and you're happiest when a plan is still loose enough to improve. That openness is your engine: it lets you spot the angle nobody else noticed and rally people around it.</p>
-      <p>Because your decisions run through <b>values before logic</b>, you read a room fast and adjust. People trust you quickly. The same warmth that makes you magnetic can make it hard to say no — which is exactly why your growth plan leans on protecting your focus.</p>
+      <p>That openness is your engine. It lets you spot the angle nobody else noticed and pull people toward it before the details are even settled. You think out loud, you connect dots across unrelated things, and you're rarely the bottleneck — momentum tends to follow you into a room.</p>
+      <p>Because your decisions run through <b>values before logic</b>, you read people fast and adjust to them. Trust comes quickly with you, and you extend it easily. It's the quality that makes you a natural at rallying a team around something that matters — and the same warmth is why saying "no" costs you more than it costs most people.</p>
+      <p>Your relationship with structure is light. You improvise well and dislike being boxed in, which is a genuine strength in ambiguous, early, fast-moving work. The catch shows up at the finish line: the last 20% of a project is where your energy dips, precisely when a more structured type is just hitting their stride. Your whole growth plan is built around that one seam — protecting focus and closing loops — because it's the difference between a hundred bright starts and a handful of things that actually land.</p>
+    </div>
+    <div class="quote">"You don't push people — you <span>light them up</span> and they push themselves."</div>
+    <div class="subhead">At a glance</div>
+    <div class="grid3">
+      <div class="mini"><div class="mt">Runs on</div><p>Possibility, people, and variety. New angles energize you more than finished plans.</p></div>
+      <div class="mini"><div class="mt">Decides by</div><p>Impact on people first, logic second — you'll feel the right call before you can defend it.</p></div>
+      <div class="mini"><div class="mt">Grows by</div><p>Adding just enough structure to finish — and protecting your focus from your own curiosity.</p></div>
     </div>
   </section>
 
@@ -259,6 +287,7 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
   <section id="axes">
     <div class="sec-head"><span class="sec-kicker">The four axes</span></div>
     <h2 class="sec-h">Where you land on each scale</h2>
+    <p class="lead">Your profile isn't a box — it's four sliders. Here's exactly where you sit on each, and what that tension means day to day.</p>
     <div class="sliders">
       <div class="slider">
         <div class="top"><span class="nm">Energy</span><span class="pct">44% toward Extraversion</span></div>
@@ -285,21 +314,32 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
         <p class="desc">You keep options open and improvise well. Deadlines help you more than they hurt — a little structure turns your energy into output.</p>
       </div>
     </div>
+    <div class="callout">
+      <div class="cl-lab">What the combination means</div>
+      <p>Extraversion + Intuition makes you an <b>idea generator with an audience</b> — you think best in dialogue and out loud. Feeling + Flexibility makes you <b>warm and adaptive</b> rather than rigid. The whole set points one direction: you're built to start things and bring people with you. Your growth edge is everything downstream of the start.</p>
+    </div>
   </section>
 
   <!-- SUPERPOWERS -->
   <section id="strengths">
     <div class="sec-head"><span class="sec-kicker">Superpowers</span></div>
     <h2 class="sec-h">What comes easily to you</h2>
-    <div class="chips" style="margin-bottom:26px">
+    <p class="lead">These aren't skills you learned — they're defaults. The things you do without effort that other people find genuinely hard.</p>
+    <div class="chips" style="margin-bottom:30px">
       <span class="chip hi">Contagious enthusiasm</span>
       <span class="chip">Reading people</span>
       <span class="chip">Idea generation</span>
       <span class="chip">Adaptability</span>
       <span class="chip">Rallying a team</span>
     </div>
-    <div class="prose">
-      <p>Your real edge is <b>momentum</b>: you can take a half-formed idea and a lukewarm room and leave both energized. That's rare, and it compounds — people bring you in early because things move when you're there.</p>
+    <div class="grid3">
+      <div class="mini"><div class="mt">Momentum</div><p>You take a half-formed idea and a lukewarm room and leave both energized. Things move when you're there — which is why people bring you in early.</p></div>
+      <div class="mini"><div class="mt">Reading people</div><p>You sense what someone needs before they say it, and adjust in real time. It makes you disarming, persuasive, and easy to trust.</p></div>
+      <div class="mini"><div class="mt">Connecting dots</div><p>You link ideas across unrelated fields and see the pattern first. Where others need the full picture, you work from a sketch.</p></div>
+    </div>
+    <div class="callout">
+      <div class="cl-lab">Your signature strength</div>
+      <p>If you only leaned on one thing, lean on <b>momentum</b>. It's rare and it compounds: the more visibly you move things forward, the more people hand you the things worth moving. Build your role around starting and igniting — and borrow structure for the rest.</p>
     </div>
   </section>
 
@@ -323,9 +363,23 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
         <p>Full unlocks the reasoning behind every match, salary-fit notes, and an extended list ranked to your exact scores.</p>
         <a class="unlock" href="#">Unlock with Full</a>
       </div>
-      <div class="body prose">
-        <p><b>Why Founder / Product lead fits (92):</b> your intuition sets direction while your warmth keeps a team bought-in — the two things early-stage work lives or dies on. Watch the structure axis: pair yourself with an operator who closes loops.</p>
-        <p><b>Also strong:</b> Community lead (74), Journalist (73), Design lead (72), Fundraiser (71), Program manager (70), Sales lead (69), L&amp;D specialist (68), Event producer (66).</p>
+      <div class="body">
+        <div class="subhead">Why your top matches fit</div>
+        <div class="prose">
+          <p><b>Founder / Product lead — 92.</b> Your intuition sets direction while your warmth keeps a team bought-in: the two things early-stage work lives or dies on. Watch the structure axis — pair yourself with an operator who closes loops, and this becomes your best possible seat.</p>
+          <p><b>Creative director — 88.</b> You generate more good angles than most teams can use, and you can sell them. The role rewards taste plus persuasion, and lets you hand execution detail to specialists — exactly the split you want.</p>
+          <p><b>UX researcher — 86.</b> Reading people <i>is</i> the job. Your instinct for what someone means beneath what they say turns into insight others miss — with enough structure baked into the method to keep you finishing.</p>
+        </div>
+        <div class="callout">
+          <div class="cl-lab">How to read fit</div>
+          <p>Fit isn't a ceiling on success — it's how little friction the role creates with your defaults. A 70 you love can beat a 90 you don't. Use this list to find <b>shape</b>, not a job title: roles that start things, involve people, and let someone else own the last mile.</p>
+        </div>
+        <div class="subhead">Also strong for you</div>
+        <div class="chips">
+          <span class="chip">Community lead · 74</span><span class="chip">Journalist · 73</span><span class="chip">Design lead · 72</span>
+          <span class="chip">Fundraiser · 71</span><span class="chip">Program manager · 70</span><span class="chip">Sales lead · 69</span>
+          <span class="chip">L&amp;D specialist · 68</span><span class="chip">Event producer · 66</span>
+        </div>
       </div>
     </div>
   </section>
@@ -347,8 +401,18 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
         <p>Full turns these into a week-by-week 30-day plan with prompts, check-ins, and a printable tracker.</p>
         <a class="unlock" href="#">Unlock with Full</a>
       </div>
-      <div class="body prose">
-        <p><b>Week 1 — Focus:</b> pick your three. <b>Week 2 — Rhythm:</b> install the quiet hour. <b>Week 3 — Edges:</b> practice one honest "no." <b>Week 4 — Review:</b> what moved, what stalled, what's next.</p>
+      <div class="body">
+        <div class="subhead">Your 30-day plan</div>
+        <div class="weeks">
+          <div class="week"><div class="wk">Week 1 · Focus</div><h5>Pick your three</h5><p>Name the three projects that matter. Everything else goes on a visible waiting list — not in your head.</p></div>
+          <div class="week"><div class="wk">Week 2 · Rhythm</div><h5>Install the quiet hour</h5><p>30 minutes daily, no notifications. Same time each day so it becomes a reflex, not a decision.</p></div>
+          <div class="week"><div class="wk">Week 3 · Edges</div><h5>One honest "no"</h5><p>Decline one thing you'd normally absorb. Notice that the relationship survives — that's the lesson.</p></div>
+          <div class="week"><div class="wk">Week 4 · Review</div><h5>Close a loop</h5><p>Ship the last 20% of one thing. Then review: what moved, what stalled, what's worth keeping.</p></div>
+        </div>
+        <div class="callout">
+          <div class="cl-lab">Why this order</div>
+          <p>Focus before rhythm before edges: there's no point protecting time (week 2) if you haven't decided what it's for (week 1), and saying "no" (week 3) only sticks once you've felt the cost of yes. Week 4 makes it a loop you can run every month.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -364,17 +428,30 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
     <div class="body">
       <div class="sec-head"><span class="sec-kicker">Blind spots</span><span class="tag-full">Full</span></div>
       <h2 class="sec-h">What quietly trips you up</h2>
+      <p class="lead">Not flaws — costs. These are the predictable ways your strengths overshoot, and the small habits that catch each one early.</p>
       <div class="grid2">
         <div class="card warn"><h4>Watch for</h4><ul>
           <li><span class="b"></span>Saying yes before you've checked your own bandwidth.</li>
           <li><span class="b"></span>Starting strong, then losing interest at the 80% mark.</li>
           <li><span class="b"></span>Reading harmony as agreement when it's really avoidance.</li>
+          <li><span class="b"></span>Optimism outrunning the plan — assuming it'll come together.</li>
         </ul></div>
         <div class="card"><h4>How to counter it</h4><ul>
           <li><span class="b"></span>A 24-hour rule on new commitments.</li>
           <li><span class="b"></span>A "finisher" partner for the last 20%.</li>
           <li><span class="b"></span>Ask the quiet person in the room directly.</li>
+          <li><span class="b"></span>Write the boring plan down before you fall for the idea.</li>
         </ul></div>
+      </div>
+      <div class="subhead">The pattern underneath</div>
+      <div class="grid3">
+        <div class="mini"><div class="mt">The overcommit</div><p>Yes feels generous in the moment and expensive by Thursday. Your calendar fills with other people's priorities.</p></div>
+        <div class="mini"><div class="mt">The 80% wall</div><p>The exciting part is done; the finish is admin. Interest drops exactly where value is delivered.</p></div>
+        <div class="mini"><div class="mt">The false peace</div><p>You smooth tension so well you sometimes bury the disagreement that needed to happen.</p></div>
+      </div>
+      <div class="callout">
+        <div class="cl-lab">The one to fix first</div>
+        <p>If you only address one, make it the <b>80% wall</b> — it's the difference between being seen as brilliant-but-flaky and brilliant-and-reliable. A finisher partner or a hard "done" ritual pays for itself fast.</p>
       </div>
     </div>
   </section>
@@ -390,9 +467,12 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
     <div class="body">
       <div class="sec-head"><span class="sec-kicker">Misreads</span><span class="tag-full">Full</span></div>
       <h2 class="sec-h">What people get wrong about you</h2>
+      <p class="lead">Your strengths are easy to misfile from the outside. Knowing the common misreads helps you get ahead of them — and explain yourself before someone draws the wrong conclusion.</p>
       <div class="misreads">
-        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They're scattered."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You're running several threads because you can see how they connect — not because you've lost the plot.</div></div></div>
-        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They just want to be liked."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You optimize for trust because that's what makes teams move — it's strategy, not approval-seeking.</div></div></div>
+        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They're scattered."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You're running several threads because you can see how they connect — not because you've lost the plot. Show the through-line and the "scattered" read disappears.</div></div></div>
+        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They just want to be liked."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You optimize for trust because that's what makes teams move. It's strategy, not approval-seeking — and it's usually the reason the group holds together.</div></div></div>
+        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They're not detail-oriented."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You're precise about the things you care about; you just refuse to spend energy on detail that doesn't change the outcome. It's prioritization, not carelessness.</div></div></div>
+        <div class="misread"><div class="say"><div class="lab">What they say</div><div class="txt">"They never commit."</div></div><div class="real"><div class="lab">What's actually going on</div><div class="txt">You keep options open until the last responsible moment because new information keeps arriving. Once you commit, you're all in — people mistake the runway for the flight.</div></div></div>
       </div>
     </div>
   </section>
@@ -408,17 +488,24 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
     <div class="body">
       <div class="sec-head"><span class="sec-kicker">Work environments</span><span class="tag-full">Full</span></div>
       <h2 class="sec-h">Where you thrive — and where you wilt</h2>
+      <p class="lead">The same person performs completely differently in the right and wrong setting. This is what to look for in a team, a manager, and a day.</p>
       <div class="grid2">
         <div class="card"><h4>Energizes you</h4><ul>
           <li><span class="b"></span>Early-stage, high-variety work with real autonomy.</li>
           <li><span class="b"></span>Teams that argue ideas warmly and decide fast.</li>
           <li><span class="b"></span>Visible impact and a mission you believe in.</li>
+          <li><span class="b"></span>A manager who gives you the "why" and gets out of the way.</li>
         </ul></div>
         <div class="card warn"><h4>Drains you</h4><ul>
           <li><span class="b"></span>Rigid process with no room to improve it.</li>
           <li><span class="b"></span>Solo, repetitive, detail-heavy tasks for weeks.</li>
           <li><span class="b"></span>Cold, transactional cultures.</li>
+          <li><span class="b"></span>Long stretches with no human contact or feedback.</li>
         </ul></div>
+      </div>
+      <div class="callout">
+        <div class="cl-lab">Your sweet spot</div>
+        <p>A small, warm, fast team early in something that matters — with one person nearby who loves the details you don't. Optimize for <b>autonomy, variety, and people</b>, and you'll outperform roles that look better on paper.</p>
       </div>
     </div>
   </section>
@@ -434,7 +521,23 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
     <div class="body">
       <div class="sec-head"><span class="sec-kicker">Money &amp; risk</span><span class="tag-full">Full</span></div>
       <h2 class="sec-h">You and risk</h2>
-      <div class="prose"><p>You're comfortable with bets that have upside and a story — sometimes more comfortable than the numbers warrant. Your best financial move is <b>a boring default</b>: automate savings so your optimism runs on top of a floor, not instead of one.</p></div>
+      <p class="lead">Money decisions are personality decisions in disguise. Here's how your wiring tends to show up when there's something at stake.</p>
+      <div class="prose">
+        <p>You're comfortable with bets that have upside and a good story — sometimes more comfortable than the numbers alone would justify. A compelling vision can quiet the part of you that should be asking "and what if this doesn't work?" You're rarely paralyzed by risk; if anything, you under-weight the downside because the upside is so vivid.</p>
+        <p>That's not a flaw to fix — it's the same optimism that lets you start things other people won't. The move is to <b>build a floor under it</b> so your bets are additive, not existential.</p>
+      </div>
+      <div class="grid2">
+        <div class="card"><h4>Play to it</h4><ul>
+          <li><span class="b"></span>Automate the boring default — savings and essentials leave before you can redirect them.</li>
+          <li><span class="b"></span>Take real swings with a defined, capped "play" budget.</li>
+          <li><span class="b"></span>Keep a 3–6 month buffer so optimism runs on top of a floor.</li>
+        </ul></div>
+        <div class="card warn"><h4>Guard against</h4><ul>
+          <li><span class="b"></span>Falling for the story before you've read the terms.</li>
+          <li><span class="b"></span>Lending or backing on warmth alone — write it down.</li>
+          <li><span class="b"></span>Treating "it'll work out" as a plan rather than a hope.</li>
+        </ul></div>
+      </div>
     </div>
   </section>
 
@@ -449,7 +552,26 @@ body.basic .premium > .body{ filter:blur(6px); opacity:.5; pointer-events:none; 
     <div class="body">
       <div class="sec-head"><span class="sec-kicker">Relationships</span><span class="tag-full">Full</span></div>
       <h2 class="sec-h">How you connect</h2>
-      <div class="prose"><p>You give warmth generously and read needs before they're spoken. The growth edge is <b>letting yourself be the one who's cared for</b> — and naming a disagreement early, while it's still small.</p></div>
+      <p class="lead">You give warmth generously and read needs before they're spoken. You're the person who makes others feel seen — and that same gift hides your own needs, even from you.</p>
+      <div class="prose">
+        <p>In close relationships you're attentive, expressive, and quick to smooth friction. You'd rather absorb a small hurt than start a conflict — which keeps the peace day to day but lets little things compound quietly until they're not little anymore. The growth edge is <b>letting yourself be the one who's cared for</b>, and naming a disagreement while it's still small enough to be easy.</p>
+      </div>
+      <div class="grid2">
+        <div class="card"><h4>What you need</h4><ul>
+          <li><span class="b"></span>People who ask about you, not just accept your attention.</li>
+          <li><span class="b"></span>Space to think out loud without it being held against you.</li>
+          <li><span class="b"></span>Genuine appreciation — it lands harder for you than for most.</li>
+        </ul></div>
+        <div class="card warn"><h4>Where friction shows up</h4><ul>
+          <li><span class="b"></span>Avoiding a hard conversation until it's overdue.</li>
+          <li><span class="b"></span>Over-giving, then feeling unseen and unsure why.</li>
+          <li><span class="b"></span>Saying "it's fine" when it isn't, to protect the mood.</li>
+        </ul></div>
+      </div>
+      <div class="callout">
+        <div class="cl-lab">One practice</div>
+        <p>Say the small thing early. A five-minute honest conversation this week is worth ten times the version you'll be forced to have in a month. Harmony that's tended beats harmony that's protected.</p>
+      </div>
     </div>
   </section>
 
