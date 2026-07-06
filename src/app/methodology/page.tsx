@@ -1,28 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { PsidNav } from '@/components/landing/PsidNav';
+import { PsidFooter } from '@/components/landing/PsidFooter';
 
 export const metadata: Metadata = {
   title: 'The ReNo Method — PsyID',
   description: 'How PsyID reads you: five axes, a pole and a band, and an honest confidence on every claim. The shape of the ReNo method.',
 };
-
-function Logo({ white = false }: { white?: boolean }) {
-  return (
-    <span className={`brand-mark${white ? ' white' : ''}`} data-size="md">
-      <span className="mk">
-        <svg viewBox="0 0 100 100">
-          <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="currentColor" strokeOpacity=".3" strokeWidth="3.5" />
-          <circle cx="50" cy="16" r="8.5" fill="#2244E0" />
-          <circle cx="84" cy="40" r="8.5" fill="#6A85F0" />
-          <circle cx="71" cy="79" r="8.5" fill="#8A5CD6" />
-          <circle cx="29" cy="79" r="8.5" fill="#FF7A3D" />
-          <circle cx="16" cy="40" r="8.5" fill="#FF5A5A" />
-        </svg>
-      </span>
-      <span className="wm">Psy<i>ID</i></span>
-    </span>
-  );
-}
 
 const AXES = [
   ['O', 'Energy Orientation', 'Where your energy comes from — the outer world of people and action, or the inner one of reflection.', '#2244E0'],
@@ -46,21 +30,7 @@ export default function MethodologyPage() {
     <div className="psid-site">
       {/* HERO */}
       <header className="method-hero grad-ground">
-        <nav className="psid-nav">
-          <div className="wrap row">
-            <Link href="/"><Logo white /></Link>
-            <div className="links">
-              <Link href="/#axes">The five axes</Link>
-              <Link href="/#how">How it works</Link>
-              <Link href="/methodology">Method</Link>
-              <Link href="/#price">Pricing</Link>
-            </div>
-            <div className="right">
-              <Link className="lang" href="/login">Log in</Link>
-              <Link className="btn btn-orange sm" href="/reno">Begin →</Link>
-            </div>
-          </div>
-        </nav>
+        <PsidNav />
 
         <div className="wrap">
           <div className="eyebrow white" style={{ marginBottom: 18 }}>The ReNo Method</div>
@@ -164,36 +134,7 @@ export default function MethodologyPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="psid-foot">
-        <div className="wrap">
-          <div className="fg">
-            <div>
-              <Link href="/"><Logo /></Link>
-              <p className="fdesc">A personality passport for adults. Five axes, grounded in the ReNo v1.1 methodology.</p>
-            </div>
-            <div className="fcol">
-              <h4>Explore</h4>
-              <Link href="/#axes">The five axes</Link>
-              <Link href="/#how">How it works</Link>
-              <Link href="/#code">Your code</Link>
-              <Link href="/#price">Pricing</Link>
-            </div>
-            <div className="fcol">
-              <h4>Account</h4>
-              <Link href="/reno">Take the test</Link>
-              <Link href="/register">Create account</Link>
-              <Link href="/login">Log in</Link>
-              <Link href="/methodology">The method</Link>
-            </div>
-            <div className="fcol">
-              <h4>Contact</h4>
-              <a href="mailto:hello@psyid.me">hello@psyid.me</a>
-              <Link href="/portal">Your passport</Link>
-            </div>
-          </div>
-          <div className="fbase"><span>© 2026 PsyID · psyid.me</span><span>Privacy · Terms</span></div>
-        </div>
-      </footer>
+      <PsidFooter />
     </div>
   );
 }

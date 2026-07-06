@@ -677,3 +677,15 @@ a { text-decoration: none; color: inherit; }
 .psid-site .callout .eyebrow{ margin-bottom:12px; }
 .psid-site .callout p{ font-size:15.5px; color:var(--ink-soft); line-height:1.65; margin:0; }
 .psid-site .method-cta{ display:flex; gap:14px; flex-wrap:wrap; margin-top:36px; }
+
+/* ── Overflow / responsive hardening ── */
+.psid-site{ overflow-x:hidden; }
+.psid-site .psid-hero > .wrap > *{ min-width:0; }
+.psid-site .axes-grid > *, .psid-site .inside-grid > *{ min-width:0; }
+.psid-site .axes-grid svg{ max-width:100%; height:auto; }
+.psid-site .sig-inline{ flex-wrap:wrap; }
+
+/* ── Nav link (visible on gradient) + footer admin link ── */
+.psid-site .psid-nav .navlink{ color:rgba(255,255,255,.9); font-weight:500; font-size:15px; }
+.psid-site .psid-nav .navlink:hover{ color:#fff; }
+.psid-site .psid-nav .btn.sm{ padding:9px 16px; }

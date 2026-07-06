@@ -2,27 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { PsidNav } from './PsidNav';
+import { PsidFooter } from './PsidFooter';
 
 const AXIS_COLORS = ['#2244E0', '#6A85F0', '#8A5CD6', '#FF7A3D', '#FF5A5A'];
-
-/* ── Constellation brand mark (official) ── */
-function Logo({ white = false }: { white?: boolean }) {
-  return (
-    <span className={`brand-mark${white ? ' white' : ''}`} data-size="md">
-      <span className="mk">
-        <svg viewBox="0 0 100 100">
-          <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="currentColor" strokeOpacity=".3" strokeWidth="3.5" />
-          <circle cx="50" cy="16" r="8.5" fill="#2244E0" />
-          <circle cx="84" cy="40" r="8.5" fill="#6A85F0" />
-          <circle cx="71" cy="79" r="8.5" fill="#8A5CD6" />
-          <circle cx="29" cy="79" r="8.5" fill="#FF7A3D" />
-          <circle cx="16" cy="40" r="8.5" fill="#FF5A5A" />
-        </svg>
-      </span>
-      <span className="wm">Psy<i>ID</i></span>
-    </span>
-  );
-}
 
 /* ── Pentagon-web radar (ported from the vault) ── */
 function PentagonRadar({ values, labels, codes, size = 300, theme = 'light' }: {
@@ -149,21 +132,7 @@ export default function SiteLanding() {
     <div className="psid-site" ref={rootRef}>
       {/* HERO */}
       <header className="psid-hero grad-ground" id="top">
-        <nav className="psid-nav">
-          <div className="wrap row">
-            <a href="#top"><Logo white /></a>
-            <div className="links">
-              <a href="#axes">The five axes</a>
-              <a href="#how">How it works</a>
-              <Link href="/methodology">Method</Link>
-              <a href="#price">Pricing</a>
-            </div>
-            <div className="right">
-              <Link className="lang" href="/login">Log in</Link>
-              <Link className="btn btn-orange sm" href="/reno">Begin →</Link>
-            </div>
-          </div>
-        </nav>
+        <PsidNav />
 
         <div className="wrap">
           <div>
@@ -343,36 +312,7 @@ export default function SiteLanding() {
       </div>
 
       {/* FOOTER */}
-      <footer className="psid-foot">
-        <div className="wrap">
-          <div className="fg">
-            <div>
-              <Logo />
-              <p className="fdesc">A personality passport for adults. Five axes, grounded in the ReNo v1.1 methodology.</p>
-            </div>
-            <div className="fcol">
-              <h4>Explore</h4>
-              <a href="#axes">The five axes</a>
-              <a href="#how">How it works</a>
-              <a href="#code">Your code</a>
-              <a href="#price">Pricing</a>
-            </div>
-            <div className="fcol">
-              <h4>Account</h4>
-              <Link href="/reno">Take the test</Link>
-              <Link href="/register">Create account</Link>
-              <Link href="/login">Log in</Link>
-              <Link href="/methodology">The method</Link>
-            </div>
-            <div className="fcol">
-              <h4>Contact</h4>
-              <a href="mailto:hello@psyid.me">hello@psyid.me</a>
-              <Link href="/portal">Your passport</Link>
-            </div>
-          </div>
-          <div className="fbase"><span>© 2026 PsyID · psyid.me</span><span>Privacy · Terms</span></div>
-        </div>
-      </footer>
+      <PsidFooter />
     </div>
   );
 }
