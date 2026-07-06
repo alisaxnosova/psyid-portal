@@ -690,3 +690,30 @@ a { text-decoration: none; color: inherit; }
 .psid-site .psid-nav .navlink{ color:rgba(255,255,255,.9); font-weight:500; font-size:15px; }
 .psid-site .psid-nav .navlink:hover{ color:#fff; }
 .psid-site .psid-nav .btn.sm{ padding:9px 16px; }
+
+/* ── Auth pages (register / login) ── */
+.psid-site .auth-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; position:relative; isolation:isolate; }
+.psid-site .auth-logo{ position:absolute; top:26px; left:32px; z-index:3; }
+.psid-site .auth-card{ width:100%; max-width:452px; background:var(--paper); border-radius:var(--r-xl); padding:44px 40px; box-shadow:0 34px 84px rgba(2,6,26,.5); }
+.psid-site .auth-card h1{ font-family:var(--font-display); font-weight:800; letter-spacing:-.03em; font-size:30px; line-height:1.05; color:var(--ink); margin:0 0 8px; }
+.psid-site .auth-sub{ font-size:14px; color:var(--ink-soft); line-height:1.55; margin:0; }
+.psid-site .auth-sub b{ color:var(--ink); font-weight:600; }
+.psid-site .auth-head{ margin-bottom:26px; }
+.psid-site .auth-form{ display:flex; flex-direction:column; gap:14px; }
+.psid-site .field{ display:flex; flex-direction:column; gap:6px; }
+.psid-site .field label{ font-size:13px; font-weight:600; color:var(--ink); }
+.psid-site .field input{ width:100%; padding:12px 15px; border-radius:var(--r-sm); border:1.5px solid var(--line); font-size:15px; font-family:var(--font-sans); background:#fff; color:var(--ink); outline:none; transition:border-color .15s; }
+.psid-site .field input::placeholder{ color:var(--ink-mute); }
+.psid-site .field input:focus{ border-color:var(--blue); }
+.psid-site .code-input{ font-family:var(--font-mono); font-size:32px; font-weight:800; letter-spacing:.25em; text-align:center; padding:16px 15px; }
+.psid-site .auth-err{ padding:11px 15px; border-radius:10px; background:#FBE3DF; color:#C0362C; font-size:14px; line-height:1.4; }
+.psid-site .auth-ok{ padding:11px 15px; border-radius:10px; background:#E3F5E9; color:#1B8A4B; font-size:14px; }
+.psid-site .btn-full{ width:100%; justify-content:center; margin-top:6px; padding:14px; font-weight:700; }
+.psid-site .btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; transform:none; }
+.psid-site .auth-alt{ text-align:center; margin-top:22px; font-size:14px; color:var(--ink-soft); }
+.psid-site .auth-alt a{ color:var(--blue); font-weight:600; }
+.psid-site .auth-icon{ width:52px; height:52px; border-radius:14px; background:rgba(34,68,224,.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.psid-site .auth-row{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; font-size:14px; }
+.psid-site .auth-row button{ background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px; padding:0; }
+.psid-site .auth-row .back{ color:var(--ink-soft); }
+.psid-site .auth-row .resend{ color:var(--blue); font-weight:600; }

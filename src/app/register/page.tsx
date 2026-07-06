@@ -4,42 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { saveTokens } from '@/lib/renoApi';
-
-const C = {
-  blue: '#2244E0', orangeHot: '#FF9540', ink: '#0E1230',
-  inkSoft: '#4F5470', inkMute: '#8A8FA8', line: '#E5DED2', paper: '#FBF7F1',
-};
-
-const iStyle: React.CSSProperties = {
-  width: '100%', padding: '12px 15px', borderRadius: 12,
-  border: `1.5px solid ${C.line}`, fontSize: 15, outline: 'none',
-  background: '#fff', boxSizing: 'border-box', fontFamily: 'inherit',
-  transition: 'border-color .15s', color: C.ink,
-};
-
-function Logo() {
-  return (
-    <Link href="/" style={{ position: 'absolute', top: 28, left: 32, display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 800, fontSize: 18, color: '#fff', letterSpacing: '-0.03em' }}>
-      <span style={{ width: 28, height: 28, borderRadius: 8, background: '#fff', position: 'relative', overflow: 'hidden', display: 'inline-block', flexShrink: 0 }}>
-        <span style={{ position: 'absolute', left: 5, top: 5, width: 8, height: 8, borderRadius: '50%', background: C.blue }}/>
-        <span style={{ position: 'absolute', right: 5, bottom: 5, width: 8, height: 8, borderRadius: 2, background: C.orangeHot }}/>
-      </span>
-      Psy<span style={{ color: C.orangeHot }}>ID</span>
-    </Link>
-  );
-}
+import { PsidLogo } from '@/components/landing/PsidLogo';
 
 function PageWrap({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{
-      minHeight: '100vh', position: 'relative', isolation: 'isolate',
-      background: 'linear-gradient(125deg, #050B36 0%, #0E1F6E 30%, #4B266A 55%, #B23A4C 75%, #FF823F 100%)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
-    }}>
-      <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: 'radial-gradient(ellipse 60% 60% at 15% 85%, rgba(48,87,224,0.5) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 85% 15%, rgba(255,128,72,0.4) 0%, transparent 60%)' }}/>
-      <Logo/>
-      <div style={{ width: '100%', maxWidth: 440, background: C.paper, borderRadius: 28, padding: '44px 40px', boxShadow: '0 32px 80px rgba(0,0,0,0.35)' }}>
-        {children}
+    <div className="psid-site">
+      <div className="auth-wrap grad-ground">
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><PsidLogo white /></Link>
+        <div className="auth-card">{children}</div>
       </div>
     </div>
   );
@@ -77,58 +49,35 @@ function StepForm({ onSent }: { onSent: (email: string) => void }) {
 
   return (
     <>
-      <div style={{ marginBottom: 28 }}>
-        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.blue, fontWeight: 700, marginBottom: 10 }}>
-          PsyID · Psychological Passport
-        </div>
-        <h1 style={{ fontSize: 30, fontWeight: 800, letterSpacing: '-0.03em', color: C.ink, margin: '0 0 8px' }}>
-          Create your account
-        </h1>
-        <p style={{ fontSize: 14, color: C.inkSoft, margin: 0, lineHeight: 1.55 }}>
-          Free to start · 15-minute assessment · Instant results
-        </p>
+      <div className="auth-head">
+        <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · Personality Passport</div>
+        <h1>Create your account</h1>
+        <p className="auth-sub">Free to start · a 20-minute assessment · your five-axis passport.</p>
       </div>
 
-      <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <div>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6, color: C.ink }}>Your name</label>
-          <input type="text" value={name} onChange={e => setName(e.target.value)}
-            placeholder="What should we call you?" style={iStyle}
-            onFocus={e => (e.target.style.borderColor = C.blue)} onBlur={e => (e.target.style.borderColor = C.line)} />
+      <form onSubmit={submit} className="auth-form">
+        <div className="field">
+          <label htmlFor="name">Your name</label>
+          <input id="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="What should we call you?" />
         </div>
-        <div>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6, color: C.ink }}>Email</label>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-            required autoComplete="email" placeholder="you@example.com" style={iStyle}
-            onFocus={e => (e.target.style.borderColor = C.blue)} onBlur={e => (e.target.style.borderColor = C.line)} />
+        <div className="field">
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email" placeholder="you@example.com" />
         </div>
-        <div>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6, color: C.ink }}>Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-            required autoComplete="new-password" placeholder="At least 8 characters" style={iStyle}
-            onFocus={e => (e.target.style.borderColor = C.blue)} onBlur={e => (e.target.style.borderColor = C.line)} />
+        <div className="field">
+          <label htmlFor="password">Password</label>
+          <input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="new-password" placeholder="At least 8 characters" />
         </div>
 
-        {error && (
-          <div style={{ padding: '11px 15px', borderRadius: 10, background: '#FEE2E2', color: '#DC2626', fontSize: 14, lineHeight: 1.4 }}>
-            {error}
-          </div>
-        )}
+        {error && <div className="auth-err">{error}</div>}
 
-        <button type="submit" disabled={loading} style={{
-          marginTop: 6, width: '100%', padding: '14px', borderRadius: 999,
-          fontWeight: 700, fontSize: 15, cursor: loading ? 'not-allowed' : 'pointer',
-          border: 'none', fontFamily: 'inherit', color: '#fff',
-          background: loading ? '#bbb' : 'linear-gradient(95deg, #FF5C72, #FF8A45)',
-          boxShadow: loading ? 'none' : '0 10px 24px -8px rgba(255,100,80,.5)',
-        }}>
+        <button type="submit" disabled={loading} className="btn btn-orange btn-full">
           {loading ? 'Sending code…' : 'Continue →'}
         </button>
       </form>
 
-      <div style={{ textAlign: 'center', marginTop: 22, fontSize: 14, color: C.inkSoft }}>
-        Already have an account?{' '}
-        <Link href="/login" style={{ color: C.blue, fontWeight: 600 }}>Sign in</Link>
+      <div className="auth-alt">
+        Already have an account? <Link href="/login">Sign in</Link>
       </div>
     </>
   );
@@ -204,30 +153,24 @@ function StepVerify({ email, onBack }: { email: string; onBack: () => void }) {
 
   return (
     <>
-      <div style={{ marginBottom: 28 }}>
-        {/* Envelope icon */}
-        <div style={{ width: 52, height: 52, borderRadius: 14, background: `${C.blue}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
+      <div className="auth-head">
+        <div className="auth-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke={C.blue} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <polyline points="22,6 12,13 2,6" stroke={C.blue} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#2244E0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="22,6 12,13 2,6" stroke="#2244E0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.03em', color: C.ink, margin: '0 0 8px' }}>
-          Check your inbox
-        </h1>
-        <p style={{ fontSize: 14, color: C.inkSoft, margin: 0, lineHeight: 1.55 }}>
-          We sent a 6-digit code to{' '}
-          <span style={{ color: C.ink, fontWeight: 600 }}>{email}</span>.
-          Enter it below to confirm your email.
-        </p>
+        <h1>Check your inbox</h1>
+        <p className="auth-sub">We sent a 6-digit code to <b>{email}</b>. Enter it below to confirm your email.</p>
       </div>
 
-      <form onSubmit={verify} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <div>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6, color: C.ink }}>Verification code</label>
+      <form onSubmit={verify} className="auth-form">
+        <div className="field">
+          <label htmlFor="code">Verification code</label>
           <input
+            id="code"
             ref={inputRef}
+            className="code-input"
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
@@ -235,46 +178,20 @@ function StepVerify({ email, onBack }: { email: string; onBack: () => void }) {
             value={code}
             onChange={e => { setCode(e.target.value.replace(/\D/g, '')); setError(''); }}
             placeholder="000000"
-            style={{
-              ...iStyle,
-              fontSize: 32, fontWeight: 800, letterSpacing: '0.25em',
-              textAlign: 'center', fontFamily: "'Geist Mono', monospace",
-              padding: '16px 15px',
-            }}
-            onFocus={e => (e.target.style.borderColor = C.blue)}
-            onBlur={e => (e.target.style.borderColor = C.line)}
           />
         </div>
 
-        {error && (
-          <div style={{ padding: '11px 15px', borderRadius: 10, background: '#FEE2E2', color: '#DC2626', fontSize: 14, lineHeight: 1.4 }}>
-            {error}
-          </div>
-        )}
-        {resent && (
-          <div style={{ padding: '11px 15px', borderRadius: 10, background: '#DCFCE7', color: '#16A34A', fontSize: 14 }}>
-            New code sent! Check your inbox.
-          </div>
-        )}
+        {error && <div className="auth-err">{error}</div>}
+        {resent && <div className="auth-ok">New code sent! Check your inbox.</div>}
 
-        <button type="submit" disabled={loading || code.length < 6} style={{
-          marginTop: 4, width: '100%', padding: '14px', borderRadius: 999,
-          fontWeight: 700, fontSize: 15, cursor: (loading || code.length < 6) ? 'not-allowed' : 'pointer',
-          border: 'none', fontFamily: 'inherit', color: '#fff',
-          background: (loading || code.length < 6) ? '#bbb' : 'linear-gradient(95deg, #FF5C72, #FF8A45)',
-          boxShadow: (loading || code.length < 6) ? 'none' : '0 10px 24px -8px rgba(255,100,80,.5)',
-        }}>
+        <button type="submit" disabled={loading || code.length < 6} className="btn btn-orange btn-full">
           {loading ? 'Verifying…' : 'Verify email →'}
         </button>
       </form>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20, fontSize: 14 }}>
-        <button onClick={onBack} style={{ color: C.inkSoft, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', fontSize: 14 }}>
-          ← Change email
-        </button>
-        <button onClick={resend} disabled={resending} style={{ color: C.blue, fontWeight: 600, background: 'none', border: 'none', cursor: resending ? 'not-allowed' : 'pointer', padding: 0, fontFamily: 'inherit', fontSize: 14 }}>
-          {resending ? 'Sending…' : 'Resend code'}
-        </button>
+      <div className="auth-row">
+        <button className="back" onClick={onBack}>← Change email</button>
+        <button className="resend" onClick={resend} disabled={resending}>{resending ? 'Sending…' : 'Resend code'}</button>
       </div>
     </>
   );
