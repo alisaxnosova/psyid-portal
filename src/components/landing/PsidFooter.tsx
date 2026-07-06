@@ -28,7 +28,7 @@ export function PsidFooter() {
             <h4>More</h4>
             <Link href="/methodology">The method</Link>
             <a href="mailto:hello@psyid.me">hello@psyid.me</a>
-            <Link href="/admin">Admin</Link>
+            <Link href="/admin/login">Admin login</Link>
           </div>
         </div>
         <div className="fbase">
