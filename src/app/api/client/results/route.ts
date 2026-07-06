@@ -2,10 +2,48 @@ import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { getSession, getPortalUser, ensureAccessCode } from '@/lib/portalAuth';
 import { scoreSession } from '@/lib/renoScore';
+import { profiles } from '@/app/reno/data/profiles';
 import type { AccessCode } from '@/app/api/codes/route';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const CODES_KEY = 'psyid:codes';
+
+// Maps each display axis to the answer-key profiles[] axis and its dominant/other poles.
+const AXIS_MAP = [
+  { key: 'energy',    name: 'Energy',    left: 'Introversion', right: 'Extraversion', rp: 'E' as const, lp: 'I' as const, pi: 0 },
+  { key: 'attention', name: 'Attention', left: 'Sensing',      right: 'Intuition',    rp: 'N' as const, lp: 'S' as const, pi: 1 },
+  { key: 'decisions', name: 'Decisions', left: 'Thinking',     right: 'Feeling',      rp: 'F' as const, lp: 'T' as const, pi: 2 },
+  { key: 'structure', name: 'Structure', left: 'Flexibility',  right: 'Planning',     rp: 'J' as const, lp: 'P' as const, pi: 3 },
+];
+
+interface AxisDetail {
+  key: string; name: string; left: string; right: string;
+  val: number;          // right-pole fraction 0..1 (for the slider)
+  bandLabel: string;    // authentic answer-key band label
+  poleLabel: string;    // which side they lean (Extraversion / Introversion …)
+  dims: { label: string; text: string }[]; // authentic per-dimension descriptions
+}
+
+// Match a score to the authentic answer-key band and surface its specialist copy (English).
+function buildAxes(pct: Record<string, number>): AxisDetail[] {
+  return AXIS_MAP.map(ax => {
+    const rightPct = pct[ax.rp]!;
+    const leftPct = pct[ax.lp]!;
+    const dominant = rightPct >= 50 ? ax.rp : ax.lp;
+    const domPct = Math.max(rightPct, leftPct);
+    const axis = profiles[ax.pi];
+    const level = axis?.levels.find(l => l.pole === dominant && domPct >= l.min && domPct <= l.max) ?? null;
+    const dimLabels = axis?.dimLabels.en ?? [];
+    const dimTexts = level?.dims.en ?? [];
+    return {
+      key: ax.key, name: ax.name, left: ax.left, right: ax.right,
+      val: rightPct / 100,
+      bandLabel: level?.label.en ?? '',
+      poleLabel: dominant === ax.rp ? ax.right : ax.left,
+      dims: dimTexts.map((text, i) => ({ label: dimLabels[i] ?? '', text })),
+    };
+  });
+}
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -49,6 +87,7 @@ interface AssessmentPayload {
   vals: number[];           // [energy, attention, decisions, structure] 0..1
   nearBoundary: string[];
   confidence: number;
+  axes: AxisDetail[];       // authentic answer-key band descriptions
 }
 
 export async function GET(req: Request) {
@@ -105,6 +144,7 @@ export async function GET(req: Request) {
         vals,
         nearBoundary: score.nearBoundary,
         confidence: Number(confidence.toFixed(2)),
+        axes: buildAxes(p as unknown as Record<string, number>),
       };
     });
 

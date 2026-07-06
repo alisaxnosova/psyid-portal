@@ -22,6 +22,11 @@ export interface Holder {
   handle: string;
   plan?: 'basic' | 'full';
 }
+export interface AxisDetail {
+  key: string; name: string; left: string; right: string;
+  val: number; bandLabel: string; poleLabel: string;
+  dims: { label: string; text: string }[];
+}
 export interface ApiAssessment {
   id: string;
   no: string;
@@ -33,6 +38,7 @@ export interface ApiAssessment {
   vals: number[];
   nearBoundary: string[];
   confidence: number;
+  axes?: AxisDetail[];
 }
 interface Career { n: string; d: string; fit: number; }
 interface Experiment { l: string; h: string; p: string; }
@@ -217,24 +223,38 @@ function Overview({ a }: { a: Assessment }) {
 }
 
 function AxesDetail({ a }: { a: Assessment }) {
+  const axes = a.axes ?? [];
   return (
     <div className="res-page">
       <div className="res-eye bl">— The four axes —</div>
-      <h2 className="res-h2 sm">Where you land on each scale</h2>
+      <h2 className="res-h2 sm">Where you land, and what it means</h2>
       <div className="dicho-list">
         {AXES.map((ax, i) => {
           const v = a.vals[i]!;
           const dist = Math.abs(v - 0.5) * 200;
+          const detail = axes.find(d => d.key === ax.key);
           return (
             <div className="dicho" key={ax.key}>
               <div className="dicho-head">
                 <span className="dt">{ax.name}</span>
-                <span className="ds">{Math.round(dist)}% toward {v >= 0.5 ? ax.right : ax.left}</span>
+                {detail?.bandLabel
+                  ? <span className="ds">{detail.bandLabel}</span>
+                  : <span className="ds">{Math.round(dist)}% toward {v >= 0.5 ? ax.right : ax.left}</span>}
               </div>
               <div className="spec">
                 <div className="spec-labels"><span>{ax.left}</span><span>{ax.right}</span></div>
                 <div className="spec-track"><div className="spec-thumb" style={{ left: v * 100 + '%' }} /></div>
               </div>
+              {detail && detail.dims.length > 0 && (
+                <div className="dims">
+                  {detail.dims.map((d, k) => (
+                    <div className="dim" key={k}>
+                      <div className="dim-k">{d.label}</div>
+                      <div className="dim-v">{d.text}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           );
         })}
@@ -994,6 +1014,11 @@ const PASSPORT_CSS = `
 .spec-labels span{ font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-m); }
 .spec-track{ height:12px; border-radius:999px; position:relative; background:linear-gradient(90deg,var(--blue),#8BA0F0 30%,#F0B0B0 70%,var(--coral)); }
 .spec-thumb{ position:absolute; top:50%; transform:translate(-50%,-50%); width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid var(--ink); box-shadow:0 4px 12px rgba(0,0,0,.25); }
+.dims{ margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:14px 22px; }
+.dim{ }
+.dim-k{ font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-m); margin-bottom:4px; }
+.dim-v{ font-size:13.5px; line-height:1.55; color:var(--ink-s); }
+@media (max-width:820px){ .dims{ grid-template-columns:1fr; } }
 .col-head{ font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:16px; }
 .col-head.or{ color:var(--orange); } .col-head.bl{ color:var(--blue); }
 .chips{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:28px; }
