@@ -526,10 +526,11 @@ a { text-decoration: none; color: inherit; }
 /* cover-gradient ground reused by hero + final */
 .grad-ground{
   background:
-    radial-gradient(ellipse 65% 55% at 88% 88%, rgba(255,165,72,.85) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 45% at 72% 70%, rgba(255,98,82,.85) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 50% at 30% 38%, rgba(58,98,232,.85) 0%, transparent 60%),
-    linear-gradient(125deg, #050B36 0%, #0E1F6E 30%, #4B266A 55%, #B23A4C 75%, #FF823F 100%);
+    radial-gradient(ellipse 52% 46% at 90% 92%, rgba(255,140,68,.42) 0%, transparent 56%),
+    radial-gradient(ellipse 46% 40% at 76% 74%, rgba(255,100,84,.36) 0%, transparent 60%),
+    radial-gradient(ellipse 66% 60% at 24% 30%, rgba(44,92,240,.90) 0%, transparent 62%),
+    radial-gradient(ellipse 85% 75% at 52% 56%, rgba(12,28,104,.60) 0%, transparent 72%),
+    linear-gradient(125deg, #02061A 0%, #071559 30%, #142889 50%, #2C2A72 68%, #7A3550 87%, #B65A3C 100%);
 }
 
 /* nav over hero */
@@ -562,7 +563,7 @@ a { text-decoration: none; color: inherit; }
 /* section scaffold */
 .psid-sec{ padding:104px 0; }
 .psid-sec.paper2{ background:var(--paper-2); }
-.psid-sec.ink{ background:var(--ink); color:#fff; }
+.psid-sec.ink{ background:linear-gradient(165deg, #071046 0%, #0C1E66 100%); color:#fff; }
 .psid-head{ max-width:760px; margin:0 0 56px; }
 .psid-head .eyebrow{ margin-bottom:16px; }
 .psid-head h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,4.4vw,54px); letter-spacing:-.035em; line-height:1.03; color:var(--ink); }
@@ -597,7 +598,7 @@ a { text-decoration: none; color: inherit; }
 /* pricing */
 .psid-price{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
 .price{ background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:38px; display:flex; flex-direction:column; }
-.price.feat{ background:var(--ink); color:#fff; border-color:var(--ink); position:relative; }
+.price.feat{ background:linear-gradient(165deg, #0A1550 0%, #0E2170 100%); color:#fff; border-color:#0E2170; position:relative; }
 .price .pk{ font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-mute); }
 .price.feat .pk{ color:var(--orange); }
 .price .amt{ font-family:var(--font-display); font-weight:800; font-size:64px; letter-spacing:-.04em; margin:16px 0 4px; line-height:1; color:var(--ink); }
