@@ -1,0 +1,288 @@
+qid	axis	type	kind	optionId	key	score	en	ru	es	fr	ar
+Q001	EI	wordselect	question				Usually, you are:	Обычно Вы:	Normalmente usted es:	Habituellement, vous êtes :	عادةً أنت:
+Q001	EI	wordselect	option	a	E	2	sociable	общительны	sociable	sociable	اجتماعي
+Q001	EI	wordselect	option	b	I	2	quite reserved and calm	довольно сдержанны и спокойны.	bastante reservado y tranquilo	plutôt réservé et calme	هادئ ومتحفظ إلى حد ما
+Q002	SN	wordselect	question				If you were a teacher, which subject would you want to teach:	Если бы Вы были преподавателем, какой курс Вы бы предпочли:	Si fuera profesor, ¿qué tipo de curso preferiría:	Si vous étiez enseignant, quel type de cours préféreriez-vous :	لو كنت معلماً، أي نوع من الدورات تفضل:
+Q002	SN	wordselect	option	a	S	2	subject based on presenting facts	построенный на изложении фактов	basado en la presentación de hechos	basé sur l'exposé des faits	يقوم على عرض الحقائق
+Q002	SN	wordselect	option	b	N	2	subject that discusses theories	включающий в себя изложение теорий.	que incluye la presentación de teorías	qui inclut l'exposé des théories	يتضمن عرض النظريات
+Q003	FT	wordselect	question				Often, you let:	Вы чаще позволяете:	Con más frecuencia usted permite que:	Le plus souvent, vous laissez :	في أغلب الأحيان تسمح لـ:
+Q003	FT	wordselect	option	a	F	2	your heart guide your mind	своему сердцу управлять разумом	su corazón guíe su mente	votre cœur guider votre raison	قلبك يوجه عقلك
+Q003	FT	wordselect	option	b	T	1	your mind guide your heart	своему разуму управлять сердцем.	su mente guíe su corazón	votre raison guider votre cœur	عقلك يوجه قلبك
+Q004	JP	wordselect	question				When you go somewhere for the whole day, you:	Когда Вы отправляетесь куда-то на весь день, Вы:	Cuando sale a algún lugar por todo el día, usted:	Quand vous partez quelque part pour toute la journée, vous :	عندما تذهب إلى مكان ما لليوم بأكمله، أنت:
+Q004	JP	wordselect	option	a	J	2	you plan your whole day ahead	планируете, что и когда будете делать	planifica qué y cuándo hará las cosas	planifiez ce que vous ferez et quand	تخطط لما ستفعله ومتى
+Q004	JP	wordselect	option	b	P	2	go without a specific plan	уходите без определенного плана.	sale sin un plan específico	partez sans plan précis	تغادر بدون خطة محددة
+Q005	EI	wordselect	question				When in a group, you usually:	Находясь в компании, Вы обычно:	Cuando está en compañía, usted generalmente:	En groupe, vous avez tendance à :	عند وجودك في مجموعة، عادةً أنت:
+Q005	EI	wordselect	option	a	E	1	join the general conversation	присоединяетесь к общему разговору	se une a la conversación general	vous joignez à la conversation générale	تنضم إلى الحديث العام
+Q005	EI	wordselect	option	b	I	2	chat one-on-one with someone from time to time	беседуете время от времени с кем-то одним.	conversa de vez en cuando con alguien en particular	discutez de temps en temps avec une seule personne	تتحدث من وقت لآخر مع شخص واحد
+Q006	NS	wordselect	question				It is easier for you to get along with people who:	Вам легче поладить с людьми:	Le resulta más fácil llevarse bien con personas que son:	Il vous est plus facile de vous entendre avec des personnes qui sont :	من الأسهل لك التعامل مع الأشخاص الذين:
+Q006	NS	wordselect	option	a	N	2	have a rich imagination	имеющими богатое воображение	tienen una imaginación rica	ont une riche imagination	يمتلكون خيالاً خصباً
+Q006	NS	wordselect	option	b	S	1	are realists	реалистичными.	realistas	réalistes	واقعيين
+Q007	FT	wordselect	question				You consider it a higher praise when people refer to you as:	Более высокой похвалой Вы считаете слова:	Considera un mayor cumplido las palabras:	Vous considérez comme un plus grand compliment les mots :	تعتبر أعلى مديح الكلمات:
+Q007	FT	wordselect	option	a	F	1	a warm-hearted person	душевный человек	una persona cálida	une personne chaleureuse	شخص دافئ القلب
+Q007	FT	wordselect	option	b	T	2	a logical person	последовательно рассуждающий человек.	una persona que razona de manera consistente	une personne qui raisonne de façon cohérente	شخص منطقي ومتسق
+Q008	JP	wordselect	question				You prefer:	Вы предпочитаете:	Usted prefiere:	Vous préférez :	أنت تفضل:
+Q008	JP	wordselect	option	a	J	2	scheduling meetings, parties, etc. ahead of time	заранее договариваться о встречах, вечеринках и т.п.	organizar reuniones, fiestas, etc. con antelación	organiser à l'avance les réunions, soirées, etc.	الترتيب المسبق للاجتماعات والحفلات وما شابه
+Q008	JP	wordselect	option	b	P	1	having the option to decide at the last moment how to have fun	иметь возможность в последний момент решать, как развлечься.	tener la posibilidad de decidir en el último momento cómo divertirse	avoir la possibilité de décider au dernier moment comment s'amuser	أن تقرر في اللحظة الأخيرة كيف تقضي وقتك
+Q009	EI	wordselect	question				In a large group:	В большой компании чаще:	En un grupo grande, con más frecuencia:	Dans un grand groupe, le plus souvent :	في مجموعة كبيرة، في الغالب:
+Q009	EI	wordselect	option	a	E	2	you often introduce people to each other	Вы представляете людей друг другу	usted presenta a las personas entre sí	vous présentez les gens les uns aux autres	أنت تعرّف الناس ببعضهم
+Q009	EI	wordselect	option	b	I	2	you are being introduced to others	Вас знакомят с другими.	le presentan a otras personas	on vous présente aux autres	يتم تعريفك بالآخرين
+Q010	SN	wordselect	question				You are more likely to be referred to as:	Вас скорее можно назвать:	Más bien se le podría llamar:	On vous qualifierait plutôt de :	يمكن وصفك بأنك:
+Q010	SN	wordselect	option	a	S	2	a practical person	человеком практичным	una persona práctica	une personne pratique	شخصاً عملياً
+Q010	SN	wordselect	option	b	N	2	an imaginative dreamer	выдумщиком.	un soñador imaginativo	un imaginatif	شخصاً خيالياً مبتكراً
+Q011	FT	wordselect	question				Usually, you:	Обычно Вы:	Normalmente usted es:	Habituellement, vous êtes :	عادةً أنت:
+Q011	FT	wordselect	option	a	F	2	value feelings more than logic	цените чувства больше, чем логику	valora los sentimientos más que la lógica	accordez plus de valeur aux sentiments qu'à la logique	تُقدّر المشاعر أكثر من المنطق
+Q011	FT	wordselect	option	b	T	2	value logic more than feelings	цените логику больше, чем чувства.	valora la lógica más que los sentimientos	accordez plus de valeur à la logique qu'aux sentiments	تُقدّر المنطق أكثر من المشاعر
+Q012	PJ	wordselect	question				You often succeed when:	Вы чаще добиваетесь успеха:	Con más frecuencia tiene éxito:	Vous réussissez le plus souvent :	في أغلب الأحيان تنجح:
+Q012	PJ	wordselect	option	a	P	1	acting in unpredictable situations requiring quick decisions	действуя в непредсказуемой ситуации, когда нужно быстро принимать решения	actuando en situaciones impredecibles que requieren decisiones rápidas	en agissant dans des situations imprévisibles où il faut prendre des décisions rapidement	بالتصرف في مواقف غير متوقعة تتطلب قرارات سريعة
+Q012	PJ	wordselect	option	b	J	1	following a carefully developed plan	следуя тщательно разработанному плану.	siguiendo un plan cuidadosamente elaborado	en suivant un plan soigneusement élaboré	باتباع خطة مدروسة بعناية
+Q013	IE	wordselect	question				You prefer:	Вы предпочитаете:	Usted prefiere:	Vous préférez :	أنت تفضل:
+Q013	IE	wordselect	option	a	I	2	having a few close, loyal friends	иметь несколько близких, верных друзей	tener unos pocos amigos cercanos y leales	avoir quelques amis proches et fidèles	وجود عدد قليل من الأصدقاء المقربين الأوفياء
+Q013	IE	wordselect	option	b	E	1	having friendly connections with a wide variety of people	иметь дружеские связи с самыми разными людьми.	tener relaciones amistosas con una gran variedad de personas	avoir des liens d'amitié avec des personnes très diverses	وجود علاقات ودية مع أشخاص متنوعين
+Q014	SN	wordselect	question				You like people who:	Вам больше нравятся люди, которые:	Le gustan más las personas que:	Vous préférez les personnes qui :	تفضل الأشخاص الذين:
+Q014	SN	wordselect	option	a	S	1	follow established norms and do not draw attention to themselves	следуют общепринятым нормам и не привлекают к себе внимания	siguen las normas establecidas y no llaman la atención	suivent les normes établies et n'attirent pas l'attention sur eux	يتبعون المعايير المقبولة ولا يلفتون الانتباه إليهم
+Q014	SN	wordselect	option	b	N	2	are so original that they do not care whether they attract attention or not	настолько оригинальны, что им все равно, обращают на них внимание или нет.	son tan originales que no les importa si atraen atención o no	sont tellement originaux qu'il leur est égal d'attirer l'attention ou non	أصيلون لدرجة أنه لا يهمهم إن كانوا يلفتون الانتباه أم لا
+Q015	FT	wordselect	question				In your opinion, the worst flaw is to be:	На Ваш взгляд самый большой недостаток – быть:	En su opinión, el mayor defecto es ser:	À votre avis, le plus grand défaut est d'être :	في رأيك، أكبر عيب هو أن تكون:
+Q015	FT	wordselect	option	a	F	2	insensitive	бесчувственным	insensible	insensible	عديم الإحساس
+Q015	FT	wordselect	option	b	T	0	imprudent	неблагоразумным.	imprudente	imprudent	متهور
+Q016	JP	wordselect	question				Following a schedule:	Следование какому-либо расписанию:	Seguir un horario:	Suivre un planning :	اتباع جدول زمني:
+Q016	JP	wordselect	option	a	J	2	appeals to you	привлекает Вас	le atrae	vous attire	يجذبك
+Q016	JP	wordselect	option	b	P	2	constraints you	сковывает Вас.	le coarta	vous contraint	يقيّدك
+Q017	IE	wordselect	question				Among your friends, you:	Среди своих друзей Вы:	Entre sus amigos, usted:	Parmi vos amis, vous :	بين أصدقائك، أنت:
+Q017	IE	wordselect	option	a	I	2	learn about events in their lives later than others	позже других узнаете о событиях в их жизни	se entera de los eventos en sus vidas más tarde que los demás	apprenez les événements de leur vie plus tard que les autres	تعرف عن أحداث حياتهم متأخراً عن الآخرين
+Q017	IE	wordselect	option	b	E	1	usually know a lot of news about them	обычно знаете массу новостей о них.	generalmente sabe muchas noticias sobre ellos	savez généralement beaucoup de nouvelles sur eux	عادةً تعرف الكثير من الأخبار عنهم
+Q018	NS	wordselect	question				You would prefer to have someone in your friend circle who:	Вы бы предпочли иметь среди своих друзей человека, который:	Preferiría tener entre sus amigos a alguien que:	Vous préféreriez avoir parmi vos amis quelqu'un qui :	تفضل أن يكون من بين أصدقائك شخص:
+Q018	NS	wordselect	option	a	N	2	is always full of new ideas	всегда полон новых идей	siempre está lleno de nuevas ideas	est toujours plein de nouvelles idées	دائماً مليء بالأفكار الجديدة
+Q018	NS	wordselect	option	b	S	1	has a sober and realistic view of the world	трезво и реалистично смотрит на мир.	tiene una visión sobria y realista del mundo	a une vision sobre et réaliste du monde	لديه نظرة رصينة وواقعية للعالم
+Q019	FT	wordselect	question				You would prefer to work for someone who:	Вы предпочли бы работать под началом человека, который:	Preferiría trabajar bajo la dirección de alguien que:	Vous préféreriez travailler sous la direction de quelqu'un qui :	تفضل العمل تحت إشراف شخص:
+Q019	FT	wordselect	option	a	F	2	is always kind	всегда добр	siempre es amable	est toujours bienveillant	دائماً طيب
+Q019	FT	wordselect	option	b	T	0	is always fair	всегда справедлив.	siempre es justo	est toujours juste	دائماً عادل
+Q020	JP	wordselect	question				The idea of making a to-do list for the weekend:	Мысль о том, чтобы составить список дел на выходные:	La idea de hacer una lista de tareas para el fin de semana:	L'idée de faire une liste de tâches pour le week-end :	فكرة إعداد قائمة مهام لعطلة نهاية الأسبوع:
+Q020	JP	wordselect	option	a	J	1	appeals to you	Вас привлекает	le atrae	vous attire	يجذبك
+Q020	JP	wordselect	option	b	P	1	leaves you indifferent	оставляет Вас равнодушным	le deja indiferente	vous laisse indifférent	يتركك غير مبالٍ
+Q020	JP	wordselect	option	c			depresses you	угнетает Вас.	le deprime	vous déprime	يُحبطك
+Q021	EI	wordselect	question				Usually, you:	Вы обычно:	Usted generalmente:	Vous généralement :	عادةً أنت:
+Q021	EI	wordselect	option	a	E	2	can easily talk to almost anyone for any amount of time	можете легко разговаривать практически с любым человеком в течение любого времени	puede conversar fácilmente con casi cualquier persona durante cualquier tiempo	pouvez facilement parler avec presque n'importe qui pendant n'importe combien de temps	يمكنك التحدث بسهولة مع أي شخص تقريباً لأي مدة
+Q021	EI	wordselect	option	b	I	2	can connect with only with a few people and only in certain situations	можете найти тему для разговора только с немногими людьми и только в определенных ситуациях.	solo puede encontrar tema de conversación con pocas personas y solo en ciertas situaciones	ne pouvez trouver un sujet de conversation qu'avec peu de personnes et seulement dans certaines situations	لا تجد موضوعاً للحديث إلا مع قلة من الناس وفي مواقف معينة فقط
+Q022	NS	wordselect	question				When you read for pleasure, you like:	Когда Вы читаете для своего удовольствия, Вам нравится:	Cuando lee por placer, le gusta:	Quand vous lisez pour le plaisir, vous aimez :	عندما تقرأ للمتعة، تحب:
+Q022	NS	wordselect	option	a	N	0	an unusual, original style of writing	необычная, оригинальная манера изложения	un estilo de escritura inusual y original	un style d'écriture inhabituel et original	أسلوب كتابة غير معتاد وأصيل
+Q022	NS	wordselect	option	b	S	1	when writers express their thoughts clearly	когда писатели четко выражают свои мысли.	cuando los escritores expresan sus pensamientos con claridad	quand les écrivains expriment clairement leurs pensées	عندما يعبر الكتّاب عن أفكارهم بوضوح
+Q023	TF	wordselect	question				You think a more serious flaw is:	Вы считаете, что более серьезный недостаток:	Usted cree que un defecto más grave es:	Vous pensez qu'un défaut plus grave est :	تعتقد أن العيب الأشد خطورة هو:
+Q023	TF	wordselect	option	a	T	1	being too kind	быть слишком сердечным	ser demasiado afectuoso	être trop chaleureux	أن تكون محباً للغاية
+Q023	TF	wordselect	option	b	F	0	being not kind enough	быть недостаточно сердечным.	no ser suficientemente afectuoso	ne pas être assez chaleureux	أن لا تكون محباً بما يكفي
+Q024	P	wordselect	question				In your daily work:	В своей повседневной работе:	En su trabajo diario:	Dans votre travail quotidien :	في عملك اليومي:
+Q024	P	wordselect	option	a	P	1	you like challenging situations, where you have to work under time constraints	Вам больше нравятся критические ситуации, когда Вам приходится работать в условиях дефицита времени	prefiere situaciones críticas en las que debe trabajar bajo presión de tiempo	vous préférez les situations critiques où vous devez travailler sous pression temporelle	تفضل المواقف الحرجة التي تعمل فيها تحت ضغط الوقت
+Q024	P	wordselect	option	b			you hate working within strict time limits	ненавидите работать в жестких временных рамках	detesta trabajar dentro de plazos estrictos	détestez travailler dans des délais stricts	تكره العمل ضمن قيود زمنية صارمة
+Q024	P	wordselect	option	c	J	1	you usually plan your work so that you have enough time before deadlines	обычно планируете свою работу так, чтобы Вам хватило времени.	generalmente planifica su trabajo para tener suficiente tiempo	planifiez généralement votre travail pour avoir suffisamment de temps	عادةً تخطط لعملك بحيث يكون لديك وقت كافٍ
+Q025	EI	wordselect	question				People can figure out your interests:	Люди могут определить область Ваших интересов:	Las personas pueden identificar sus áreas de interés:	Les gens peuvent identifier vos centres d'intérêt :	يمكن للناس تحديد مجالات اهتمامك:
+Q025	EI	wordselect	option	a	E	1	upon meeting you for the first time	при первом знакомстве с Вами	al conocerle por primera vez	dès la première rencontre	عند لقائك لأول مرة
+Q025	EI	wordselect	option	b	I	1	only when they get to know you better	лишь тогда, когда узнают Вас поближе.	solo cuando le conocen mejor	seulement quand ils apprennent à mieux vous connaître	فقط عندما يتعرفون عليك بشكل أفضل
+Q026	SN	wordselect	question				When doing the same task that has been done by others in the past, you prefer:	Выполняя ту же работу, что и многие другие люди, Вы предпочитаете:	Al hacer el mismo trabajo que muchos otros, usted prefiere:	Quand vous faites le même travail que beaucoup d'autres, vous préférez :	عند القيام بنفس العمل الذي يقوم به الآخرون، تفضل:
+Q026	SN	wordselect	option	a	S	1	do it the traditional way	делать это традиционным способом	hacerlo de la manera tradicional	le faire de la manière traditionnelle	القيام به بالطريقة التقليدية
+Q026	SN	wordselect	option	b	N	1	invent your own way	изобретать свой собственный способ.	inventar su propio método	inventer votre propre méthode	ابتكار طريقتك الخاصة
+Q027	FT	wordselect	question				You are more concerned with:	Вас больше волнуют:	Le preocupan más:	Vous vous souciez davantage de :	أنت أكثر اهتماماً بـ:
+Q027	FT	wordselect	option	a	F	0	people's feelings	чувства людей	los sentimientos de las personas	les sentiments des gens	مشاعر الناس
+Q027	FT	wordselect	option	b	T	2	people's rights	их права.	sus derechos	leurs droits	حقوقهم
+Q028	JP	wordselect	question				When you need to complete a certain task, you usually:	Когда Вам нужно выполнить определенную работу, Вы обычно:	Cuando necesita completar una tarea específica, usted generalmente:	Quand vous devez accomplir une tâche précise, vous avez généralement tendance à :	عندما تحتاج إلى إنجاز مهمة معينة، عادةً أنت:
+Q028	JP	wordselect	option	a	J	1	carefully organize everything before starting	тщательно организовываете все перед началом работы	organiza todo cuidadosamente antes de comenzar	organisez soigneusement tout avant de commencer	تنظم كل شيء بعناية قبل البدء
+Q028	JP	wordselect	option	b	P	2	prefer to figure out everything needed as you go	предпочитаете выяснять все необходимое в процессе работы.	prefiere descubrir todo lo necesario mientras trabaja	préférez découvrir tout ce dont vous avez besoin au fur et à mesure	تفضل معرفة ما تحتاجه أثناء العمل
+Q029	EI	wordselect	question				You are usually:	Обычно Вы:	Normalmente usted es:	Habituellement, vous êtes :	عادةً أنت:
+Q029	EI	wordselect	option	a	E	1	freely express your feelings	свободно выражаете свои чувства	expresa libremente sus sentimientos	exprimez librement vos sentiments	تعبّر بحرية عن مشاعرك
+Q029	EI	wordselect	option	b	I	0	keep your feelings to yourself	держите свои чувства при себе.	guarda sus sentimientos para sí mismo	gardez vos sentiments pour vous	تحتفظ بمشاعرك لنفسك
+Q030	SN	wordselect	question				You prefer:	Вы предпочитаете:	Usted prefiere:	Vous préférez :	أنت تفضل:
+Q030	SN	wordselect	option	a	S	1	being original	быть оригинальным	ser original	être original	أن تكون مبتكراً
+Q030	SN	wordselect	option	b	N	0	following established norms	следовать общепринятым нормам.	seguir las normas establecidas	suivre les normes établies	اتباع المعايير المقبولة
+Q031	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q031	FT	wordselect	option	a	F	1	gentle	кроткий	manso	doux	وديع
+Q031	FT	wordselect	option	b	T	2	persistent	настойчивый.	persistente	persévérant	مثابر
+Q032	JP	wordselect	question				When you need to do something at a specific time, you feel that:	Когда Вам необходимо что-то сделать в определенное время, Вы считаете, что:	Cuando necesita hacer algo en un momento determinado, usted cree que:	Quand vous devez faire quelque chose à un moment précis, vous estimez que :	عندما تحتاج إلى القيام بشيء في وقت محدد، تشعر أن:
+Q032	JP	wordselect	option	a	J	1	it is better to plan everything in advance	лучше планировать все заранее	es mejor planificar todo con antelación	il vaut mieux tout planifier à l'avance	من الأفضل التخطيط لكل شيء مسبقاً
+Q032	JP	wordselect	option	b	P	1	it is somewhat unpleasant to be bound by these plans	несколько неприятно быть связанным этими планами.	es algo desagradable estar atado a estos planes	il est quelque peu désagréable d'être lié par ces plans	من غير المريح أن تكون مقيداً بهذه الخطط
+Q033	EI	wordselect	question				It can be said that you:	Можно сказать, что Вы:	Se puede decir que usted:	On peut dire que vous :	يمكن القول أنك:
+Q033	EI	wordselect	option	a	E	1	more enthusiastic than other people	более восторженны по сравнению с другими людьми	más entusiasta que otras personas	plus enthousiaste que les autres	أكثر حماساً مقارنةً بالآخرين
+Q033	EI	wordselect	option	b	I	1	less enthusiastic than most people	менее восторженны, чем большинство людей.	menos entusiasta que la mayoría de las personas	moins enthousiaste que la plupart des gens	أقل حماساً من معظم الناس
+Q034	NS	wordselect	question				A higher compliment for a person would be recognition of:	Более высокой похвалой человеку будет признание:	Un mayor cumplido para una persona sería reconocer:	Un plus grand compliment pour une personne serait de reconnaître :	أعلى مديح للشخص هو الاعتراف بـ:
+Q034	NS	wordselect	option	a	N	2	their ability to foresee things	его способности к предвидению	su capacidad de previsión	leur capacité de prévision	قدرتهم على استشراف الأمور
+Q034	NS	wordselect	option	b	S	1	their common sense	его здравого смысла.	su sentido común	leur bon sens	حسن تقديرهم
+Q035	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q035	TF	wordselect	option	a	T	2	thoughts	мысли	pensamientos	pensées	أفكار
+Q035	TF	wordselect	option	b	F	1	feelings	чувства.	sentimientos	sentiments	مشاعر
+Q036	PJ	wordselect	question				Usually:	Обычно:	Normalmente:	Habituellement :	عادةً:
+Q036	PJ	wordselect	option	a	P	1	you prefer to do everything at the last minute	Вы предпочитаете все делать в последнюю минуту	prefiere hacer todo en el último momento	vous préférez tout faire à la dernière minute	تفضل القيام بكل شيء في اللحظة الأخيرة
+Q036	PJ	wordselect	option	b	J	1	putting everything off until the last minute is too stressful for you	для Вас откладывать все до последней минуты – это слишком большая нервотрепка.	dejar todo para el último momento le genera demasiado estrés	tout remettre à la dernière minute est trop stressant pour vous	تأجيل كل شيء إلى اللحظة الأخيرة مرهق جداً بالنسبة لك
+Q037	IE	wordselect	question				At parties, you:	На вечеринках Вам:	En las fiestas, usted:	Lors des soirées, vous :	في الحفلات، أنت:
+Q037	IE	wordselect	option	a	I	1	you sometimes get bored	иногда становится скучно	a veces se aburre	vous vous ennuyez parfois	تشعر أحياناً بالملل
+Q037	IE	wordselect	option	b	E	2	you always have fun	всегда весело.	siempre se divierte	vous vous amusez toujours	دائماً تستمتع
+Q038	NS	wordselect	question				You think it is more important to:	Вы считаете, что более важно:	Usted cree que es más importante:	Vous pensez qu'il est plus important de :	تعتقد أن الأهم هو:
+Q038	NS	wordselect	option	a	N	0	to see various possibilities in a situation	видеть различные возможности в какой-либо ситуации	ver diversas posibilidades en una situación	voir diverses possibilités dans une situation	رؤية الإمكانيات المتعددة في الموقف
+Q038	NS	wordselect	option	b	S	1	to perceive facts as they are	воспринимать факты такими, какие они есть.	percibir los hechos tal como son	percevoir les faits tels qu'ils sont	رؤية الحقائق كما هي
+Q039	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q039	TF	wordselect	option	a	T	2	convincing	убедительный	convincente	convaincant	مقنع
+Q039	TF	wordselect	option	b	F	1	touching	трогательный.	conmovedor	touchant	مؤثر
+Q040	JP	wordselect	question				Do you think that having a stable daily routine:	Считаете ли Вы, что наличие стабильного повседневного распорядка:	¿Cree usted que tener una rutina diaria estable:	Pensez-vous qu'avoir une routine quotidienne stable :	هل تعتقد أن وجود روتين يومي ثابت:
+Q040	JP	wordselect	option	a	J	0	is very convenient for getting many things done	очень удобно для выполнения многих дел	es muy conveniente para realizar muchas tareas	est très pratique pour accomplir beaucoup de choses	مريح جداً لإنجاز الكثير من الأمور
+Q040	JP	wordselect	option	b	P	0	is burdensome, even when necessary	тягостно, даже когда это необходимо.	es pesado, incluso cuando es necesario	est pénible, même quand c'est nécessaire	مرهق حتى عندما يكون ضرورياً
+Q041	EI	wordselect	question				When something becomes fashionable, you usually:	Когда что-то входит в моду, Вы обычно:	Cuando algo se pone de moda, usted generalmente:	Quand quelque chose devient à la mode, vous avez généralement tendance à :	عندما يصبح شيء ما رائجاً، عادةً أنت:
+Q041	EI	wordselect	option	a	E	0	are among the first to try it	одним из первых испробуете это	es uno de los primeros en probarlo	êtes parmi les premiers à l'essayer	تكون من أوائل من يجربه
+Q041	EI	wordselect	option	b	I	2	have little interest in it	мало этим интересуетесь.	tiene poco interés en ello	vous y intéressez peu	اهتمامك به ضئيل
+Q042	SN	wordselect	question				You would rather:	Вы скорее:	Usted más bien:	Vous avez plutôt tendance à :	أنت أميل إلى:
+Q042	SN	wordselect	option	a	S	2	stick to established methods in your work	придерживаетесь общепринятых методов в работе	se adhiere a los métodos establecidos en su trabajo	vous en tenez aux méthodes établies dans votre travail	تلتزم بالأساليب المعتمدة في عملك
+Q042	SN	wordselect	option	b	N	0	look for what is still wrong and tackle unresolved problems	ищете, что еще неверно, и беретесь за неразрешенные проблемы.	busca qué está mal aún y se ocupa de los problemas sin resolver	cherchez ce qui ne va pas encore et vous attaquez aux problèmes non résolus	تبحث عما هو خاطئ وتتعامل مع المشكلات غير المحلولة
+Q043	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q043	TF	wordselect	option	a	T	1	to analyze	анализировать	analizar	analyser	تحليل
+Q043	TF	wordselect	option	b	F	2	to empathize	сопереживать.	empatizar	empathiser	التعاطف
+Q044	PJ	wordselect	question				When you think about a minor task you need to do or a small thing to buy, you:	Когда Вы думаете о том, что надо сделать какое-то не очень важное дело или купить какую-то мелкую вещь, Вы:	Cuando piensa en una tarea menor que debe hacer o en algo pequeño que comprar, usted:	Quand vous pensez à une tâche mineure à accomplir ou à un petit achat à faire, vous :	عندما تفكر في مهمة بسيطة تحتاج إلى إنجازها أو شيء صغير للشراء، أنت:
+Q044	PJ	wordselect	option	a	P	1	often forget about it and remember too late	часто забываете об этом и вспоминаете слишком поздно	a menudo lo olvida y lo recuerda demasiado tarde	l'oubliez souvent et vous en souvenez trop tard	كثيراً ما تنساه وتتذكره في وقت متأخر
+Q044	PJ	wordselect	option	b	J	1	write it down on paper so as not to forget	записываете это на бумаге, чтобы не забыть	lo anota en papel para no olvidarlo	le notez sur papier pour ne pas l'oublier	تكتبه على ورقة حتى لا تنساه
+Q044	PJ	wordselect	option	c			always do it without additional reminders	всегда выполняете это без дополнительных напоминаний.	siempre lo hace sin recordatorios adicionales	le faites toujours sans rappels supplémentaires	دائماً تنجزه دون تذكيرات إضافية
+Q045	EI	wordselect	question				Finding out what kind of person you are:	Узнать, что Вы за человек:	Descubrir qué tipo de persona es usted:	Découvrir quel type de personne vous êtes :	معرفة نوع الشخص الذي أنت عليه:
+Q045	EI	wordselect	option	a	E	1	quite easily	довольно легко	con bastante facilidad	assez facilement	بسهولة كافية
+Q045	EI	wordselect	option	b	I	2	quite difficult	довольно трудно.	bastante difícil	assez difficile	صعب إلى حد ما
+Q046	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q046	SN	wordselect	option	a	S	2	facts	факты	hechos	faits	حقائق
+Q046	SN	wordselect	option	b	N	1	ideas	идеи.	ideas	idées	أفكار
+Q047	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q047	TF	wordselect	option	a	T	1	justice	справедливость	justicia	justice	عدالة
+Q047	TF	wordselect	option	b	F	2	compassion	сочувствие.	compasión	compassion	تعاطف
+Q048	PJ	wordselect	question				It is harder for you to adapt to:	Вам труднее приспособиться:	Le resulta más difícil adaptarse:	Il vous est plus difficile de vous adapter :	من الصعب عليك التأقلم مع:
+Q048	PJ	wordselect	option	a	P	1	to monotony	к однообразию	a la monotonía	à la monotonie	الرتابة
+Q048	PJ	wordselect	option	b	J	1	to constant change	к постоянным переменам.	a los cambios constantes	aux changements constants	التغيير المستمر
+Q049	E	wordselect	question				When you find yourself in an awkward situation, you usually:	Оказавшись в затруднительной ситуации, Вы обычно:	Cuando se encuentra en una situación difícil, usted generalmente:	Quand vous vous trouvez dans une situation embarrassante, vous avez généralement tendance à :	عند وجودك في موقف محرج، عادةً أنت:
+Q049	E	wordselect	option	a			change the subject	переводите разговор на другое	cambia el tema de conversación	détournez la conversation	تحوّل الحديث إلى موضوع آخر
+Q049	E	wordselect	option	b	E	1	turn everything into a joke	обращаете все в шутку	convierte todo en una broma	tournez tout en plaisanterie	تحوّل كل شيء إلى نكتة
+Q049	E	wordselect	option	c	I	2	think a few days later about what you should have said	спустя несколько дней думаете, что Вам следовало сказать.	piensa unos días después en lo que debería haber dicho	pensez quelques jours plus tard à ce que vous auriez dû dire	تفكر بعد أيام فيما كان ينبغي لك قوله
+Q050	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q050	SN	wordselect	option	a	S	2	statement	утверждение	afirmación	affirmation	تأكيد
+Q050	SN	wordselect	option	b	N	1	idea	идея.	idea	idée	فكرة
+Q051	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q051	FT	wordselect	option	a	F	1	compassion	сочувствие	compasión	compassion	تعاطف
+Q051	FT	wordselect	option	b	T	2	calculation	расчетливость.	cálculo	calcul	حسابية
+Q052	JP	wordselect	question				When you start a big project that will take a week, you:	Когда Вы начинаете какое-то большое дело, которое займет у Вас неделю, Вы:	Cuando comienza un gran proyecto que le llevará una semana, usted:	Quand vous commencez un grand projet qui vous prendra une semaine, vous :	عند بدء مشروع كبير سيستغرق منك أسبوعاً، أنت:
+Q052	JP	wordselect	option	a	J	2	first make a list of what needs to be done and in what order	составляете сначала список того, что нужно сделать и в каком порядке	primero hace una lista de lo que hay que hacer y en qué orden	commencez par faire une liste de ce qui doit être fait et dans quel ordre	أولاً تضع قائمة بما يجب القيام به وبأي ترتيب
+Q052	JP	wordselect	option	b	P	1	get straight to work	сразу беретесь за работу.	se pone a trabajar de inmediato	vous mettez immédiatement au travail	تبدأ العمل فوراً
+Q053	EI	wordselect	question				You think your close ones know your thoughts:	Вы считаете, что Вашим близким известны Ваши мысли:	Cree que sus seres queridos conocen sus pensamientos:	Vous pensez que vos proches connaissent vos pensées :	تعتقد أن المقربين منك يعرفون أفكارك:
+Q053	EI	wordselect	option	a	E	1	well enough	достаточно хорошо	bastante bien	assez bien	جيداً بما يكفي
+Q053	EI	wordselect	option	b	I	1	only when you deliberately tell them	лишь тогда, когда Вы намеренно сообщаете о них.	solo cuando usted se los comunica deliberadamente	seulement quand vous le leur dites délibérément	فقط عندما تخبرهم بها عن قصد
+Q054	NS	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q054	NS	wordselect	option	a	N	2	theory	теория	teoría	théorie	نظرية
+Q054	NS	wordselect	option	b	S	1	fact	факт.	hecho	fait	حقيقة
+Q055	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q055	TF	wordselect	option	a	T	1	benefit	выгода	beneficio	bénéfice	فائدة
+Q055	TF	wordselect	option	b	F	1	good deed	благодеяние.	buena acción	bonne action	عمل خير
+Q056	PJ	wordselect	question				When doing a job, you usually:	Выполняя какую-либо работу, Вы обычно:	Al realizar un trabajo, usted generalmente:	Quand vous effectuez un travail, vous avez généralement tendance à :	عند القيام بعمل ما، عادةً أنت:
+Q056	PJ	wordselect	option	a	P	1	plan your work so as to finish with time to spare	планируете работу таким образом, чтобы закончить с запасом времени	planifica su trabajo para terminar con tiempo de sobra	planifiez votre travail de façon à terminer avec du temps en avance	تخطط لعملك لإنهائه قبل الموعد المحدد
+Q056	PJ	wordselect	option	b	J	0	work at your highest productivity at the last moment	в последний момент работаете с наивысшей производительностью.	trabaja con su mayor productividad en el último momento	travaillez avec votre plus haute productivité au dernier moment	تعمل بأعلى إنتاجية في اللحظة الأخيرة
+Q057	EI	wordselect	question				At a party, you prefer:	Будучи на вечеринке, Вы предпочитаете:	En una fiesta, usted prefiere:	À une soirée, vous préférez :	في حفلة، تفضل:
+Q057	EI	wordselect	option	a	E	1	actively participate in how things unfold	активно участвовать в развитии событий	participar activamente en el desarrollo de los eventos	participer activement au déroulement des événements	المشاركة الفعّالة في تطور الأحداث
+Q057	EI	wordselect	option	b	I	2	let others have fun in their own way	предоставляете другим развлекаться, как им хочется.	deja que los demás se diviertan como quieran	laissez les autres s'amuser comme ils le souhaitent	تترك للآخرين حرية الاستمتاع كما يشاؤون
+Q058	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q058	SN	wordselect	option	a	S	1	literal	буквальный	literal	littéral	حرفي
+Q058	SN	wordselect	option	b	N	1	figurative	фигуральный.	figurado	figuré	مجازي
+Q059	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q059	TF	wordselect	option	a	T	1	decisive	решительный	decidido	décisif	حازم
+Q059	TF	wordselect	option	b	F	2	devoted	преданный.	leal	dévoué	مخلص
+Q060	JP	wordselect	question				If asked on a weekend morning what you plan to do during the day, you:	Если в выходной утром Вас спросят, что Вы собираетесь сделать в течение дня, Вы:	Si le preguntan por la mañana de un día libre qué planea hacer durante el día, usted:	Si on vous demande un matin de week-end ce que vous comptez faire dans la journée, vous :	إذا سُئلت صباح يوم عطلة عما تخطط للقيام به خلال اليوم، أنت:
+Q060	JP	wordselect	option	a	J	0	can answer fairly accurately	сможете довольно точно ответить	puede responder con bastante precisión	pouvez répondre assez précisément	يمكنك الإجابة بدقة معقولة
+Q060	JP	wordselect	option	b	P	1	will list twice as many things as you can actually do	перечислите вдвое больше дел, чем сможете сделать	enumerará el doble de cosas de las que realmente puede hacer	enumérerez deux fois plus de choses que vous ne pouvez en faire	ستعدد ضعف ما يمكنك القيام به فعلاً
+Q060	JP	wordselect	option	c			prefer not to plan in advance	предпочтете не загадывать заранее.	prefiere no planificar con antelación	préférez ne pas planifier à l'avance	تفضل عدم التخطيط مسبقاً
+Q061	EI	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q061	EI	wordselect	option	a	E	1	energetic	энергичный	enérgico	énergique	نشيط
+Q061	EI	wordselect	option	b	I	2	calm	спокойный.	tranquilo	calme	هادئ
+Q062	NS	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q062	NS	wordselect	option	a	N	0	figurative	образный	figurativo	imagé	مجازي
+Q062	NS	wordselect	option	b	S	2	ordinary	прозаичный.	prosaico	prosaïque	مباشر
+Q063	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q063	TF	wordselect	option	a	T	2	unyielding	неуступчивый	inflexible	inflexible	متصلب
+Q063	TF	wordselect	option	b	F	0	kindhearted	добросердечный.	bondadoso	bienveillant	طيب القلب
+Q064	JP	wordselect	question				The monotony of daily tasks seems to you:	Однообразие повседневных дел кажется Вам:	La monotonía de las tareas diarias le parece:	La monotonie des tâches quotidiennes vous semble :	يبدو لك رتابة المهام اليومية:
+Q064	JP	wordselect	option	a	J	1	calm	спокойным	tranquilo	calme	هادئاً
+Q064	JP	wordselect	option	b	P	0	tiring	утомительным.	agotador	épuisant	مُرهقاً
+Q065	IE	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q065	IE	wordselect	option	a	I	1	reserved	сдержанный	reservado	réservé	متحفظ
+Q065	IE	wordselect	option	b	E	2	talkative	разговорчивый.	hablador	bavard	ثرثار
+Q066	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q066	SN	wordselect	option	a	S	2	to produce	производить	producir	produire	إنتاج
+Q066	SN	wordselect	option	b	N	0	to create	создавать.	crear	créer	خلق
+Q067	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q067	FT	wordselect	option	a	F	0	peacemaker	миротворец	pacificador	pacificateur	صانع سلام
+Q067	FT	wordselect	option	b	T	2	judge	судья.	juez	juge	قاضٍ
+Q068	JP	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q068	JP	wordselect	option	a	J	2	scheduled	запланированный	planificado	planifié	مخطط له
+Q068	JP	wordselect	option	b	P	2	unplanned	внеплановый.	no planificado	imprévu	غير مخطط له
+Q069	IE	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q069	IE	wordselect	option	a	I	1	calm	спокойный	tranquilo	calme	هادئ
+Q069	IE	wordselect	option	b	E	1	lively	оживленный.	animado	animé	نشيط
+Q070	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q070	SN	wordselect	option	a	S	2	prudent	благоразумный	prudente	prudent	حكيم
+Q070	SN	wordselect	option	b	N	0	charming	очаровательный.	encantador	charmant	ساحر
+Q071	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q071	FT	wordselect	option	a	F	0	gentle	мягкий	suave	doux	لطيف
+Q071	FT	wordselect	option	b	T	2	firm	твердый.	firme	ferme	صارم
+Q072	JP	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q072	JP	wordselect	option	a	J	2	methodical	методичный	metódico	méthodique	منهجي
+Q072	JP	wordselect	option	b	P	2	spontaneous	спонтанный.	espontáneo	spontané	عفوي
+Q073	EI	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q073	EI	wordselect	option	a	E	0	to speak	говорить	hablar	parler	التحدث
+Q073	EI	wordselect	option	b	I	1	to write	писать.	escribir	écrire	الكتابة
+Q074	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q074	SN	wordselect	option	a	S	1	production	производство	producción	production	إنتاج
+Q074	SN	wordselect	option	b	N	1	planning	планирование.	planificación	planification	تخطيط
+Q075	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q075	FT	wordselect	option	a	F	0	to forgive	прощать	perdonar	pardonner	المسامحة
+Q075	FT	wordselect	option	b	T	2	to permit	дозволять.	permitir	permettre	السماح
+Q076	JP	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q076	JP	wordselect	option	a	J	2	systematic	систематический	sistemático	systématique	منهجي
+Q076	JP	wordselect	option	b	P	2	random	случайный.	aleatorio	aléatoire	عشوائي
+Q077	EI	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q077	EI	wordselect	option	a	E	1	sociable	общительный	sociable	sociable	اجتماعي
+Q077	EI	wordselect	option	b	I	1	withdrawn	замкнутый.	introvertido	renfermé	منطوٍ
+Q078	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q078	SN	wordselect	option	a	S	1	concrete	конкретный	concreto	concret	ملموس
+Q078	SN	wordselect	option	b	N	2	abstract	абстрактный.	abstracto	abstrait	مجرد
+Q079	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q079	FT	wordselect	option	a	F	0	who	кто	quién	qui	من
+Q079	FT	wordselect	option	b	T	1	what	что.	qué	quoi	ماذا
+Q080	PJ	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q080	PJ	wordselect	option	a	P	2	impulse	импульс	impulso	impulsion	دافع
+Q080	PJ	wordselect	option	b	J	1	decision	решение.	decisión	décision	قرار
+Q081	EI	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q081	EI	wordselect	option	a	E	1	party	вечеринка	fiesta	soirée	حفلة
+Q081	EI	wordselect	option	b	I	0	theater	театр.	teatro	théâtre	مسرح
+Q082	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q082	SN	wordselect	option	a	S	2	to build	сооружать	construir	construire	بناء
+Q082	SN	wordselect	option	b	N	1	to invent	изобретать.	inventar	inventer	اختراع
+Q083	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q083	FT	wordselect	option	a	F	1	uncritical	некритичный	no crítico	non critique	غير ناقد
+Q083	FT	wordselect	option	b	T	1	critical	критичный.	crítico	critique	ناقد
+Q084	JP	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q084	JP	wordselect	option	a	J	1	punctual	пунктуальный	puntual	ponctuel	دقيق في المواعيد
+Q084	JP	wordselect	option	b	P	1	free	свободный.	libre	libre	حر
+Q085	NS	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q085	NS	wordselect	option	a	N	2	foundation	основание	base	base	قاعدة
+Q085	NS	wordselect	option	b	S	0	peak	вершина.	cima	sommet	قمة
+Q086	TF	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q086	TF	wordselect	option	a	T	2	cautious	осторожный	cauteloso	prudent	حذر
+Q086	TF	wordselect	option	b	F	0	trusting	доверчивый.	confiado	confiant	ساذج
+Q087	PJ	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q087	PJ	wordselect	option	a	P	0	changeable	переменчивый	variable	changeant	متقلب
+Q087	PJ	wordselect	option	b	J	1	unchanging	неизменный.	inmutable	immuable	ثابت
+Q088	NS	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q088	NS	wordselect	option	a	N	2	theory	теория	teoría	théorie	نظرية
+Q088	NS	wordselect	option	b	S	0	practice	практика.	práctica	pratique	تطبيق
+Q089	FT	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q089	FT	wordselect	option	a	F	1	to agree	соглашаться	estar de acuerdo	être d'accord	الموافقة
+Q089	FT	wordselect	option	b	T	0	to debate	дискутировать.	debatir	débattre	النقاش
+Q090	JP	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q090	JP	wordselect	option	a	J	2	disciplined	дисциплинированный	disciplinado	discipliné	منضبط
+Q090	JP	wordselect	option	b	P	1	carefree	беспечный.	despreocupado	insouciant	لامبالٍ
+Q091	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q091	SN	wordselect	option	a	S	1	sign	знак	señal	signe	إشارة
+Q091	SN	wordselect	option	b	N	0	symbol	символ.	símbolo	symbole	رمز
+Q092	PJ	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q092	PJ	wordselect	option	a	P	1	swift	стремительный	veloz	rapide	سريع
+Q092	PJ	wordselect	option	b	J	0	thorough	тщательный.	minucioso	minutieux	دقيق
+Q093	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q093	SN	wordselect	option	a	S	1	to accept	принимать	aceptar	accepter	القبول
+Q093	SN	wordselect	option	b	N	0	to change	изменять.	cambiar	changer	التغيير
+Q094	SN	wordselect	question				Which word from the pair do you prefer:	Какое слово из пары Вам больше нравится:	¿Cuál de las palabras del par prefiere:	Quel mot de la paire préférez-vous :	أي كلمة من الزوج تفضل:
+Q094	SN	wordselect	option	a	S	1	known	известный	conocido	connu	معروف
+Q094	SN	wordselect	option	b	N	1	unknown	неизвестный.	desconocido	inconnu	مجهول
