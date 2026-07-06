@@ -10,7 +10,7 @@ export function Nav() {
   const { user, loading } = useAuth();
   const isHome = pathname === '/';
 
-  if (pathname === '/' || pathname.startsWith('/start') || pathname.startsWith('/reno') || pathname.startsWith('/admin') || pathname.startsWith('/register') || pathname.startsWith('/login') || pathname.startsWith('/portal')) return null;
+  if (pathname === '/' || pathname.startsWith('/start') || pathname.startsWith('/reno') || pathname.startsWith('/admin') || pathname.startsWith('/register') || pathname.startsWith('/login') || pathname.startsWith('/portal') || pathname.startsWith('/methodology')) return null;
 
   return (
     <>
