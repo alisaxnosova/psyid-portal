@@ -1,8 +1,13 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import CATALOG from '@/content/admin.json';
 
 export type AdminLang = 'en' | 'ru';
+
+// Sheet-editable overrides (regenerated from admin.tsv by scripts/sync-content.mjs).
+const OVERRIDE = CATALOG as Record<string, Record<string, string>>;
+const tr = (k: string, lang: AdminLang): string => OVERRIDE[k]?.[lang] || (T as Record<string, Record<string, string>>)[k]?.[lang] || k;
 
 export const T = {
   // Sidebar nav
@@ -160,7 +165,7 @@ export function AdminLangProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <Ctx.Provider value={{ lang, setLang, t: (k) => T[k][lang] }}>
+    <Ctx.Provider value={{ lang, setLang, t: (k) => tr(k as string, lang) }}>
       {children}
     </Ctx.Provider>
   );

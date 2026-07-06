@@ -3,6 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
+import LANDING_CATALOG from '@/content/landing.json';
+
+// Sheet-editable overrides (regenerated from landing.tsv by scripts/sync-content.mjs).
+const L_CAT = LANDING_CATALOG as Record<string, Record<string, string>>;
+function landingOverride(lang: 'en' | 'ru'): Record<string, string> {
+  const o: Record<string, string> = {};
+  for (const k in L_CAT) { const v = L_CAT[k]?.[lang]; if (v) o[k] = v; }
+  return o;
+}
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 const C = {
@@ -280,7 +289,7 @@ export default function Landing() {
   const [vals, setVals]       = useState<Record<AxisKey, number>>({ top: 0, right: 1, bot: 2, left: -1 });
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const t = T[lang];
+  const t = { ...T[lang], ...landingOverride(lang) } as typeof T['en'];
   const PROFILES = lang === 'en' ? PROFILES_EN : PROFILES_RU;
 
   const pT = pt('top',   rad(vals.top));
