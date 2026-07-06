@@ -56,6 +56,15 @@ export async function getPortalUser(email: string): Promise<PortalUser | null> {
   return kvGet<PortalUser>(userKey(email));
 }
 
+// Sets a new password for an existing portal user. Returns false if no such user.
+export async function resetPortalPassword(email: string, newPassword: string): Promise<boolean> {
+  const user = await getPortalUser(email);
+  if (!user) return false;
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+  await kvSet(userKey(email), { ...user, passwordHash });
+  return true;
+}
+
 export async function verifyPortalPassword(email: string, password: string): Promise<PortalUser | null> {
   const user = await getPortalUser(email);
   if (!user) return null;

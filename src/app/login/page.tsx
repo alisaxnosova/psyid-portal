@@ -84,7 +84,10 @@ function LoginForm() {
               onFocus={e => (e.target.style.borderColor = C.blue)} onBlur={e => (e.target.style.borderColor = C.line)} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6, color: C.ink }}>Password</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: C.ink }}>Password</label>
+              <Link href="/forgot-password" style={{ fontSize: 13, color: C.blue, fontWeight: 600 }}>Forgot password?</Link>
+            </div>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)}
               required autoComplete="current-password" placeholder="••••••••" style={iStyle}
               onFocus={e => (e.target.style.borderColor = C.blue)} onBlur={e => (e.target.style.borderColor = C.line)} />
