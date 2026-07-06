@@ -3,10 +3,16 @@ import { kvGet, kvKeys } from '@/lib/upstash';
 import { getSession, getPortalUser, ensureAccessCode } from '@/lib/portalAuth';
 import { scoreSession } from '@/lib/renoScore';
 import { profiles } from '@/app/reno/data/profiles';
+import descriptions from '@/content/descriptions.json';
 import type { AccessCode } from '@/app/api/codes/route';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const CODES_KEY = 'psyid:codes';
+
+// Editable content catalog (regenerated from the Google Sheet by scripts/sync-content.mjs).
+// Any key present here overrides the profiles.ts default text.
+const CATALOG = descriptions as Record<string, Record<string, string>>;
+const catText = (key: string, lang: string, fallback: string) => CATALOG[key]?.[lang] || fallback;
 
 // Maps each display axis to the answer-key profiles[] axis and its dominant/other poles.
 const AXIS_MAP = [
@@ -35,12 +41,17 @@ function buildAxes(pct: Record<string, number>): AxisDetail[] {
     const level = axis?.levels.find(l => l.pole === dominant && domPct >= l.min && domPct <= l.max) ?? null;
     const dimLabels = axis?.dimLabels.en ?? [];
     const dimTexts = level?.dims.en ?? [];
+    const lang = 'en';
+    const band = level ? `${axis!.axis}.${level.pole}_${level.min}-${level.max}` : '';
     return {
       key: ax.key, name: ax.name, left: ax.left, right: ax.right,
       val: rightPct / 100,
-      bandLabel: level?.label.en ?? '',
+      bandLabel: catText(`${band}.label`, lang, level?.label.en ?? ''),
       poleLabel: dominant === ax.rp ? ax.right : ax.left,
-      dims: dimTexts.map((text, i) => ({ label: dimLabels[i] ?? '', text })),
+      dims: dimTexts.map((text, i) => ({
+        label: catText(`${axis!.axis}.dimName.${i}`, lang, dimLabels[i] ?? ''),
+        text: catText(`${band}.dim.${i}`, lang, text),
+      })),
     };
   });
 }

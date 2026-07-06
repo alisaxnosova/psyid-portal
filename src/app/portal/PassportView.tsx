@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { logout } from '@/lib/useAuth';
+import FullReport from './FullReport';
 
 /* ────────────────────────────────────────────────────────────
    PsyID Passport — interactive page-turn booklet for the client
@@ -787,9 +788,7 @@ export default function PassportView({ holder, assessments: apiAssessments }: { 
         </div>
       </div>
 
-      <div className={'results-mount' + (openResult ? ' show' : '')}>
-        {openResult && <ResultsReader assessment={openResult} onClose={() => setOpenResult(null)} />}
-      </div>
+      {openResult && <FullReport a={openResult} holder={holder} onClose={() => setOpenResult(null)} />}
     </div>
   );
 }

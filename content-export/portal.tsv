@@ -1,0 +1,68 @@
+surface	key	en	ru
+Portal	nav_sub	Portal	Портал
+Portal	nav_my_passport	My passport	Мой паспорт
+Portal	nav_new_assessment	New assessment	Новая оценка
+Portal	nav_sign_out	Sign out	Выйти
+Portal	pre_eyebrow	Your Portal	Ваш портал
+Portal	pre_hello	Hello	Здравствуйте
+Portal	pre_subline	This is your PsyID portal — your assessment, results, and passport live here.	Это ваш портал PsyID — здесь живут ваш тест, результаты и паспорт.
+Portal	banner_eyebrow	Assessment · 15 minutes	Тест · 15 минут
+Portal	banner_title	Ready to discover who you are?	Готовы узнать, кто вы?
+Portal	banner_body	A 15-minute scenario-based assessment that maps your 4 character axes and shows the careers where you'll naturally excel.	15-минутный тест по сценариям определяет ваши 4 оси характера и показывает профессии, где вы будете естественно сильны.
+Portal	banner_code_label	Your Access Code	Ваш код доступа
+Portal	banner_copy	Copy code	Скопировать
+Portal	banner_copied	Copied!	Скопировано!
+Portal	banner_cta	Take the assessment ↗	Пройти тест ↗
+Portal	unlock_header	What you'll unlock once you finish	Что откроется после прохождения
+Portal	unlock_1_t	Personality Passport	Паспорт личности
+Portal	unlock_1_d	An interactive passport with a stamp for every assessment — your type, your four character axes, and a profile that's yours.	Интерактивный паспорт со штампом за каждый тест — ваш тип, четыре оси характера и профиль, который принадлежит вам.
+Portal	unlock_2_t	Your full report	Ваш полный отчёт
+Portal	unlock_2_d	7 best-fit careers, your superpowers and blind spots, a 30-day growth plan and more — written to your exact profile.	7 наиболее подходящих профессий, ваши сильные стороны и слепые зоны, 30-дневный план роста и не только — под ваш профиль.
+Portal	unlock_3_t	Grows every year	Растёт каждый год
+Portal	unlock_3_d	Retake once a year; each assessment adds a new stamp, so you can see how you've changed over time.	Проходите раз в год; каждый тест добавляет новый штамп, чтобы видеть, как вы меняетесь.
+Portal	cover_line1	PERSONALITY	ПАСПОРТ
+Portal	cover_line2	PASSPORT	ЛИЧНОСТИ
+Portal	cover_hint	tap to open →	нажмите, чтобы открыть →
+Portal	id_data_page	DATA PAGE	СТРАНИЦА ДАННЫХ
+Portal	id_photo	PHOTO	ФОТО
+Portal	id_holder	Holder	Владелец
+Portal	id_doc_type	Document type	Тип документа
+Portal	id_doc_value	Personality profile	Личностный профиль
+Portal	id_member_since	Member since	Участник с
+Portal	id_assessments	Assessments	Тестов
+Portal	id_passport_no	Passport №	№ паспорта
+Portal	id_signature	Holder signature	Подпись владельца
+Portal	intro_band	HOW TO READ IT	КАК ЧИТАТЬ
+Portal	intro_eyebrow	Assessment stamps	Штампы тестов
+Portal	intro_h	Each stamp is one completed assessment.	Каждый штамп — один пройденный тест.
+Portal	intro_1	Turn the pages — tap a corner or the arrows below.	Листайте страницы — нажимайте на угол или на стрелки внизу.
+Portal	intro_2	Tap a stamp — the full breakdown of that assessment opens.	Нажмите на штамп — откроется полный разбор этого теста.
+Portal	intro_3	Blank pages fill in as you take new assessments.	Свободные страницы заполняются, когда вы проходите новые тесты.
+Portal	intro_legend	A stamp shows the date, your personality code and profile level.	На штампе — дата, код личности и уровень профиля.
+Portal	visa_label	ASSESSMENTS	ТЕСТЫ
+Portal	visa_empty	Empty	Свободно
+Portal	visa_take	Take assessment	Пройти тест
+Portal	stamp_open	Open results →	Открыть результаты →
+Portal	endpaper_front_eyebrow	Personal document	Личный документ
+Portal	endpaper_front	This passport belongs to {name} and describes your personality as seen by the PsyID assessment. It grows with you — every new assessment adds a stamp.	Этот паспорт принадлежит {name} и описывает личность так, как её увидел тест PsyID. Он растёт вместе с вами — каждый новый тест добавляет штамп.
+Portal	endpaper_back_eyebrow	To be continued	Продолжение следует
+Portal	endpaper_back	Blank pages await your next assessments. Personality is a route, not a diagnosis.	Свободные страницы ждут ваших следующих тестов. Личность — это маршрут, а не диагноз.
+Portal	back_tag	Personality is a route, not a diagnosis.	Личность — это маршрут, а не диагноз.
+Portal	open_hint	Tap the passport to open	Нажмите на паспорт, чтобы открыть
+Portal	reader_back	Passport	Паспорт
+Portal	reader_sec_overview	Overview	Обзор
+Portal	reader_sec_axes	Axes	Оси
+Portal	reader_sec_strengths	Superpowers	Сильные стороны
+Portal	reader_sec_growth	Growth	Рост
+Portal	ov_eyebrow	Profile overview	Обзор профиля
+Portal	ov_conf	Average confidence across your profile	Средняя уверенность по вашему профилю
+Portal	ax_eyebrow	The four axes	Четыре оси
+Portal	ax_h	Where you land, and what it means	Где вы находитесь и что это значит
+Portal	st_eyebrow	Superpowers & direction	Сильные стороны и путь
+Portal	st_h	What comes easily to you	Что вам даётся легко
+Portal	st_strengths	Superpowers	Сильные стороны
+Portal	st_watch	What to watch for	На что обратить внимание
+Portal	st_careers	Careers where you're in your element	Профессии, где вы в своей среде
+Portal	gr_eyebrow	Growth experiments	Эксперименты роста
+Portal	gr_h	A few things to try	Несколько идей, чтобы попробовать
+Portal	gr_sub	Not tasks, and not a diagnosis — small experiments for the next couple of weeks.	Не задания и не диагноз — маленькие опыты на ближайшие пару недель.

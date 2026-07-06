@@ -1,0 +1,270 @@
+{
+  "nav_sub": {
+    "en": "Portal",
+    "ru": "Портал"
+  },
+  "nav_my_passport": {
+    "en": "My passport",
+    "ru": "Мой паспорт"
+  },
+  "nav_new_assessment": {
+    "en": "New assessment",
+    "ru": "Новая оценка"
+  },
+  "nav_sign_out": {
+    "en": "Sign out",
+    "ru": "Выйти"
+  },
+  "pre_eyebrow": {
+    "en": "Your Portal",
+    "ru": "Ваш портал"
+  },
+  "pre_hello": {
+    "en": "Hello",
+    "ru": "Здравствуйте"
+  },
+  "pre_subline": {
+    "en": "This is your PsyID portal — your assessment, results, and passport live here.",
+    "ru": "Это ваш портал PsyID — здесь живут ваш тест, результаты и паспорт."
+  },
+  "banner_eyebrow": {
+    "en": "Assessment · 15 minutes",
+    "ru": "Тест · 15 минут"
+  },
+  "banner_title": {
+    "en": "Ready to discover who you are?",
+    "ru": "Готовы узнать, кто вы?"
+  },
+  "banner_body": {
+    "en": "A 15-minute scenario-based assessment that maps your 4 character axes and shows the careers where you'll naturally excel.",
+    "ru": "15-минутный тест по сценариям определяет ваши 4 оси характера и показывает профессии, где вы будете естественно сильны."
+  },
+  "banner_code_label": {
+    "en": "Your Access Code",
+    "ru": "Ваш код доступа"
+  },
+  "banner_copy": {
+    "en": "Copy code",
+    "ru": "Скопировать"
+  },
+  "banner_copied": {
+    "en": "Copied!",
+    "ru": "Скопировано!"
+  },
+  "banner_cta": {
+    "en": "Take the assessment ↗",
+    "ru": "Пройти тест ↗"
+  },
+  "unlock_header": {
+    "en": "What you'll unlock once you finish",
+    "ru": "Что откроется после прохождения"
+  },
+  "unlock_1_t": {
+    "en": "Personality Passport",
+    "ru": "Паспорт личности"
+  },
+  "unlock_1_d": {
+    "en": "An interactive passport with a stamp for every assessment — your type, your four character axes, and a profile that's yours.",
+    "ru": "Интерактивный паспорт со штампом за каждый тест — ваш тип, четыре оси характера и профиль, который принадлежит вам."
+  },
+  "unlock_2_t": {
+    "en": "Your full report",
+    "ru": "Ваш полный отчёт"
+  },
+  "unlock_2_d": {
+    "en": "7 best-fit careers, your superpowers and blind spots, a 30-day growth plan and more — written to your exact profile.",
+    "ru": "7 наиболее подходящих профессий, ваши сильные стороны и слепые зоны, 30-дневный план роста и не только — под ваш профиль."
+  },
+  "unlock_3_t": {
+    "en": "Grows every year",
+    "ru": "Растёт каждый год"
+  },
+  "unlock_3_d": {
+    "en": "Retake once a year; each assessment adds a new stamp, so you can see how you've changed over time.",
+    "ru": "Проходите раз в год; каждый тест добавляет новый штамп, чтобы видеть, как вы меняетесь."
+  },
+  "cover_line1": {
+    "en": "PERSONALITY",
+    "ru": "ПАСПОРТ"
+  },
+  "cover_line2": {
+    "en": "PASSPORT",
+    "ru": "ЛИЧНОСТИ"
+  },
+  "cover_hint": {
+    "en": "tap to open →",
+    "ru": "нажмите, чтобы открыть →"
+  },
+  "id_data_page": {
+    "en": "DATA PAGE",
+    "ru": "СТРАНИЦА ДАННЫХ"
+  },
+  "id_photo": {
+    "en": "PHOTO",
+    "ru": "ФОТО"
+  },
+  "id_holder": {
+    "en": "Holder",
+    "ru": "Владелец"
+  },
+  "id_doc_type": {
+    "en": "Document type",
+    "ru": "Тип документа"
+  },
+  "id_doc_value": {
+    "en": "Personality profile",
+    "ru": "Личностный профиль"
+  },
+  "id_member_since": {
+    "en": "Member since",
+    "ru": "Участник с"
+  },
+  "id_assessments": {
+    "en": "Assessments",
+    "ru": "Тестов"
+  },
+  "id_passport_no": {
+    "en": "Passport №",
+    "ru": "№ паспорта"
+  },
+  "id_signature": {
+    "en": "Holder signature",
+    "ru": "Подпись владельца"
+  },
+  "intro_band": {
+    "en": "HOW TO READ IT",
+    "ru": "КАК ЧИТАТЬ"
+  },
+  "intro_eyebrow": {
+    "en": "Assessment stamps",
+    "ru": "Штампы тестов"
+  },
+  "intro_h": {
+    "en": "Each stamp is one completed assessment.",
+    "ru": "Каждый штамп — один пройденный тест."
+  },
+  "intro_1": {
+    "en": "Turn the pages — tap a corner or the arrows below.",
+    "ru": "Листайте страницы — нажимайте на угол или на стрелки внизу."
+  },
+  "intro_2": {
+    "en": "Tap a stamp — the full breakdown of that assessment opens.",
+    "ru": "Нажмите на штамп — откроется полный разбор этого теста."
+  },
+  "intro_3": {
+    "en": "Blank pages fill in as you take new assessments.",
+    "ru": "Свободные страницы заполняются, когда вы проходите новые тесты."
+  },
+  "intro_legend": {
+    "en": "A stamp shows the date, your personality code and profile level.",
+    "ru": "На штампе — дата, код личности и уровень профиля."
+  },
+  "visa_label": {
+    "en": "ASSESSMENTS",
+    "ru": "ТЕСТЫ"
+  },
+  "visa_empty": {
+    "en": "Empty",
+    "ru": "Свободно"
+  },
+  "visa_take": {
+    "en": "Take assessment",
+    "ru": "Пройти тест"
+  },
+  "stamp_open": {
+    "en": "Open results →",
+    "ru": "Открыть результаты →"
+  },
+  "endpaper_front_eyebrow": {
+    "en": "Personal document",
+    "ru": "Личный документ"
+  },
+  "endpaper_front": {
+    "en": "This passport belongs to {name} and describes your personality as seen by the PsyID assessment. It grows with you — every new assessment adds a stamp.",
+    "ru": "Этот паспорт принадлежит {name} и описывает личность так, как её увидел тест PsyID. Он растёт вместе с вами — каждый новый тест добавляет штамп."
+  },
+  "endpaper_back_eyebrow": {
+    "en": "To be continued",
+    "ru": "Продолжение следует"
+  },
+  "endpaper_back": {
+    "en": "Blank pages await your next assessments. Personality is a route, not a diagnosis.",
+    "ru": "Свободные страницы ждут ваших следующих тестов. Личность — это маршрут, а не диагноз."
+  },
+  "back_tag": {
+    "en": "Personality is a route, not a diagnosis.",
+    "ru": "Личность — это маршрут, а не диагноз."
+  },
+  "open_hint": {
+    "en": "Tap the passport to open",
+    "ru": "Нажмите на паспорт, чтобы открыть"
+  },
+  "reader_back": {
+    "en": "Passport",
+    "ru": "Паспорт"
+  },
+  "reader_sec_overview": {
+    "en": "Overview",
+    "ru": "Обзор"
+  },
+  "reader_sec_axes": {
+    "en": "Axes",
+    "ru": "Оси"
+  },
+  "reader_sec_strengths": {
+    "en": "Superpowers",
+    "ru": "Сильные стороны"
+  },
+  "reader_sec_growth": {
+    "en": "Growth",
+    "ru": "Рост"
+  },
+  "ov_eyebrow": {
+    "en": "Profile overview",
+    "ru": "Обзор профиля"
+  },
+  "ov_conf": {
+    "en": "Average confidence across your profile",
+    "ru": "Средняя уверенность по вашему профилю"
+  },
+  "ax_eyebrow": {
+    "en": "The four axes",
+    "ru": "Четыре оси"
+  },
+  "ax_h": {
+    "en": "Where you land, and what it means",
+    "ru": "Где вы находитесь и что это значит"
+  },
+  "st_eyebrow": {
+    "en": "Superpowers & direction",
+    "ru": "Сильные стороны и путь"
+  },
+  "st_h": {
+    "en": "What comes easily to you",
+    "ru": "Что вам даётся легко"
+  },
+  "st_strengths": {
+    "en": "Superpowers",
+    "ru": "Сильные стороны"
+  },
+  "st_watch": {
+    "en": "What to watch for",
+    "ru": "На что обратить внимание"
+  },
+  "st_careers": {
+    "en": "Careers where you're in your element",
+    "ru": "Профессии, где вы в своей среде"
+  },
+  "gr_eyebrow": {
+    "en": "Growth experiments",
+    "ru": "Эксперименты роста"
+  },
+  "gr_h": {
+    "en": "A few things to try",
+    "ru": "Несколько идей, чтобы попробовать"
+  },
+  "gr_sub": {
+    "en": "Not tasks, and not a diagnosis — small experiments for the next couple of weeks.",
+    "ru": "Не задания и не диагноз — маленькие опыты на ближайшие пару недель."
+  }
+}
