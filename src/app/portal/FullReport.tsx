@@ -123,6 +123,18 @@ const TEMP: Record<string, {
   },
 };
 
+/* Expanded explanation for each derived strength (keyed by the chip label). */
+const STRENGTH_EXPLAIN: Record<string, string> = {
+  'Contagious enthusiasm': 'Your energy is visible and it spreads — you can walk into a flat room and leave it motivated. People rally around the things you get excited about, and that momentum is genuinely hard to fake.',
+  'Depth of thought': 'You think below the surface, sitting with an idea until you truly understand it. Where others skim, you find the insight that actually matters — which is why people bring you the hard questions.',
+  'Eye for detail': 'You notice the specifics others miss — the small error, the missing step, the thing that’s slightly off. It makes your work reliable and precise, and it quietly saves everyone from bigger problems later.',
+  'Imagination': 'You see what could be, not just what is. You connect unrelated ideas and generate possibilities most people wouldn’t think of — the source of your best, most original work.',
+  'Systematic thinking': 'You break complex problems into clear, logical parts. You find the underlying structure and build solutions that hold together under pressure.',
+  'Empathy': 'You read what people are feeling before they say it, and you make them feel understood. It builds trust fast and makes you the person others open up to.',
+  'Organization': 'You bring order to chaos — plans, systems, and follow-through. You’re the person who makes sure things actually get done, on time and without loose ends.',
+  'Flexibility': 'You adapt easily when things change, staying calm and resourceful when a plan falls apart. You improvise well and keep options open until the moment is right.',
+};
+
 function Radar({ vals, size = 260, accent = '#FF7A3D' }: { vals: number[]; size?: number; accent?: string }) {
   const c = size / 2, maxR = size / 2 - 18;
   const ang = [-90, 0, 90, 180].map(d => (d * Math.PI) / 180);
@@ -148,6 +160,7 @@ export default function FullReport({ a, holder, onClose }: { a: ReportAssessment
   const temp = TEMP[a.code.slice(1, 3)] ?? TEMP.NF!;
   const axes = a.axes ?? [];
   const strong = a.vals.map(v => Math.abs(v - 0.5) >= 0.22);
+  const [openStrength, setOpenStrength] = React.useState<number | null>(0);
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   return (
@@ -234,9 +247,22 @@ export default function FullReport({ a, holder, onClose }: { a: ReportAssessment
         <section id="strengths">
           <div className="psyr-kick">Superpowers</div>
           <h2 className="psyr-sh">What comes easily to you</h2>
+          <p className="psyr-hint">Tap a superpower to see what it means for you.</p>
           <div className="psyr-chips">
-            {a.strengths.map((s, i) => <span key={i} className={'psyr-chip' + (i === 0 ? ' hi' : '')}>{s}</span>)}
+            {a.strengths.map((s, i) => (
+              <button
+                key={i}
+                className={'psyr-chip clickable' + (openStrength === i ? ' hi' : '')}
+                onClick={() => setOpenStrength(openStrength === i ? null : i)}
+              >{s}</button>
+            ))}
           </div>
+          {openStrength !== null && a.strengths[openStrength] && (
+            <div className="psyr-expand">
+              <div className="psyr-expand-t">{a.strengths[openStrength]}</div>
+              <p>{STRENGTH_EXPLAIN[a.strengths[openStrength]!] ?? 'One of the things that comes naturally to you — a strength you can lean on and build a role around.'}</p>
+            </div>
+          )}
         </section>
 
         {/* CAREERS */}
@@ -324,9 +350,12 @@ export default function FullReport({ a, holder, onClose }: { a: ReportAssessment
         </section>
 
         <section className="psyr-closing">
-          <div className="psyr-kick" style={{ color: 'rgba(255,255,255,.55)' }}>Closing</div>
-          <h2 className="psyr-sh" style={{ color: '#fff' }}>This is a snapshot, not a verdict</h2>
-          <p className="psyr-p" style={{ color: 'rgba(255,255,255,.75)' }}>You’ll grow, and your profile will move with you. Take the assessment again next year — a new stamp joins your passport, and you’ll see exactly how you’ve shifted.</p>
+          <div className="psyr-closing-inner">
+            <div className="psyr-kick" style={{ color: 'rgba(255,255,255,.55)' }}>Closing</div>
+            <h2 className="psyr-sh" style={{ color: '#fff' }}>This is a snapshot, not a verdict</h2>
+            <p className="psyr-p">You’ll grow, and your profile will move with you. Take the assessment again next year — a new stamp joins your passport, and you’ll see exactly how you’ve shifted.</p>
+            <button className="psyr-dl" onClick={onClose}>Back to your passport ↑</button>
+          </div>
         </section>
       </div>
     </div>
@@ -393,9 +422,16 @@ const REPORT_CSS = `
 .psyr-dims{ margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; }
 .psyr-dk{ font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-m); margin-bottom:4px; }
 .psyr-dv{ font-size:13.5px; line-height:1.55; color:var(--ink-s); }
+.psyr-hint{ font-size:13px; color:var(--ink-m); margin:-8px 0 16px; }
 .psyr-chips{ display:flex; flex-wrap:wrap; gap:9px; }
-.psyr-chip{ padding:9px 16px; border-radius:999px; font-size:14px; font-weight:600; border:1.5px solid var(--line); background:#fff; }
+.psyr-chip{ padding:9px 16px; border-radius:999px; font-size:14px; font-weight:600; border:1.5px solid var(--line); background:#fff; color:var(--ink); }
 .psyr-chip.hi{ background:linear-gradient(95deg,var(--orange),var(--gold)); border-color:transparent; color:#fff; }
+.psyr-chip.clickable{ cursor:pointer; font-family:inherit; transition:transform .12s, box-shadow .12s; }
+.psyr-chip.clickable:hover{ transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+.psyr-expand{ margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 24px; max-width:660px; animation:psyrFade .2s ease; }
+.psyr-expand-t{ font-size:17px; font-weight:700; margin-bottom:8px; letter-spacing:-.01em; }
+.psyr-expand p{ font-size:15px; line-height:1.6; color:var(--ink-s); }
+@keyframes psyrFade{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:translateY(0); } }
 .psyr-careers{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .psyr-career{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 18px; display:flex; align-items:center; gap:16px; }
 .psyr-cbody{ flex:1; min-width:0; }
@@ -422,7 +458,12 @@ const REPORT_CSS = `
 .psyr-real{ padding:18px 20px; }
 .psyr-lab{ font-family:var(--mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-m); margin-bottom:7px; }
 .psyr-txt{ font-size:14.5px; color:var(--ink-s); line-height:1.55; }
-.psyr-closing{ background:radial-gradient(ellipse 50% 45% at 85% 85%, rgba(255,165,72,.4) 0%, transparent 55%), radial-gradient(ellipse 45% 40% at 12% 15%, rgba(50,90,224,.4) 0%, transparent 55%), linear-gradient(150deg,#070E38 0%,#0F1E72 55%,#35105A 85%); color:#fff; border-radius:26px; padding:48px 44px; margin:48px 0; }
+.psyr-closing{ background:radial-gradient(ellipse 50% 45% at 85% 85%, rgba(255,165,72,.4) 0%, transparent 55%), radial-gradient(ellipse 45% 40% at 12% 15%, rgba(50,90,224,.4) 0%, transparent 55%), linear-gradient(150deg,#070E38 0%,#0F1E72 55%,#35105A 85%); color:#fff; border-radius:26px; padding:56px 44px; margin:48px 0; text-align:center; }
+.psyr-closing-inner{ max-width:600px; margin:0 auto; }
+.psyr-closing .psyr-kick{ color:rgba(255,255,255,.55); }
+.psyr-closing .psyr-p{ max-width:none; color:rgba(255,255,255,.75); margin-bottom:0; }
+.psyr-dl{ display:inline-flex; align-items:center; gap:10px; margin-top:26px; background:linear-gradient(95deg,#FF5C72,#FF8A45); color:#fff; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; cursor:pointer; }
+.psyr-dl:hover{ filter:brightness(1.05); }
 @media (max-width:860px){
   .psyr-hero{ grid-template-columns:1fr; gap:32px; }
   .psyr-grid2,.psyr-careers,.psyr-misread,.psyr-dims{ grid-template-columns:1fr; }
