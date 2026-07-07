@@ -717,3 +717,6 @@ a { text-decoration: none; color: inherit; }
 .psid-site .auth-row button{ background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px; padding:0; }
 .psid-site .auth-row .back{ color:var(--ink-soft); }
 .psid-site .auth-row .resend{ color:var(--blue); font-weight:600; }
+.psid-site .auth-info{ padding:11px 15px; border-radius:10px; background:#E6ECFF; color:var(--blue); font-size:14px; line-height:1.4; }
+.psid-site .field-row{ display:flex; justify-content:space-between; align-items:baseline; }
+.psid-site .field-row a{ font-size:13px; color:var(--blue); font-weight:600; }
