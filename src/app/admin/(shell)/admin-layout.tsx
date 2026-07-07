@@ -142,12 +142,16 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
         {/* Brand */}
         <div style={{ padding: '24px 20px 20px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ width: 32, height: 32, borderRadius: 10, background: 'white', position: 'relative', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
-              <span style={{ position: 'absolute', left: 5, top: 5, width: 9, height: 9, borderRadius: '50%', background: '#2244E0' }}/>
-              <span style={{ position: 'absolute', right: 5, bottom: 5, width: 9, height: 9, borderRadius: 3, background: '#FF9540' }}/>
-            </span>
+            <svg viewBox="0 0 100 100" width="30" height="30" style={{ flexShrink: 0 }}>
+              <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="#fff" strokeOpacity="0.62" strokeWidth="3.5"/>
+              <circle cx="50" cy="16" r="8.5" fill="#2244E0"/>
+              <circle cx="84" cy="40" r="8.5" fill="#6A85F0"/>
+              <circle cx="71" cy="79" r="8.5" fill="#8A5CD6"/>
+              <circle cx="29" cy="79" r="8.5" fill="#FF7A3D"/>
+              <circle cx="16" cy="40" r="8.5" fill="#FF5A5A"/>
+            </svg>
             <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.03em', color: '#fff' }}>
-              Psy<span style={{ color: '#FF9540' }}>ID</span>
+              Psy<span style={{ color: '#FF7A3D' }}>ID</span>
             </span>
           </Link>
           <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>

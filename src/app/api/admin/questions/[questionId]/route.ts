@@ -24,11 +24,11 @@ export async function PUT(
   const { questionId } = await params;
   const updatedQuestion = (await req.json()) as Question;
 
-  const cached = await kvGet<Question[]>('psyid:questions');
+  const cached = await kvGet<Question[]>('psyid:questions:v2');
   const questions = (cached ?? (questionsJson as unknown as Question[])).map(q =>
     q.id === questionId ? { ...q, ...updatedQuestion } : q,
   );
 
-  await kvSet('psyid:questions', questions);
+  await kvSet('psyid:questions:v2', questions);
   return NextResponse.json({ ok: true, question: questions.find(q => q.id === questionId) });
 }

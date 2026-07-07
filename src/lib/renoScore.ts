@@ -1,4 +1,7 @@
-import questionsData from '@/app/reno/data/questions.json';
+// The live test + scoring still run on the legacy 4-axis bank until the ReNo v1.1
+// Likert migration (Phase 5). The new 5-axis bank lives in questions.json and is
+// managed from the admin under a separate Redis key (psyid:questions:v2).
+import questionsData from '@/app/reno/data/questions.v1-4axis.json';
 
 interface RawAnswer { questionId: string; answerId: string; }
 interface QuestionOption { id: string; key: string; score: number; }

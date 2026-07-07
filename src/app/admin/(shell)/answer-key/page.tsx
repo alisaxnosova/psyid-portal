@@ -1,172 +1,106 @@
 'use client';
 
 import { useState } from 'react';
-import { useAdminLang } from '@/lib/adminLang';
-import { profiles } from '@/app/reno/data/profiles';
-import type { Lang } from '@/app/reno/data/profiles';
+import { answerKey } from '@/app/reno/data/answer-key';
+import { AXES, AXIS_BY_CODE, type AxisCode, type Lang } from '@/data/reno-axes';
 
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
-  line: '#E5DED2', bone: '#F6F1EA',
-  orange: '#FF7A3D', orangeHot: '#FF9540',
+  line: '#E5DED2', bone: '#F6F1EA', orange: '#FF7A3D', orangeHot: '#FF9540', blue: '#2244E0',
 };
 
-const LANGS: Lang[] = ['ru', 'en', 'es', 'fr', 'ar'];
-const LANG_LABELS: Record<Lang, string> = { ru: 'RU', en: 'EN', es: 'ES', fr: 'FR', ar: 'AR' };
-
-const AXIS_LABELS = {
-  EI: 'Extraversion / Introversion',
-  SN: 'Sensing / Intuition',
-  TF: 'Thinking / Feeling',
-  JP: 'Judging / Perceiving',
-};
-
-const POLE_COLOR: Record<string, string> = {
-  E: '#2244E0', I: '#6A85F0',
-  S: '#22AA60', N: '#6ADC9A',
-  T: '#B25AD0', F: '#E090FF',
-  J: '#FF7A3D', P: '#FFC074',
-  balanced: '#8A8FA8',
-};
+const LANGS: Lang[] = ['en', 'ru'];
 
 export default function AnswerKeyPage() {
-  const { t } = useAdminLang();
-  const [axisIdx, setAxisIdx] = useState(0);
-  const [lang, setLang] = useState<Lang>('ru');
+  const [axisCode, setAxisCode] = useState<AxisCode>('EO');
+  const [lang, setLang] = useState<Lang>('en');
 
-  const axis = profiles[axisIdx];
-  const isRtl = lang === 'ar';
+  const axis = AXIS_BY_CODE[axisCode];
+  const cells = answerKey[axisCode] ?? [];
 
   return (
     <div style={{ fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
-      {/* Header */}
-      <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>
-          {t('ak_title')}
-        </h1>
+      <div style={{ marginBottom: 22 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Answer key</h1>
         <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-          {t('ak_sub')}
+          ReNo Interpretive Key v1.2 · five axes · EN/RU · position 0–100 → band 0–5
         </p>
       </div>
 
-      {/* Controls row */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
-        {/* Axis tabs */}
-        <div style={{ display: 'flex', gap: 6 }}>
-          {profiles.map((ax, i) => {
-            const active = i === axisIdx;
+      {/* Controls */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          {AXES.map(a => {
+            const active = a.code === axisCode;
             return (
-              <button key={ax.axis} onClick={() => setAxisIdx(i)} style={{
-                padding: '8px 16px', borderRadius: 999, fontSize: 13, fontWeight: 700,
-                cursor: 'pointer', border: '1.5px solid',
-                borderColor: active ? C.orangeHot : C.line,
-                background: active ? 'rgba(255,149,64,0.10)' : 'white',
-                color: active ? C.orangeHot : C.inkSoft,
-                fontFamily: "'Geist Mono', monospace", transition: 'all .15s',
-              }}>
-                {ax.axis}
-              </button>
+              <button key={a.code} onClick={() => setAxisCode(a.code)} style={{
+                padding: '8px 14px', borderRadius: 999, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                border: '1.5px solid', borderColor: active ? a.color : C.line,
+                background: active ? `${a.color}14` : 'white', color: active ? a.color : C.inkSoft,
+                fontFamily: "'Geist Mono', monospace",
+              }}>{a.code}</button>
             );
           })}
         </div>
-
-        {/* Language tabs */}
         <div style={{ display: 'flex', gap: 4 }}>
           {LANGS.map(l => {
             const active = l === lang;
             return (
               <button key={l} onClick={() => setLang(l)} style={{
-                padding: '7px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700,
-                cursor: 'pointer', border: '1.5px solid',
-                borderColor: active ? '#2244E0' : C.line,
-                background: active ? 'rgba(34,68,224,0.08)' : 'white',
-                color: active ? '#2244E0' : C.inkMute,
-                fontFamily: "'Geist Mono', monospace", transition: 'all .15s',
-              }}>
-                {LANG_LABELS[l]}
-              </button>
+                padding: '7px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                border: '1.5px solid', borderColor: active ? C.blue : C.line,
+                background: active ? 'rgba(34,68,224,0.08)' : 'white', color: active ? C.blue : C.inkMute,
+                fontFamily: "'Geist Mono', monospace",
+              }}>{l.toUpperCase()}</button>
             );
           })}
         </div>
       </div>
 
-      {/* Axis title */}
-      <div style={{
-        fontSize: 14, fontWeight: 600, color: C.inkSoft,
-        marginBottom: 16, padding: '10px 14px',
-        background: 'white', borderRadius: 10, border: `1px solid ${C.line}`,
-        display: 'inline-block',
-      }}>
-        {AXIS_LABELS[axis.axis]}
+      {/* Axis header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', background: 'white', borderRadius: 12, border: `1px solid ${C.line}`, borderLeft: `4px solid ${axis.color}` }}>
+        <div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: C.ink, letterSpacing: '-0.02em' }}>
+            {lang === 'ru' ? axis.name.ru : axis.name.en}
+          </div>
+          <div style={{ fontSize: 12, color: C.inkMute, fontFamily: "'Geist Mono', monospace", marginTop: 3 }}>
+            {axis.plus.letter} {lang === 'ru' ? axis.plus.label.ru : axis.plus.label.en} (100) ·
+            {' '}{axis.minus.letter} {lang === 'ru' ? axis.minus.label.ru : axis.minus.label.en} (0)
+          </div>
+        </div>
       </div>
 
-      {/* Table */}
+      {/* Cells table */}
       <div style={{ overflowX: 'auto', borderRadius: 16, border: `1.5px solid ${C.line}`, background: 'white' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }} dir={isRtl ? 'rtl' : 'ltr'}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ background: C.bone }}>
-              <th style={{
-                padding: '10px 14px', textAlign: isRtl ? 'right' : 'left',
-                fontWeight: 700, color: C.ink, fontSize: 11,
-                borderBottom: `1.5px solid ${C.line}`,
-                fontFamily: "'Geist Mono', monospace",
-                position: 'sticky', left: 0, background: C.bone, zIndex: 1,
-                minWidth: 140,
-              }}>
-                Level
-              </th>
-              {(axis.dimLabels[lang] ?? axis.dimLabels.ru).map((label, i) => (
-                <th key={i} style={{
-                  padding: '10px 12px', textAlign: isRtl ? 'right' : 'left',
-                  fontWeight: 600, color: C.inkSoft, fontSize: 11,
-                  borderBottom: `1.5px solid ${C.line}`,
-                  minWidth: 180,
-                }}>
-                  {label || `Dim ${i + 1}`}
-                </th>
+              {['Code', 'Level', 'Position', lang === 'ru' ? 'Описание' : 'Descriptor', lang === 'ru' ? 'Примечание' : 'Framing'].map((h, i) => (
+                <th key={i} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 700, color: C.ink, fontSize: 11, borderBottom: `1.5px solid ${C.line}`, fontFamily: "'Geist Mono', monospace", minWidth: i >= 3 ? 280 : 80 }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {axis.levels.map((level, rowIdx) => {
-              const poleColor = POLE_COLOR[level.pole] ?? C.inkMute;
-              const dims = level.dims[lang]?.length
-                ? level.dims[lang]
-                : level.dims.ru;
+            {cells.map((cell, i) => {
+              const balanced = cell.band === 0;
+              const poleColor = balanced ? C.inkMute : axis.color;
               return (
-                <tr key={rowIdx} style={{
-                  borderBottom: `1px solid ${C.bone}`,
-                  background: rowIdx % 2 === 0 ? 'white' : 'rgba(246,241,234,0.4)',
-                }}>
-                  <td style={{
-                    padding: '12px 14px',
-                    position: 'sticky', left: 0, zIndex: 1,
-                    background: rowIdx % 2 === 0 ? 'white' : 'rgba(246,241,234,0.8)',
-                    borderRight: `1px solid ${C.line}`,
-                  }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                      <span style={{
-                        fontSize: 10, fontWeight: 800, fontFamily: "'Geist Mono', monospace",
-                        padding: '2px 7px', borderRadius: 5, display: 'inline-block', width: 'fit-content',
-                        background: `${poleColor}22`, color: poleColor,
-                      }}>
-                        {level.pole === 'balanced' ? '≈' : level.pole}
-                        {level.pole !== 'balanced' && ` ${level.min}–${level.max}`}
-                      </span>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: C.ink }}>
-                        {level.label[lang] || level.label.ru}
-                      </span>
-                    </div>
+                <tr key={cell.code + i} style={{ borderBottom: `1px solid ${C.bone}`, background: i % 2 ? 'rgba(246,241,234,0.4)' : 'white' }}>
+                  <td style={{ padding: '12px 14px', verticalAlign: 'top' }}>
+                    <span style={{ fontSize: 13, fontWeight: 800, fontFamily: "'Geist Mono', monospace", padding: '3px 9px', borderRadius: 6, background: `${poleColor}1c`, color: poleColor }}>{cell.code}</span>
                   </td>
-                  {dims.map((dim, colIdx) => (
-                    <td key={colIdx} style={{
-                      padding: '12px 12px',
-                      color: C.inkSoft, lineHeight: 1.55,
-                      verticalAlign: 'top',
-                    }}>
-                      {dim || <span style={{ color: C.line, fontStyle: 'italic' }}>—</span>}
-                    </td>
-                  ))}
+                  <td style={{ padding: '12px 14px', verticalAlign: 'top', color: C.inkSoft, fontSize: 12 }}>
+                    <b style={{ color: C.ink }}>{cell.band}</b>
+                  </td>
+                  <td style={{ padding: '12px 14px', verticalAlign: 'top', color: C.inkMute, fontFamily: "'Geist Mono', monospace", fontSize: 11 }}>
+                    {cell.posMin}–{cell.posMax}
+                  </td>
+                  <td style={{ padding: '12px 14px', verticalAlign: 'top', color: C.inkSoft, lineHeight: 1.55 }}>
+                    {lang === 'ru' ? cell.ru || cell.en : cell.en}
+                  </td>
+                  <td style={{ padding: '12px 14px', verticalAlign: 'top', color: C.inkMute, lineHeight: 1.5, fontSize: 12, fontStyle: 'italic' }}>
+                    {(lang === 'ru' ? cell.framing.ru : cell.framing.en) || <span style={{ color: C.line }}>—</span>}
+                  </td>
                 </tr>
               );
             })}
