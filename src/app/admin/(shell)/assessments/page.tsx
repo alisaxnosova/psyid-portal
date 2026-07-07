@@ -1,264 +1,110 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { isAdminLoggedIn, getAdminToken } from '@/lib/adminApi';
-import { useAdminLang } from '@/lib/adminLang';
-import { profiles, getLevelFromSlider } from '@/app/reno/data/profiles';
-import type { Lang } from '@/app/reno/data/profiles';
-import { useEffect } from 'react';
+import { isAdminLoggedIn } from '@/lib/adminApi';
+import { AXES, toCode, type AxisCode, type Lang } from '@/data/reno-axes';
+import { answerKey, type AnswerKeyCell } from '@/app/reno/data/answer-key';
 
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
-  line: '#E5DED2', bone: '#F6F1EA',
-  orange: '#FF7A3D', orangeHot: '#FF9540',
-  blue: '#2244E0', blueSoft: '#6A85F0',
-  green: '#22AA60', purple: '#B25AD0',
+  line: '#E5DED2', bone: '#F6F1EA', orange: '#FF7A3D', orangeHot: '#FF9540', blue: '#2244E0',
 };
 
-const LANGS: Lang[] = ['ru', 'en', 'es', 'fr', 'ar'];
-const LANG_LABELS: Record<Lang, string> = { ru: 'RU', en: 'EN', es: 'ES', fr: 'FR', ar: 'AR' };
+const LANGS: Lang[] = ['en', 'ru'];
 
-const AXIS_INFO = [
-  { axis: 'EI' as const, left: 'E', right: 'I', leftLabel: 'Extraversion', rightLabel: 'Introversion', color: C.blue },
-  { axis: 'SN' as const, left: 'S', right: 'N', leftLabel: 'Sensing', rightLabel: 'Intuition', color: C.green },
-  { axis: 'TF' as const, left: 'T', right: 'F', leftLabel: 'Thinking', rightLabel: 'Feeling', color: C.purple },
-  { axis: 'JP' as const, left: 'J', right: 'P', leftLabel: 'Judging', rightLabel: 'Perceiving', color: C.orange },
-];
-
-type SliderState = { EI: number; SN: number; TF: number; JP: number };
+function cellFor(axis: AxisCode, pos: number): AnswerKeyCell | undefined {
+  const cells = answerKey[axis] ?? [];
+  return cells.find(c => c.posMin != null && c.posMax != null && pos >= c.posMin && pos <= c.posMax)
+    ?? cells.find(c => c.band === 0);
+}
 
 export default function AssessmentsPage() {
   const router = useRouter();
-  const { t } = useAdminLang();
-  const [sliders, setSliders] = useState<SliderState>({ EI: 0, SN: 0, TF: 0, JP: 0 });
+  const [pos, setPos] = useState<Record<AxisCode, number>>({ EO: 50, IF: 50, DB: 50, SP: 50, ER: 50 });
   const [lang, setLang] = useState<Lang>('en');
-  const [narrative, setNarrative] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (!isAdminLoggedIn()) router.push('/admin/login');
-  }, [router]);
+  useEffect(() => { if (!isAdminLoggedIn()) router.push('/admin/login'); }, [router]);
 
-  const handleSlider = (axis: keyof SliderState, value: number) => {
-    setSliders(prev => ({ ...prev, [axis]: value }));
-  };
-
-  const generateReport = useCallback(async () => {
-    setLoading(true);
-    setError('');
-    setNarrative('');
-    try {
-      const res = await fetch('/api/admin/report-preview', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getAdminToken()}`,
-        },
-        body: JSON.stringify({ sliders, lang }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json() as { narrative: string };
-      setNarrative(data.narrative);
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  }, [sliders, lang]);
-
-  const isRtl = lang === 'ar';
+  const signature = AXES.map(a => toCode(a, pos[a.code])).join(' · ');
+  const tx = (b: { en: string; ru: string }) => (lang === 'ru' ? b.ru || b.en : b.en);
 
   return (
     <div style={{ fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
       {/* Header */}
-      <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>
-          {t('sliders_title')}
-        </h1>
-        <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-          {t('sliders_sub')}
-        </p>
+      <div style={{ marginBottom: 22, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
+        <div>
+          <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Cognitive profiles</h1>
+          <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
+            ReNo v1.1 · drag each axis to read the interpretive key
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: 4 }}>
+          {LANGS.map(l => (
+            <button key={l} onClick={() => setLang(l)} style={{
+              padding: '7px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+              border: '1.5px solid', borderColor: lang === l ? C.blue : C.line,
+              background: lang === l ? 'rgba(34,68,224,0.08)' : 'white', color: lang === l ? C.blue : C.inkMute,
+              fontFamily: "'Geist Mono', monospace",
+            }}>{l.toUpperCase()}</button>
+          ))}
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
+      {/* Signature */}
+      <div style={{ background: 'white', borderRadius: 16, border: `1px solid ${C.line}`, padding: '16px 22px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', color: C.inkMute, textTransform: 'uppercase' }}>Signature</span>
+        <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 800, fontSize: 22, letterSpacing: '0.04em', color: C.ink }}>{signature}</span>
+      </div>
 
-        {/* ─── Left: Sliders ─── */}
-        <div>
-          <div style={{ background: 'white', borderRadius: 20, border: `1.5px solid ${C.line}`, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 32 }}>
-            {AXIS_INFO.map(({ axis, left, right, leftLabel, rightLabel, color }) => {
-              const axisData = profiles.find(p => p.axis === axis)!;
-              const level = getLevelFromSlider(axisData, sliders[axis]);
-              const val = sliders[axis];
-              const pole = val < 0 ? left : val > 0 ? right : '≈';
-              const strength = Math.abs(val);
-              const levelLabel = level.label['en'] || level.label.ru;
-
-              return (
-                <div key={axis}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 800, fontSize: 13, color }}>
-                        {axis}
-                      </span>
-                      <span style={{ fontSize: 12, color: C.inkMute }}>
-                        {leftLabel} / {rightLabel}
-                      </span>
-                    </div>
-                    <span style={{
-                      fontSize: 11, fontWeight: 700, fontFamily: "'Geist Mono', monospace",
-                      padding: '3px 9px', borderRadius: 6,
-                      background: `${color}18`, color,
-                    }}>
-                      {pole === '≈' ? 'Balanced' : `${pole} ${strength}%`}
-                    </span>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, alignItems: 'start' }}>
+        {/* Left: sliders */}
+        <div style={{ background: 'white', borderRadius: 20, border: `1.5px solid ${C.line}`, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 30 }}>
+          {AXES.map(a => {
+            const val = pos[a.code];
+            const code = toCode(a, val);
+            return (
+              <div key={a.code}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 800, fontSize: 13, color: a.color }}>{a.code}</span>
+                    <span style={{ fontSize: 12, color: C.inkMute }}>{tx(a.name)}</span>
                   </div>
-
-                  <div style={{ position: 'relative' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, fontWeight: 700, color: C.inkMute, fontFamily: "'Geist Mono', monospace", marginBottom: 6 }}>
-                      <span>{left}</span>
-                      <span>0</span>
-                      <span>{right}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={-100} max={100} value={val} step={1}
-                      onChange={e => handleSlider(axis, Number(e.target.value))}
-                      style={{
-                        width: '100%', appearance: 'none', height: 6,
-                        borderRadius: 3, outline: 'none', cursor: 'pointer',
-                        background: `linear-gradient(to right, ${color} 0%, ${color} ${(val + 100) / 2}%, ${C.line} ${(val + 100) / 2}%, ${C.line} 100%)`,
-                      }}
-                    />
-                  </div>
-
-                  <div style={{ marginTop: 8, fontSize: 12, color: C.inkSoft, fontStyle: 'italic' }}>
-                    {levelLabel}
-                  </div>
+                  <span style={{ fontSize: 12, fontWeight: 800, fontFamily: "'Geist Mono', monospace", padding: '3px 10px', borderRadius: 6, background: `${a.color}18`, color: a.color }}>{code}</span>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Language + Generate */}
-          <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: C.inkMute, marginBottom: 8 }}>
-                {t('sliders_lang')}
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, fontWeight: 700, color: C.inkMute, fontFamily: "'Geist Mono', monospace", marginBottom: 6 }}>
+                  <span>{a.minus.letter} {tx(a.minus.label)}</span>
+                  <span>{a.plus.letter} {tx(a.plus.label)}</span>
+                </div>
+                <input type="range" min={0} max={100} step={1} value={val}
+                  onChange={e => setPos(prev => ({ ...prev, [a.code]: Number(e.target.value) }))}
+                  style={{ width: '100%', appearance: 'none', height: 6, borderRadius: 3, outline: 'none', cursor: 'pointer',
+                    background: `linear-gradient(to right, ${a.color} 0%, ${a.color} ${val}%, ${C.line} ${val}%, ${C.line} 100%)` }}
+                />
+                <div style={{ marginTop: 8, fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>
+                  {cellFor(a.code, val) ? tx({ en: cellFor(a.code, val)!.en, ru: cellFor(a.code, val)!.ru }) : '—'}
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: 6 }}>
-                {LANGS.map(l => {
-                  const active = l === lang;
-                  return (
-                    <button key={l} onClick={() => setLang(l)} style={{
-                      flex: 1, padding: '8px 0', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                      cursor: 'pointer', border: '1.5px solid',
-                      borderColor: active ? C.orangeHot : C.line,
-                      background: active ? 'rgba(255,149,64,0.10)' : 'white',
-                      color: active ? C.orangeHot : C.inkSoft,
-                      fontFamily: "'Geist Mono', monospace", transition: 'all .15s',
-                    }}>
-                      {LANG_LABELS[l]}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <button
-              onClick={generateReport}
-              disabled={loading}
-              style={{
-                width: '100%', padding: '14px 20px', borderRadius: 14,
-                background: loading ? C.inkMute : C.orangeHot, color: 'white',
-                border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
-                fontWeight: 700, fontSize: 15, fontFamily: 'inherit',
-                transition: 'background .15s',
-              }}
-            >
-              {loading ? 'Generating...' : narrative ? t('sliders_regen') : t('sliders_gen')}
-            </button>
-          </div>
+            );
+          })}
         </div>
 
-        {/* ─── Right: Profile preview + Narrative ─── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {/* Quick profile summary */}
-          <div style={{ background: 'white', borderRadius: 16, border: `1.5px solid ${C.line}`, padding: '20px 24px' }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: C.inkMute, marginBottom: 14, fontFamily: "'Geist Mono', monospace", letterSpacing: '0.08em' }}>
-              PROFILE SUMMARY
-            </div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {AXIS_INFO.map(({ axis, left, right, color }) => {
-                const axisData = profiles.find(p => p.axis === axis)!;
-                const level = getLevelFromSlider(axisData, sliders[axis]);
-                const val = sliders[axis];
-                const dominantPole = val < 0 ? left : val > 0 ? right : '≈';
-                const levelLabel = level.label['en'] || level.label.ru;
-                return (
-                  <div key={axis} style={{
-                    flex: '1 1 calc(50% - 4px)', padding: '10px 14px',
-                    borderRadius: 12, background: `${color}10`,
-                    border: `1px solid ${color}30`,
-                  }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, color, fontFamily: "'Geist Mono', monospace" }}>
-                      {axis}
-                    </div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color, marginTop: 2, fontFamily: "'Geist Mono', monospace" }}>
-                      {dominantPole}
-                    </div>
-                    <div style={{ fontSize: 11, color: C.inkSoft, marginTop: 4, lineHeight: 1.4 }}>
-                      {levelLabel}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Narrative */}
-          {(narrative || loading || error) && (
-            <div style={{
-              background: 'white', borderRadius: 16, border: `1.5px solid ${C.line}`,
-              padding: '20px 24px',
-            }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.inkMute, marginBottom: 14, fontFamily: "'Geist Mono', monospace", letterSpacing: '0.08em' }}>
-                {t('sliders_preview')}
-              </div>
-
-              {loading && (
-                <div style={{ color: C.inkMute, fontSize: 13, padding: '20px 0', textAlign: 'center' }}>
-                  Writing your report...
+        {/* Right: interpretive summary */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {AXES.map(a => {
+            const cell = cellFor(a.code, pos[a.code]);
+            const framing = cell ? tx(cell.framing) : '';
+            return (
+              <div key={a.code} style={{ background: 'white', borderRadius: 14, border: `1px solid ${C.line}`, borderLeft: `4px solid ${a.color}`, padding: '14px 18px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                  <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 800, fontSize: 13, padding: '2px 9px', borderRadius: 6, background: `${a.color}18`, color: a.color }}>{toCode(a, pos[a.code])}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: C.ink }}>{tx(a.name)}</span>
                 </div>
-              )}
-
-              {error && (
-                <div style={{ color: '#FF5A5A', fontSize: 13 }}>{error}</div>
-              )}
-
-              {narrative && (
-                <div style={{
-                  fontSize: 14, lineHeight: 1.7, color: C.ink,
-                  direction: isRtl ? 'rtl' : 'ltr',
-                  whiteSpace: 'pre-line',
-                }}>
-                  {narrative}
-                </div>
-              )}
-            </div>
-          )}
-
-          {!narrative && !loading && (
-            <div style={{
-              borderRadius: 16, border: `2px dashed ${C.line}`,
-              padding: '40px 24px', textAlign: 'center',
-            }}>
-              <div style={{ fontSize: 13, color: C.inkMute }}>
-                Adjust the sliders and click <strong>Generate Report Preview</strong>
+                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{cell ? tx({ en: cell.en, ru: cell.ru }) : '—'}</div>
+                {framing && <div style={{ fontSize: 11.5, color: C.inkMute, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>{framing}</div>}
               </div>
-            </div>
-          )}
+            );
+          })}
         </div>
       </div>
     </div>

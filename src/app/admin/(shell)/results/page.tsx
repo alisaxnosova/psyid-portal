@@ -496,6 +496,7 @@ function ExpandedRow({ r }: { r: ResultRow }) {
 }
 
 export default function AdminResultsPage() {
+  const [version, setVersion]   = useState<'v11' | 'v10'>('v11');
   const [tab, setTab]           = useState<Tab>('results');
   const [results, setResults]   = useState<ResultRow[]>([]);
   const [loading, setLoading]   = useState(true);
@@ -567,6 +568,42 @@ export default function AdminResultsPage() {
           {loading ? 'Refreshing…' : '↻ Refresh'}
         </button>
       </div>
+
+      {/* Version switcher — new v1.1 results vs archived v1.0 */}
+      <div style={{ display: 'flex', gap: 6, marginBottom: 18, flexWrap: 'wrap' }}>
+        {([['v11', 'ReNo v1.1', 'five-axis · live'], ['v10', 'v1.0 archive', 'legacy MBTI']] as const).map(([key, label, sub]) => {
+          const active = version === key;
+          return (
+            <button key={key} onClick={() => setVersion(key)} style={{
+              padding: '9px 16px', borderRadius: 12, cursor: 'pointer', textAlign: 'left',
+              border: `1.5px solid ${active ? C.blue : C.line}`,
+              background: active ? 'rgba(34,68,224,0.07)' : 'white', transition: 'all .15s',
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: active ? C.blue : C.ink }}>{label}</div>
+              <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, color: C.inkMute, marginTop: 1 }}>{sub}</div>
+            </button>
+          );
+        })}
+      </div>
+
+      {version === 'v11' && (
+        <div style={{ background: 'white', borderRadius: 20, border: `1px dashed ${C.line}`, padding: '64px 32px', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', gap: 6, marginBottom: 16 }}>
+            {['#2244E0', '#6A85F0', '#8A5CD6', '#FF7A3D', '#FF5A5A'].map(c => (
+              <span key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />
+            ))}
+          </div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: C.ink, letterSpacing: '-0.02em', marginBottom: 8 }}>ReNo v1.1 results</div>
+          <div style={{ fontSize: 13.5, color: C.inkMute, maxWidth: 470, margin: '0 auto', lineHeight: 1.6 }}>
+            New completions are recorded with the five-axis methodology — a continuous 0–100 position per
+            axis, its band, and the signature code (e.g.{' '}
+            <span style={{ fontFamily: "'Geist Mono', monospace", color: C.ink }}>W2·A4·V3·F4·S2</span>).
+            They&apos;ll appear here once the ReNo v1.1 test goes live. Old results stay in the v1.0 archive.
+          </div>
+        </div>
+      )}
+
+      {version === 'v10' && (<>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
@@ -751,6 +788,7 @@ export default function AdminResultsPage() {
           {tab === 'research' && `${researchRows.length} participant${researchRows.length !== 1 ? 's' : ''} with research data`}
         </div>
       </div>
+      </>)}
     </div>
   );
 }
