@@ -1,0 +1,95 @@
+qid	axis	pole	reverse	en	ru
+Q001	EO	O	0	After a party or large gathering, I leave with more energy than when I arrived.	После вечеринки или большого собрания я ухожу с большей энергией, чем пришёл(а).
+Q002	EO	O	0	I work out my ideas by talking them through with someone.	Я додумываю свои идеи, проговаривая их с кем-нибудь.
+Q003	EO	O	0	In a group discussion, I speak up early without waiting to be asked.	В групповом обсуждении я высказываюсь одним из первых, не дожидаясь, пока меня спросят.
+Q004	EO	O	0	I strike up conversations with strangers — in a queue, on a plane — without needing a special reason.	Я завожу разговор с незнакомыми людьми — в очереди, в самолёте — без особого повода.
+Q005	EO	O	0	When something good happens to me, my first impulse is to tell someone right away.	Когда со мной происходит что-то хорошее, первым делом мне хочется сразу кому-то рассказать.
+Q006	EO	O	0	After a long day alone, I look for a reason to call or meet someone.	После целого дня в одиночестве я ищу повод позвонить кому-нибудь или встретиться.
+Q007	EO	O	0	I start answering a question right away, shaping my thought as I speak.	Я начинаю отвечать на вопрос сразу, формулируя мысль по ходу речи.
+Q008	EO	O	0	Given the choice, I work or study in a lively place — a café or shared room — rather than in silence.	При возможности я работаю или учусь в оживлённом месте — в кафе или общем помещении, а не в тишине.
+Q009	EO	O	0	At meetings, I volunteer to speak or present.	На собраниях я сам(а) вызываюсь выступить или представить результат.
+Q010	EO	O	0	I plan my weekends around get-togethers with groups of people.	Я планирую выходные вокруг встреч с компанией.
+Q011	EO	W	1	After a few hours in company, I need time alone before I can do anything else.	После нескольких часов в компании мне нужно побыть одному(ой), прежде чем браться за что-то ещё.
+Q012	EO	W	1	I rehearse what I am going to say in my head before saying it aloud.	Я проговариваю про себя то, что собираюсь сказать, прежде чем произнести вслух.
+Q013	EO	W	1	I sometimes let a call go unanswered so I can prepare before calling back.	Иногда я не беру трубку, чтобы подготовиться и перезвонить позже.
+Q014	EO	W	1	When facing a difficult problem, I first work it out alone in a quiet place, and only then discuss it.	Столкнувшись со сложной задачей, я сначала обдумываю её в тишине наедине с собой и лишь потом обсуждаю.
+Q015	EO	W	1	In conversation, I let others finish and often keep my reaction to myself.	В разговоре я даю другим договорить и часто оставляю свою реакцию при себе.
+Q016	EO	W	1	I keep a new idea to myself until it is fully formed.	Я держу новую идею при себе, пока она полностью не сформируется.
+Q017	EO	W	1	At big events, I find one person for a quiet conversation at the edge of the room.	На больших мероприятиях я нахожу одного собеседника для спокойного разговора в стороне.
+Q018	EO	W	1	I turn down invitations because I would rather spend the evening by myself.	Я отказываюсь от приглашений, потому что предпочитаю провести вечер наедине с собой.
+Q019	EO	W	1	When asked a question, I pause to think before answering.	Когда мне задают вопрос, я беру паузу, чтобы подумать, прежде чем ответить.
+Q020	IF	C	0	When assembling something new, I follow the written instructions step by step.	Собирая что-то новое, я следую инструкции шаг за шагом.
+Q021	IF	C	0	When someone explains an idea, I ask for a concrete example before accepting it.	Когда мне объясняют идею, я прошу конкретный пример, прежде чем принять её.
+Q022	IF	C	0	I remember exact facts from what I read — dates, prices, names.	Я запоминаю из прочитанного точные факты — даты, цены, имена.
+Q023	IF	C	0	When describing an event, I recount what actually happened, in order and with specifics.	Описывая событие, я передаю, что именно произошло, — по порядку и с подробностями.
+Q024	IF	C	0	When buying, I compare exact specifications rather than general impressions.	При покупке я сравниваю точные характеристики, а не общее впечатление.
+Q025	IF	C	0	I prefer tasks with a clear, proven method over tasks that require inventing an approach.	Я предпочитаю задачи с понятным проверенным методом задачам, где подход нужно придумывать.
+Q026	IF	C	0	When planning a trip, I focus on the practical details — schedules, costs, distances.	Планируя поездку, я сосредотачиваюсь на практических деталях — расписании, ценах, расстояниях.
+Q027	IF	C	0	I judge a proposal mainly by whether it has already worked somewhere.	Я оцениваю предложение прежде всего по тому, сработало ли оно уже где-то.
+Q028	IF	C	0	I do my best work on tasks where the requirements are spelled out precisely.	Лучше всего мне удаются задачи, где требования прописаны точно.
+Q029	IF	C	0	In a book or article, I skip the theory and look for the practical takeaway.	В книге или статье я пропускаю теорию и ищу практический вывод.
+Q030	IF	A	1	When I learn a new fact, I immediately fit it into a bigger pattern or idea.	Узнав новый факт, я сразу встраиваю его в более общую закономерность или идею.
+Q031	IF	A	1	I catch myself imagining how things could be, rather than noting how they are.	Я ловлю себя на том, что представляю, каким всё могло бы быть, а не отмечаю, как есть.
+Q032	IF	A	1	In conversation, I drift from what is happening now to future possibilities.	В разговоре я перехожу от того, что происходит сейчас, к будущим возможностям.
+Q033	IF	A	1	A new idea can absorb me more than the practical task in front of me.	Новая идея может увлечь меня сильнее, чем практическая задача передо мной.
+Q034	IF	A	1	I invent my own way of solving a problem even when a standard one exists.	Я придумываю собственный способ решения, даже когда существует стандартный.
+Q035	IF	A	1	I explain things through images, metaphors, and analogies.	Я объясняю через образы, метафоры и аналогии.
+Q036	IF	A	1	Untested, new ways of doing things attract me more than proven ones.	Новые, непроверенные способы привлекают меня больше, чем проверенные.
+Q037	IF	A	1	I notice connections between things that seem unrelated to others.	Я замечаю связи между вещами, которые другим кажутся не связанными.
+Q038	IF	A	1	After a film or book, I think more about its meaning than about the details of the plot.	После фильма или книги я думаю больше о смысле, чем о деталях сюжета.
+Q039	DB	L	0	When deciding, I weigh the pros and cons and follow the conclusion, even if it upsets someone.	Принимая решение, я взвешиваю «за» и «против» и следую выводу, даже если кого-то это расстроит.
+Q040	DB	L	0	In a discussion, I directly point out flaws in the other person's reasoning.	В споре я прямо указываю на слабые места в рассуждениях собеседника.
+Q041	DB	L	0	I give honest critical feedback even when I know it will disappoint.	Я даю честную критическую обратную связь, даже если знаю, что она огорчит.
+Q042	DB	L	0	When two people disagree, I judge who is right by the facts, not by who is more upset.	Когда двое спорят, я сужу, кто прав, по фактам, а не по тому, кто сильнее расстроен.
+Q043	DB	L	0	I convince people with evidence and reasoning rather than appeals to feelings.	Я убеждаю доказательствами и логикой, а не обращением к чувствам.
+Q044	DB	L	0	If a rule is fair, I apply it even to a close friend.	Если правило справедливо, я применяю его даже к близкому другу.
+Q045	DB	L	0	I prefer an uncomfortable truth to a comforting version of events.	Я предпочту неприятную правду утешительной версии событий.
+Q046	DB	L	0	In group decisions, I argue for the objectively strongest option even against the group's mood.	В групповых решениях я отстаиваю объективно лучший вариант, даже вопреки настроению группы.
+Q047	DB	L	0	I evaluate a person's work on its merits, separately from my relationship with them.	Я оцениваю работу человека по её качеству, отдельно от моих отношений с ним.
+Q048	DB	L	0	I question the logic of a claim even when it comes from someone I like.	Я проверяю логику утверждения, даже если его высказал симпатичный мне человек.
+Q049	DB	V	1	Before deciding, I first think through how each option will affect the people involved.	Прежде чем решить, я сначала продумываю, как каждый вариант отразится на людях.
+Q050	DB	V	1	I soften critical feedback so the person is not hurt.	Я смягчаю критику, чтобы не задеть человека.
+Q051	DB	V	1	I go along with a group decision I privately disagree with, to preserve the peace.	Я соглашаюсь с решением группы, с которым внутренне не согласен(на), ради мира.
+Q052	DB	V	1	When someone shares a problem, I comfort them first and analyze later.	Когда со мной делятся проблемой, я сначала утешаю и только потом анализирую.
+Q053	DB	V	1	I make exceptions to rules when applying them would hurt someone.	Я делаю исключения из правил, если их применение причинит кому-то боль.
+Q054	DB	V	1	In a debate, I sense the emotional temperature of the room before I weigh the arguments.	В дискуссии я улавливаю эмоциональную атмосферу раньше, чем взвешиваю аргументы.
+Q055	DB	V	1	I change my plans to fit what matters to the people close to me.	Я меняю свои планы ради того, что важно близким.
+Q056	DB	V	1	I persuade by connecting to what a person cares about, not by proving them wrong.	Я убеждаю, опираясь на то, что дорого человеку, а не доказывая его неправоту.
+Q057	DB	V	1	Choosing between the "correct" option and the one that keeps harmony, I choose harmony.	Выбирая между «правильным» вариантом и тем, что сохранит согласие, я выбираю согласие.
+Q058	SP	D	0	I keep a to-do list and actually cross items off.	Я веду список дел и действительно вычёркиваю выполненное.
+Q059	SP	D	0	I finish tasks well before the deadline.	Я заканчиваю дела задолго до срока.
+Q060	SP	D	0	I plan my week in advance and mostly follow the plan.	Я планирую неделю заранее и в основном следую плану.
+Q061	SP	D	0	Before starting work, I put my workspace in order.	Прежде чем начать работу, я навожу порядок на рабочем месте.
+Q062	SP	D	0	I completely finish one task before starting the next.	Я полностью завершаю одно дело, прежде чем взяться за следующее.
+Q063	SP	D	0	When traveling, I book tickets and lodging well in advance.	В поездках я бронирую билеты и жильё заранее.
+Q064	SP	D	0	When plans change suddenly, I immediately build a new plan rather than acting ad hoc.	Если планы внезапно меняются, я сразу выстраиваю новый план, а не действую по обстоятельствам.
+Q065	SP	D	0	My files, papers, and belongings each have their fixed place.	У моих файлов, бумаг и вещей есть своё постоянное место.
+Q066	SP	D	0	I keep a fixed daily routine.	Я придерживаюсь постоянного распорядка дня.
+Q067	SP	D	0	Once a decision is made, I close the question and do not reopen it.	Приняв решение, я закрываю вопрос и не возвращаюсь к нему.
+Q068	SP	F	1	I decide what to do with my day as it unfolds.	Я решаю, чем заняться, по ходу дня.
+Q069	SP	F	1	I work in bursts of inspiration rather than on a schedule.	Я работаю рывками по вдохновению, а не по расписанию.
+Q070	SP	F	1	My best work happens close to the deadline.	Лучше всего мне работается ближе к дедлайну.
+Q071	SP	F	1	I start new projects before finishing old ones.	Я начинаю новые дела, не закончив старых.
+Q072	SP	F	1	I keep plans loose so I can change them if something better comes up.	Я оставляю планы гибкими, чтобы поменять их, если подвернётся что-то лучше.
+Q073	SP	F	1	My workspace has piles that make sense only to me.	На моём рабочем месте — стопки, понятные только мне.
+Q074	SP	F	1	I put off final decisions to keep my options open longer.	Я откладываю окончательные решения, чтобы дольше сохранять варианты.
+Q075	SP	F	1	When traveling, I prefer to sort things out on the spot rather than book everything ahead.	В путешествиях я предпочитаю разбираться на месте, а не бронировать всё заранее.
+Q076	SP	F	1	I drop a plan midway if a more interesting path appears.	Я бросаю план на середине, если появляется более интересный путь.
+Q077	ER	S	0	After an unpleasant conversation, I return to my usual state within minutes.	После неприятного разговора я возвращаюсь в обычное состояние за считанные минуты.
+Q078	ER	S	0	Bad news rarely changes how I spend the rest of the day.	Плохие новости редко меняют то, как я провожу остаток дня.
+Q079	ER	S	0	Under time pressure, I keep working at my normal pace.	В цейтноте я продолжаю работать в своём обычном темпе.
+Q080	ER	S	0	I can listen to criticism of my work and get back to it within the hour.	Я могу выслушать критику своей работы и вернуться к ней в течение часа.
+Q081	ER	S	0	My mood stays roughly level through the week, regardless of events.	Моё настроение остаётся ровным всю неделю, независимо от событий.
+Q082	ER	S	0	When something breaks or falls through, I go straight to fixing it without dwelling on it.	Когда что-то ломается или срывается, я сразу перехожу к исправлению, не пережёвывая случившееся.
+Q083	ER	S	0	Waiting for important results does not affect my sleep.	Ожидание важных результатов не влияет на мой сон.
+Q084	ER	S	0	A sudden change of plans doesn't knock me off track — I adjust and continue.	Внезапная смена планов не выбивает меня из колеи — я перестраиваюсь и продолжаю.
+Q085	ER	S	0	In a heated argument, my voice and pace stay the same as in a calm conversation.	В жарком споре мой голос и темп остаются такими же, как в спокойной беседе.
+Q086	ER	R	1	After a conflict, I replay it in my head for hours or even days.	После конфликта я прокручиваю его в голове часами, а то и днями.
+Q087	ER	R	1	A small setback can color my whole day.	Небольшая неудача может окрасить весь мой день.
+Q088	ER	R	1	I feel events in my body — racing heart, tight stomach — before I've fully processed them.	Я ощущаю события телом — учащённое сердцебиение, сжатие в животе — раньше, чем успеваю их осмыслить.
+Q089	ER	R	1	My mood can shift noticeably several times in one day.	Моё настроение может заметно меняться несколько раз за день.
+Q090	ER	R	1	Criticism stays with me long after the conversation is over.	Критика остаётся со мной надолго после окончания разговора.
+Q091	ER	R	1	Before important events, I sleep worse than usual.	Перед важными событиями я сплю хуже обычного.
+Q092	ER	R	1	A stray remark can occupy my thoughts for the rest of the evening.	Случайное замечание может занимать мои мысли весь вечер.
+Q093	ER	R	1	A touching film or piece of music can move me to tears.	Трогательный фильм или музыка могут довести меня до слёз.
+Q094	ER	R	1	When stakes are high, I check and re-check — sent messages, locked doors, submitted work.	Когда ставки высоки, я проверяю и перепроверяю — отправленные сообщения, закрытые двери, сданную работу.

@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The ReNo Question Bank Methodology · v1.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* =====================================================================
+   PsyID · Methodology document system   (shared by all 4 documents)
+   Aligned to the Element Vault · ReNo v1.1
+   ===================================================================== */
+
+:root{
+  --navy:#050C2E; --ink:#0E1230; --ink-soft:#40456A; --ink-mute:#82879F;
+  --blue:#2244E0; --blue-soft:#6A85F0; --violet:#8A5CD6; --coral:#FF5A5A;
+  --orange:#FF7A3D; --orange-hot:#FF9540; --gold:#FFC074; --gold-deep:#C98A2E;
+
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+
+  --paper:#FBF9F5; --paper-2:#F3EEE5; --paper-3:#ECE4D7;
+  --line:#E4DCCD; --line-2:#D3C9B8;
+
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+
+  --grad-hero:linear-gradient(135deg,#0A143F 0%,#0D1E6A 30%,#4B266A 56%,#B23A4C 78%,#FF823F 100%);
+  --grad-axis:linear-gradient(95deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+  --grad-orange:linear-gradient(95deg,var(--orange),var(--gold));
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+}
+
+*{box-sizing:border-box;}
+doc-page:not(:defined){visibility:hidden;}
+body{margin:0;background:#211E17;}
+doc-page{
+  --doc-accent:var(--orange);
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font); font-size:11pt; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv01";
+}
+
+/* ── Running header / footer ─────────────────────────────── */
+.doc-head{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-mute); padding-bottom:9px; border-bottom:1px solid var(--line);
+}
+.doc-head .dh-brand{font-family:var(--font);font-weight:800;letter-spacing:-.02em;font-size:10pt;color:var(--ink);text-transform:none;}
+.doc-head .dh-brand i{color:var(--orange);font-style:normal;}
+.doc-foot{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-mute); padding-top:9px; border-top:1px solid var(--line);
+}
+
+/* ── Base type ───────────────────────────────────────────── */
+doc-page p{margin:0 0 12px; color:var(--ink-soft); }
+doc-page strong,doc-page b{color:var(--ink);font-weight:600;}
+doc-page em{font-style:italic;}
+a{color:var(--orange);text-decoration:none;} a:hover{color:var(--orange-hot);}
+
+.lead{font-size:14.5pt;line-height:1.5;color:var(--ink);font-weight:500;letter-spacing:-.01em;margin-bottom:20px;text-wrap:pretty;}
+
+/* ── Section header ──────────────────────────────────────── */
+.sec{margin-top:40px;}
+.sec:first-of-type{margin-top:0;}
+.sec-num{font-family:var(--mono);font-size:9pt;letter-spacing:.24em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+h1.sec-title{font-size:26pt;font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0 0 16px;color:var(--ink);}
+h2{font-size:15pt;font-weight:700;letter-spacing:-.02em;margin:26px 0 10px;color:var(--ink);}
+h3{font-family:var(--mono);font-size:9pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin:22px 0 8px;}
+.rule{height:1px;background:var(--line);border:none;margin:26px 0;}
+
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--orange);}
+
+/* ── Lists ───────────────────────────────────────────────── */
+doc-page ul,doc-page ol{margin:0 0 14px;padding-left:0;list-style:none;}
+doc-page li{position:relative;padding-left:22px;margin-bottom:8px;color:var(--ink-soft);}
+doc-page ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--doc-accent);}
+doc-page ol{counter-reset:li;}
+doc-page ol li{counter-increment:li;}
+doc-page ol li::before{content:counter(li);position:absolute;left:0;top:0;font-family:var(--mono);font-size:9pt;font-weight:600;color:var(--orange);}
+
+/* ── Cover ───────────────────────────────────────────────── */
+.cover{
+  position:relative; margin:-0.9in -0.9in 0; padding:0.9in 0.9in 0.8in;
+  min-height:9.4in; color:#fff; display:flex; flex-direction:column;
+  background:var(--grad-hero); overflow:hidden; break-after:page;
+}
+.cover::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 84% 88%, rgba(255,165,72,.55), transparent 60%),
+  radial-gradient(ellipse 50% 45% at 22% 30%, rgba(58,98,232,.5), transparent 60%);pointer-events:none;}
+.cover>*{position:relative;z-index:1;}
+.cover .cover-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.cover-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17pt;letter-spacing:-.03em;}
+.cover-brand i{color:var(--gold);font-style:normal;}
+.cover-status{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 13px;}
+.cover-mid{margin-top:auto;}
+.cover-kicker{font-family:var(--mono);font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:18px;}
+.cover h1{font-size:52pt;font-weight:800;letter-spacing:-.045em;line-height:.98;margin:0 0 22px;color:#fff;}
+.cover .sub{font-size:14pt;line-height:1.5;color:rgba(255,255,255,.82);max-width:34ch;font-weight:400;margin-bottom:30px;text-wrap:pretty;}
+.cover-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;border-top:1px solid rgba(255,255,255,.2);padding-top:22px;max-width:560px;}
+.cover-meta dt{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.cover-meta dd{font-size:10.5pt;color:#fff;font-weight:500;margin:0;}
+.cover-sig{margin-top:26px;display:flex;gap:7px;align-items:center;}
+.cover-sig .cs{font-family:var(--mono);font-weight:600;font-size:13pt;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:8px 4px;min-width:46px;text-align:center;}
+.cover-sig .cs b{font-family:var(--font);font-weight:800;color:var(--gold);}
+.cover-sig .cs span{color:rgba(255,255,255,.55);}
+
+/* ── Constellation mark ──────────────────────────────────── */
+.constell{display:inline-block;line-height:0;}
+
+/* ── Contents ────────────────────────────────────────────── */
+.toc{display:flex;flex-direction:column;gap:0;margin-top:10px;}
+.toc a{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);}
+.toc a:hover{color:var(--orange);}
+.toc .toc-n{font-family:var(--mono);font-size:9pt;color:var(--orange);width:26px;flex:none;}
+.toc .toc-t{font-weight:600;font-size:12pt;letter-spacing:-.01em;flex:1;}
+.toc .toc-d{font-size:10pt;color:var(--ink-mute);}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.m-table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:9.5pt;}
+.m-table thead th{
+  font-family:var(--mono);font-size:8pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);text-align:left;font-weight:600;
+  padding:0 12px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom;
+}
+.m-table tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);line-height:1.5;}
+.m-table tbody tr:last-child td{border-bottom:none;}
+.m-table td b,.m-table td strong{color:var(--ink);}
+.m-table .code{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+.m-table.zebra tbody tr:nth-child(even){background:var(--paper-2);}
+.m-table .pole{font-family:var(--mono);font-weight:600;color:#fff;border-radius:6px;padding:2px 8px;display:inline-block;font-size:8.5pt;}
+
+/* ── Callouts ────────────────────────────────────────────── */
+.callout{border-radius:16px;padding:20px 22px;margin:18px 0;background:var(--paper-2);border:1px solid var(--line);break-inside:avoid;}
+.callout .co-label{font-family:var(--mono);font-size:8pt;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+.callout .co-label .dot{width:7px;height:7px;border-radius:50%;}
+.callout p:last-child{margin-bottom:0;}
+.callout p{color:var(--ink-soft);}
+
+.callout.honest{background:linear-gradient(180deg,#FFF6E6,#FDF0D8);border-color:#F0DDB6;}
+.callout.honest .co-label{color:var(--gold-deep);} .callout.honest .co-label .dot{background:var(--gold-deep);}
+.callout.principle{background:var(--ink);border-color:var(--ink);}
+.callout.principle .co-label{color:var(--gold);} .callout.principle .co-label .dot{background:var(--gold);}
+.callout.principle p{color:rgba(255,255,255,.82);} .callout.principle strong{color:#fff;}
+.callout.framing{background:linear-gradient(180deg,#FFEEEC,#FFE4E1);border-color:#F6C9C4;}
+.callout.framing .co-label{color:var(--coral);} .callout.framing .co-label .dot{background:var(--coral);}
+.callout.note{background:var(--paper-2);}
+.callout.note .co-label{color:var(--blue);} .callout.note .co-label .dot{background:var(--blue);}
+
+/* ── Pull quote ──────────────────────────────────────────── */
+.pq{font-size:19pt;font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.3;color:var(--ink);border-left:3px solid var(--orange);padding-left:22px;margin:22px 0;text-wrap:pretty;}
+.pq b{font-style:normal;background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ── Axis legend cards ───────────────────────────────────── */
+.axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.axis-grid.five{grid-template-columns:repeat(5,1fr);gap:9px;}
+.axis-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 16px;border-top:4px solid var(--ax);break-inside:avoid;}
+.axis-card .ac-no{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);}
+.axis-card .ac-name{font-weight:700;font-size:12pt;letter-spacing:-.02em;margin:5px 0 11px;color:var(--ink);}
+.axis-card .ac-pole{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:9pt;color:var(--ink-soft);line-height:1.35;}
+.axis-card .ac-pole .p{font-family:var(--mono);font-weight:600;font-size:11pt;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;background:var(--ax);flex:none;}
+.axis-card .ac-pole .p.minus{background:transparent;color:var(--ax);border:1.5px solid var(--ax);}
+.axis-card.five .ac-name{font-size:10.5pt;}
+
+/* ── Signature code block ────────────────────────────────── */
+.sig-code{display:flex;gap:8px;margin:16px 0;}
+.sig-slot{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 8px 10px;text-align:center;position:relative;overflow:hidden;break-inside:avoid;}
+.sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax);}
+.sig-slot .sa{font-family:var(--mono);font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;}
+.sig-slot .sv{font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1;display:flex;align-items:baseline;justify-content:center;gap:1px;}
+.sig-slot .sv b{font-size:26pt;color:var(--ax);} .sig-slot .sv span{font-size:15pt;color:var(--ink-mute);}
+.sig-slot .sp{font-size:8.5pt;color:var(--ink-soft);margin-top:6px;font-weight:600;}
+.sig-slot.balanced::before{background:var(--line-2);} .sig-slot.balanced .sv b{color:var(--ink-mute);} .sig-slot.balanced .sv span{color:var(--ink-mute);}
+.sig-inline{font-family:var(--mono);font-weight:600;font-size:14pt;letter-spacing:.02em;color:var(--ink);display:inline-flex;gap:9px;align-items:center;}
+.sig-inline .d{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);}
+
+/* ── Band scale ──────────────────────────────────────────── */
+.band-scale{margin:16px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.band-row{display:grid;grid-template-columns:40px 92px 1fr;align-items:center;gap:14px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);}
+.band-row:last-child{border-bottom:none;}
+.band-row .bd{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:16pt;color:#fff;}
+.band-row.b0 .bd{background:var(--line-2);color:var(--ink);}
+.band-row .br{font-family:var(--mono);font-size:9pt;color:var(--ink-soft);}
+.band-row .bt b{color:var(--ink);font-weight:700;} .band-row .bt span{color:var(--ink-soft);}
+
+/* ── Growth edge card ────────────────────────────────────── */
+.growth{border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,#131A3E,#2A1C4A 60%,#45213F);color:#fff;position:relative;overflow:hidden;margin:18px 0;break-inside:avoid;}
+.growth::after{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,72,.45),transparent 70%);}
+.growth .g-eye{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;position:relative;}
+.growth .g-title{font-weight:800;font-size:16pt;letter-spacing:-.02em;margin-bottom:7px;position:relative;}
+.growth .g-title span{color:var(--gold);}
+.growth p{color:rgba(255,255,255,.82);position:relative;margin:0;}
+
+/* ── Radar figure ────────────────────────────────────────── */
+.fig{margin:18px 0;break-inside:avoid;}
+.fig .radar-chart{display:block;}
+.fig-dark{background:var(--grad-hero);border-radius:18px;padding:26px;display:flex;gap:26px;align-items:center;color:#fff;}
+.fig-dark .fd-side{flex:1;}
+.fig-dark .fd-side h4{font-size:13pt;font-weight:700;margin:0 0 6px;color:#fff;letter-spacing:-.01em;}
+.fig-dark .fd-side p{color:rgba(255,255,255,.78);margin:0;font-size:10pt;}
+.figcap{font-family:var(--mono);font-size:8pt;letter-spacing:.06em;color:var(--ink-mute);margin-top:10px;text-transform:uppercase;}
+
+/* ── Axis pill (list) ────────────────────────────────────── */
+.axis-pill{display:flex;align-items:center;gap:12px;margin:8px 0;}
+.axis-pill .ap-n{font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);width:96px;flex:none;}
+.axis-pill .ap-t{flex:1;height:7px;background:var(--paper-3);border-radius:999px;overflow:hidden;}
+.axis-pill .ap-f{height:100%;border-radius:999px;background:var(--ax);}
+.axis-pill .ap-c{font-family:var(--mono);font-size:9.5pt;font-weight:600;color:var(--ink);width:30px;text-align:right;}
+
+/* ── Two-column feature (products) ───────────────────────── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.split .col{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;break-inside:avoid;}
+.split .col.blue{border-top:4px solid var(--blue);}
+.split .col.coral{border-top:4px solid var(--coral);}
+.split .col h4{font-size:13pt;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em;}
+.split .col .tag{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;}
+.split .col p{font-size:10pt;margin:0;}
+
+/* ── Stat row ────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.stat{background:var(--ink);border-radius:14px;padding:18px 16px;color:#fff;}
+.stat .sv{font-weight:800;font-size:32pt;letter-spacing:-.04em;line-height:1;}
+.stat .sv.or{background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sv.bl{background:linear-gradient(95deg,var(--blue-soft),#fff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sl{font-size:8.5pt;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.4;}
+
+/* ── Small helpers ───────────────────────────────────────── */
+.mono{font-family:var(--mono);}
+.tag-inline{font-family:var(--mono);font-size:8.5pt;background:var(--paper-3);border-radius:5px;padding:1px 6px;color:var(--ink);}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:5px 12px;}
+.badge.orange{background:rgba(255,122,61,.12);color:var(--orange);}
+.badge.blue{background:rgba(34,68,224,.1);color:var(--blue);}
+.page-break{break-after:page;height:0;}
+.avoid-break{break-inside:avoid;}
+
+/* ── Print / PDF · Letter ──────────────────────────────────── */
+@media print{
+  doc-page{font-size:10.5pt;line-height:1.55;}
+  .cover{
+    margin:0 0 0.25in; padding:0.55in 0.5in 0.5in;
+    min-height:8.5in; border-radius:20px; break-after:page;
+  }
+  .cover h1{font-size:44pt;}
+  .cover .sub{font-size:12.5pt;margin-bottom:24px;}
+  .cover-meta{padding-top:18px;}
+  .sec-num,h1.sec-title,h2,h3,.eyebrow,.lead{break-after:avoid;}
+  .sec{margin-top:0;}
+  .callout,.pq,.growth,.fig,.split,.stats,.band-scale,
+  .sig-code,.axis-grid,.axis-card,.axis-pill,figure{break-inside:avoid;}
+  .toc{break-inside:auto;} .toc a{break-inside:avoid;}
+  .m-table{break-inside:auto;}
+  .m-table thead{display:table-header-group;}
+  .m-table tr{break-inside:avoid;}
+}
+
+</style>
+<style>doc-page:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<doc-page size="letter" margin="0.9in">
+
+  <div slot="header" class="doc-head">
+    <span class="dh-brand">Psy<i>ID</i></span>
+    <span>ReNo Question Bank · v1.0 · Internal</span>
+  </div>
+  <div slot="footer" class="doc-foot">
+    <span>Companion to The ReNo Methodology v1.1</span>
+    <span>July 2026</span>
+  </div>
+
+  <!-- COVER -->
+  <section class="cover">
+    <svg class="cover-bg" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A143F"></stop><stop offset="0.3" stop-color="#0D1E6A"></stop><stop offset="0.56" stop-color="#4B266A"></stop><stop offset="0.78" stop-color="#B23A4C"></stop><stop offset="1" stop-color="#FF823F"></stop></linearGradient></defs><rect width="100" height="100" fill="url(#coverGrad)"></rect></svg>
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="constell" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+            <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"></polygon>
+            <circle cx="50" cy="16" r="6.5" fill="#6A85F0"></circle><circle cx="84" cy="40" r="6.5" fill="#8A5CD6"></circle>
+            <circle cx="71" cy="79" r="6.5" fill="#FF7A3D"></circle><circle cx="29" cy="79" r="6.5" fill="#FF5A5A"></circle>
+            <circle cx="16" cy="40" r="6.5" fill="#2244E0"></circle>
+          </svg>
+        </span>
+        <span class="wordmark">Psy<i>ID</i></span>
+      </div>
+      <div class="cover-status">Status · Pilot-ready, not yet validated</div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-kicker">Companion methodology · Internal</div>
+      <h1>The Question<br/>Bank</h1>
+      <div class="sub">How the 94-item instrument is constructed, keyed, and scored — and the eight principles every item obeys.</div>
+      <dl class="cover-meta">
+        <div><dt>Instrument</dt><dd>ReNo v1.1 — five-axis, 94 normative items</dd></div>
+        <div><dt>Form</dt><dd>Adult self-report (EN / RU)</dd></div>
+        <div><dt>Version</dt><dd>1.0 — pilot-ready · July 2026</dd></div>
+        <div><dt>Companion to</dt><dd>The ReNo Methodology v1.1</dd></div>
+      </dl>
+      <div class="cover-sig">
+        <div class="cs"><b>W</b><span>2</span></div>
+        <div class="cs"><b>A</b><span>4</span></div>
+        <div class="cs"><b>V</b><span>3</span></div>
+        <div class="cs"><b>F</b><span>4</span></div>
+        <div class="cs"><b>S</b><span>2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 00 SCOPE -->
+  <section class="sec">
+    <div class="sec-num">00 — Scope</div>
+    <h1 class="sec-title">What this companion covers</h1>
+    <p class="lead">This document explains the question bank specifically: item format, axis mapping, the scoring key, and the eight construction rules that separate this bank from the legacy forced-choice test it replaces.</p>
+    <p>It assumes the constructs defined in the main methodology whitepaper — the five axes, the continuous 0–100 scoring model, the bands, and the derived growth edge are all specified there. This companion is about the <strong>instrument</strong>: the pool of items that produces a reading, and the deterministic key that turns responses into a code.</p>
+
+    <div class="callout honest">
+      <div class="co-label"><span class="dot"></span>Honest status</div>
+      <p>The 94 items are a <strong>pilot-ready pool, not a finalized scale</strong>. The development study (item &amp; factor analysis) is expected to drop the weakest items on each axis — that is the method working as designed, not failing. No score produced by this bank is validated until that study is complete.</p>
+    </div>
+
+    <h2>Contents</h2>
+    <nav class="toc">
+      <a href="#s1"><span class="toc-n">01</span><span class="toc-t">What changed from the legacy bank</span><span class="toc-d">Forced-choice → normative</span></a>
+      <a href="#s2"><span class="toc-n">02</span><span class="toc-t">Item format &amp; response scale</span><span class="toc-d">One shared 5-point scale</span></a>
+      <a href="#s3"><span class="toc-n">03</span><span class="toc-t">The eight construction rules</span><span class="toc-d">The quality contract</span></a>
+      <a href="#s4"><span class="toc-n">04</span><span class="toc-t">Axis map &amp; item allocation</span><span class="toc-d">94 items, five axes</span></a>
+      <a href="#s5"><span class="toc-n">05</span><span class="toc-t">The scoring key</span><span class="toc-d">Item → axis → code</span></a>
+      <a href="#s6"><span class="toc-n">06</span><span class="toc-t">Contamination control</span><span class="toc-d">Where each construct lives</span></a>
+      <a href="#s7"><span class="toc-n">07</span><span class="toc-t">Watch-items &amp; the pilot plan</span><span class="toc-d">Soft spots and the study</span></a>
+    </nav>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 01 WHAT CHANGED -->
+  <section class="sec" id="s1">
+    <div class="sec-num">01 — What changed from the legacy bank</div>
+    <h1 class="sec-title">From forced-choice to normative</h1>
+    <p class="lead">The previous instrument was 94 forced-choice word-select items on four axes. It converts well, but it fights the methodology's scientific goals. Three structural changes define the new bank.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:22%">Dimension</th><th style="width:34%">Legacy bank</th><th>ReNo v1.1 bank</th></tr></thead>
+      <tbody>
+        <tr><td><b>Scoring model</b></td><td>Forced-choice (ipsative) — pick one pole-word per item.</td><td>Normative Likert — agree/disagree per statement. Enables factor analysis, Big-Five validation, and clean test–retest.</td></tr>
+        <tr><td><b>Item content</b></td><td>Single trait-words (“sociable” vs “reserved”).</td><td>Behaviourally anchored statements — observable actions, no trait labels.</td></tr>
+        <tr><td><b>Axes</b></td><td>4 — no Emotional Response.</td><td>5 — adds Emotional Response (18 items).</td></tr>
+        <tr><td><b>Item weights</b></td><td>Hand-assigned 2 / 1 / 0 per option.</td><td>All items equal at pilot; discrimination established empirically, not assumed.</td></tr>
+        <tr><td><b>Languages</b></td><td>EN / RU / ES / FR / AR.</td><td>EN / RU for pilot; localise the survivors post-analysis.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>The one honest trade-off</div>
+      <p>Forced-choice word-select is faster and lower-friction — good for conversion. Normative Likert is validatable — good for science. This bank chooses science. If conversion friction proves costly, the fallback is to keep a forced-choice consumer form and run a normative form for the validation study only.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 02 ITEM FORMAT -->
+  <section class="sec" id="s2">
+    <div class="sec-num">02 — Item format &amp; response scale</div>
+    <h1 class="sec-title">One statement, one shared scale</h1>
+    <p class="lead">Every item is a first-person behavioural statement rated on one shared five-point agreement scale.</p>
+
+    <table class="m-table">
+      <thead><tr><th style="width:14%">Value</th><th style="width:43%">English</th><th>Russian</th></tr></thead>
+      <tbody>
+        <tr><td class="code">1</td><td>Completely disagree</td><td>Совершенно не согласен(на)</td></tr>
+        <tr><td class="code">2</td><td>Rather disagree</td><td>Скорее не согласен(на)</td></tr>
+        <tr><td class="code">3</td><td>Hard to say</td><td>Трудно сказать</td></tr>
+        <tr><td class="code">4</td><td>Rather agree</td><td>Скорее согласен(на)</td></tr>
+        <tr><td class="code">5</td><td>Completely agree</td><td>Полностью согласен(на)</td></tr>
+      </tbody>
+    </table>
+
+    <p>Each item carries three fixed attributes in the bank file: its <strong>axis</strong>, the <strong>pole</strong> that agreement scores toward, and a <strong>reverse</strong> flag. A worked example:</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th>QID</th><th>Axis</th><th>Pole</th><th>Rev</th><th style="width:52%">Item</th></tr></thead>
+      <tbody>
+        <tr><td class="code">Q001</td><td class="code">EO</td><td><span class="pole" style="background:var(--ax1)">O</span></td><td class="code">0</td><td>“After a party or large gathering, I leave with more energy than when I arrived.”</td></tr>
+        <tr><td class="code">Q011</td><td class="code">EO</td><td class="code">W</td><td class="code">1</td><td>“After a few hours in company, I need time alone before I can do anything else.”</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Why forward and reverse mix</div>
+      <p>Both items measure Energy Orientation. Q001 scores toward the <b>Outward</b> pole directly; Q011 is reverse-keyed — agreement indicates <b>Inward</b>. Mixing forward and reverse items within each axis is deliberate (see Rule 5): it neutralises the tendency to simply agree with everything.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 03 EIGHT RULES -->
+  <section class="sec" id="s3">
+    <div class="sec-num">03 — The eight construction rules</div>
+    <h1 class="sec-title">The quality contract</h1>
+    <p class="lead">Every item was written to obey these eight rules. They are the quality contract for the bank — any new item must pass all eight.</p>
+    <ol>
+      <li><strong>Normative, not ipsative.</strong> Independent agreement ratings, so scores can be correlated, factored, and validated.</li>
+      <li><strong>One construct per item.</strong> No item may touch two axes. This is what keeps the factor structure clean and the stability read trustworthy.</li>
+      <li><strong>Behaviourally anchored.</strong> Describe an observable action (“I finish tasks well before the deadline”), never a trait word (“I am organized”). People report behaviour accurately but infer traits poorly.</li>
+      <li><strong>Concrete and situational.</strong> Each item names a recognisable moment — a party, a deadline, a disagreement — so the respondent recalls rather than self-theorises.</li>
+      <li><strong>Balanced keying.</strong> Roughly half of each axis is reverse-keyed, so a respondent who agrees with everything scores near the midpoint. This neutralises acquiescence bias — the normative equivalent of what forced-choice got for free.</li>
+      <li><strong>Value-neutral poles.</strong> Neither pole is written as better. No item frames a trait as a deficit (the legacy key's “too much detail, misses the point” is exactly what to avoid).</li>
+      <li><strong>Single, unambiguous idea.</strong> No double-barrelled items (“I plan ahead and stay calm” secretly measures two axes). One verb, one behaviour.</li>
+      <li><strong>Contamination-safe by axis.</strong> Composure and rumination appear only on Emotional Response; novelty-seeking only on Information Focus; no risk-propensity items anywhere; Structure Preference stays pure order-and-closure.</li>
+    </ol>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 04 AXIS MAP -->
+  <section class="sec" id="s4">
+    <div class="sec-num">04 — Axis map &amp; item allocation</div>
+    <h1 class="sec-title">94 items across five axes</h1>
+    <p class="lead">Each axis is pole-balanced. The reference pole is the “plus” direction a raw score of 100 points toward.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th>Code</th><th style="width:26%">Axis</th><th>Poles (plus / minus)</th><th>Items</th><th>Split</th></tr></thead>
+      <tbody>
+        <tr><td class="code">EO</td><td><b>Energy Orientation</b></td><td><span class="pole" style="background:var(--ax1)">O</span> Outward / W Inward</td><td class="code">19</td><td>10 O · 9 W</td></tr>
+        <tr><td class="code">IF</td><td><b>Information Focus</b></td><td><span class="pole" style="background:var(--ax2)">C</span> Concrete / A Abstract</td><td class="code">19</td><td>10 C · 9 A</td></tr>
+        <tr><td class="code">DB</td><td><b>Decision Basis</b></td><td><span class="pole" style="background:var(--ax3)">L</span> Logic / V Values</td><td class="code">19</td><td>10 L · 9 V</td></tr>
+        <tr><td class="code">SP</td><td><b>Structure Preference</b></td><td><span class="pole" style="background:var(--ax4)">D</span> Ordered / F Flexible</td><td class="code">19</td><td>10 D · 9 F</td></tr>
+        <tr><td class="code">ER</td><td><b>Emotional Response</b></td><td><span class="pole" style="background:var(--ax5)">S</span> Steady / R Reactive</td><td class="code">18</td><td>9 S · 9 R</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Item ID blocks</div>
+      <p><span class="mono">EO Q001–Q019 · IF Q020–Q038 · DB Q039–Q057 · SP Q058–Q076 · ER Q077–Q094.</span> Reference poles: <span class="mono">EO→O · IF→C · DB→L · SP→D · ER→S.</span></p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 05 SCORING KEY -->
+  <section class="sec" id="s5">
+    <div class="sec-num">05 — The scoring key</div>
+    <h1 class="sec-title">Item → axis → code</h1>
+    <p class="lead">Four deterministic steps convert raw responses into the five-slot code. Everything runs on the continuous score; the code is display only.</p>
+
+    <h3>Step 1 · Item value</h3>
+    <p>For an item with response <span class="tag-inline">r</span> (1–5), normalise to 0–1 in the direction of the axis's plus pole:</p>
+    <div class="callout note"><p class="mono">reverse = 0 → value = (r − 1) / 4<br/>reverse = 1 → value = (5 − r) / 4</p></div>
+
+    <h3>Step 2 · Axis raw score (0–100)</h3>
+    <p><span class="mono">X = mean( item values on that axis ) × 100.</span> X = 100 means fully the plus pole, 0 fully the minus pole, 50 balanced.</p>
+
+    <h3>Step 3 · Pole, intensity, band</h3>
+    <div class="callout note"><p class="mono">pole = plus pole if X ≥ 50, else minus pole<br/>intensity = |X − 50| × 2  (0–100)<br/>band = 1–20→1 · 21–40→2 · 41–60→3 · 61–80→4 · 81–100→5</p></div>
+
+    <h3>Step 4 · Assemble the code</h3>
+    <p>Concatenate <span class="mono">[pole][band]</span> in fixed order EO · IF · DB · SP · ER:</p>
+    <div class="sig-code">
+      <div class="sig-slot" style="--ax:var(--ax1)"><div class="sa">Energy</div><div class="sv"><b>W</b><span>2</span></div><div class="sp">Inward</div></div>
+      <div class="sig-slot" style="--ax:var(--ax2)"><div class="sa">Information</div><div class="sv"><b>A</b><span>4</span></div><div class="sp">Abstract</div></div>
+      <div class="sig-slot" style="--ax:var(--ax3)"><div class="sa">Decision</div><div class="sv"><b>V</b><span>3</span></div><div class="sp">Values</div></div>
+      <div class="sig-slot" style="--ax:var(--ax4)"><div class="sa">Structure</div><div class="sv"><b>F</b><span>4</span></div><div class="sp">Flexible</div></div>
+      <div class="sig-slot" style="--ax:var(--ax5)"><div class="sa">Emotion</div><div class="sv"><b>S</b><span>2</span></div><div class="sp">Steady</div></div>
+    </div>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>Balanced band (digit 0)</div>
+      <p>Band 0 is assigned when the score's confidence interval spans 50 — the lean is within measurement error. Until reliability is established in the pilot, use a provisional rule of <b>intensity ≤ 5</b>. This prevents labelling a near-balanced person with a false pole.</p>
+    </div>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Store the score, not the band</div>
+      <p>Persist <b>X</b> (continuous) and every raw item response with a timestamp. All reliability, stability, and validation analysis runs on X. The band and code are regenerated from X for display — never the reverse.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 06 CONTAMINATION -->
+  <section class="sec" id="s6">
+    <div class="sec-num">06 — Contamination control</div>
+    <h1 class="sec-title">Where each construct lives</h1>
+    <p class="lead">The legacy instrument let three constructs leak across axes. Rule 8 enforces where each now lives — at the item level.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:30%">Content</th><th>Legacy location</th><th>ReNo v1.1 — enforced home</th></tr></thead>
+      <tbody>
+        <tr><td><b>Composure / rumination</b></td><td>Decision Basis (T/F)</td><td>→ Emotional Response only (Q077–Q094). DB items carry zero composure content.</td></tr>
+        <tr><td><b>Emotional stability / mood swings</b></td><td>Structure Preference (J/P)</td><td>→ Emotional Response only. SP is pure order-and-closure.</td></tr>
+        <tr><td><b>Novelty-seeking</b></td><td>Structure Preference (J/P)</td><td>→ Information Focus (e.g. Q036 — “untested ways attract me”), where it is the same openness signal.</td></tr>
+        <tr><td><b>Risk propensity</b></td><td>Structure Preference (J/P)</td><td>→ Dropped. A blend of three traits; measured nowhere, allowed to emerge in interpretation.</td></tr>
+      </tbody>
+    </table>
+
+    <p>A concrete check: Decision Basis (Q039–Q057) contains only decision-criterion behaviour — weighing pros/cons vs weighing people, critiquing vs softening, rules vs exceptions. Nothing about staying calm. That content lives entirely in Emotional Response, which is why the two axes can factor independently.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 07 WATCH-ITEMS -->
+  <section class="sec" id="s7">
+    <div class="sec-num">07 — Known watch-items &amp; the pilot plan</div>
+    <h1 class="sec-title">Soft spots, and the study that resolves them</h1>
+    <p class="lead">Honesty about the bank's soft spots, and the development study that turns a pilot pool into a validated scale.</p>
+
+    <h2>Watch-items — first drop candidates in analysis</h2>
+    <ul>
+      <li><span class="mono">Q054</span> (“I sense the emotional temperature of the room”) — keyed to Decision Basis / Values, but may cross-load onto Emotional Response. If it does, drop it.</li>
+      <li><span class="mono">Q093</span> (“moved to tears by a film or music”) — deliberately captures the positive face of reactivity so Emotional Response is not an all-negative scale; verify it loads with the other R items and does not read as sadness alone.</li>
+      <li><span class="mono">Q073 / Q065</span> (workspace tidiness) — watch for overlap with cultural habit rather than trait Structure Preference.</li>
+    </ul>
+
+    <h2>The pilot plan — DeVellis sequence</h2>
+    <ol>
+      <li>Administer all 94 items to a development sample (the launch cohort is a viable first source).</li>
+      <li>Item analysis — drop low-discrimination and cross-loading items.</li>
+      <li>Confirmatory factor analysis — verify five clean factors.</li>
+      <li>Establish test–retest reliability (short interval) before any longitudinal claim.</li>
+      <li>Optimise to ~12 items per axis; localise the survivors to ES / FR / AR.</li>
+      <li>Convergent validation against NEO-PI-R / TIPI (traits), RIASEC (interests), and the Basic Psychological Needs Scale (motivation).</li>
+    </ol>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Next form to build</div>
+      <p>This is the adult self-report bank. The PsyID Youth product needs a parallel <b>parent-observer</b> bank — same constructs and key structure, child-world behaviours (school, play, homework), “My child…” phrasing, for ages 8–14.</p>
+    </div>
+  </section>
+
+</doc-page>
+<script>
+// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* BEGIN USAGE */
+/**
+ * <doc-page> — paged-document shell for printable HTML.
+ *
+ * On screen the document renders as a single continuous sheet on a desk
+ * background (Google Docs' pageless view): you scroll one tall page card.
+ * There is no manual page-splitting — write the whole document as normal
+ * flow inside <doc-page> and the browser's print engine paginates it at
+ * export.
+ *
+ * At print the component injects `@page { size: …; margin: 0 }` (which
+ * leaves Chrome no margin box to draw its date/URL/page-count header in)
+ * and moves the visual margin onto the sheet's own padding, so the printed
+ * page has the same inset you see on screen. Standard break-hygiene rules
+ * (`break-inside: avoid` on figures, code blocks, images and table rows;
+ * `orphans/widows: 3`) are applied so paragraphs and groups split cleanly.
+ * On screen and at print, headings default to `text-wrap: balance` and
+ * body text (p, li, blockquote, figcaption) to `text-wrap: pretty`, so
+ * the document avoids widowed/orphaned words; the defaults have zero
+ * specificity, so any text-wrap you declare on those elements wins.
+ *
+ * Usage:
+ *   <style>doc-page:not(:defined){visibility:hidden}</style>
+ *   <doc-page size="letter" margin="0.75in">
+ *     <h1>Title</h1>
+ *     <p>…body…</p>
+ *   </doc-page>
+ *   &lt;script src="doc-page.js">&lt;/script>
+ *
+ * Attributes:
+ *   size    — letter | a4 | legal (default letter)
+ *   width / height — explicit CSS lengths, override `size`
+ *   margin  — printable inset on every page (default 0.75in)
+ *
+ * Running header/footer (optional): give an element `slot="header"` or
+ * `slot="footer"` and it repeats on every printed page via
+ * `position: fixed`. To keep body text from sliding under it, the
+ * component prints inside a single-cell table whose <thead>/<tfoot> are
+ * spacers sized to the header/footer height — browsers repeat thead/tfoot
+ * on every page, so each sheet's content starts below the header and ends
+ * above the footer. On screen the header/footer render once at the
+ * top/bottom of the sheet.
+ *
+ * Author content as static HTML so the user can click-to-edit any text
+ * directly. Do not set width/padding/background on the document body —
+ * the component owns the sheet box.
+ */
+/* END USAGE */
+
+(() => {
+  const PAPER = {
+    letter: ['8.5in', '11in'],
+    a4: ['210mm', '297mm'],
+    legal: ['8.5in', '14in'],
+  };
+  const CSS_LENGTH = /^\d+(\.\d+)?(px|in|mm|cm|pt|pc)$/;
+  const safeLen = (v, fb) => (CSS_LENGTH.test((v || '').trim()) ? v.trim() : fb);
+
+  const stylesheet = `
+    :host {
+      position: relative;
+      display: block;
+      min-height: 100vh;
+      background: #ece8dd;
+      padding: 48px 24px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --doc-page-w: 8.5in;
+      --doc-page-h: 11in;
+      --doc-page-margin: 0.75in;
+      --doc-hdr-h: 0px;
+      --doc-ftr-h: 0px;
+    }
+    .sheet {
+      width: var(--doc-page-w);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 14px rgba(20, 20, 19, 0.12);
+      border-radius: 2px;
+      box-sizing: border-box;
+      padding: var(--doc-page-margin);
+    }
+    .frame { width: 100%; border-collapse: collapse; }
+    .frame td, .frame th { padding: 0; text-align: left; font-weight: inherit; }
+    .hdr-space { height: var(--doc-hdr-h); }
+    .ftr-space { height: var(--doc-ftr-h); }
+    ::slotted([slot="header"]),
+    ::slotted([slot="footer"]) { display: block; box-sizing: border-box; }
+    @media print {
+      :host { background: none; padding: 0; min-height: 0; }
+      .sheet {
+        width: auto; margin: 0; box-shadow: none; border-radius: 0;
+        padding: 0 var(--doc-page-margin);
+      }
+      /* The thead/tfoot spacers repeat on every page, so they carry the
+       * vertical page margin (which the sheet's own padding cannot, since
+       * that padding is consumed once on the first/last page). The running
+       * header/footer are fixed inside that band. */
+      .hdr-space { height: max(var(--doc-page-margin), calc(var(--doc-hdr-h) + 0.35in)); }
+      .ftr-space { height: max(var(--doc-page-margin), calc(var(--doc-ftr-h) + 0.35in)); }
+      ::slotted([slot="header"]) {
+        position: fixed; top: 0; left: 0; right: 0; margin: 0;
+        padding: calc(var(--doc-page-margin) * 0.45) var(--doc-page-margin) 0;
+      }
+      ::slotted([slot="footer"]) {
+        position: fixed; bottom: 0; left: 0; right: 0; margin: 0;
+        padding: 0 var(--doc-page-margin) calc(var(--doc-page-margin) * 0.45);
+      }
+    }
+  `;
+
+  class DocPage extends HTMLElement {
+    static get observedAttributes() { return ['size', 'width', 'height', 'margin']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._mo = typeof MutationObserver === 'function'
+        ? new MutationObserver(() => this._scheduleMeasure())
+        : null;
+    }
+
+    get pageWidth() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('width'), named ? named[0] : PAPER.letter[0]);
+    }
+    get pageHeight() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('height'), named ? named[1] : PAPER.letter[1]);
+    }
+    get pageMargin() { return safeLen(this.getAttribute('margin'), '0.75in'); }
+
+    connectedCallback() {
+      if (!this._sheet) this._render();
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._ensureTextWrapDefaults();
+      if (this._mo) this._mo.observe(this, {
+        subtree: true, childList: true, characterData: true, attributes: true,
+      });
+      this._onResize = () => this._scheduleMeasure();
+      window.addEventListener('resize', this._onResize);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => this._scheduleMeasure());
+      }
+      this._scheduleMeasure();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('resize', this._onResize);
+      if (this._mo) this._mo.disconnect();
+      if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+      // Drop the head rules when the last doc-page leaves, so a deleted
+      // document's @page geometry and text-wrap defaults can't apply to
+      // whatever replaces it.
+      if (!document.querySelector('doc-page')) {
+        ['doc-page-print', 'doc-page-text-wrap'].forEach((id) => {
+          const tag = document.getElementById(id);
+          if (tag) tag.remove();
+        });
+      }
+    }
+
+    attributeChangedCallback() {
+      if (!this._sheet) return;
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._scheduleMeasure();
+    }
+
+    _render() {
+      this._root.innerHTML = `
+        <style>${stylesheet}</style>
+        <style id="vars"></style>
+        <div class="sheet" data-screen-label="Document">
+          <table class="frame" role="presentation">
+            <thead><tr><th><div class="hdr-space"><slot name="header"></slot></div></th></tr></thead>
+            <tbody><tr><td class="body"><slot></slot></td></tr></tbody>
+            <tfoot><tr><td><div class="ftr-space"><slot name="footer"></slot></div></td></tr></tfoot>
+          </table>
+        </div>`;
+      this._sheet = this._root.querySelector('.sheet');
+      this._vars = this._root.getElementById('vars');
+    }
+
+    /** Runtime sizing lives in a shadow <style> :host rule, never on the
+     *  light-DOM host element, so serialize-persist can't write it back. */
+    _syncSize(hdrH, ftrH) {
+      this._vars.textContent = ':host{' +
+        '--doc-page-w:' + this.pageWidth + ';' +
+        '--doc-page-h:' + this.pageHeight + ';' +
+        '--doc-page-margin:' + this.pageMargin + ';' +
+        '--doc-hdr-h:' + (hdrH || 0) + 'px;' +
+        '--doc-ftr-h:' + (ftrH || 0) + 'px}';
+    }
+
+    /** @page is a no-op inside shadow DOM, so the rule lives in <head>.
+     *  Re-appended on every sync so it stays last in source order — the
+     *  @page cascade is source-order per descriptor, so this rule wins
+     *  over any other @page rule in the document. */
+    _syncPrintPageRule() {
+      const id = 'doc-page-print';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+      }
+      document.head.appendChild(tag);
+      tag.textContent =
+        '@page { size: ' + this.pageWidth + ' ' + this.pageHeight + '; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; height: auto !important; overflow: visible !important; } ' +
+        'h1,h2,h3,h4,h5,h6 { break-after: avoid; } ' +
+        'figure,pre,blockquote,img,svg,tr { break-inside: avoid; } ' +
+        'p,li { orphans: 3; widows: 3; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } ' +
+        '*, *::before, *::after { animation-delay: -99s !important; animation-duration: .001s !important; ' +
+        'animation-iteration-count: 1 !important; animation-fill-mode: both !important; ' +
+        'animation-play-state: running !important; transition-duration: 0s !important; } }';
+    }
+
+    /** Typographic defaults for document text: balance headings, avoid
+     *  widowed/orphaned words in body copy (browsers without text-wrap
+     *  support drop the declarations). Zero-specificity via :where() so
+     *  any text-wrap authored on those elements wins; document-level so the
+     *  rules reach the slotted (light DOM) content — shadow styles can't.
+     *  data-omelette-injected marks the tag for the host editor to strip
+     *  at serialize, so it is never written back as authored source. */
+    _ensureTextWrapDefaults() {
+      if (document.getElementById('doc-page-text-wrap')) return;
+      const tag = document.createElement('style');
+      tag.id = 'doc-page-text-wrap';
+      tag.setAttribute('data-omelette-injected', '');
+      tag.textContent =
+        ':where(h1,h2,h3,h4,h5,h6){text-wrap:balance}' +
+        ':where(p,li,blockquote,figcaption){text-wrap:pretty}';
+      document.head.appendChild(tag);
+    }
+
+    _scheduleMeasure() {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._measure(); });
+    }
+
+    /** Slot heights feed the print spacers (--doc-hdr-h / --doc-ftr-h), so
+     *  they re-measure on content mutation, resize, and font load. */
+    _measure() {
+      const hdr = this.querySelector(':scope > [slot="header"]');
+      const ftr = this.querySelector(':scope > [slot="footer"]');
+      this._syncSize(hdr ? hdr.offsetHeight : 0, ftr ? ftr.offsetHeight : 0);
+    }
+  }
+
+  if (!customElements.get('doc-page')) {
+    customElements.define('doc-page', DocPage);
+  }
+})();
+
+</script>
+<script>
+/* =====================================================================
+   PsyID · Methodology document JS  (shared)
+   Renders the pentagon radar + fills axis-pill widths from data-*.
+   ===================================================================== */
+(function(){
+  var AX = ['#2244E0','#6A85F0','#8A5CD6','#FF7A3D','#FF5A5A'];
+  function polar(cx,cy,r,deg){var a=(deg-90)*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};}
+
+  function buildRadar(el){
+    var vals  = (el.getAttribute('data-values')||'0.5,0.5,0.5,0.5,0.5').split(',').map(Number);
+    var labs  = (el.getAttribute('data-labels')||'').split(',');
+    var codes = (el.getAttribute('data-codes')||'').split(',');
+    var size  = parseInt(el.getAttribute('data-size')||'300',10);
+    var theme = el.getAttribute('data-theme')||'light';
+    var n = vals.length, cx=size/2, cy=size/2, maxR=size/2-40, step=360/n;
+    var light = theme==='light';
+    var ring = light?'#E4DCCD':'rgba(255,255,255,.16)';
+    var axis = light?'#E4DCCD':'rgba(255,255,255,.22)';
+    var txt  = light?'#82879F':'rgba(255,255,255,.7)';
+    var code = light?'#0E1230':'#fff';
+    var i,ri,rr,pp,e,p,pts=[],dp=[];
+    var svg='';
+    for(ri=1;ri<=4;ri++){rr=(ri/4)*maxR;pp=[];for(i=0;i<n;i++){p=polar(cx,cy,rr,i*step);pp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}svg+='<polygon points="'+pp.join(' ')+'" fill="none" stroke="'+ring+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){e=polar(cx,cy,maxR,i*step);svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+axis+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){p=polar(cx,cy,vals[i]*maxR,i*step);pts.push(p);dp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}
+    var fill=light?'rgba(255,122,61,.14)':'rgba(255,165,72,.22)';
+    var stroke=light?'#FF7A3D':'rgba(255,255,255,.92)';
+    svg+='<polygon points="'+dp.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" stroke-linejoin="round"/>';
+    for(i=0;i<n;i++){svg+='<circle cx="'+pts[i].x.toFixed(1)+'" cy="'+pts[i].y.toFixed(1)+'" r="4.5" fill="#fff" stroke="'+AX[i%5]+'" stroke-width="2.5"/>';}
+    for(i=0;i<n;i++){
+      var lp=polar(cx,cy,maxR+22,i*step);
+      var anchor=lp.x<cx-2?'end':(lp.x>cx+2?'start':'middle');
+      var dy=lp.y<cy-2?'-2':(lp.y>cy+2?'11':'4');
+      var lab=(labs[i]||'').trim().toUpperCase(), cd=(codes[i]||'').trim();
+      svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+dy+'" text-anchor="'+anchor+'" font-family="Geist Mono, monospace" font-size="9" letter-spacing="1.2" fill="'+txt+'">'+lab+'</text>';
+      if(cd)svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+(parseFloat(dy)+12)+'" text-anchor="'+anchor+'" font-family="Geist, system-ui" font-weight="800" font-size="12" fill="'+code+'">'+cd+'</text>';
+    }
+    var pad=46;
+    el.innerHTML='<svg viewBox="'+(-pad)+' 0 '+(size+2*pad)+' '+size+'" width="'+(size+2*pad)+'" height="'+size+'" fill="none">'+svg+'</svg>';
+  }
+
+  function run(){
+    document.querySelectorAll('.radar-chart').forEach(buildRadar);
+    document.querySelectorAll('.axis-pill[data-value]').forEach(function(el){
+      var v=parseFloat(el.getAttribute('data-value')||'0.5');
+      var f=el.querySelector('.ap-f'); if(f)f.style.width=(v*100).toFixed(0)+'%';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run); else run();
+})();
+
+</script>
+</body>
+</html>

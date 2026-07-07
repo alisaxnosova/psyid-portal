@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Методология банка вопросов ReNo · v1.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* =====================================================================
+   PsyID · Methodology document system   (shared by all 4 documents)
+   Aligned to the Element Vault · ReNo v1.1
+   ===================================================================== */
+
+:root{
+  --navy:#050C2E; --ink:#0E1230; --ink-soft:#40456A; --ink-mute:#82879F;
+  --blue:#2244E0; --blue-soft:#6A85F0; --violet:#8A5CD6; --coral:#FF5A5A;
+  --orange:#FF7A3D; --orange-hot:#FF9540; --gold:#FFC074; --gold-deep:#C98A2E;
+
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+
+  --paper:#FBF9F5; --paper-2:#F3EEE5; --paper-3:#ECE4D7;
+  --line:#E4DCCD; --line-2:#D3C9B8;
+
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+
+  --grad-hero:linear-gradient(135deg,#0A143F 0%,#0D1E6A 30%,#4B266A 56%,#B23A4C 78%,#FF823F 100%);
+  --grad-axis:linear-gradient(95deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+  --grad-orange:linear-gradient(95deg,var(--orange),var(--gold));
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+}
+
+*{box-sizing:border-box;}
+doc-page:not(:defined){visibility:hidden;}
+body{margin:0;background:#211E17;}
+doc-page{
+  --doc-accent:var(--orange);
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font); font-size:11pt; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv01";
+}
+
+/* ── Running header / footer ─────────────────────────────── */
+.doc-head{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-mute); padding-bottom:9px; border-bottom:1px solid var(--line);
+}
+.doc-head .dh-brand{font-family:var(--font);font-weight:800;letter-spacing:-.02em;font-size:10pt;color:var(--ink);text-transform:none;}
+.doc-head .dh-brand i{color:var(--orange);font-style:normal;}
+.doc-foot{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-mute); padding-top:9px; border-top:1px solid var(--line);
+}
+
+/* ── Base type ───────────────────────────────────────────── */
+doc-page p{margin:0 0 12px; color:var(--ink-soft); }
+doc-page strong,doc-page b{color:var(--ink);font-weight:600;}
+doc-page em{font-style:italic;}
+a{color:var(--orange);text-decoration:none;} a:hover{color:var(--orange-hot);}
+
+.lead{font-size:14.5pt;line-height:1.5;color:var(--ink);font-weight:500;letter-spacing:-.01em;margin-bottom:20px;text-wrap:pretty;}
+
+/* ── Section header ──────────────────────────────────────── */
+.sec{margin-top:40px;}
+.sec:first-of-type{margin-top:0;}
+.sec-num{font-family:var(--mono);font-size:9pt;letter-spacing:.24em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+h1.sec-title{font-size:26pt;font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0 0 16px;color:var(--ink);}
+h2{font-size:15pt;font-weight:700;letter-spacing:-.02em;margin:26px 0 10px;color:var(--ink);}
+h3{font-family:var(--mono);font-size:9pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin:22px 0 8px;}
+.rule{height:1px;background:var(--line);border:none;margin:26px 0;}
+
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--orange);}
+
+/* ── Lists ───────────────────────────────────────────────── */
+doc-page ul,doc-page ol{margin:0 0 14px;padding-left:0;list-style:none;}
+doc-page li{position:relative;padding-left:22px;margin-bottom:8px;color:var(--ink-soft);}
+doc-page ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--doc-accent);}
+doc-page ol{counter-reset:li;}
+doc-page ol li{counter-increment:li;}
+doc-page ol li::before{content:counter(li);position:absolute;left:0;top:0;font-family:var(--mono);font-size:9pt;font-weight:600;color:var(--orange);}
+
+/* ── Cover ───────────────────────────────────────────────── */
+.cover{
+  position:relative; margin:-0.9in -0.9in 0; padding:0.9in 0.9in 0.8in;
+  min-height:9.4in; color:#fff; display:flex; flex-direction:column;
+  background:var(--grad-hero); overflow:hidden; break-after:page;
+}
+.cover::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 84% 88%, rgba(255,165,72,.55), transparent 60%),
+  radial-gradient(ellipse 50% 45% at 22% 30%, rgba(58,98,232,.5), transparent 60%);pointer-events:none;}
+.cover>*{position:relative;z-index:1;}
+.cover .cover-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.cover-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17pt;letter-spacing:-.03em;}
+.cover-brand i{color:var(--gold);font-style:normal;}
+.cover-status{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 13px;}
+.cover-mid{margin-top:auto;}
+.cover-kicker{font-family:var(--mono);font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:18px;}
+.cover h1{font-size:52pt;font-weight:800;letter-spacing:-.045em;line-height:.98;margin:0 0 22px;color:#fff;}
+.cover .sub{font-size:14pt;line-height:1.5;color:rgba(255,255,255,.82);max-width:34ch;font-weight:400;margin-bottom:30px;text-wrap:pretty;}
+.cover-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;border-top:1px solid rgba(255,255,255,.2);padding-top:22px;max-width:560px;}
+.cover-meta dt{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.cover-meta dd{font-size:10.5pt;color:#fff;font-weight:500;margin:0;}
+.cover-sig{margin-top:26px;display:flex;gap:7px;align-items:center;}
+.cover-sig .cs{font-family:var(--mono);font-weight:600;font-size:13pt;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:8px 4px;min-width:46px;text-align:center;}
+.cover-sig .cs b{font-family:var(--font);font-weight:800;color:var(--gold);}
+.cover-sig .cs span{color:rgba(255,255,255,.55);}
+
+/* ── Constellation mark ──────────────────────────────────── */
+.constell{display:inline-block;line-height:0;}
+
+/* ── Contents ────────────────────────────────────────────── */
+.toc{display:flex;flex-direction:column;gap:0;margin-top:10px;}
+.toc a{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);}
+.toc a:hover{color:var(--orange);}
+.toc .toc-n{font-family:var(--mono);font-size:9pt;color:var(--orange);width:26px;flex:none;}
+.toc .toc-t{font-weight:600;font-size:12pt;letter-spacing:-.01em;flex:1;}
+.toc .toc-d{font-size:10pt;color:var(--ink-mute);}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.m-table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:9.5pt;}
+.m-table thead th{
+  font-family:var(--mono);font-size:8pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);text-align:left;font-weight:600;
+  padding:0 12px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom;
+}
+.m-table tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);line-height:1.5;}
+.m-table tbody tr:last-child td{border-bottom:none;}
+.m-table td b,.m-table td strong{color:var(--ink);}
+.m-table .code{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+.m-table.zebra tbody tr:nth-child(even){background:var(--paper-2);}
+.m-table .pole{font-family:var(--mono);font-weight:600;color:#fff;border-radius:6px;padding:2px 8px;display:inline-block;font-size:8.5pt;}
+
+/* ── Callouts ────────────────────────────────────────────── */
+.callout{border-radius:16px;padding:20px 22px;margin:18px 0;background:var(--paper-2);border:1px solid var(--line);break-inside:avoid;}
+.callout .co-label{font-family:var(--mono);font-size:8pt;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+.callout .co-label .dot{width:7px;height:7px;border-radius:50%;}
+.callout p:last-child{margin-bottom:0;}
+.callout p{color:var(--ink-soft);}
+
+.callout.honest{background:linear-gradient(180deg,#FFF6E6,#FDF0D8);border-color:#F0DDB6;}
+.callout.honest .co-label{color:var(--gold-deep);} .callout.honest .co-label .dot{background:var(--gold-deep);}
+.callout.principle{background:var(--ink);border-color:var(--ink);}
+.callout.principle .co-label{color:var(--gold);} .callout.principle .co-label .dot{background:var(--gold);}
+.callout.principle p{color:rgba(255,255,255,.82);} .callout.principle strong{color:#fff;}
+.callout.framing{background:linear-gradient(180deg,#FFEEEC,#FFE4E1);border-color:#F6C9C4;}
+.callout.framing .co-label{color:var(--coral);} .callout.framing .co-label .dot{background:var(--coral);}
+.callout.note{background:var(--paper-2);}
+.callout.note .co-label{color:var(--blue);} .callout.note .co-label .dot{background:var(--blue);}
+
+/* ── Pull quote ──────────────────────────────────────────── */
+.pq{font-size:19pt;font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.3;color:var(--ink);border-left:3px solid var(--orange);padding-left:22px;margin:22px 0;text-wrap:pretty;}
+.pq b{font-style:normal;background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ── Axis legend cards ───────────────────────────────────── */
+.axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.axis-grid.five{grid-template-columns:repeat(5,1fr);gap:9px;}
+.axis-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 16px;border-top:4px solid var(--ax);break-inside:avoid;}
+.axis-card .ac-no{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);}
+.axis-card .ac-name{font-weight:700;font-size:12pt;letter-spacing:-.02em;margin:5px 0 11px;color:var(--ink);}
+.axis-card .ac-pole{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:9pt;color:var(--ink-soft);line-height:1.35;}
+.axis-card .ac-pole .p{font-family:var(--mono);font-weight:600;font-size:11pt;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;background:var(--ax);flex:none;}
+.axis-card .ac-pole .p.minus{background:transparent;color:var(--ax);border:1.5px solid var(--ax);}
+.axis-card.five .ac-name{font-size:10.5pt;}
+
+/* ── Signature code block ────────────────────────────────── */
+.sig-code{display:flex;gap:8px;margin:16px 0;}
+.sig-slot{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 8px 10px;text-align:center;position:relative;overflow:hidden;break-inside:avoid;}
+.sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax);}
+.sig-slot .sa{font-family:var(--mono);font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;}
+.sig-slot .sv{font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1;display:flex;align-items:baseline;justify-content:center;gap:1px;}
+.sig-slot .sv b{font-size:26pt;color:var(--ax);} .sig-slot .sv span{font-size:15pt;color:var(--ink-mute);}
+.sig-slot .sp{font-size:8.5pt;color:var(--ink-soft);margin-top:6px;font-weight:600;}
+.sig-slot.balanced::before{background:var(--line-2);} .sig-slot.balanced .sv b{color:var(--ink-mute);} .sig-slot.balanced .sv span{color:var(--ink-mute);}
+.sig-inline{font-family:var(--mono);font-weight:600;font-size:14pt;letter-spacing:.02em;color:var(--ink);display:inline-flex;gap:9px;align-items:center;}
+.sig-inline .d{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);}
+
+/* ── Band scale ──────────────────────────────────────────── */
+.band-scale{margin:16px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.band-row{display:grid;grid-template-columns:40px 92px 1fr;align-items:center;gap:14px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);}
+.band-row:last-child{border-bottom:none;}
+.band-row .bd{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:16pt;color:#fff;}
+.band-row.b0 .bd{background:var(--line-2);color:var(--ink);}
+.band-row .br{font-family:var(--mono);font-size:9pt;color:var(--ink-soft);}
+.band-row .bt b{color:var(--ink);font-weight:700;} .band-row .bt span{color:var(--ink-soft);}
+
+/* ── Growth edge card ────────────────────────────────────── */
+.growth{border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,#131A3E,#2A1C4A 60%,#45213F);color:#fff;position:relative;overflow:hidden;margin:18px 0;break-inside:avoid;}
+.growth::after{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,72,.45),transparent 70%);}
+.growth .g-eye{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;position:relative;}
+.growth .g-title{font-weight:800;font-size:16pt;letter-spacing:-.02em;margin-bottom:7px;position:relative;}
+.growth .g-title span{color:var(--gold);}
+.growth p{color:rgba(255,255,255,.82);position:relative;margin:0;}
+
+/* ── Radar figure ────────────────────────────────────────── */
+.fig{margin:18px 0;break-inside:avoid;}
+.fig .radar-chart{display:block;}
+.fig-dark{background:var(--grad-hero);border-radius:18px;padding:26px;display:flex;gap:26px;align-items:center;color:#fff;}
+.fig-dark .fd-side{flex:1;}
+.fig-dark .fd-side h4{font-size:13pt;font-weight:700;margin:0 0 6px;color:#fff;letter-spacing:-.01em;}
+.fig-dark .fd-side p{color:rgba(255,255,255,.78);margin:0;font-size:10pt;}
+.figcap{font-family:var(--mono);font-size:8pt;letter-spacing:.06em;color:var(--ink-mute);margin-top:10px;text-transform:uppercase;}
+
+/* ── Axis pill (list) ────────────────────────────────────── */
+.axis-pill{display:flex;align-items:center;gap:12px;margin:8px 0;}
+.axis-pill .ap-n{font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);width:96px;flex:none;}
+.axis-pill .ap-t{flex:1;height:7px;background:var(--paper-3);border-radius:999px;overflow:hidden;}
+.axis-pill .ap-f{height:100%;border-radius:999px;background:var(--ax);}
+.axis-pill .ap-c{font-family:var(--mono);font-size:9.5pt;font-weight:600;color:var(--ink);width:30px;text-align:right;}
+
+/* ── Two-column feature (products) ───────────────────────── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.split .col{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;break-inside:avoid;}
+.split .col.blue{border-top:4px solid var(--blue);}
+.split .col.coral{border-top:4px solid var(--coral);}
+.split .col h4{font-size:13pt;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em;}
+.split .col .tag{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;}
+.split .col p{font-size:10pt;margin:0;}
+
+/* ── Stat row ────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.stat{background:var(--ink);border-radius:14px;padding:18px 16px;color:#fff;}
+.stat .sv{font-weight:800;font-size:32pt;letter-spacing:-.04em;line-height:1;}
+.stat .sv.or{background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sv.bl{background:linear-gradient(95deg,var(--blue-soft),#fff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sl{font-size:8.5pt;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.4;}
+
+/* ── Small helpers ───────────────────────────────────────── */
+.mono{font-family:var(--mono);}
+.tag-inline{font-family:var(--mono);font-size:8.5pt;background:var(--paper-3);border-radius:5px;padding:1px 6px;color:var(--ink);}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:5px 12px;}
+.badge.orange{background:rgba(255,122,61,.12);color:var(--orange);}
+.badge.blue{background:rgba(34,68,224,.1);color:var(--blue);}
+.page-break{break-after:page;height:0;}
+.avoid-break{break-inside:avoid;}
+
+/* ── Print / PDF · Letter ──────────────────────────────────── */
+@media print{
+  doc-page{font-size:10.5pt;line-height:1.55;}
+  .cover{
+    margin:0 0 0.25in; padding:0.55in 0.5in 0.5in;
+    min-height:8.5in; border-radius:20px; break-after:page;
+  }
+  .cover h1{font-size:44pt;}
+  .cover .sub{font-size:12.5pt;margin-bottom:24px;}
+  .cover-meta{padding-top:18px;}
+  .sec-num,h1.sec-title,h2,h3,.eyebrow,.lead{break-after:avoid;}
+  .sec{margin-top:0;}
+  .callout,.pq,.growth,.fig,.split,.stats,.band-scale,
+  .sig-code,.axis-grid,.axis-card,.axis-pill,figure{break-inside:avoid;}
+  .toc{break-inside:auto;} .toc a{break-inside:avoid;}
+  .m-table{break-inside:auto;}
+  .m-table thead{display:table-header-group;}
+  .m-table tr{break-inside:avoid;}
+}
+
+</style>
+<style>doc-page:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<doc-page size="letter" margin="0.9in">
+
+  <div slot="header" class="doc-head">
+    <span class="dh-brand">Psy<i>ID</i></span>
+    <span>Банк вопросов ReNo · v1.0 · Внутренний документ</span>
+  </div>
+  <div slot="footer" class="doc-foot">
+    <span>Дополнение к Методологии ReNo v1.1</span>
+    <span>Июль 2026</span>
+  </div>
+
+  <!-- ОБЛОЖКА -->
+  <section class="cover">
+    <svg class="cover-bg" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A143F"></stop><stop offset="0.3" stop-color="#0D1E6A"></stop><stop offset="0.56" stop-color="#4B266A"></stop><stop offset="0.78" stop-color="#B23A4C"></stop><stop offset="1" stop-color="#FF823F"></stop></linearGradient></defs><rect width="100" height="100" fill="url(#coverGrad)"></rect></svg>
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="constell" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+            <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"></polygon>
+            <circle cx="50" cy="16" r="6.5" fill="#6A85F0"></circle><circle cx="84" cy="40" r="6.5" fill="#8A5CD6"></circle>
+            <circle cx="71" cy="79" r="6.5" fill="#FF7A3D"></circle><circle cx="29" cy="79" r="6.5" fill="#FF5A5A"></circle>
+            <circle cx="16" cy="40" r="6.5" fill="#2244E0"></circle>
+          </svg>
+        </span>
+        <span class="wordmark">Psy<i>ID</i></span>
+      </div>
+      <div class="cover-status">Статус · Готов к пилоту, ещё не валидирован</div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-kicker">Дополнительная методология · Внутренний</div>
+      <h1>Банк<br/>вопросов</h1>
+      <div class="sub">Как устроен, кодируется и оценивается инструмент из 94 пунктов — и восемь принципов, которым подчиняется каждый пункт.</div>
+      <dl class="cover-meta">
+        <div><dt>Инструмент</dt><dd>ReNo v1.1 — пять осей, 94 нормативных пункта</dd></div>
+        <div><dt>Форма</dt><dd>Самоотчёт взрослого (EN / RU)</dd></div>
+        <div><dt>Версия</dt><dd>1.0 — готов к пилоту · июль 2026</dd></div>
+        <div><dt>Дополнение к</dt><dd>Методологии ReNo v1.1</dd></div>
+      </dl>
+      <div class="cover-sig">
+        <div class="cs"><b>W</b><span>2</span></div>
+        <div class="cs"><b>A</b><span>4</span></div>
+        <div class="cs"><b>V</b><span>3</span></div>
+        <div class="cs"><b>F</b><span>4</span></div>
+        <div class="cs"><b>S</b><span>2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 00 -->
+  <section class="sec">
+    <div class="sec-num">00 — Область применения</div>
+    <h1 class="sec-title">Что охватывает это дополнение</h1>
+    <p class="lead">Документ описывает именно банк вопросов: формат пунктов, привязку к осям, ключ оценки и восемь правил конструирования, которые отличают этот банк от прежнего теста с вынужденным выбором, на смену которому он приходит.</p>
+    <p>Он опирается на конструкты, определённые в основном методологическом документе — пять осей, непрерывная шкала 0–100, банды и производная зона роста описаны там. Это дополнение — про сам <strong>инструмент</strong>: пул пунктов, порождающий результат, и детерминированный ключ, превращающий ответы в код.</p>
+
+    <div class="callout honest">
+      <div class="co-label"><span class="dot"></span>Честный статус</div>
+      <p>94 пункта — это <strong>готовый к пилоту пул, а не финальная шкала</strong>. Ожидается, что исследование разработки (анализ пунктов и факторный анализ) отбросит самые слабые пункты на каждой оси — это метод, работающий как задумано, а не его провал. Ни один результат этого банка не является валидированным до завершения этого исследования.</p>
+    </div>
+
+    <h2>Содержание</h2>
+    <nav class="toc">
+      <a href="#s1"><span class="toc-n">01</span><span class="toc-t">Что изменилось по сравнению с прежним банком</span><span class="toc-d">Вынужденный выбор → нормативная шкала</span></a>
+      <a href="#s2"><span class="toc-n">02</span><span class="toc-t">Формат пункта и шкала ответов</span><span class="toc-d">Одна общая 5-балльная шкала</span></a>
+      <a href="#s3"><span class="toc-n">03</span><span class="toc-t">Восемь правил конструирования</span><span class="toc-d">Контракт качества</span></a>
+      <a href="#s4"><span class="toc-n">04</span><span class="toc-t">Карта осей и распределение пунктов</span><span class="toc-d">94 пункта, пять осей</span></a>
+      <a href="#s5"><span class="toc-n">05</span><span class="toc-t">Ключ оценки</span><span class="toc-d">Пункт → ось → код</span></a>
+      <a href="#s6"><span class="toc-n">06</span><span class="toc-t">Контроль контаминации</span><span class="toc-d">Где живёт каждый конструкт</span></a>
+      <a href="#s7"><span class="toc-n">07</span><span class="toc-t">Пункты под наблюдением и план пилота</span><span class="toc-d">Слабые места и исследование</span></a>
+    </nav>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 01 -->
+  <section class="sec" id="s1">
+    <div class="sec-num">01 — Что изменилось по сравнению с прежним банком</div>
+    <h1 class="sec-title">От вынужденного выбора к нормативной шкале</h1>
+    <p class="lead">Прежний инструмент — 94 пункта с вынужденным выбором слов на четырёх осях. Он хорошо конвертирует, но противоречит научным целям методологии. Новый банк определяют три структурных изменения.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:22%">Параметр</th><th style="width:34%">Прежний банк</th><th>Банк ReNo v1.1</th></tr></thead>
+      <tbody>
+        <tr><td><b>Модель оценки</b></td><td>Вынужденный выбор (ипсативный) — выбрать одно полюсное слово на пункт.</td><td>Нормативная шкала Лайкерта — согласие/несогласие по каждому утверждению. Делает возможными факторный анализ, валидацию по «Большой пятёрке» и чистый ретест.</td></tr>
+        <tr><td><b>Содержание пунктов</b></td><td>Отдельные черты-слова («общительный» vs «сдержанный»).</td><td>Поведенчески привязанные утверждения — наблюдаемые действия, без ярлыков-черт.</td></tr>
+        <tr><td><b>Оси</b></td><td>4 — без Эмоционального отклика.</td><td>5 — добавлен Эмоциональный отклик (18 пунктов).</td></tr>
+        <tr><td><b>Веса пунктов</b></td><td>Назначаемые вручную 2 / 1 / 0 на вариант.</td><td>Все пункты равны на пилоте; дискриминативность устанавливается эмпирически, а не постулируется.</td></tr>
+        <tr><td><b>Языки</b></td><td>EN / RU / ES / FR / AR.</td><td>EN / RU на пилоте; локализация выживших пунктов после анализа.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>Единственный честный компромисс</div>
+      <p>Вынужденный выбор быстрее и создаёт меньше трения — хорошо для конверсии. Нормативная шкала валидируема — хорошо для науки. Этот банк выбирает науку. Если трение конверсии окажется дорогим, запасной вариант — сохранить потребительскую форму с вынужденным выбором и запускать нормативную форму только для валидационного исследования.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 02 -->
+  <section class="sec" id="s2">
+    <div class="sec-num">02 — Формат пункта и шкала ответов</div>
+    <h1 class="sec-title">Одно утверждение, одна общая шкала</h1>
+    <p class="lead">Каждый пункт — это утверждение от первого лица о поведении, оцениваемое по одной общей пятибалльной шкале согласия.</p>
+
+    <table class="m-table">
+      <thead><tr><th style="width:14%">Значение</th><th style="width:50%">Формулировка</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td class="code">1</td><td>Совершенно не согласен(на)</td><td>Completely disagree</td></tr>
+        <tr><td class="code">2</td><td>Скорее не согласен(на)</td><td>Rather disagree</td></tr>
+        <tr><td class="code">3</td><td>Трудно сказать</td><td>Hard to say</td></tr>
+        <tr><td class="code">4</td><td>Скорее согласен(на)</td><td>Rather agree</td></tr>
+        <tr><td class="code">5</td><td>Полностью согласен(на)</td><td>Completely agree</td></tr>
+      </tbody>
+    </table>
+
+    <p>Каждый пункт несёт в файле банка три фиксированных атрибута: его <strong>ось</strong>, <strong>полюс</strong>, к которому засчитывается согласие, и флаг <strong>реверса</strong>. Разобранный пример:</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th>QID</th><th>Ось</th><th>Полюс</th><th>Рев</th><th style="width:50%">Пункт</th></tr></thead>
+      <tbody>
+        <tr><td class="code">Q001</td><td class="code">EO</td><td><span class="pole" style="background:var(--ax1)">O</span></td><td class="code">0</td><td>«После вечеринки или большого собрания я ухожу с бо́льшим запасом энергии, чем когда пришёл.»</td></tr>
+        <tr><td class="code">Q011</td><td class="code">EO</td><td class="code">W</td><td class="code">1</td><td>«После нескольких часов в компании мне нужно побыть одному, прежде чем я смогу заняться чем-либо ещё.»</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Почему смешаны прямые и обратные пункты</div>
+      <p>Оба пункта измеряют Ориентацию энергии. Q001 засчитывается напрямую к полюсу <b>Вовне</b>; Q011 — обратный: согласие указывает на полюс <b>Внутрь</b>. Смешение прямых и обратных пунктов на каждой оси сделано намеренно (см. правило 5): оно нейтрализует склонность со всем соглашаться.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 03 -->
+  <section class="sec" id="s3">
+    <div class="sec-num">03 — Восемь правил конструирования</div>
+    <h1 class="sec-title">Контракт качества</h1>
+    <p class="lead">Каждый пункт написан с соблюдением этих восьми правил. Это контракт качества банка — любой новый пункт обязан пройти все восемь.</p>
+    <ol>
+      <li><strong>Нормативность, а не ипсативность.</strong> Независимые оценки согласия, чтобы результаты можно было коррелировать, факторизовать и валидировать.</li>
+      <li><strong>Один конструкт на пункт.</strong> Ни один пункт не может касаться двух осей. Именно это сохраняет чистоту факторной структуры и достоверность оценки стабильности.</li>
+      <li><strong>Поведенческая привязка.</strong> Описывайте наблюдаемое действие («Я завершаю задачи задолго до дедлайна»), а не черту («Я организован»). Люди точно сообщают о поведении и плохо выводят черты.</li>
+      <li><strong>Конкретность и ситуативность.</strong> Каждый пункт называет узнаваемый момент — вечеринку, дедлайн, разногласие — чтобы респондент вспоминал, а не теоретизировал о себе.</li>
+      <li><strong>Сбалансированное кодирование.</strong> Примерно половина пунктов каждой оси — обратные, поэтому тот, кто со всем соглашается, набирает около середины. Это нейтрализует уступчивость — нормативный эквивалент того, что вынужденный выбор давал даром.</li>
+      <li><strong>Ценностно-нейтральные полюса.</strong> Ни один полюс не написан как «лучший». Ни один пункт не подаёт черту как недостаток (формулировка прежнего ключа «слишком много деталей, упускает суть» — ровно то, чего следует избегать).</li>
+      <li><strong>Одна недвусмысленная мысль.</strong> Никаких двуствольных пунктов («Я планирую наперёд и сохраняю спокойствие» тайно измеряет две оси). Один глагол, одно поведение.</li>
+      <li><strong>Защита от контаминации по осям.</strong> Невозмутимость и руминация — только на Эмоциональном отклике; поиск новизны — только на Фокусе информации; никаких пунктов про склонность к риску; Организация остаётся чистым «порядок-и-завершённость».</li>
+    </ol>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 04 -->
+  <section class="sec" id="s4">
+    <div class="sec-num">04 — Карта осей и распределение пунктов</div>
+    <h1 class="sec-title">94 пункта по пяти осям</h1>
+    <p class="lead">Каждая ось сбалансирована по полюсам. Референсный полюс — «плюсовое» направление, на которое указывает сырой балл 100.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th>Код</th><th style="width:26%">Ось</th><th>Полюса (плюс / минус)</th><th>Пункты</th><th>Разбивка</th></tr></thead>
+      <tbody>
+        <tr><td class="code">EO</td><td><b>Ориентация энергии</b></td><td><span class="pole" style="background:var(--ax1)">O</span> Вовне / W Внутрь</td><td class="code">19</td><td>10 O · 9 W</td></tr>
+        <tr><td class="code">IF</td><td><b>Фокус информации</b></td><td><span class="pole" style="background:var(--ax2)">C</span> Конкретика / A Абстракция</td><td class="code">19</td><td>10 C · 9 A</td></tr>
+        <tr><td class="code">DB</td><td><b>Основа решений</b></td><td><span class="pole" style="background:var(--ax3)">L</span> Логика / V Ценности</td><td class="code">19</td><td>10 L · 9 V</td></tr>
+        <tr><td class="code">SP</td><td><b>Организация</b></td><td><span class="pole" style="background:var(--ax4)">D</span> Порядок / F Гибкость</td><td class="code">19</td><td>10 D · 9 F</td></tr>
+        <tr><td class="code">ER</td><td><b>Эмоциональный отклик</b></td><td><span class="pole" style="background:var(--ax5)">S</span> Устойчивость / R Реактивность</td><td class="code">18</td><td>9 S · 9 R</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Блоки идентификаторов</div>
+      <p><span class="mono">EO Q001–Q019 · IF Q020–Q038 · DB Q039–Q057 · SP Q058–Q076 · ER Q077–Q094.</span> Референсные полюса: <span class="mono">EO→O · IF→C · DB→L · SP→D · ER→S.</span></p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 05 -->
+  <section class="sec" id="s5">
+    <div class="sec-num">05 — Ключ оценки</div>
+    <h1 class="sec-title">Пункт → ось → код</h1>
+    <p class="lead">Четыре детерминированных шага превращают сырые ответы в пятислотовый код. Всё считается на непрерывном балле; код — только для отображения.</p>
+
+    <h3>Шаг 1 · Значение пункта</h3>
+    <p>Для пункта с ответом <span class="tag-inline">r</span> (1–5) нормализуем к 0–1 в направлении плюс-полюса оси:</p>
+    <div class="callout note"><p class="mono">реверс = 0 → value = (r − 1) / 4<br/>реверс = 1 → value = (5 − r) / 4</p></div>
+
+    <h3>Шаг 2 · Сырой балл оси (0–100)</h3>
+    <p><span class="mono">X = среднее( значения пунктов оси ) × 100.</span> X = 100 — полностью плюс-полюс, 0 — полностью минус-полюс, 50 — баланс.</p>
+
+    <h3>Шаг 3 · Полюс, интенсивность, банд</h3>
+    <div class="callout note"><p class="mono">полюс = плюс-полюс, если X ≥ 50, иначе минус-полюс<br/>интенсивность = |X − 50| × 2  (0–100)<br/>банд = 1–20→1 · 21–40→2 · 41–60→3 · 61–80→4 · 81–100→5</p></div>
+
+    <h3>Шаг 4 · Сборка кода</h3>
+    <p>Соединяем <span class="mono">[полюс][банд]</span> в фиксированном порядке EO · IF · DB · SP · ER:</p>
+    <div class="sig-code">
+      <div class="sig-slot" style="--ax:var(--ax1)"><div class="sa">Энергия</div><div class="sv"><b>W</b><span>2</span></div><div class="sp">Внутрь</div></div>
+      <div class="sig-slot" style="--ax:var(--ax2)"><div class="sa">Информация</div><div class="sv"><b>A</b><span>4</span></div><div class="sp">Абстракция</div></div>
+      <div class="sig-slot" style="--ax:var(--ax3)"><div class="sa">Решения</div><div class="sv"><b>V</b><span>3</span></div><div class="sp">Ценности</div></div>
+      <div class="sig-slot" style="--ax:var(--ax4)"><div class="sa">Организация</div><div class="sv"><b>F</b><span>4</span></div><div class="sp">Гибкость</div></div>
+      <div class="sig-slot" style="--ax:var(--ax5)"><div class="sa">Эмоция</div><div class="sv"><b>S</b><span>2</span></div><div class="sp">Устойчивость</div></div>
+    </div>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>Сбалансированный банд (цифра 0)</div>
+      <p>Банд 0 присваивается, когда доверительный интервал балла пересекает 50 — наклон в пределах погрешности измерения. Пока надёжность не установлена на пилоте, действует временное правило <b>интенсивность ≤ 5</b>. Это защищает от присвоения почти сбалансированному человеку ложного полюса.</p>
+    </div>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Храните балл, а не банд</div>
+      <p>Сохраняйте <b>X</b> (непрерывный) и каждый сырой ответ на пункт с меткой времени. Весь анализ надёжности, стабильности и валидности идёт по X. Банд и код регенерируются из X для отображения — никогда наоборот.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 06 -->
+  <section class="sec" id="s6">
+    <div class="sec-num">06 — Контроль контаминации</div>
+    <h1 class="sec-title">Где живёт каждый конструкт</h1>
+    <p class="lead">Прежний инструмент позволял трём конструктам перетекать между осями. Правило 8 закрепляет место каждого — на уровне пункта.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:30%">Содержание</th><th>Прежнее место</th><th>ReNo v1.1 — закреплённый дом</th></tr></thead>
+      <tbody>
+        <tr><td><b>Невозмутимость / руминация</b></td><td>Основа решений (T/F)</td><td>→ Только Эмоциональный отклик (Q077–Q094). В пунктах DB нет содержания про невозмутимость.</td></tr>
+        <tr><td><b>Эмоц. стабильность / перепады настроения</b></td><td>Организация (J/P)</td><td>→ Только Эмоциональный отклик. Организация — чистый «порядок-и-завершённость».</td></tr>
+        <tr><td><b>Поиск новизны</b></td><td>Организация (J/P)</td><td>→ Фокус информации (напр. Q036 — «меня привлекают непроверенные способы»), где это тот же сигнал открытости.</td></tr>
+        <tr><td><b>Склонность к риску</b></td><td>Организация (J/P)</td><td>→ Исключено. Смесь трёх черт; нигде не измеряется, оставлено проявляться в интерпретации.</td></tr>
+      </tbody>
+    </table>
+
+    <p>Конкретная проверка: Основа решений (Q039–Q057) содержит только поведение по критериям решения — взвешивание «за/против» vs взвешивание людей, критику vs смягчение, правила vs исключения. Ничего про сохранение спокойствия. Это содержание целиком в Эмоциональном отклике — потому две оси и могут факторизоваться независимо.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- 07 -->
+  <section class="sec" id="s7">
+    <div class="sec-num">07 — Пункты под наблюдением и план пилота</div>
+    <h1 class="sec-title">Слабые места и исследование, которое их разрешает</h1>
+    <p class="lead">Честно о слабых местах банка и об исследовании разработки, которое превращает пилотный пул в валидированную шкалу.</p>
+
+    <h2>Пункты под наблюдением — первые кандидаты на исключение</h2>
+    <ul>
+      <li><span class="mono">Q054</span> («Я чувствую эмоциональную температуру в помещении») — привязан к Основе решений / Ценностям, но может кросс-загружаться на Эмоциональный отклик. Если так — исключить.</li>
+      <li><span class="mono">Q093</span> («до слёз трогает фильм или музыка») — намеренно фиксирует позитивную сторону реактивности, чтобы Эмоциональный отклик не был всецело негативной шкалой; проверить, что он грузится вместе с другими R-пунктами и не читается только как грусть.</li>
+      <li><span class="mono">Q073 / Q065</span> (аккуратность рабочего места) — следить за пересечением с культурной привычкой, а не чертой Организации.</li>
+    </ul>
+
+    <h2>План пилота — последовательность ДеВеллиса</h2>
+    <ol>
+      <li>Предъявить все 94 пункта выборке разработки (стартовая когорта — жизнеспособный первый источник).</li>
+      <li>Анализ пунктов — отбросить низкодискриминативные и кросс-загружающиеся.</li>
+      <li>Конфирматорный факторный анализ — подтвердить пять чистых факторов.</li>
+      <li>Установить ретестовую надёжность (короткий интервал) до любых лонгитюдных утверждений.</li>
+      <li>Оптимизировать до ~12 пунктов на ось; локализовать выжившие на ES / FR / AR.</li>
+      <li>Конвергентная валидация против NEO-PI-R / TIPI (черты), RIASEC (интересы) и Basic Psychological Needs Scale (мотивация).</li>
+    </ol>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Следующая форма для разработки</div>
+      <p>Это банк самоотчёта взрослого. Продукту PsyID Youth нужен параллельный <b>родительский банк-наблюдение</b> — те же конструкты и структура ключа, поведение из мира ребёнка (школа, игра, домашние задания), формулировки «Мой ребёнок…», для возраста 8–14.</p>
+    </div>
+  </section>
+
+</doc-page>
+<script>
+// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* BEGIN USAGE */
+/**
+ * <doc-page> — paged-document shell for printable HTML.
+ *
+ * On screen the document renders as a single continuous sheet on a desk
+ * background (Google Docs' pageless view): you scroll one tall page card.
+ * There is no manual page-splitting — write the whole document as normal
+ * flow inside <doc-page> and the browser's print engine paginates it at
+ * export.
+ *
+ * At print the component injects `@page { size: …; margin: 0 }` (which
+ * leaves Chrome no margin box to draw its date/URL/page-count header in)
+ * and moves the visual margin onto the sheet's own padding, so the printed
+ * page has the same inset you see on screen. Standard break-hygiene rules
+ * (`break-inside: avoid` on figures, code blocks, images and table rows;
+ * `orphans/widows: 3`) are applied so paragraphs and groups split cleanly.
+ * On screen and at print, headings default to `text-wrap: balance` and
+ * body text (p, li, blockquote, figcaption) to `text-wrap: pretty`, so
+ * the document avoids widowed/orphaned words; the defaults have zero
+ * specificity, so any text-wrap you declare on those elements wins.
+ *
+ * Usage:
+ *   <style>doc-page:not(:defined){visibility:hidden}</style>
+ *   <doc-page size="letter" margin="0.75in">
+ *     <h1>Title</h1>
+ *     <p>…body…</p>
+ *   </doc-page>
+ *   <script src="doc-page.js"><\/script>
+ *
+ * Attributes:
+ *   size    — letter | a4 | legal (default letter)
+ *   width / height — explicit CSS lengths, override `size`
+ *   margin  — printable inset on every page (default 0.75in)
+ *
+ * Running header/footer (optional): give an element `slot="header"` or
+ * `slot="footer"` and it repeats on every printed page via
+ * `position: fixed`. To keep body text from sliding under it, the
+ * component prints inside a single-cell table whose <thead>/<tfoot> are
+ * spacers sized to the header/footer height — browsers repeat thead/tfoot
+ * on every page, so each sheet's content starts below the header and ends
+ * above the footer. On screen the header/footer render once at the
+ * top/bottom of the sheet.
+ *
+ * Author content as static HTML so the user can click-to-edit any text
+ * directly. Do not set width/padding/background on the document body —
+ * the component owns the sheet box.
+ */
+/* END USAGE */
+
+(() => {
+  const PAPER = {
+    letter: ['8.5in', '11in'],
+    a4: ['210mm', '297mm'],
+    legal: ['8.5in', '14in'],
+  };
+  const CSS_LENGTH = /^\d+(\.\d+)?(px|in|mm|cm|pt|pc)$/;
+  const safeLen = (v, fb) => (CSS_LENGTH.test((v || '').trim()) ? v.trim() : fb);
+
+  const stylesheet = `
+    :host {
+      position: relative;
+      display: block;
+      min-height: 100vh;
+      background: #ece8dd;
+      padding: 48px 24px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --doc-page-w: 8.5in;
+      --doc-page-h: 11in;
+      --doc-page-margin: 0.75in;
+      --doc-hdr-h: 0px;
+      --doc-ftr-h: 0px;
+    }
+    .sheet {
+      width: var(--doc-page-w);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 14px rgba(20, 20, 19, 0.12);
+      border-radius: 2px;
+      box-sizing: border-box;
+      padding: var(--doc-page-margin);
+    }
+    .frame { width: 100%; border-collapse: collapse; }
+    .frame td, .frame th { padding: 0; text-align: left; font-weight: inherit; }
+    .hdr-space { height: var(--doc-hdr-h); }
+    .ftr-space { height: var(--doc-ftr-h); }
+    ::slotted([slot="header"]),
+    ::slotted([slot="footer"]) { display: block; box-sizing: border-box; }
+    @media print {
+      :host { background: none; padding: 0; min-height: 0; }
+      .sheet {
+        width: auto; margin: 0; box-shadow: none; border-radius: 0;
+        padding: 0 var(--doc-page-margin);
+      }
+      /* The thead/tfoot spacers repeat on every page, so they carry the
+       * vertical page margin (which the sheet's own padding cannot, since
+       * that padding is consumed once on the first/last page). The running
+       * header/footer are fixed inside that band. */
+      .hdr-space { height: max(var(--doc-page-margin), calc(var(--doc-hdr-h) + 0.35in)); }
+      .ftr-space { height: max(var(--doc-page-margin), calc(var(--doc-ftr-h) + 0.35in)); }
+      ::slotted([slot="header"]) {
+        position: fixed; top: 0; left: 0; right: 0; margin: 0;
+        padding: calc(var(--doc-page-margin) * 0.45) var(--doc-page-margin) 0;
+      }
+      ::slotted([slot="footer"]) {
+        position: fixed; bottom: 0; left: 0; right: 0; margin: 0;
+        padding: 0 var(--doc-page-margin) calc(var(--doc-page-margin) * 0.45);
+      }
+    }
+  `;
+
+  class DocPage extends HTMLElement {
+    static get observedAttributes() { return ['size', 'width', 'height', 'margin']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._mo = typeof MutationObserver === 'function'
+        ? new MutationObserver(() => this._scheduleMeasure())
+        : null;
+    }
+
+    get pageWidth() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('width'), named ? named[0] : PAPER.letter[0]);
+    }
+    get pageHeight() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('height'), named ? named[1] : PAPER.letter[1]);
+    }
+    get pageMargin() { return safeLen(this.getAttribute('margin'), '0.75in'); }
+
+    connectedCallback() {
+      if (!this._sheet) this._render();
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._ensureTextWrapDefaults();
+      if (this._mo) this._mo.observe(this, {
+        subtree: true, childList: true, characterData: true, attributes: true,
+      });
+      this._onResize = () => this._scheduleMeasure();
+      window.addEventListener('resize', this._onResize);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => this._scheduleMeasure());
+      }
+      this._scheduleMeasure();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('resize', this._onResize);
+      if (this._mo) this._mo.disconnect();
+      if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+      // Drop the head rules when the last doc-page leaves, so a deleted
+      // document's @page geometry and text-wrap defaults can't apply to
+      // whatever replaces it.
+      if (!document.querySelector('doc-page')) {
+        ['doc-page-print', 'doc-page-text-wrap'].forEach((id) => {
+          const tag = document.getElementById(id);
+          if (tag) tag.remove();
+        });
+      }
+    }
+
+    attributeChangedCallback() {
+      if (!this._sheet) return;
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._scheduleMeasure();
+    }
+
+    _render() {
+      this._root.innerHTML = `
+        <style>${stylesheet}</style>
+        <style id="vars"></style>
+        <div class="sheet" data-screen-label="Document">
+          <table class="frame" role="presentation">
+            <thead><tr><th><div class="hdr-space"><slot name="header"></slot></div></th></tr></thead>
+            <tbody><tr><td class="body"><slot></slot></td></tr></tbody>
+            <tfoot><tr><td><div class="ftr-space"><slot name="footer"></slot></div></td></tr></tfoot>
+          </table>
+        </div>`;
+      this._sheet = this._root.querySelector('.sheet');
+      this._vars = this._root.getElementById('vars');
+    }
+
+    /** Runtime sizing lives in a shadow <style> :host rule, never on the
+     *  light-DOM host element, so serialize-persist can't write it back. */
+    _syncSize(hdrH, ftrH) {
+      this._vars.textContent = ':host{' +
+        '--doc-page-w:' + this.pageWidth + ';' +
+        '--doc-page-h:' + this.pageHeight + ';' +
+        '--doc-page-margin:' + this.pageMargin + ';' +
+        '--doc-hdr-h:' + (hdrH || 0) + 'px;' +
+        '--doc-ftr-h:' + (ftrH || 0) + 'px}';
+    }
+
+    /** @page is a no-op inside shadow DOM, so the rule lives in <head>.
+     *  Re-appended on every sync so it stays last in source order — the
+     *  @page cascade is source-order per descriptor, so this rule wins
+     *  over any other @page rule in the document. */
+    _syncPrintPageRule() {
+      const id = 'doc-page-print';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+      }
+      document.head.appendChild(tag);
+      tag.textContent =
+        '@page { size: ' + this.pageWidth + ' ' + this.pageHeight + '; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; height: auto !important; overflow: visible !important; } ' +
+        'h1,h2,h3,h4,h5,h6 { break-after: avoid; } ' +
+        'figure,pre,blockquote,img,svg,tr { break-inside: avoid; } ' +
+        'p,li { orphans: 3; widows: 3; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } ' +
+        '*, *::before, *::after { animation-delay: -99s !important; animation-duration: .001s !important; ' +
+        'animation-iteration-count: 1 !important; animation-fill-mode: both !important; ' +
+        'animation-play-state: running !important; transition-duration: 0s !important; } }';
+    }
+
+    /** Typographic defaults for document text: balance headings, avoid
+     *  widowed/orphaned words in body copy (browsers without text-wrap
+     *  support drop the declarations). Zero-specificity via :where() so
+     *  any text-wrap authored on those elements wins; document-level so the
+     *  rules reach the slotted (light DOM) content — shadow styles can't.
+     *  data-omelette-injected marks the tag for the host editor to strip
+     *  at serialize, so it is never written back as authored source. */
+    _ensureTextWrapDefaults() {
+      if (document.getElementById('doc-page-text-wrap')) return;
+      const tag = document.createElement('style');
+      tag.id = 'doc-page-text-wrap';
+      tag.setAttribute('data-omelette-injected', '');
+      tag.textContent =
+        ':where(h1,h2,h3,h4,h5,h6){text-wrap:balance}' +
+        ':where(p,li,blockquote,figcaption){text-wrap:pretty}';
+      document.head.appendChild(tag);
+    }
+
+    _scheduleMeasure() {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._measure(); });
+    }
+
+    /** Slot heights feed the print spacers (--doc-hdr-h / --doc-ftr-h), so
+     *  they re-measure on content mutation, resize, and font load. */
+    _measure() {
+      const hdr = this.querySelector(':scope > [slot="header"]');
+      const ftr = this.querySelector(':scope > [slot="footer"]');
+      this._syncSize(hdr ? hdr.offsetHeight : 0, ftr ? ftr.offsetHeight : 0);
+    }
+  }
+
+  if (!customElements.get('doc-page')) {
+    customElements.define('doc-page', DocPage);
+  }
+})();
+
+</script>
+<script>
+/* =====================================================================
+   PsyID · Methodology document JS  (shared)
+   Renders the pentagon radar + fills axis-pill widths from data-*.
+   ===================================================================== */
+(function(){
+  var AX = ['#2244E0','#6A85F0','#8A5CD6','#FF7A3D','#FF5A5A'];
+  function polar(cx,cy,r,deg){var a=(deg-90)*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};}
+
+  function buildRadar(el){
+    var vals  = (el.getAttribute('data-values')||'0.5,0.5,0.5,0.5,0.5').split(',').map(Number);
+    var labs  = (el.getAttribute('data-labels')||'').split(',');
+    var codes = (el.getAttribute('data-codes')||'').split(',');
+    var size  = parseInt(el.getAttribute('data-size')||'300',10);
+    var theme = el.getAttribute('data-theme')||'light';
+    var n = vals.length, cx=size/2, cy=size/2, maxR=size/2-40, step=360/n;
+    var light = theme==='light';
+    var ring = light?'#E4DCCD':'rgba(255,255,255,.16)';
+    var axis = light?'#E4DCCD':'rgba(255,255,255,.22)';
+    var txt  = light?'#82879F':'rgba(255,255,255,.7)';
+    var code = light?'#0E1230':'#fff';
+    var i,ri,rr,pp,e,p,pts=[],dp=[];
+    var svg='';
+    for(ri=1;ri<=4;ri++){rr=(ri/4)*maxR;pp=[];for(i=0;i<n;i++){p=polar(cx,cy,rr,i*step);pp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}svg+='<polygon points="'+pp.join(' ')+'" fill="none" stroke="'+ring+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){e=polar(cx,cy,maxR,i*step);svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+axis+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){p=polar(cx,cy,vals[i]*maxR,i*step);pts.push(p);dp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}
+    var fill=light?'rgba(255,122,61,.14)':'rgba(255,165,72,.22)';
+    var stroke=light?'#FF7A3D':'rgba(255,255,255,.92)';
+    svg+='<polygon points="'+dp.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" stroke-linejoin="round"/>';
+    for(i=0;i<n;i++){svg+='<circle cx="'+pts[i].x.toFixed(1)+'" cy="'+pts[i].y.toFixed(1)+'" r="4.5" fill="#fff" stroke="'+AX[i%5]+'" stroke-width="2.5"/>';}
+    for(i=0;i<n;i++){
+      var lp=polar(cx,cy,maxR+22,i*step);
+      var anchor=lp.x<cx-2?'end':(lp.x>cx+2?'start':'middle');
+      var dy=lp.y<cy-2?'-2':(lp.y>cy+2?'11':'4');
+      var lab=(labs[i]||'').trim().toUpperCase(), cd=(codes[i]||'').trim();
+      svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+dy+'" text-anchor="'+anchor+'" font-family="Geist Mono, monospace" font-size="9" letter-spacing="1.2" fill="'+txt+'">'+lab+'</text>';
+      if(cd)svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+(parseFloat(dy)+12)+'" text-anchor="'+anchor+'" font-family="Geist, system-ui" font-weight="800" font-size="12" fill="'+code+'">'+cd+'</text>';
+    }
+    var pad=46;
+    el.innerHTML='<svg viewBox="'+(-pad)+' 0 '+(size+2*pad)+' '+size+'" width="'+(size+2*pad)+'" height="'+size+'" fill="none">'+svg+'</svg>';
+  }
+
+  function run(){
+    document.querySelectorAll('.radar-chart').forEach(buildRadar);
+    document.querySelectorAll('.axis-pill[data-value]').forEach(function(el){
+      var v=parseFloat(el.getAttribute('data-value')||'0.5');
+      var f=el.querySelector('.ap-f'); if(f)f.style.width=(v*100).toFixed(0)+'%';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run); else run();
+})();
+
+</script>
+</body>
+</html>

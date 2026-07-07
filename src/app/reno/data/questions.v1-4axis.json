@@ -1,0 +1,3634 @@
+[
+  {
+    "id": "Q001",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Обычно Вы:",
+      "en": "You are usually:",
+      "es": "Normalmente usted es:",
+      "fr": "Habituellement, vous êtes :",
+      "ar": "عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "общительны",
+          "en": "sociable",
+          "es": "sociable",
+          "fr": "sociable",
+          "ar": "اجتماعي"
+        },
+        "key": "E",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "довольно сдержанны и спокойны.",
+          "en": "quite reserved and calm",
+          "es": "bastante reservado y tranquilo",
+          "fr": "plutôt réservé et calme",
+          "ar": "هادئ ومتحفظ إلى حد ما"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q002",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Если бы Вы были преподавателем, какой курс Вы бы предпочли:",
+      "en": "If you were a teacher, which course would you prefer:",
+      "es": "Si fuera profesor, ¿qué tipo de curso preferiría:",
+      "fr": "Si vous étiez enseignant, quel type de cours préféreriez-vous :",
+      "ar": "لو كنت معلماً، أي نوع من الدورات تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "построенный на изложении фактов",
+          "en": "based on presenting facts",
+          "es": "basado en la presentación de hechos",
+          "fr": "basé sur l'exposé des faits",
+          "ar": "يقوم على عرض الحقائق"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "включающий в себя изложение теорий.",
+          "en": "that includes presenting theories",
+          "es": "que incluye la presentación de teorías",
+          "fr": "qui inclut l'exposé des théories",
+          "ar": "يتضمن عرض النظريات"
+        },
+        "key": "N",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q003",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы чаще позволяете:",
+      "en": "You more often let:",
+      "es": "Con más frecuencia usted permite que:",
+      "fr": "Le plus souvent, vous laissez :",
+      "ar": "في أغلب الأحيان تسمح لـ:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "своему сердцу управлять разумом",
+          "en": "your heart guide your mind",
+          "es": "su corazón guíe su mente",
+          "fr": "votre cœur guider votre raison",
+          "ar": "قلبك يوجه عقلك"
+        },
+        "key": "F",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "своему разуму управлять сердцем.",
+          "en": "your mind guide your heart",
+          "es": "su mente guíe su corazón",
+          "fr": "votre raison guider votre cœur",
+          "ar": "عقلك يوجه قلبك"
+        },
+        "key": "T",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q004",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вы отправляетесь куда-то на весь день, Вы:",
+      "en": "When you go somewhere for the whole day, you:",
+      "es": "Cuando sale a algún lugar por todo el día, usted:",
+      "fr": "Quand vous partez quelque part pour toute la journée, vous :",
+      "ar": "عندما تذهب إلى مكان ما لليوم بأكمله، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "планируете, что и когда будете делать",
+          "en": "plan what and when you will do things",
+          "es": "planifica qué y cuándo hará las cosas",
+          "fr": "planifiez ce que vous ferez et quand",
+          "ar": "تخطط لما ستفعله ومتى"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "уходите без определенного плана.",
+          "en": "go without a specific plan",
+          "es": "sale sin un plan específico",
+          "fr": "partez sans plan précis",
+          "ar": "تغادر بدون خطة محددة"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q005",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Находясь в компании, Вы обычно:",
+      "en": "When in a group, you usually:",
+      "es": "Cuando está en compañía, usted generalmente:",
+      "fr": "En groupe, vous avez tendance à :",
+      "ar": "عند وجودك في مجموعة، عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "присоединяетесь к общему разговору",
+          "en": "join the general conversation",
+          "es": "se une a la conversación general",
+          "fr": "vous joignez à la conversation générale",
+          "ar": "تنضم إلى الحديث العام"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "беседуете время от времени с кем-то одним.",
+          "en": "chat one-on-one with someone from time to time",
+          "es": "conversa de vez en cuando con alguien en particular",
+          "fr": "discutez de temps en temps avec une seule personne",
+          "ar": "تتحدث من وقت لآخر مع شخص واحد"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q006",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вам легче поладить с людьми:",
+      "en": "It is easier for you to get along with people who are:",
+      "es": "Le resulta más fácil llevarse bien con personas que son:",
+      "fr": "Il vous est plus facile de vous entendre avec des personnes qui sont :",
+      "ar": "من الأسهل لك التعامل مع الأشخاص الذين:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "имеющими богатое воображение",
+          "en": "have a rich imagination",
+          "es": "tienen una imaginación rica",
+          "fr": "ont une riche imagination",
+          "ar": "يمتلكون خيالاً خصباً"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "реалистичными.",
+          "en": "realistic",
+          "es": "realistas",
+          "fr": "réalistes",
+          "ar": "واقعيين"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q007",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Более высокой похвалой Вы считаете слова:",
+      "en": "You consider a greater compliment the words:",
+      "es": "Considera un mayor cumplido las palabras:",
+      "fr": "Vous considérez comme un plus grand compliment les mots :",
+      "ar": "تعتبر أعلى مديح الكلمات:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "душевный человек",
+          "en": "a warm-hearted person",
+          "es": "una persona cálida",
+          "fr": "une personne chaleureuse",
+          "ar": "شخص دافئ القلب"
+        },
+        "key": "F",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "последовательно рассуждающий человек.",
+          "en": "a consistently logical person",
+          "es": "una persona que razona de manera consistente",
+          "fr": "une personne qui raisonne de façon cohérente",
+          "ar": "شخص منطقي ومتسق"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q008",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы предпочитаете:",
+      "en": "You prefer:",
+      "es": "Usted prefiere:",
+      "fr": "Vous préférez :",
+      "ar": "أنت تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "заранее договариваться о встречах, вечеринках и т.п.",
+          "en": "arranging meetings, parties, etc. in advance",
+          "es": "organizar reuniones, fiestas, etc. con antelación",
+          "fr": "organiser à l'avance les réunions, soirées, etc.",
+          "ar": "الترتيب المسبق للاجتماعات والحفلات وما شابه"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "иметь возможность в последний момент решать, как развлечься.",
+          "en": "having the option to decide at the last moment how to have fun",
+          "es": "tener la posibilidad de decidir en el último momento cómo divertirse",
+          "fr": "avoir la possibilité de décider au dernier moment comment s'amuser",
+          "ar": "أن تقرر في اللحظة الأخيرة كيف تقضي وقتك"
+        },
+        "key": "P",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q009",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "В большой компании чаще:",
+      "en": "In a large group, more often:",
+      "es": "En un grupo grande, con más frecuencia:",
+      "fr": "Dans un grand groupe, le plus souvent :",
+      "ar": "في مجموعة كبيرة، في الغالب:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "Вы представляете людей друг другу",
+          "en": "you introduce people to each other",
+          "es": "usted presenta a las personas entre sí",
+          "fr": "vous présentez les gens les uns aux autres",
+          "ar": "أنت تعرّف الناس ببعضهم"
+        },
+        "key": "E",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "Вас знакомят с другими.",
+          "en": "you are introduced to others",
+          "es": "le presentan a otras personas",
+          "fr": "on vous présente aux autres",
+          "ar": "يتم تعريفك بالآخرين"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q010",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вас скорее можно назвать:",
+      "en": "You would more likely be called:",
+      "es": "Más bien se le podría llamar:",
+      "fr": "On vous qualifierait plutôt de :",
+      "ar": "يمكن وصفك بأنك:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "человеком практичным",
+          "en": "a practical person",
+          "es": "una persona práctica",
+          "fr": "une personne pratique",
+          "ar": "شخصاً عملياً"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "выдумщиком.",
+          "en": "an imaginative dreamer",
+          "es": "un soñador imaginativo",
+          "fr": "un imaginatif",
+          "ar": "شخصاً خيالياً مبتكراً"
+        },
+        "key": "N",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q011",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Обычно Вы:",
+      "en": "You are usually:",
+      "es": "Normalmente usted es:",
+      "fr": "Habituellement, vous êtes :",
+      "ar": "عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "цените чувства больше, чем логику",
+          "en": "value feelings more than logic",
+          "es": "valora los sentimientos más que la lógica",
+          "fr": "accordez plus de valeur aux sentiments qu'à la logique",
+          "ar": "تُقدّر المشاعر أكثر من المنطق"
+        },
+        "key": "F",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "цените логику больше, чем чувства.",
+          "en": "value logic more than feelings",
+          "es": "valora la lógica más que los sentimientos",
+          "fr": "accordez plus de valeur à la logique qu'aux sentiments",
+          "ar": "تُقدّر المنطق أكثر من المشاعر"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q012",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы чаще добиваетесь успеха:",
+      "en": "You more often succeed:",
+      "es": "Con más frecuencia tiene éxito:",
+      "fr": "Vous réussissez le plus souvent :",
+      "ar": "في أغلب الأحيان تنجح:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "действуя в непредсказуемой ситуации, когда нужно быстро принимать решения",
+          "en": "acting in unpredictable situations requiring quick decisions",
+          "es": "actuando en situaciones impredecibles que requieren decisiones rápidas",
+          "fr": "en agissant dans des situations imprévisibles où il faut prendre des décisions rapidement",
+          "ar": "بالتصرف في مواقف غير متوقعة تتطلب قرارات سريعة"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "следуя тщательно разработанному плану.",
+          "en": "following a carefully developed plan",
+          "es": "siguiendo un plan cuidadosamente elaborado",
+          "fr": "en suivant un plan soigneusement élaboré",
+          "ar": "باتباع خطة مدروسة بعناية"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q013",
+    "axis": "IE",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы предпочитаете:",
+      "en": "You prefer:",
+      "es": "Usted prefiere:",
+      "fr": "Vous préférez :",
+      "ar": "أنت تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "иметь несколько близких, верных друзей",
+          "en": "having a few close, loyal friends",
+          "es": "tener unos pocos amigos cercanos y leales",
+          "fr": "avoir quelques amis proches et fidèles",
+          "ar": "وجود عدد قليل من الأصدقاء المقربين الأوفياء"
+        },
+        "key": "I",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "иметь дружеские связи с самыми разными людьми.",
+          "en": "having friendly connections with a wide variety of people",
+          "es": "tener relaciones amistosas con una gran variedad de personas",
+          "fr": "avoir des liens d'amitié avec des personnes très diverses",
+          "ar": "وجود علاقات ودية مع أشخاص متنوعين"
+        },
+        "key": "E",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q014",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вам больше нравятся люди, которые:",
+      "en": "You like people who:",
+      "es": "Le gustan más las personas que:",
+      "fr": "Vous préférez les personnes qui :",
+      "ar": "تفضل الأشخاص الذين:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "следуют общепринятым нормам и не привлекают к себе внимания",
+          "en": "follow established norms and do not draw attention to themselves",
+          "es": "siguen las normas establecidas y no llaman la atención",
+          "fr": "suivent les normes établies et n'attirent pas l'attention sur eux",
+          "ar": "يتبعون المعايير المقبولة ولا يلفتون الانتباه إليهم"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "настолько оригинальны, что им все равно, обращают на них внимание или нет.",
+          "en": "are so original that they do not care whether they attract attention or not",
+          "es": "son tan originales que no les importa si atraen atención o no",
+          "fr": "sont tellement originaux qu'il leur est égal d'attirer l'attention ou non",
+          "ar": "أصيلون لدرجة أنه لا يهمهم إن كانوا يلفتون الانتباه أم لا"
+        },
+        "key": "N",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q015",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "На Ваш взгляд самый большой недостаток – быть:",
+      "en": "In your opinion, the greatest flaw is to be:",
+      "es": "En su opinión, el mayor defecto es ser:",
+      "fr": "À votre avis, le plus grand défaut est d'être :",
+      "ar": "في رأيك، أكبر عيب هو أن تكون:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "бесчувственным",
+          "en": "insensitive",
+          "es": "insensible",
+          "fr": "insensible",
+          "ar": "عديم الإحساس"
+        },
+        "key": "F",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "неблагоразумным.",
+          "en": "imprudent",
+          "es": "imprudente",
+          "fr": "imprudent",
+          "ar": "متهور"
+        },
+        "key": "T",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q016",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Следование какому-либо расписанию:",
+      "en": "Following a schedule:",
+      "es": "Seguir un horario:",
+      "fr": "Suivre un planning :",
+      "ar": "اتباع جدول زمني:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "привлекает Вас",
+          "en": "appeals to you",
+          "es": "le atrae",
+          "fr": "vous attire",
+          "ar": "يجذبك"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "сковывает Вас.",
+          "en": "constrains you",
+          "es": "le coarta",
+          "fr": "vous contraint",
+          "ar": "يقيّدك"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q017",
+    "axis": "IE",
+    "type": "wordselect",
+    "text": {
+      "ru": "Среди своих друзей Вы:",
+      "en": "Among your friends, you:",
+      "es": "Entre sus amigos, usted:",
+      "fr": "Parmi vos amis, vous :",
+      "ar": "بين أصدقائك، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "позже других узнаете о событиях в их жизни",
+          "en": "learn about events in their lives later than others",
+          "es": "se entera de los eventos en sus vidas más tarde que los demás",
+          "fr": "apprenez les événements de leur vie plus tard que les autres",
+          "ar": "تعرف عن أحداث حياتهم متأخراً عن الآخرين"
+        },
+        "key": "I",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "обычно знаете массу новостей о них.",
+          "en": "usually know a lot of news about them",
+          "es": "generalmente sabe muchas noticias sobre ellos",
+          "fr": "savez généralement beaucoup de nouvelles sur eux",
+          "ar": "عادةً تعرف الكثير من الأخبار عنهم"
+        },
+        "key": "E",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q018",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы бы предпочли иметь среди своих друзей человека, который:",
+      "en": "You would prefer to have among your friends someone who:",
+      "es": "Preferiría tener entre sus amigos a alguien que:",
+      "fr": "Vous préféreriez avoir parmi vos amis quelqu'un qui :",
+      "ar": "تفضل أن يكون من بين أصدقائك شخص:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "всегда полон новых идей",
+          "en": "is always full of new ideas",
+          "es": "siempre está lleno de nuevas ideas",
+          "fr": "est toujours plein de nouvelles idées",
+          "ar": "دائماً مليء بالأفكار الجديدة"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "трезво и реалистично смотрит на мир.",
+          "en": "has a sober and realistic view of the world",
+          "es": "tiene una visión sobria y realista del mundo",
+          "fr": "a une vision sobre et réaliste du monde",
+          "ar": "لديه نظرة رصينة وواقعية للعالم"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q019",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы предпочли бы работать под началом человека, который:",
+      "en": "You would prefer to work under someone who:",
+      "es": "Preferiría trabajar bajo la dirección de alguien que:",
+      "fr": "Vous préféreriez travailler sous la direction de quelqu'un qui :",
+      "ar": "تفضل العمل تحت إشراف شخص:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "всегда добр",
+          "en": "is always kind",
+          "es": "siempre es amable",
+          "fr": "est toujours bienveillant",
+          "ar": "دائماً طيب"
+        },
+        "key": "F",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "всегда справедлив.",
+          "en": "is always fair",
+          "es": "siempre es justo",
+          "fr": "est toujours juste",
+          "ar": "دائماً عادل"
+        },
+        "key": "T",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q020",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Мысль о том, чтобы составить список дел на выходные:",
+      "en": "The idea of making a to-do list for the weekend:",
+      "es": "La idea de hacer una lista de tareas para el fin de semana:",
+      "fr": "L'idée de faire une liste de tâches pour le week-end :",
+      "ar": "فكرة إعداد قائمة مهام لعطلة نهاية الأسبوع:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "Вас привлекает",
+          "en": "appeals to you",
+          "es": "le atrae",
+          "fr": "vous attire",
+          "ar": "يجذبك"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "оставляет Вас равнодушным",
+          "en": "leaves you indifferent",
+          "es": "le deja indiferente",
+          "fr": "vous laisse indifférent",
+          "ar": "يتركك غير مبالٍ"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "c",
+        "text": {
+          "ru": "угнетает Вас.",
+          "en": "depresses you",
+          "es": "le deprime",
+          "fr": "vous déprime",
+          "ar": "يُحبطك"
+        },
+        "key": "",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "Q021",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы обычно:",
+      "en": "You usually:",
+      "es": "Usted generalmente:",
+      "fr": "Vous généralement :",
+      "ar": "عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "можете легко разговаривать практически с любым человеком в течение любого времени",
+          "en": "can easily talk to almost anyone for any amount of time",
+          "es": "puede conversar fácilmente con casi cualquier persona durante cualquier tiempo",
+          "fr": "pouvez facilement parler avec presque n'importe qui pendant n'importe combien de temps",
+          "ar": "يمكنك التحدث بسهولة مع أي شخص تقريباً لأي مدة"
+        },
+        "key": "E",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "можете найти тему для разговора только с немногими людьми и только в определенных ситуациях.",
+          "en": "can find a topic to talk about only with a few people and only in certain situations",
+          "es": "solo puede encontrar tema de conversación con pocas personas y solo en ciertas situaciones",
+          "fr": "ne pouvez trouver un sujet de conversation qu'avec peu de personnes et seulement dans certaines situations",
+          "ar": "لا تجد موضوعاً للحديث إلا مع قلة من الناس وفي مواقف معينة فقط"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q022",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вы читаете для своего удовольствия, Вам нравится:",
+      "en": "When you read for pleasure, you like:",
+      "es": "Cuando lee por placer, le gusta:",
+      "fr": "Quand vous lisez pour le plaisir, vous aimez :",
+      "ar": "عندما تقرأ للمتعة، تحب:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "необычная, оригинальная манера изложения",
+          "en": "an unusual, original style of writing",
+          "es": "un estilo de escritura inusual y original",
+          "fr": "un style d'écriture inhabituel et original",
+          "ar": "أسلوب كتابة غير معتاد وأصيل"
+        },
+        "key": "N",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "когда писатели четко выражают свои мысли.",
+          "en": "when writers express their thoughts clearly",
+          "es": "cuando los escritores expresan sus pensamientos con claridad",
+          "fr": "quand les écrivains expriment clairement leurs pensées",
+          "ar": "عندما يعبر الكتّاب عن أفكارهم بوضوح"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q023",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы считаете, что более серьезный недостаток:",
+      "en": "You think a more serious flaw is:",
+      "es": "Usted cree que un defecto más grave es:",
+      "fr": "Vous pensez qu'un défaut plus grave est :",
+      "ar": "تعتقد أن العيب الأشد خطورة هو:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "быть слишком сердечным",
+          "en": "being too warm-hearted",
+          "es": "ser demasiado afectuoso",
+          "fr": "être trop chaleureux",
+          "ar": "أن تكون محباً للغاية"
+        },
+        "key": "T",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "быть недостаточно сердечным.",
+          "en": "being not warm-hearted enough",
+          "es": "no ser suficientemente afectuoso",
+          "fr": "ne pas être assez chaleureux",
+          "ar": "أن لا تكون محباً بما يكفي"
+        },
+        "key": "F",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q024",
+    "axis": "P",
+    "type": "wordselect",
+    "text": {
+      "ru": "В своей повседневной работе:",
+      "en": "In your daily work:",
+      "es": "En su trabajo diario:",
+      "fr": "Dans votre travail quotidien :",
+      "ar": "في عملك اليومي:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "Вам больше нравятся критические ситуации, когда Вам приходится работать в условиях дефицита времени",
+          "en": "you prefer critical situations where you have to work under time pressure",
+          "es": "prefiere situaciones críticas en las que debe trabajar bajo presión de tiempo",
+          "fr": "vous préférez les situations critiques où vous devez travailler sous pression temporelle",
+          "ar": "تفضل المواقف الحرجة التي تعمل فيها تحت ضغط الوقت"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "ненавидите работать в жестких временных рамках",
+          "en": "hate working within strict time limits",
+          "es": "detesta trabajar dentro de plazos estrictos",
+          "fr": "détestez travailler dans des délais stricts",
+          "ar": "تكره العمل ضمن قيود زمنية صارمة"
+        },
+        "key": "",
+        "score": null
+      },
+      {
+        "id": "c",
+        "text": {
+          "ru": "обычно планируете свою работу так, чтобы Вам хватило времени.",
+          "en": "usually plan your work so that you have enough time",
+          "es": "generalmente planifica su trabajo para tener suficiente tiempo",
+          "fr": "planifiez généralement votre travail pour avoir suffisamment de temps",
+          "ar": "عادةً تخطط لعملك بحيث يكون لديك وقت كافٍ"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q025",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Люди могут определить область Ваших интересов:",
+      "en": "People can identify your areas of interest:",
+      "es": "Las personas pueden identificar sus áreas de interés:",
+      "fr": "Les gens peuvent identifier vos centres d'intérêt :",
+      "ar": "يمكن للناس تحديد مجالات اهتمامك:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "при первом знакомстве с Вами",
+          "en": "upon first meeting you",
+          "es": "al conocerle por primera vez",
+          "fr": "dès la première rencontre",
+          "ar": "عند لقائك لأول مرة"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "лишь тогда, когда узнают Вас поближе.",
+          "en": "only when they get to know you better",
+          "es": "solo cuando le conocen mejor",
+          "fr": "seulement quand ils apprennent à mieux vous connaître",
+          "ar": "فقط عندما يتعرفون عليك بشكل أفضل"
+        },
+        "key": "I",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q026",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Выполняя ту же работу, что и многие другие люди, Вы предпочитаете:",
+      "en": "When doing the same work as many others, you prefer:",
+      "es": "Al hacer el mismo trabajo que muchos otros, usted prefiere:",
+      "fr": "Quand vous faites le même travail que beaucoup d'autres, vous préférez :",
+      "ar": "عند القيام بنفس العمل الذي يقوم به الآخرون، تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "делать это традиционным способом",
+          "en": "do it the traditional way",
+          "es": "hacerlo de la manera tradicional",
+          "fr": "le faire de la manière traditionnelle",
+          "ar": "القيام به بالطريقة التقليدية"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "изобретать свой собственный способ.",
+          "en": "invent your own way",
+          "es": "inventar su propio método",
+          "fr": "inventer votre propre méthode",
+          "ar": "ابتكار طريقتك الخاصة"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q027",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вас больше волнуют:",
+      "en": "You are more concerned with:",
+      "es": "Le preocupan más:",
+      "fr": "Vous vous souciez davantage de :",
+      "ar": "أنت أكثر اهتماماً بـ:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "чувства людей",
+          "en": "people's feelings",
+          "es": "los sentimientos de las personas",
+          "fr": "les sentiments des gens",
+          "ar": "مشاعر الناس"
+        },
+        "key": "F",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "их права.",
+          "en": "their rights",
+          "es": "sus derechos",
+          "fr": "leurs droits",
+          "ar": "حقوقهم"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q028",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вам нужно выполнить определенную работу, Вы обычно:",
+      "en": "When you need to complete a certain task, you usually:",
+      "es": "Cuando necesita completar una tarea específica, usted generalmente:",
+      "fr": "Quand vous devez accomplir une tâche précise, vous avez généralement tendance à :",
+      "ar": "عندما تحتاج إلى إنجاز مهمة معينة، عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "тщательно организовываете все перед началом работы",
+          "en": "carefully organize everything before starting",
+          "es": "organiza todo cuidadosamente antes de comenzar",
+          "fr": "organisez soigneusement tout avant de commencer",
+          "ar": "تنظم كل شيء بعناية قبل البدء"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "предпочитаете выяснять все необходимое в процессе работы.",
+          "en": "prefer to figure out everything needed as you go",
+          "es": "prefiere descubrir todo lo necesario mientras trabaja",
+          "fr": "préférez découvrir tout ce dont vous avez besoin au fur et à mesure",
+          "ar": "تفضل معرفة ما تحتاجه أثناء العمل"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q029",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Обычно Вы:",
+      "en": "You are usually:",
+      "es": "Normalmente usted es:",
+      "fr": "Habituellement, vous êtes :",
+      "ar": "عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "свободно выражаете свои чувства",
+          "en": "freely express your feelings",
+          "es": "expresa libremente sus sentimientos",
+          "fr": "exprimez librement vos sentiments",
+          "ar": "تعبّر بحرية عن مشاعرك"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "держите свои чувства при себе.",
+          "en": "keep your feelings to yourself",
+          "es": "guarda sus sentimientos para sí mismo",
+          "fr": "gardez vos sentiments pour vous",
+          "ar": "تحتفظ بمشاعرك لنفسك"
+        },
+        "key": "I",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q030",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы предпочитаете:",
+      "en": "You prefer:",
+      "es": "Usted prefiere:",
+      "fr": "Vous préférez :",
+      "ar": "أنت تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "быть оригинальным",
+          "en": "being original",
+          "es": "ser original",
+          "fr": "être original",
+          "ar": "أن تكون مبتكراً"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "следовать общепринятым нормам.",
+          "en": "following established norms",
+          "es": "seguir las normas establecidas",
+          "fr": "suivre les normes établies",
+          "ar": "اتباع المعايير المقبولة"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q031",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "кроткий",
+          "en": "gentle",
+          "es": "manso",
+          "fr": "doux",
+          "ar": "وديع"
+        },
+        "key": "F",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "настойчивый.",
+          "en": "persistent",
+          "es": "persistente",
+          "fr": "persévérant",
+          "ar": "مثابر"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q032",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вам необходимо что-то сделать в определенное время, Вы считаете, что:",
+      "en": "When you need to do something at a specific time, you feel that:",
+      "es": "Cuando necesita hacer algo en un momento determinado, usted cree que:",
+      "fr": "Quand vous devez faire quelque chose à un moment précis, vous estimez que :",
+      "ar": "عندما تحتاج إلى القيام بشيء في وقت محدد، تشعر أن:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "лучше планировать все заранее",
+          "en": "it is better to plan everything in advance",
+          "es": "es mejor planificar todo con antelación",
+          "fr": "il vaut mieux tout planifier à l'avance",
+          "ar": "من الأفضل التخطيط لكل شيء مسبقاً"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "несколько неприятно быть связанным этими планами.",
+          "en": "it is somewhat unpleasant to be bound by these plans",
+          "es": "es algo desagradable estar atado a estos planes",
+          "fr": "il est quelque peu désagréable d'être lié par ces plans",
+          "ar": "من غير المريح أن تكون مقيداً بهذه الخطط"
+        },
+        "key": "P",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q033",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Можно сказать, что Вы:",
+      "en": "It can be said that you:",
+      "es": "Se puede decir que usted:",
+      "fr": "On peut dire que vous :",
+      "ar": "يمكن القول أنك:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "более восторженны по сравнению с другими людьми",
+          "en": "more enthusiastic than other people",
+          "es": "más entusiasta que otras personas",
+          "fr": "plus enthousiaste que les autres",
+          "ar": "أكثر حماساً مقارنةً بالآخرين"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "менее восторженны, чем большинство людей.",
+          "en": "less enthusiastic than most people",
+          "es": "menos entusiasta que la mayoría de las personas",
+          "fr": "moins enthousiaste que la plupart des gens",
+          "ar": "أقل حماساً من معظم الناس"
+        },
+        "key": "I",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q034",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Более высокой похвалой человеку будет признание:",
+      "en": "A higher compliment for a person would be recognition of:",
+      "es": "Un mayor cumplido para una persona sería reconocer:",
+      "fr": "Un plus grand compliment pour une personne serait de reconnaître :",
+      "ar": "أعلى مديح للشخص هو الاعتراف بـ:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "его способности к предвидению",
+          "en": "their ability to foresee things",
+          "es": "su capacidad de previsión",
+          "fr": "leur capacité de prévision",
+          "ar": "قدرتهم على استشراف الأمور"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "его здравого смысла.",
+          "en": "their common sense",
+          "es": "su sentido común",
+          "fr": "leur bon sens",
+          "ar": "حسن تقديرهم"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q035",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "мысли",
+          "en": "thoughts",
+          "es": "pensamientos",
+          "fr": "pensées",
+          "ar": "أفكار"
+        },
+        "key": "T",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "чувства.",
+          "en": "feelings",
+          "es": "sentimientos",
+          "fr": "sentiments",
+          "ar": "مشاعر"
+        },
+        "key": "F",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q036",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Обычно:",
+      "en": "Usually:",
+      "es": "Normalmente:",
+      "fr": "Habituellement :",
+      "ar": "عادةً:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "Вы предпочитаете все делать в последнюю минуту",
+          "en": "you prefer to do everything at the last minute",
+          "es": "prefiere hacer todo en el último momento",
+          "fr": "vous préférez tout faire à la dernière minute",
+          "ar": "تفضل القيام بكل شيء في اللحظة الأخيرة"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "для Вас откладывать все до последней минуты – это слишком большая нервотрепка.",
+          "en": "putting everything off until the last minute is too stressful for you",
+          "es": "dejar todo para el último momento le genera demasiado estrés",
+          "fr": "tout remettre à la dernière minute est trop stressant pour vous",
+          "ar": "تأجيل كل شيء إلى اللحظة الأخيرة مرهق جداً بالنسبة لك"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q037",
+    "axis": "IE",
+    "type": "wordselect",
+    "text": {
+      "ru": "На вечеринках Вам:",
+      "en": "At parties, you:",
+      "es": "En las fiestas, usted:",
+      "fr": "Lors des soirées, vous :",
+      "ar": "في الحفلات، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "иногда становится скучно",
+          "en": "you sometimes get bored",
+          "es": "a veces se aburre",
+          "fr": "vous vous ennuyez parfois",
+          "ar": "تشعر أحياناً بالملل"
+        },
+        "key": "I",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "всегда весело.",
+          "en": "you always have fun",
+          "es": "siempre se divierte",
+          "fr": "vous vous amusez toujours",
+          "ar": "دائماً تستمتع"
+        },
+        "key": "E",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q038",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы считаете, что более важно:",
+      "en": "You think it is more important to:",
+      "es": "Usted cree que es más importante:",
+      "fr": "Vous pensez qu'il est plus important de :",
+      "ar": "تعتقد أن الأهم هو:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "видеть различные возможности в какой-либо ситуации",
+          "en": "to see various possibilities in a situation",
+          "es": "ver diversas posibilidades en una situación",
+          "fr": "voir diverses possibilités dans une situation",
+          "ar": "رؤية الإمكانيات المتعددة في الموقف"
+        },
+        "key": "N",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "воспринимать факты такими, какие они есть.",
+          "en": "to perceive facts as they are",
+          "es": "percibir los hechos tal como son",
+          "fr": "percevoir les faits tels qu'ils sont",
+          "ar": "رؤية الحقائق كما هي"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q039",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "убедительный",
+          "en": "convincing",
+          "es": "convincente",
+          "fr": "convaincant",
+          "ar": "مقنع"
+        },
+        "key": "T",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "трогательный.",
+          "en": "touching",
+          "es": "conmovedor",
+          "fr": "touchant",
+          "ar": "مؤثر"
+        },
+        "key": "F",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q040",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Считаете ли Вы, что наличие стабильного повседневного распорядка:",
+      "en": "Do you think that having a stable daily routine:",
+      "es": "¿Cree usted que tener una rutina diaria estable:",
+      "fr": "Pensez-vous qu'avoir une routine quotidienne stable :",
+      "ar": "هل تعتقد أن وجود روتين يومي ثابت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "очень удобно для выполнения многих дел",
+          "en": "is very convenient for getting many things done",
+          "es": "es muy conveniente para realizar muchas tareas",
+          "fr": "est très pratique pour accomplir beaucoup de choses",
+          "ar": "مريح جداً لإنجاز الكثير من الأمور"
+        },
+        "key": "J",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "тягостно, даже когда это необходимо.",
+          "en": "is burdensome, even when necessary",
+          "es": "es pesado, incluso cuando es necesario",
+          "fr": "est pénible, même quand c'est nécessaire",
+          "ar": "مرهق حتى عندما يكون ضرورياً"
+        },
+        "key": "P",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q041",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда что-то входит в моду, Вы обычно:",
+      "en": "When something becomes fashionable, you usually:",
+      "es": "Cuando algo se pone de moda, usted generalmente:",
+      "fr": "Quand quelque chose devient à la mode, vous avez généralement tendance à :",
+      "ar": "عندما يصبح شيء ما رائجاً، عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "одним из первых испробуете это",
+          "en": "are among the first to try it",
+          "es": "es uno de los primeros en probarlo",
+          "fr": "êtes parmi les premiers à l'essayer",
+          "ar": "تكون من أوائل من يجربه"
+        },
+        "key": "E",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "мало этим интересуетесь.",
+          "en": "have little interest in it",
+          "es": "tiene poco interés en ello",
+          "fr": "vous y intéressez peu",
+          "ar": "اهتمامك به ضئيل"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q042",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы скорее:",
+      "en": "You would rather:",
+      "es": "Usted más bien:",
+      "fr": "Vous avez plutôt tendance à :",
+      "ar": "أنت أميل إلى:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "придерживаетесь общепринятых методов в работе",
+          "en": "stick to established methods in your work",
+          "es": "se adhiere a los métodos establecidos en su trabajo",
+          "fr": "vous en tenez aux méthodes établies dans votre travail",
+          "ar": "تلتزم بالأساليب المعتمدة في عملك"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "ищете, что еще неверно, и беретесь за неразрешенные проблемы.",
+          "en": "look for what is still wrong and tackle unresolved problems",
+          "es": "busca qué está mal aún y se ocupa de los problemas sin resolver",
+          "fr": "cherchez ce qui ne va pas encore et vous attaquez aux problèmes non résolus",
+          "ar": "تبحث عما هو خاطئ وتتعامل مع المشكلات غير المحلولة"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q043",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "анализировать",
+          "en": "to analyze",
+          "es": "analizar",
+          "fr": "analyser",
+          "ar": "تحليل"
+        },
+        "key": "T",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "сопереживать.",
+          "en": "to empathize",
+          "es": "empatizar",
+          "fr": "empathiser",
+          "ar": "التعاطف"
+        },
+        "key": "F",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q044",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вы думаете о том, что надо сделать какое-то не очень важное дело или купить какую-то мелкую вещь, Вы:",
+      "en": "When you think about a minor task you need to do or a small thing to buy, you:",
+      "es": "Cuando piensa en una tarea menor que debe hacer o en algo pequeño que comprar, usted:",
+      "fr": "Quand vous pensez à une tâche mineure à accomplir ou à un petit achat à faire, vous :",
+      "ar": "عندما تفكر في مهمة بسيطة تحتاج إلى إنجازها أو شيء صغير للشراء، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "часто забываете об этом и вспоминаете слишком поздно",
+          "en": "often forget about it and remember too late",
+          "es": "a menudo lo olvida y lo recuerda demasiado tarde",
+          "fr": "l'oubliez souvent et vous en souvenez trop tard",
+          "ar": "كثيراً ما تنساه وتتذكره في وقت متأخر"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "записываете это на бумаге, чтобы не забыть",
+          "en": "write it down on paper so as not to forget",
+          "es": "lo anota en papel para no olvidarlo",
+          "fr": "le notez sur papier pour ne pas l'oublier",
+          "ar": "تكتبه على ورقة حتى لا تنساه"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "c",
+        "text": {
+          "ru": "всегда выполняете это без дополнительных напоминаний.",
+          "en": "always do it without additional reminders",
+          "es": "siempre lo hace sin recordatorios adicionales",
+          "fr": "le faites toujours sans rappels supplémentaires",
+          "ar": "دائماً تنجزه دون تذكيرات إضافية"
+        },
+        "key": "",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "Q045",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Узнать, что Вы за человек:",
+      "en": "Finding out what kind of person you are:",
+      "es": "Descubrir qué tipo de persona es usted:",
+      "fr": "Découvrir quel type de personne vous êtes :",
+      "ar": "معرفة نوع الشخص الذي أنت عليه:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "довольно легко",
+          "en": "quite easily",
+          "es": "con bastante facilidad",
+          "fr": "assez facilement",
+          "ar": "بسهولة كافية"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "довольно трудно.",
+          "en": "quite difficult",
+          "es": "bastante difícil",
+          "fr": "assez difficile",
+          "ar": "صعب إلى حد ما"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q046",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "факты",
+          "en": "facts",
+          "es": "hechos",
+          "fr": "faits",
+          "ar": "حقائق"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "идеи.",
+          "en": "ideas",
+          "es": "ideas",
+          "fr": "idées",
+          "ar": "أفكار"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q047",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "справедливость",
+          "en": "justice",
+          "es": "justicia",
+          "fr": "justice",
+          "ar": "عدالة"
+        },
+        "key": "T",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "сочувствие.",
+          "en": "compassion",
+          "es": "compasión",
+          "fr": "compassion",
+          "ar": "تعاطف"
+        },
+        "key": "F",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q048",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вам труднее приспособиться:",
+      "en": "It is harder for you to adapt to:",
+      "es": "Le resulta más difícil adaptarse:",
+      "fr": "Il vous est plus difficile de vous adapter :",
+      "ar": "من الصعب عليك التأقلم مع:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "к однообразию",
+          "en": "to monotony",
+          "es": "a la monotonía",
+          "fr": "à la monotonie",
+          "ar": "الرتابة"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "к постоянным переменам.",
+          "en": "to constant change",
+          "es": "a los cambios constantes",
+          "fr": "aux changements constants",
+          "ar": "التغيير المستمر"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q049",
+    "axis": "E",
+    "type": "wordselect",
+    "text": {
+      "ru": "Оказавшись в затруднительной ситуации, Вы обычно:",
+      "en": "When you find yourself in an awkward situation, you usually:",
+      "es": "Cuando se encuentra en una situación difícil, usted generalmente:",
+      "fr": "Quand vous vous trouvez dans une situation embarrassante, vous avez généralement tendance à :",
+      "ar": "عند وجودك في موقف محرج، عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "переводите разговор на другое",
+          "en": "change the subject",
+          "es": "cambia el tema de conversación",
+          "fr": "détournez la conversation",
+          "ar": "تحوّل الحديث إلى موضوع آخر"
+        },
+        "key": "",
+        "score": null
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "обращаете все в шутку",
+          "en": "turn everything into a joke",
+          "es": "convierte todo en una broma",
+          "fr": "tournez tout en plaisanterie",
+          "ar": "تحوّل كل شيء إلى نكتة"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "c",
+        "text": {
+          "ru": "спустя несколько дней думаете, что Вам следовало сказать.",
+          "en": "think a few days later about what you should have said",
+          "es": "piensa unos días después en lo que debería haber dicho",
+          "fr": "pensez quelques jours plus tard à ce que vous auriez dû dire",
+          "ar": "تفكر بعد أيام فيما كان ينبغي لك قوله"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q050",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "утверждение",
+          "en": "statement",
+          "es": "afirmación",
+          "fr": "affirmation",
+          "ar": "تأكيد"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "идея.",
+          "en": "idea",
+          "es": "idea",
+          "fr": "idée",
+          "ar": "فكرة"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q051",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "сочувствие",
+          "en": "compassion",
+          "es": "compasión",
+          "fr": "compassion",
+          "ar": "تعاطف"
+        },
+        "key": "F",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "расчетливость.",
+          "en": "calculation",
+          "es": "cálculo",
+          "fr": "calcul",
+          "ar": "حسابية"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q052",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Когда Вы начинаете какое-то большое дело, которое займет у Вас неделю, Вы:",
+      "en": "When you start a big project that will take a week, you:",
+      "es": "Cuando comienza un gran proyecto que le llevará una semana, usted:",
+      "fr": "Quand vous commencez un grand projet qui vous prendra une semaine, vous :",
+      "ar": "عند بدء مشروع كبير سيستغرق منك أسبوعاً، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "составляете сначала список того, что нужно сделать и в каком порядке",
+          "en": "first make a list of what needs to be done and in what order",
+          "es": "primero hace una lista de lo que hay que hacer y en qué orden",
+          "fr": "commencez par faire une liste de ce qui doit être fait et dans quel ordre",
+          "ar": "أولاً تضع قائمة بما يجب القيام به وبأي ترتيب"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "сразу беретесь за работу.",
+          "en": "get straight to work",
+          "es": "se pone a trabajar de inmediato",
+          "fr": "vous mettez immédiatement au travail",
+          "ar": "تبدأ العمل فوراً"
+        },
+        "key": "P",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q053",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Вы считаете, что Вашим близким известны Ваши мысли:",
+      "en": "You think your close ones know your thoughts:",
+      "es": "Cree que sus seres queridos conocen sus pensamientos:",
+      "fr": "Vous pensez que vos proches connaissent vos pensées :",
+      "ar": "تعتقد أن المقربين منك يعرفون أفكارك:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "достаточно хорошо",
+          "en": "well enough",
+          "es": "bastante bien",
+          "fr": "assez bien",
+          "ar": "جيداً بما يكفي"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "лишь тогда, когда Вы намеренно сообщаете о них.",
+          "en": "only when you deliberately tell them",
+          "es": "solo cuando usted se los comunica deliberadamente",
+          "fr": "seulement quand vous le leur dites délibérément",
+          "ar": "فقط عندما تخبرهم بها عن قصد"
+        },
+        "key": "I",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q054",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "теория",
+          "en": "theory",
+          "es": "teoría",
+          "fr": "théorie",
+          "ar": "نظرية"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "факт.",
+          "en": "fact",
+          "es": "hecho",
+          "fr": "fait",
+          "ar": "حقيقة"
+        },
+        "key": "S",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q055",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "выгода",
+          "en": "benefit",
+          "es": "beneficio",
+          "fr": "bénéfice",
+          "ar": "فائدة"
+        },
+        "key": "T",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "благодеяние.",
+          "en": "good deed",
+          "es": "buena acción",
+          "fr": "bonne action",
+          "ar": "عمل خير"
+        },
+        "key": "F",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q056",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Выполняя какую-либо работу, Вы обычно:",
+      "en": "When doing a job, you usually:",
+      "es": "Al realizar un trabajo, usted generalmente:",
+      "fr": "Quand vous effectuez un travail, vous avez généralement tendance à :",
+      "ar": "عند القيام بعمل ما، عادةً أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "планируете работу таким образом, чтобы закончить с запасом времени",
+          "en": "plan your work so as to finish with time to spare",
+          "es": "planifica su trabajo para terminar con tiempo de sobra",
+          "fr": "planifiez votre travail de façon à terminer avec du temps en avance",
+          "ar": "تخطط لعملك لإنهائه قبل الموعد المحدد"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "в последний момент работаете с наивысшей производительностью.",
+          "en": "work at your highest productivity at the last moment",
+          "es": "trabaja con su mayor productividad en el último momento",
+          "fr": "travaillez avec votre plus haute productivité au dernier moment",
+          "ar": "تعمل بأعلى إنتاجية في اللحظة الأخيرة"
+        },
+        "key": "J",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q057",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Будучи на вечеринке, Вы предпочитаете:",
+      "en": "At a party, you prefer:",
+      "es": "En una fiesta, usted prefiere:",
+      "fr": "À une soirée, vous préférez :",
+      "ar": "في حفلة، تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "активно участвовать в развитии событий",
+          "en": "actively participate in how things unfold",
+          "es": "participar activamente en el desarrollo de los eventos",
+          "fr": "participer activement au déroulement des événements",
+          "ar": "المشاركة الفعّالة في تطور الأحداث"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "предоставляете другим развлекаться, как им хочется.",
+          "en": "let others have fun in their own way",
+          "es": "deja que los demás se diviertan como quieran",
+          "fr": "laissez les autres s'amuser comme ils le souhaitent",
+          "ar": "تترك للآخرين حرية الاستمتاع كما يشاؤون"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q058",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "буквальный",
+          "en": "literal",
+          "es": "literal",
+          "fr": "littéral",
+          "ar": "حرفي"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "фигуральный.",
+          "en": "figurative",
+          "es": "figurado",
+          "fr": "figuré",
+          "ar": "مجازي"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q059",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "решительный",
+          "en": "decisive",
+          "es": "decidido",
+          "fr": "décisif",
+          "ar": "حازم"
+        },
+        "key": "T",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "преданный.",
+          "en": "devoted",
+          "es": "leal",
+          "fr": "dévoué",
+          "ar": "مخلص"
+        },
+        "key": "F",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q060",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Если в выходной утром Вас спросят, что Вы собираетесь сделать в течение дня, Вы:",
+      "en": "If asked on a weekend morning what you plan to do during the day, you:",
+      "es": "Si le preguntan por la mañana de un día libre qué planea hacer durante el día, usted:",
+      "fr": "Si on vous demande un matin de week-end ce que vous comptez faire dans la journée, vous :",
+      "ar": "إذا سُئلت صباح يوم عطلة عما تخطط للقيام به خلال اليوم، أنت:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "сможете довольно точно ответить",
+          "en": "can answer fairly accurately",
+          "es": "puede responder con bastante precisión",
+          "fr": "pouvez répondre assez précisément",
+          "ar": "يمكنك الإجابة بدقة معقولة"
+        },
+        "key": "J",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "перечислите вдвое больше дел, чем сможете сделать",
+          "en": "will list twice as many things as you can actually do",
+          "es": "enumerará el doble de cosas de las que realmente puede hacer",
+          "fr": "enumérerez deux fois plus de choses que vous ne pouvez en faire",
+          "ar": "ستعدد ضعف ما يمكنك القيام به فعلاً"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "c",
+        "text": {
+          "ru": "предпочтете не загадывать заранее.",
+          "en": "prefer not to plan in advance",
+          "es": "prefiere no planificar con antelación",
+          "fr": "préférez ne pas planifier à l'avance",
+          "ar": "تفضل عدم التخطيط مسبقاً"
+        },
+        "key": "",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "Q061",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "энергичный",
+          "en": "energetic",
+          "es": "enérgico",
+          "fr": "énergique",
+          "ar": "نشيط"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "спокойный.",
+          "en": "calm",
+          "es": "tranquilo",
+          "fr": "calme",
+          "ar": "هادئ"
+        },
+        "key": "I",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q062",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "образный",
+          "en": "figurative",
+          "es": "figurativo",
+          "fr": "imagé",
+          "ar": "مجازي"
+        },
+        "key": "N",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "прозаичный.",
+          "en": "prosaic",
+          "es": "prosaico",
+          "fr": "prosaïque",
+          "ar": "مباشر"
+        },
+        "key": "S",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q063",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "неуступчивый",
+          "en": "unyielding",
+          "es": "inflexible",
+          "fr": "inflexible",
+          "ar": "متصلب"
+        },
+        "key": "T",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "добросердечный.",
+          "en": "kindhearted",
+          "es": "bondadoso",
+          "fr": "bienveillant",
+          "ar": "طيب القلب"
+        },
+        "key": "F",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q064",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Однообразие повседневных дел кажется Вам:",
+      "en": "The monotony of daily tasks seems to you:",
+      "es": "La monotonía de las tareas diarias le parece:",
+      "fr": "La monotonie des tâches quotidiennes vous semble :",
+      "ar": "يبدو لك رتابة المهام اليومية:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "спокойным",
+          "en": "calm",
+          "es": "tranquilo",
+          "fr": "calme",
+          "ar": "هادئاً"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "утомительным.",
+          "en": "tiring",
+          "es": "agotador",
+          "fr": "épuisant",
+          "ar": "مُرهقاً"
+        },
+        "key": "P",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q065",
+    "axis": "IE",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "сдержанный",
+          "en": "reserved",
+          "es": "reservado",
+          "fr": "réservé",
+          "ar": "متحفظ"
+        },
+        "key": "I",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "разговорчивый.",
+          "en": "talkative",
+          "es": "hablador",
+          "fr": "bavard",
+          "ar": "ثرثار"
+        },
+        "key": "E",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q066",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "производить",
+          "en": "to produce",
+          "es": "producir",
+          "fr": "produire",
+          "ar": "إنتاج"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "создавать.",
+          "en": "to create",
+          "es": "crear",
+          "fr": "créer",
+          "ar": "خلق"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q067",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "миротворец",
+          "en": "peacemaker",
+          "es": "pacificador",
+          "fr": "pacificateur",
+          "ar": "صانع سلام"
+        },
+        "key": "F",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "судья.",
+          "en": "judge",
+          "es": "juez",
+          "fr": "juge",
+          "ar": "قاضٍ"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q068",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "запланированный",
+          "en": "scheduled",
+          "es": "planificado",
+          "fr": "planifié",
+          "ar": "مخطط له"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "внеплановый.",
+          "en": "unplanned",
+          "es": "no planificado",
+          "fr": "imprévu",
+          "ar": "غير مخطط له"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q069",
+    "axis": "IE",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "спокойный",
+          "en": "calm",
+          "es": "tranquilo",
+          "fr": "calme",
+          "ar": "هادئ"
+        },
+        "key": "I",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "оживленный.",
+          "en": "lively",
+          "es": "animado",
+          "fr": "animé",
+          "ar": "نشيط"
+        },
+        "key": "E",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q070",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "благоразумный",
+          "en": "prudent",
+          "es": "prudente",
+          "fr": "prudent",
+          "ar": "حكيم"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "очаровательный.",
+          "en": "charming",
+          "es": "encantador",
+          "fr": "charmant",
+          "ar": "ساحر"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q071",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "мягкий",
+          "en": "gentle",
+          "es": "suave",
+          "fr": "doux",
+          "ar": "لطيف"
+        },
+        "key": "F",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "твердый.",
+          "en": "firm",
+          "es": "firme",
+          "fr": "ferme",
+          "ar": "صارم"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q072",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "методичный",
+          "en": "methodical",
+          "es": "metódico",
+          "fr": "méthodique",
+          "ar": "منهجي"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "спонтанный.",
+          "en": "spontaneous",
+          "es": "espontáneo",
+          "fr": "spontané",
+          "ar": "عفوي"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q073",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "говорить",
+          "en": "to speak",
+          "es": "hablar",
+          "fr": "parler",
+          "ar": "التحدث"
+        },
+        "key": "E",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "писать.",
+          "en": "to write",
+          "es": "escribir",
+          "fr": "écrire",
+          "ar": "الكتابة"
+        },
+        "key": "I",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q074",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "производство",
+          "en": "production",
+          "es": "producción",
+          "fr": "production",
+          "ar": "إنتاج"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "планирование.",
+          "en": "planning",
+          "es": "planificación",
+          "fr": "planification",
+          "ar": "تخطيط"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q075",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "прощать",
+          "en": "to forgive",
+          "es": "perdonar",
+          "fr": "pardonner",
+          "ar": "المسامحة"
+        },
+        "key": "F",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "дозволять.",
+          "en": "to permit",
+          "es": "permitir",
+          "fr": "permettre",
+          "ar": "السماح"
+        },
+        "key": "T",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q076",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "систематический",
+          "en": "systematic",
+          "es": "sistemático",
+          "fr": "systématique",
+          "ar": "منهجي"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "случайный.",
+          "en": "random",
+          "es": "aleatorio",
+          "fr": "aléatoire",
+          "ar": "عشوائي"
+        },
+        "key": "P",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q077",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "общительный",
+          "en": "sociable",
+          "es": "sociable",
+          "fr": "sociable",
+          "ar": "اجتماعي"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "замкнутый.",
+          "en": "withdrawn",
+          "es": "introvertido",
+          "fr": "renfermé",
+          "ar": "منطوٍ"
+        },
+        "key": "I",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q078",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "конкретный",
+          "en": "concrete",
+          "es": "concreto",
+          "fr": "concret",
+          "ar": "ملموس"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "абстрактный.",
+          "en": "abstract",
+          "es": "abstracto",
+          "fr": "abstrait",
+          "ar": "مجرد"
+        },
+        "key": "N",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "Q079",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "кто",
+          "en": "who",
+          "es": "quién",
+          "fr": "qui",
+          "ar": "من"
+        },
+        "key": "F",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "что.",
+          "en": "what",
+          "es": "qué",
+          "fr": "quoi",
+          "ar": "ماذا"
+        },
+        "key": "T",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q080",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "импульс",
+          "en": "impulse",
+          "es": "impulso",
+          "fr": "impulsion",
+          "ar": "دافع"
+        },
+        "key": "P",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "решение.",
+          "en": "decision",
+          "es": "decisión",
+          "fr": "décision",
+          "ar": "قرار"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q081",
+    "axis": "EI",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "вечеринка",
+          "en": "party",
+          "es": "fiesta",
+          "fr": "soirée",
+          "ar": "حفلة"
+        },
+        "key": "E",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "театр.",
+          "en": "theater",
+          "es": "teatro",
+          "fr": "théâtre",
+          "ar": "مسرح"
+        },
+        "key": "I",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q082",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "сооружать",
+          "en": "to build",
+          "es": "construir",
+          "fr": "construire",
+          "ar": "بناء"
+        },
+        "key": "S",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "изобретать.",
+          "en": "to invent",
+          "es": "inventar",
+          "fr": "inventer",
+          "ar": "اختراع"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q083",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "некритичный",
+          "en": "uncritical",
+          "es": "no crítico",
+          "fr": "non critique",
+          "ar": "غير ناقد"
+        },
+        "key": "F",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "критичный.",
+          "en": "critical",
+          "es": "crítico",
+          "fr": "critique",
+          "ar": "ناقد"
+        },
+        "key": "T",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q084",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "пунктуальный",
+          "en": "punctual",
+          "es": "puntual",
+          "fr": "ponctuel",
+          "ar": "دقيق في المواعيد"
+        },
+        "key": "J",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "свободный.",
+          "en": "free",
+          "es": "libre",
+          "fr": "libre",
+          "ar": "حر"
+        },
+        "key": "P",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q085",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "основание",
+          "en": "foundation",
+          "es": "base",
+          "fr": "base",
+          "ar": "قاعدة"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "вершина.",
+          "en": "peak",
+          "es": "cima",
+          "fr": "sommet",
+          "ar": "قمة"
+        },
+        "key": "S",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q086",
+    "axis": "TF",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "осторожный",
+          "en": "cautious",
+          "es": "cauteloso",
+          "fr": "prudent",
+          "ar": "حذر"
+        },
+        "key": "T",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "доверчивый.",
+          "en": "trusting",
+          "es": "confiado",
+          "fr": "confiant",
+          "ar": "ساذج"
+        },
+        "key": "F",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q087",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "переменчивый",
+          "en": "changeable",
+          "es": "variable",
+          "fr": "changeant",
+          "ar": "متقلب"
+        },
+        "key": "P",
+        "score": 0
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "неизменный.",
+          "en": "unchanging",
+          "es": "inmutable",
+          "fr": "immuable",
+          "ar": "ثابت"
+        },
+        "key": "J",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q088",
+    "axis": "NS",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "теория",
+          "en": "theory",
+          "es": "teoría",
+          "fr": "théorie",
+          "ar": "نظرية"
+        },
+        "key": "N",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "практика.",
+          "en": "practice",
+          "es": "práctica",
+          "fr": "pratique",
+          "ar": "تطبيق"
+        },
+        "key": "S",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q089",
+    "axis": "FT",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "соглашаться",
+          "en": "to agree",
+          "es": "estar de acuerdo",
+          "fr": "être d'accord",
+          "ar": "الموافقة"
+        },
+        "key": "F",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "дискутировать.",
+          "en": "to debate",
+          "es": "debatir",
+          "fr": "débattre",
+          "ar": "النقاش"
+        },
+        "key": "T",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q090",
+    "axis": "JP",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "дисциплинированный",
+          "en": "disciplined",
+          "es": "disciplinado",
+          "fr": "discipliné",
+          "ar": "منضبط"
+        },
+        "key": "J",
+        "score": 2
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "беспечный.",
+          "en": "carefree",
+          "es": "despreocupado",
+          "fr": "insouciant",
+          "ar": "لامبالٍ"
+        },
+        "key": "P",
+        "score": 1
+      }
+    ]
+  },
+  {
+    "id": "Q091",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "знак",
+          "en": "sign",
+          "es": "señal",
+          "fr": "signe",
+          "ar": "إشارة"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "символ.",
+          "en": "symbol",
+          "es": "símbolo",
+          "fr": "symbole",
+          "ar": "رمز"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q092",
+    "axis": "PJ",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "стремительный",
+          "en": "swift",
+          "es": "veloz",
+          "fr": "rapide",
+          "ar": "سريع"
+        },
+        "key": "P",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "тщательный.",
+          "en": "thorough",
+          "es": "minucioso",
+          "fr": "minutieux",
+          "ar": "دقيق"
+        },
+        "key": "J",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q093",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "принимать",
+          "en": "to accept",
+          "es": "aceptar",
+          "fr": "accepter",
+          "ar": "القبول"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "изменять.",
+          "en": "to change",
+          "es": "cambiar",
+          "fr": "changer",
+          "ar": "التغيير"
+        },
+        "key": "N",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "Q094",
+    "axis": "SN",
+    "type": "wordselect",
+    "text": {
+      "ru": "Какое слово из пары Вам больше нравится:",
+      "en": "Which word from the pair do you prefer:",
+      "es": "¿Cuál de las palabras del par prefiere:",
+      "fr": "Quel mot de la paire préférez-vous :",
+      "ar": "أي كلمة من الزوج تفضل:"
+    },
+    "options": [
+      {
+        "id": "a",
+        "text": {
+          "ru": "известный",
+          "en": "known",
+          "es": "conocido",
+          "fr": "connu",
+          "ar": "معروف"
+        },
+        "key": "S",
+        "score": 1
+      },
+      {
+        "id": "b",
+        "text": {
+          "ru": "неизвестный.",
+          "en": "unknown",
+          "es": "desconocido",
+          "fr": "inconnu",
+          "ar": "مجهول"
+        },
+        "key": "N",
+        "score": 1
+      }
+    ]
+  }
+]

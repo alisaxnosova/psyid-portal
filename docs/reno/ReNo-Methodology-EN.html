@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The ReNo Methodology · v1.1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* =====================================================================
+   PsyID · Methodology document system   (shared by all 4 documents)
+   Aligned to the Element Vault · ReNo v1.1
+   ===================================================================== */
+
+:root{
+  --navy:#050C2E; --ink:#0E1230; --ink-soft:#40456A; --ink-mute:#82879F;
+  --blue:#2244E0; --blue-soft:#6A85F0; --violet:#8A5CD6; --coral:#FF5A5A;
+  --orange:#FF7A3D; --orange-hot:#FF9540; --gold:#FFC074; --gold-deep:#C98A2E;
+
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+
+  --paper:#FBF9F5; --paper-2:#F3EEE5; --paper-3:#ECE4D7;
+  --line:#E4DCCD; --line-2:#D3C9B8;
+
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+
+  --grad-hero:linear-gradient(135deg,#0A143F 0%,#0D1E6A 30%,#4B266A 56%,#B23A4C 78%,#FF823F 100%);
+  --grad-axis:linear-gradient(95deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+  --grad-orange:linear-gradient(95deg,var(--orange),var(--gold));
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+}
+
+*{box-sizing:border-box;}
+doc-page:not(:defined){visibility:hidden;}
+body{margin:0;background:#211E17;}
+doc-page{
+  --doc-accent:var(--orange);
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font); font-size:11pt; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv01";
+}
+
+/* ── Running header / footer ─────────────────────────────── */
+.doc-head{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-mute); padding-bottom:9px; border-bottom:1px solid var(--line);
+}
+.doc-head .dh-brand{font-family:var(--font);font-weight:800;letter-spacing:-.02em;font-size:10pt;color:var(--ink);text-transform:none;}
+.doc-head .dh-brand i{color:var(--orange);font-style:normal;}
+.doc-foot{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-mute); padding-top:9px; border-top:1px solid var(--line);
+}
+
+/* ── Base type ───────────────────────────────────────────── */
+doc-page p{margin:0 0 12px; color:var(--ink-soft); }
+doc-page strong,doc-page b{color:var(--ink);font-weight:600;}
+doc-page em{font-style:italic;}
+a{color:var(--orange);text-decoration:none;} a:hover{color:var(--orange-hot);}
+
+.lead{font-size:14.5pt;line-height:1.5;color:var(--ink);font-weight:500;letter-spacing:-.01em;margin-bottom:20px;text-wrap:pretty;}
+
+/* ── Section header ──────────────────────────────────────── */
+.sec{margin-top:40px;}
+.sec:first-of-type{margin-top:0;}
+.sec-num{font-family:var(--mono);font-size:9pt;letter-spacing:.24em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+h1.sec-title{font-size:26pt;font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0 0 16px;color:var(--ink);}
+h2{font-size:15pt;font-weight:700;letter-spacing:-.02em;margin:26px 0 10px;color:var(--ink);}
+h3{font-family:var(--mono);font-size:9pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin:22px 0 8px;}
+.rule{height:1px;background:var(--line);border:none;margin:26px 0;}
+
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--orange);}
+
+/* ── Lists ───────────────────────────────────────────────── */
+doc-page ul,doc-page ol{margin:0 0 14px;padding-left:0;list-style:none;}
+doc-page li{position:relative;padding-left:22px;margin-bottom:8px;color:var(--ink-soft);}
+doc-page ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--doc-accent);}
+doc-page ol{counter-reset:li;}
+doc-page ol li{counter-increment:li;}
+doc-page ol li::before{content:counter(li);position:absolute;left:0;top:0;font-family:var(--mono);font-size:9pt;font-weight:600;color:var(--orange);}
+
+/* ── Cover ───────────────────────────────────────────────── */
+.cover{
+  position:relative; margin:-0.9in -0.9in 0; padding:0.9in 0.9in 0.8in;
+  min-height:9.4in; color:#fff; display:flex; flex-direction:column;
+  background:var(--grad-hero); overflow:hidden; break-after:page;
+}
+.cover::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 84% 88%, rgba(255,165,72,.55), transparent 60%),
+  radial-gradient(ellipse 50% 45% at 22% 30%, rgba(58,98,232,.5), transparent 60%);pointer-events:none;}
+.cover>*{position:relative;z-index:1;}
+.cover .cover-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.cover-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17pt;letter-spacing:-.03em;}
+.cover-brand i{color:var(--gold);font-style:normal;}
+.cover-status{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 13px;}
+.cover-mid{margin-top:auto;}
+.cover-kicker{font-family:var(--mono);font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:18px;}
+.cover h1{font-size:52pt;font-weight:800;letter-spacing:-.045em;line-height:.98;margin:0 0 22px;color:#fff;}
+.cover .sub{font-size:14pt;line-height:1.5;color:rgba(255,255,255,.82);max-width:34ch;font-weight:400;margin-bottom:30px;text-wrap:pretty;}
+.cover-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;border-top:1px solid rgba(255,255,255,.2);padding-top:22px;max-width:560px;}
+.cover-meta dt{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.cover-meta dd{font-size:10.5pt;color:#fff;font-weight:500;margin:0;}
+.cover-sig{margin-top:26px;display:flex;gap:7px;align-items:center;}
+.cover-sig .cs{font-family:var(--mono);font-weight:600;font-size:13pt;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:8px 4px;min-width:46px;text-align:center;}
+.cover-sig .cs b{font-family:var(--font);font-weight:800;color:var(--gold);}
+.cover-sig .cs span{color:rgba(255,255,255,.55);}
+
+/* ── Constellation mark ──────────────────────────────────── */
+.constell{display:inline-block;line-height:0;}
+
+/* ── Contents ────────────────────────────────────────────── */
+.toc{display:flex;flex-direction:column;gap:0;margin-top:10px;}
+.toc a{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);}
+.toc a:hover{color:var(--orange);}
+.toc .toc-n{font-family:var(--mono);font-size:9pt;color:var(--orange);width:26px;flex:none;}
+.toc .toc-t{font-weight:600;font-size:12pt;letter-spacing:-.01em;flex:1;}
+.toc .toc-d{font-size:10pt;color:var(--ink-mute);}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.m-table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:9.5pt;}
+.m-table thead th{
+  font-family:var(--mono);font-size:8pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);text-align:left;font-weight:600;
+  padding:0 12px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom;
+}
+.m-table tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);line-height:1.5;}
+.m-table tbody tr:last-child td{border-bottom:none;}
+.m-table td b,.m-table td strong{color:var(--ink);}
+.m-table .code{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+.m-table.zebra tbody tr:nth-child(even){background:var(--paper-2);}
+.m-table .pole{font-family:var(--mono);font-weight:600;color:#fff;border-radius:6px;padding:2px 8px;display:inline-block;font-size:8.5pt;}
+
+/* ── Callouts ────────────────────────────────────────────── */
+.callout{border-radius:16px;padding:20px 22px;margin:18px 0;background:var(--paper-2);border:1px solid var(--line);break-inside:avoid;}
+.callout .co-label{font-family:var(--mono);font-size:8pt;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+.callout .co-label .dot{width:7px;height:7px;border-radius:50%;}
+.callout p:last-child{margin-bottom:0;}
+.callout p{color:var(--ink-soft);}
+
+.callout.honest{background:linear-gradient(180deg,#FFF6E6,#FDF0D8);border-color:#F0DDB6;}
+.callout.honest .co-label{color:var(--gold-deep);} .callout.honest .co-label .dot{background:var(--gold-deep);}
+.callout.principle{background:var(--ink);border-color:var(--ink);}
+.callout.principle .co-label{color:var(--gold);} .callout.principle .co-label .dot{background:var(--gold);}
+.callout.principle p{color:rgba(255,255,255,.82);} .callout.principle strong{color:#fff;}
+.callout.framing{background:linear-gradient(180deg,#FFEEEC,#FFE4E1);border-color:#F6C9C4;}
+.callout.framing .co-label{color:var(--coral);} .callout.framing .co-label .dot{background:var(--coral);}
+.callout.note{background:var(--paper-2);}
+.callout.note .co-label{color:var(--blue);} .callout.note .co-label .dot{background:var(--blue);}
+
+/* ── Pull quote ──────────────────────────────────────────── */
+.pq{font-size:19pt;font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.3;color:var(--ink);border-left:3px solid var(--orange);padding-left:22px;margin:22px 0;text-wrap:pretty;}
+.pq b{font-style:normal;background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ── Axis legend cards ───────────────────────────────────── */
+.axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.axis-grid.five{grid-template-columns:repeat(5,1fr);gap:9px;}
+.axis-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 16px;border-top:4px solid var(--ax);break-inside:avoid;}
+.axis-card .ac-no{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);}
+.axis-card .ac-name{font-weight:700;font-size:12pt;letter-spacing:-.02em;margin:5px 0 11px;color:var(--ink);}
+.axis-card .ac-pole{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:9pt;color:var(--ink-soft);line-height:1.35;}
+.axis-card .ac-pole .p{font-family:var(--mono);font-weight:600;font-size:11pt;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;background:var(--ax);flex:none;}
+.axis-card .ac-pole .p.minus{background:transparent;color:var(--ax);border:1.5px solid var(--ax);}
+.axis-card.five .ac-name{font-size:10.5pt;}
+
+/* ── Signature code block ────────────────────────────────── */
+.sig-code{display:flex;gap:8px;margin:16px 0;}
+.sig-slot{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 8px 10px;text-align:center;position:relative;overflow:hidden;break-inside:avoid;}
+.sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax);}
+.sig-slot .sa{font-family:var(--mono);font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;}
+.sig-slot .sv{font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1;display:flex;align-items:baseline;justify-content:center;gap:1px;}
+.sig-slot .sv b{font-size:26pt;color:var(--ax);} .sig-slot .sv span{font-size:15pt;color:var(--ink-mute);}
+.sig-slot .sp{font-size:8.5pt;color:var(--ink-soft);margin-top:6px;font-weight:600;}
+.sig-slot.balanced::before{background:var(--line-2);} .sig-slot.balanced .sv b{color:var(--ink-mute);} .sig-slot.balanced .sv span{color:var(--ink-mute);}
+.sig-inline{font-family:var(--mono);font-weight:600;font-size:14pt;letter-spacing:.02em;color:var(--ink);display:inline-flex;gap:9px;align-items:center;}
+.sig-inline .d{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);}
+
+/* ── Band scale ──────────────────────────────────────────── */
+.band-scale{margin:16px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.band-row{display:grid;grid-template-columns:40px 92px 1fr;align-items:center;gap:14px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);}
+.band-row:last-child{border-bottom:none;}
+.band-row .bd{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:16pt;color:#fff;}
+.band-row.b0 .bd{background:var(--line-2);color:var(--ink);}
+.band-row .br{font-family:var(--mono);font-size:9pt;color:var(--ink-soft);}
+.band-row .bt b{color:var(--ink);font-weight:700;} .band-row .bt span{color:var(--ink-soft);}
+
+/* ── Growth edge card ────────────────────────────────────── */
+.growth{border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,#131A3E,#2A1C4A 60%,#45213F);color:#fff;position:relative;overflow:hidden;margin:18px 0;break-inside:avoid;}
+.growth::after{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,72,.45),transparent 70%);}
+.growth .g-eye{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;position:relative;}
+.growth .g-title{font-weight:800;font-size:16pt;letter-spacing:-.02em;margin-bottom:7px;position:relative;}
+.growth .g-title span{color:var(--gold);}
+.growth p{color:rgba(255,255,255,.82);position:relative;margin:0;}
+
+/* ── Radar figure ────────────────────────────────────────── */
+.fig{margin:18px 0;break-inside:avoid;}
+.fig .radar-chart{display:block;}
+.fig-dark{background:var(--grad-hero);border-radius:18px;padding:26px;display:flex;gap:26px;align-items:center;color:#fff;}
+.fig-dark .fd-side{flex:1;}
+.fig-dark .fd-side h4{font-size:13pt;font-weight:700;margin:0 0 6px;color:#fff;letter-spacing:-.01em;}
+.fig-dark .fd-side p{color:rgba(255,255,255,.78);margin:0;font-size:10pt;}
+.figcap{font-family:var(--mono);font-size:8pt;letter-spacing:.06em;color:var(--ink-mute);margin-top:10px;text-transform:uppercase;}
+
+/* ── Axis pill (list) ────────────────────────────────────── */
+.axis-pill{display:flex;align-items:center;gap:12px;margin:8px 0;}
+.axis-pill .ap-n{font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);width:96px;flex:none;}
+.axis-pill .ap-t{flex:1;height:7px;background:var(--paper-3);border-radius:999px;overflow:hidden;}
+.axis-pill .ap-f{height:100%;border-radius:999px;background:var(--ax);}
+.axis-pill .ap-c{font-family:var(--mono);font-size:9.5pt;font-weight:600;color:var(--ink);width:30px;text-align:right;}
+
+/* ── Two-column feature (products) ───────────────────────── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.split .col{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;break-inside:avoid;}
+.split .col.blue{border-top:4px solid var(--blue);}
+.split .col.coral{border-top:4px solid var(--coral);}
+.split .col h4{font-size:13pt;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em;}
+.split .col .tag{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;}
+.split .col p{font-size:10pt;margin:0;}
+
+/* ── Stat row ────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.stat{background:var(--ink);border-radius:14px;padding:18px 16px;color:#fff;}
+.stat .sv{font-weight:800;font-size:32pt;letter-spacing:-.04em;line-height:1;}
+.stat .sv.or{background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sv.bl{background:linear-gradient(95deg,var(--blue-soft),#fff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sl{font-size:8.5pt;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.4;}
+
+/* ── Small helpers ───────────────────────────────────────── */
+.mono{font-family:var(--mono);}
+.tag-inline{font-family:var(--mono);font-size:8.5pt;background:var(--paper-3);border-radius:5px;padding:1px 6px;color:var(--ink);}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:5px 12px;}
+.badge.orange{background:rgba(255,122,61,.12);color:var(--orange);}
+.badge.blue{background:rgba(34,68,224,.1);color:var(--blue);}
+.page-break{break-after:page;height:0;}
+.avoid-break{break-inside:avoid;}
+
+/* ── Print / PDF · Letter ──────────────────────────────────── */
+@media print{
+  doc-page{font-size:10.5pt;line-height:1.55;}
+  .cover{
+    margin:0 0 0.25in; padding:0.55in 0.5in 0.5in;
+    min-height:8.5in; border-radius:20px; break-after:page;
+  }
+  .cover h1{font-size:44pt;}
+  .cover .sub{font-size:12.5pt;margin-bottom:24px;}
+  .cover-meta{padding-top:18px;}
+  .sec-num,h1.sec-title,h2,h3,.eyebrow,.lead{break-after:avoid;}
+  .sec{margin-top:0;}
+  .callout,.pq,.growth,.fig,.split,.stats,.band-scale,
+  .sig-code,.axis-grid,.axis-card,.axis-pill,figure{break-inside:avoid;}
+  .toc{break-inside:auto;} .toc a{break-inside:avoid;}
+  .m-table{break-inside:auto;}
+  .m-table thead{display:table-header-group;}
+  .m-table tr{break-inside:avoid;}
+}
+
+</style>
+<style>doc-page:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<doc-page size="letter" margin="0.9in">
+
+  <!-- running header / footer -->
+  <div slot="header" class="doc-head">
+    <span class="dh-brand">Psy<i>ID</i></span>
+    <span>The ReNo Methodology · v1.1 · Internal</span>
+  </div>
+  <div slot="footer" class="doc-foot">
+    <span>Pre-validation working document</span>
+    <span>July 2026</span>
+  </div>
+
+  <!-- ═══════════════ COVER ═══════════════ -->
+  <section class="cover">
+    <svg class="cover-bg" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A143F"></stop><stop offset="0.3" stop-color="#0D1E6A"></stop><stop offset="0.56" stop-color="#4B266A"></stop><stop offset="0.78" stop-color="#B23A4C"></stop><stop offset="1" stop-color="#FF823F"></stop></linearGradient></defs><rect width="100" height="100" fill="url(#coverGrad)"></rect></svg>
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="constell" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+            <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/>
+            <circle cx="50" cy="16" r="6.5" fill="#6A85F0"/><circle cx="84" cy="40" r="6.5" fill="#8A5CD6"/>
+            <circle cx="71" cy="79" r="6.5" fill="#FF7A3D"/><circle cx="29" cy="79" r="6.5" fill="#FF5A5A"/>
+            <circle cx="16" cy="40" r="6.5" fill="#2244E0"/>
+          </svg>
+        </span>
+        <span class="wordmark">Psy<i>ID</i></span>
+      </div>
+      <div class="cover-status">Status · Pre-validation working document</div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-kicker">Methodology Whitepaper · Internal</div>
+      <h1>The ReNo<br/>Methodology</h1>
+      <div class="sub">A five-axis framework for measuring personality structure, tracking it over time, and translating it into developmental and vocational guidance — for adults and for children.</div>
+      <dl class="cover-meta">
+        <div><dt>Instrument</dt><dd>ReNo — five-axis personality model</dd></div>
+        <div><dt>Products</dt><dd>PsyID (15–45) · PsyID Youth (8–14)</dd></div>
+        <div><dt>Version</dt><dd>1.1 — working draft · July 2026</dd></div>
+        <div><dt>Signature format</dt><dd class="mono">W2 · A4 · V3 · F4 · S2</dd></div>
+      </dl>
+      <div class="cover-sig">
+        <div class="cs"><b>W</b><span>2</span></div>
+        <div class="cs"><b>A</b><span>4</span></div>
+        <div class="cs"><b>V</b><span>3</span></div>
+        <div class="cs"><b>F</b><span>4</span></div>
+        <div class="cs"><b>S</b><span>2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 00 ABOUT + CONTENTS ═══════════════ -->
+  <section class="sec">
+    <div class="sec-num">00 — About this document</div>
+    <h1 class="sec-title">What this whitepaper is</h1>
+    <p class="lead">This paper defines the ReNo instrument: its theoretical foundations, its five measurement axes, its scoring and coding system, the shadow/growth-edge it derives, its profile architecture, and the empirical roadmap required to validate it.</p>
+    <p>It is a methodology document, not marketing material. It describes what ReNo measures and why, in terms a psychometrician or research collaborator would expect. The consumer-facing translation of these constructs — the warm, parent-facing language, the animal totems, the campaign copy — is deliberately kept in a separate layer and is out of scope here.</p>
+
+    <div class="callout honest">
+      <div class="co-label"><span class="dot"></span>Honest status</div>
+      <p>ReNo is at present a <strong>theoretically specified but empirically unvalidated</strong> instrument. The constructs, axes, and scoring logic are defined here; reliability, factor structure, and population norms are roadmap items, not accomplished facts. Nothing here should be presented to customers or investors as a validated psychometric result until the development study in Section 10 is complete.</p>
+    </div>
+
+    <h2>Contents</h2>
+    <nav class="toc">
+      <a href="#s1"><span class="toc-n">01</span><span class="toc-t">Purpose &amp; scope</span><span class="toc-d">Two products, one engine</span></a>
+      <a href="#s2"><span class="toc-n">02</span><span class="toc-t">Theoretical foundations</span><span class="toc-d">Attribution &amp; IP</span></a>
+      <a href="#s3"><span class="toc-n">03</span><span class="toc-t">The three-level architecture</span><span class="toc-d">McAdams</span></a>
+      <a href="#s4"><span class="toc-n">04</span><span class="toc-t">The five axes</span><span class="toc-d">The measurement spine</span></a>
+      <a href="#s5"><span class="toc-n">05</span><span class="toc-t">Scoring &amp; the intensity code</span><span class="toc-d">0–100, banded 0–5</span></a>
+      <a href="#s6"><span class="toc-n">06</span><span class="toc-t">Construct hygiene</span><span class="toc-d">What was separated</span></a>
+      <a href="#s7"><span class="toc-n">07</span><span class="toc-t">Type-naming architecture</span><span class="toc-d">Totems &amp; archetypes</span></a>
+      <a href="#s8"><span class="toc-n">08</span><span class="toc-t">The shadow / growth edge</span><span class="toc-d">Derived, not measured</span></a>
+      <a href="#s9"><span class="toc-n">09</span><span class="toc-t">The profile &amp; the passport</span><span class="toc-d">A worked example</span></a>
+      <a href="#s10"><span class="toc-n">10</span><span class="toc-t">Measurement development</span><span class="toc-d">The DeVellis path</span></a>
+      <a href="#s11"><span class="toc-n">11</span><span class="toc-t">Stability &amp; longitudinal design</span><span class="toc-d">The core question</span></a>
+      <a href="#s12"><span class="toc-n">12</span><span class="toc-t">Validation &amp; publication</span><span class="toc-d">Convergent checks</span></a>
+      <a href="#s13"><span class="toc-n">13</span><span class="toc-t">Ethics, framing &amp; data separation</span><span class="toc-d">Duty of care</span></a>
+      <a href="#sa"><span class="toc-n">A</span><span class="toc-t">Appendix — code reference</span><span class="toc-d">The five slots</span></a>
+    </nav>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 01 PURPOSE ═══════════════ -->
+  <section class="sec" id="s1">
+    <div class="sec-num">01 — Purpose &amp; scope</div>
+    <h1 class="sec-title">One engine, two products</h1>
+    <p class="lead">ReNo measures the stable structure of an individual's personality, tracks how it consolidates over time, and translates that structure into guidance about fit — educational, vocational, and developmental.</p>
+    <p>The instrument powers two products that share one engine but must never be conflated.</p>
+
+    <div class="split">
+      <div class="col blue">
+        <h4>PsyID — adult</h4>
+        <div class="tag">Self-report · English · 15–45</div>
+        <p>For people figuring out their lives — career fit, identity, decisions at a crossroads. No upper age limit; older adults are welcome, but it is built for those actively working out direction. Delivered as tiered reports.</p>
+      </div>
+      <div class="col coral">
+        <h4>PsyID Youth — children</h4>
+        <div class="tag">Parent-observed · Russian · 8–14</div>
+        <p>A "psychological passport" the parent completes, yielding developmental guidance and profession directions for the child.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Why the youth floor is 8, not 6</div>
+      <p>Before roughly age 7–8 a child's personality is still highly malleable and its structure is not yet reliably measurable — early-childhood temperament is real but under-differentiated, and self- or parent-report at that age carries too much noise. The working theory is that as the brain matures, a measurable, increasingly stable core emerges. ReNo therefore begins at 8, treats the 8–14 window as a <strong>consolidating</strong> profile rather than a fixed one (Section 11), and at 15 hands off to the adult self-report instrument — a clean transition from parent-observed to self-observed.</p>
+    </div>
+
+    <h2>The passport is longitudinal by design</h2>
+    <p>Both products produce a passport — not a one-off result but a dated record the user builds up over repeated tests, so they can see their own personality history across years. This is a core feature, not an add-on: it is what turns a quiz into a developmental record, and it is the same mechanism that makes the stability study (Section 11) possible.</p>
+    <p>ReNo carries a dual mandate. Commercially, it produces reports and a passport people will pay to maintain. Scientifically, it is designed from day one to collect the item-level, timestamped, repeatable data needed to test a genuine question about personality stability and development.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 02 FOUNDATIONS ═══════════════ -->
+  <section class="sec" id="s2">
+    <div class="sec-num">02 — Theoretical foundations</div>
+    <h1 class="sec-title">Standing on several shoulders</h1>
+    <p class="lead">ReNo is not a single-theory instrument. It draws several established traditions into one architecture, using McAdams' model of personality as the integrating spine.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:26%">Tradition</th><th>What it contributes</th><th style="width:28%">Role in ReNo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jung</b> — Psychological Types (1921)</td><td>The attitude-types (introversion/extraversion), the four functions, and the inferior function &amp; shadow.</td><td>Origin of Axes 1–3 and of the shadow (§8).</td></tr>
+        <tr><td><b>Lawrence</b> — People Types &amp; Tiger Stripes</td><td>Type applied to learning; persona/shadow; lifelong type development.</td><td>Grounds the growth-edge and the develops-over-time claim.</td></tr>
+        <tr><td><b>Holland</b> — RIASEC</td><td>Six vocational-interest types.</td><td>The bridge from measured traits to profession fit (Level 2).</td></tr>
+        <tr><td><b>Deci &amp; Ryan</b> — Self-Determination Theory</td><td>Three basic needs: autonomy, competence, relatedness.</td><td>The motivational layer of guidance.</td></tr>
+        <tr><td><b>Murray</b> — Explorations in Personality</td><td>Personology: internal needs × environmental press.</td><td>Frames guidance as person×environment fit.</td></tr>
+        <tr><td><b>McAdams</b> — three-level model</td><td>Traits, characteristic adaptations, narrative identity.</td><td>The integrating architecture (§3).</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>On attribution &amp; IP</div>
+      <p>Building a new instrument inspired by these thinkers is standard, legitimate scholarship, and naming them is the correct move. Scientific ideas and theories are not copyrightable — introversion, the RIASEC types, the three-level model are ideas, free to build on — and citation is what distinguishes theory-building from plagiarism. Two lines not to cross: <strong>(1)</strong> do not reproduce others' copyrighted expression — their exact descriptions, item wording, tables (ReNo paraphrases and rebuilds throughout); <strong>(2)</strong> do not use trademarks in branding — MBTI®, Myers-Briggs®, the branded 16-type names, the Self-Directed Search® — or imply their validation transfers to ReNo. The renaming in Section 4 exists precisely to stay clear of this line. General information, not legal advice; a short IP review before commercial launch is advisable.</p>
+    </div>
+
+    <p><strong>A deliberate gap.</strong> ReNo's trait layer overlaps the Big Five, but ReNo is not a Big Five instrument. The Big Five is the external yardstick against which ReNo's axes will be validated (§12), not a component of the model.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 03 THREE LEVELS ═══════════════ -->
+  <section class="sec" id="s3">
+    <div class="sec-num">03 — The three-level architecture</div>
+    <h1 class="sec-title">What each part is allowed to claim</h1>
+    <p class="lead">Every ReNo profile is organized on McAdams' three levels. This governs what each part of a profile is permitted to claim.</p>
+
+    <table class="m-table">
+      <thead><tr><th style="width:22%">Level</th><th>What it is</th><th style="width:26%">ReNo component</th><th style="width:16%">Product tier</th></tr></thead>
+      <tbody>
+        <tr><td><b>Level 1</b><br/>Dispositional traits</td><td>Broad, decontextualized, relatively stable tendencies. "The psychology of the stranger."</td><td>The five measured axes.</td><td>Tier 1 — "Who am I?"</td></tr>
+        <tr><td><b>Level 2</b><br/>Characteristic adaptations</td><td>Goals, motives, interests, coping — contextualized in role and time.</td><td>RIASEC mapping; SDT needs; profession directions; the growth edge.</td><td>Tier 2 — "Where do I fit?"</td></tr>
+        <tr><td><b>Level 3</b><br/>Narrative identity</td><td>The internalized, evolving life story that gives a life unity and purpose.</td><td>The archetype / totem and its story framing.</td><td>Tier 3 — "What do I do next?"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>The rule this enforces</div>
+      <p>A measurement claim (Level 1) and a story (Level 3) are different kinds of statement. The axis scores may be defended as data; <strong>the archetype is explicitly a narrative and is never presented as a measured result.</strong> Keeping the levels distinct is what keeps ReNo honest as it scales from a quiz into a research instrument.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 04 FIVE AXES ═══════════════ -->
+  <section class="sec" id="s4">
+    <div class="sec-num">04 — The five axes</div>
+    <h1 class="sec-title">The measurement spine</h1>
+    <p class="lead">ReNo measures five orthogonal axes. Each is a spectrum scored 0–100, not a category. Axis 5 (Emotional Response) is new in v1.1 and exists partly to clean contamination out of Axes 3 and 4 (§6).</p>
+
+    <div class="axis-grid five">
+      <div class="axis-card five" style="--ax:var(--ax1)">
+        <div class="ac-no">Axis 1</div><div class="ac-name">Energy Orientation</div>
+        <div class="ac-pole"><span class="p">O</span>Outward</div>
+        <div class="ac-pole"><span class="p minus">W</span>Inward</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax2)">
+        <div class="ac-no">Axis 2</div><div class="ac-name">Information Focus</div>
+        <div class="ac-pole"><span class="p">C</span>Concrete</div>
+        <div class="ac-pole"><span class="p minus">A</span>Abstract</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax3)">
+        <div class="ac-no">Axis 3</div><div class="ac-name">Decision Basis</div>
+        <div class="ac-pole"><span class="p">L</span>Logic</div>
+        <div class="ac-pole"><span class="p minus">V</span>Values</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax4)">
+        <div class="ac-no">Axis 4</div><div class="ac-name">Structure Pref.</div>
+        <div class="ac-pole"><span class="p">D</span>Ordered</div>
+        <div class="ac-pole"><span class="p minus">F</span>Flexible</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax5)">
+        <div class="ac-no">Axis 5 · new</div><div class="ac-name">Emotional Resp.</div>
+        <div class="ac-pole"><span class="p">S</span>Steady</div>
+        <div class="ac-pole"><span class="p minus">R</span>Reactive</div>
+      </div>
+    </div>
+
+    <table class="m-table">
+      <thead><tr><th style="width:20%">Dimension</th><th>Construct</th><th style="width:28%">Lineage &amp; boundary</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 · Energy Orientation</b></td><td>Direction attention and energy habitually flow — outer world of people/action vs inner world of concept/reflection.</td><td>Jung's attitude-types. <em>Not</em> sociability or social skill.</td></tr>
+        <tr><td><b>2 · Information Focus</b></td><td>Which information is trusted first — concrete fact/detail vs pattern/meaning/possibility.</td><td>Jung's sensation/intuition; bridges to RIASEC. <em>Not</em> intelligence or thoroughness.</td></tr>
+        <tr><td><b>3 · Decision Basis</b></td><td>The criterion decisions rest on — impersonal analysis vs person-centred values.</td><td>Jung's thinking/feeling. <em>Not</em> composure under pressure (→ Axis 5).</td></tr>
+        <tr><td><b>4 · Structure Preference</b></td><td>How the outer world and time are managed — planning/order/closure vs spontaneity/flexibility.</td><td>Myers' extension; ≈ Conscientiousness. <em>Not</em> steadiness, risk, or novelty-seeking.</td></tr>
+        <tr><td><b>5 · Emotional Response</b></td><td>Baseline emotional tempo — even-keeled and slow to rattle vs quickly and deeply affected.</td><td>Big Five Emotional Stability. <em>Not</em> clinical — normal-range temperament only.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Naming discipline</div>
+      <p>Axes are named by the dimension, not a pole, so a 0–100 score reads as a position on a spectrum. Pole letters are language-neutral and visually distinct (O / W avoid "I reads as one" and the E-collision; D = or<b>D</b>ered). The system abandons all MBTI and socionics vocabulary — both to avoid others' IP and to resolve a collision: Jung uses "rational" to mean judging, which the old labels contradicted.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 05 SCORING ═══════════════ -->
+  <section class="sec" id="s5">
+    <div class="sec-num">05 — Scoring &amp; the intensity code</div>
+    <h1 class="sec-title">Continuous score, banded for reading</h1>
+    <p class="lead">Each axis produces a continuous 0–100 score, banded into intensity levels per pole for reading, and expressed as a compact code — but the raw score is always the record.</p>
+
+    <div class="band-scale">
+      <div class="band-row"><div class="bd" style="background:var(--ax5)">5</div><div class="br">81–100</div><div class="bt"><b>Maximal</b> — <span>the trait dominates behaviour</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax4)">4</div><div class="br">61–80</div><div class="bt"><b>Strong</b> — <span>clearly, consistently expressed</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax3)">3</div><div class="br">41–60</div><div class="bt"><b>Pronounced</b> — <span>present, situational</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax2)">2</div><div class="br">21–40</div><div class="bt"><b>Moderate</b> — <span>a mild lean</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax1)">1</div><div class="br">1–20</div><div class="bt"><b>Slight</b> — <span>barely distinguishable from balanced</span></div></div>
+      <div class="band-row b0"><div class="bd">0</div><div class="br">~50 balanced</div><div class="bt"><b>Balanced</b> — <span>no meaningful lean</span></div></div>
+    </div>
+
+    <h2>The signature</h2>
+    <p>A full ReNo signature is five slots — pole letter plus band digit — joined by separators. It is richer than a four-letter type: O3 and O5 are distinguishable, so year-over-year comparison happens on a graded scale rather than a flip/no-flip binary. It is also fully language-neutral — identical for an English adult and a Russian parent; only the archetype on top is localized.</p>
+
+    <div class="sig-code">
+      <div class="sig-slot" style="--ax:var(--ax1)"><div class="sa">Energy</div><div class="sv"><b>W</b><span>2</span></div><div class="sp">Inward</div></div>
+      <div class="sig-slot" style="--ax:var(--ax2)"><div class="sa">Information</div><div class="sv"><b>A</b><span>4</span></div><div class="sp">Abstract</div></div>
+      <div class="sig-slot" style="--ax:var(--ax3)"><div class="sa">Decision</div><div class="sv"><b>V</b><span>3</span></div><div class="sp">Values</div></div>
+      <div class="sig-slot" style="--ax:var(--ax4)"><div class="sa">Structure</div><div class="sv"><b>F</b><span>4</span></div><div class="sp">Flexible</div></div>
+      <div class="sig-slot" style="--ax:var(--ax5)"><div class="sa">Emotion</div><div class="sv"><b>S</b><span>2</span></div><div class="sp">Steady</div></div>
+    </div>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Non-negotiable principle</div>
+      <p><strong>The raw 0–100 score is the record; the band and code are only a display layer.</strong> Every reliability calculation, stability comparison, and published analysis runs on the continuous score. Bands communicate; they never compute. Running analysis on bands would manufacture false instability wherever a score sits near a band edge (60 vs 61).</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 06 HYGIENE ═══════════════ -->
+  <section class="sec" id="s6">
+    <div class="sec-num">06 — Construct hygiene</div>
+    <h1 class="sec-title">What was separated</h1>
+    <p class="lead">The original rubric measured behaviour richly but let distinct constructs bleed across axes. An axis carrying two constructs cannot factor cleanly, and cross-loading items are the main reason scores drift year to year for reasons that are not real change. v1.1 performs a deliberate separation.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:34%">Descriptor in the old rubric</th><th style="width:22%">Was attached to</th><th>Action in v1.1</th></tr></thead>
+      <tbody>
+        <tr><td>"Stays composed while others lose control"</td><td>Axis 3 — Decision Basis</td><td>→ Move to Axis 5. Stress tolerance, not decision logic.</td></tr>
+        <tr><td>"Emotional stability"</td><td>Axis 4 — Structure</td><td>→ Move to Axis 5. Never a structure construct.</td></tr>
+        <tr><td>"Mood swings drive productivity"</td><td>Axis 4 — Structure</td><td>→ Move to Axis 5. Emotional tempo.</td></tr>
+        <tr><td>Risk propensity</td><td>Axis 4 — Structure</td><td>→ Drop as a direct measure. A blend of low-Conscientiousness, low-Neuroticism, high-Extraversion — cross-loads on three axes. Let it emerge, don't measure it.</td></tr>
+        <tr><td>Conservative vs innovator</td><td>Axis 4 — Structure</td><td>→ Fold into Axis 2. Openness-to-novelty is the same signal as Concrete↔Abstract.</td></tr>
+      </tbody>
+    </table>
+
+    <p>After this pass, <strong>Axis 4 measures only order-vs-spontaneity and starter-vs-finisher</strong> — clean Conscientiousness — and the emotional content now lives, cleanly, on Axis 5. This is the version that survives factor analysis and gives a trustworthy longitudinal read.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 07 NAMING ═══════════════ -->
+  <section class="sec" id="s7">
+    <div class="sec-num">07 — Type-naming architecture</div>
+    <h1 class="sec-title">The code is the engine; the name is the dashboard</h1>
+    <p class="lead">The user never remembers five axes. They remember one name. The two products use different naming skins over the same code spine.</p>
+
+    <div class="split">
+      <div class="col coral">
+        <h4>Youth — animal totems</h4>
+        <div class="tag">Job: reassurance + pride</div>
+        <p>A parent remembers "my daughter is a Fox." The animal is the System 1 hook; the methodology sits below the fold for the involved parent.</p>
+      </div>
+      <div class="col blue">
+        <h4>Adult — archetype roles</h4>
+        <div class="tag">Job: self-understanding + decisions</div>
+        <p>"The Steady Builder," "The Quick Improviser." A named role reads as insight and carries authority; an adult told they're an "Owl" feels infantilized.</p>
+      </div>
+    </div>
+
+    <h2>Three rules that hold the system together</h2>
+    <ul>
+      <li><strong>Shared invisible spine.</strong> The five-axis code is identical across both products — what makes them one family, not two quizzes.</li>
+      <li><strong>The name is a mapping, not a spelling.</strong> Do not force the axis letters to spell a word; a name is a label bolted onto a region of the code space, as "The Architect" is bolted onto a coordinate.</li>
+      <li><strong>Name off the dominant, high-band axis.</strong> A near-balanced profile (band 0–1) gets a distinct "adaptable / versatile" name rather than being jammed into a strong pole.</li>
+    </ul>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>The cross-sell bridge</div>
+      <p>Each child animal maps to its adult archetype on the same axis-pole (child "Fox" → adult "Improviser"). This pairing is the literal mechanism of cross-selling: a parent already committed to the framework for their child converts more readily on themselves (Cialdini's commitment &amp; consistency). <strong>Axis 5 is excluded from the headline name</strong> — no child is "The Reactive One" — and any animal set must be sense-checked for connotation in the target culture.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 08 SHADOW ═══════════════ -->
+  <section class="sec" id="s8">
+    <div class="sec-num">08 — The shadow / growth edge</div>
+    <h1 class="sec-title">The core holds; the shadow grows</h1>
+    <p class="lead">Every profile has a front and a back. The dominant preferences are the front — the persona a person leads with. The shadow is the back: the underdeveloped opposite poles, and especially the least-developed axis, where a person operates less consciously. ReNo surfaces this as the growth edge.</p>
+
+    <div class="growth">
+      <div class="g-eye">Growth edge · derived, not measured</div>
+      <div class="g-title">A Level 2/3 interpretation <span>— no code slot</span></div>
+      <p>The shadow is computed from the existing five axes — the opposite pole of each dominant preference, weighted toward the least-developed axis (the one closest to balanced, or lowest-band among the leading functions). It gets no code slot and no confidence band of its own.</p>
+    </div>
+
+    <h2>Why it is the reason to re-test</h2>
+    <p>Jung's claim is not that a person never changes — it is that the <strong>core preferences are stable while the shadow / inferior functions develop over the lifespan</strong> (individuation; Lawrence's "type development"). The structure holds; the shadow grows. That resolves the apparent paradox of a longitudinal product: if personality were fully fixed, why re-test? Because the passport tracks two things at once — the stable core (which should hold) and the developing growth edge (which should move). The re-test is not looking for the core to change; it is watching the shadow mature.</p>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>Framing rule — this one is sensitive</div>
+      <p>For adults, "shadow / untapped potential / where you get in your own way" is a compelling hook. For a child's profile shown to a parent, "shadow" and "not living up to potential" must <strong>never</strong> read as a deficit or a dark verdict on the child. The parent-facing frame is strengths-based and developmental — "growth edge," "emerging strengths," "where your child will benefit from support" — grounded in SDT, never a label. Same construct, life-stage-appropriate language, exactly as with Axis 5.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 09 PROFILE + PASSPORT ═══════════════ -->
+  <section class="sec" id="s9">
+    <div class="sec-num">09 — The profile &amp; the passport</div>
+    <h1 class="sec-title">A worked example</h1>
+    <p class="lead">How one code — <span class="mono">W2 · A4 · V3 · F4 · S2</span> — expands into the three levels, and how the passport records it over time. Sample profile: <strong>Lis</strong>.</p>
+
+    <div class="fig">
+      <div class="fig-dark">
+        <div class="radar-chart" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Energy,Info,Decision,Structure,Emotion" data-codes="W2,A4,V3,F4,S2" data-size="260" data-theme="gradient"></div>
+        <div class="fd-side">
+          <h4>The Reflective Explorer</h4>
+          <p>Level 1, visualized. Each axis is a spectrum position toward its plus pole, shown with a confidence band — next year's small movement inside the band reads as stability, not change.</p>
+        </div>
+      </div>
+    </div>
+
+    <table class="m-table">
+      <thead><tr><th>Axis</th><th>Raw (0–100)</th><th>Band</th><th>Code</th><th style="width:34%">Reading</th></tr></thead>
+      <tbody>
+        <tr><td><b>Energy Orientation</b></td><td>32 — Inward</td><td>2</td><td class="code">W2</td><td>Mildly inward; recharges alone, warms up in small groups.</td></tr>
+        <tr><td><b>Information Focus</b></td><td>71 — Abstract</td><td>4</td><td class="code">A4</td><td>Strongly abstract; drawn to ideas, patterns, "what if."</td></tr>
+        <tr><td><b>Decision Basis</b></td><td>54 — Values</td><td>3</td><td class="code">V3</td><td>Pronounced values-led; weighs people and fairness first.</td></tr>
+        <tr><td><b>Structure Preference</b></td><td>68 — Flexible</td><td>4</td><td class="code">F4</td><td>Strongly flexible; improvises, resists rigid schedules.</td></tr>
+        <tr><td><b>Emotional Response</b></td><td>38 — Steady-ish</td><td>2</td><td class="code">S2</td><td>Fairly steady; occasional sensitivity under real stress.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="growth">
+      <div class="g-eye">Growth edge · derived</div>
+      <div class="g-title">Energy Orientation <span>· W2, near-balanced</span></div>
+      <p>The least-developed axis points the shadow toward developing outward expression: speaking up, initiating. Framed for a parent as "where a little encouragement pays off," not a weakness.</p>
+    </div>
+
+    <h2>What the three levels contain</h2>
+    <ul>
+      <li><strong>Level 1 — measured.</strong> The five axes as spectrum positions, each with a confidence band, not a false-precision point ("71, likely 64–78"). Visualized as a radar. The band protects the retest promise.</li>
+      <li><strong>Level 2 — interpretive.</strong> The code translated into patterns: RIASEC direction and profession fit, SDT motivational profile, and the growth edge (§8).</li>
+      <li><strong>Level 3 — narrative.</strong> The archetype/totem and a short life-story framing — the part a person screenshots. Explicitly a story.</li>
+    </ul>
+
+    <h2>The passport</h2>
+    <p>Each test writes a dated entry to the user's passport. Over years, the passport shows two trend-lines: the <strong>stable core</strong> (dominant axes, expected to hold within their confidence bands) and the <strong>growth edge</strong> (expected to develop). For the youth product it states plainly that it is based on parent observation, which sets up the annual re-test naturally.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 10 DEVELOPMENT ═══════════════ -->
+  <section class="sec" id="s10">
+    <div class="sec-num">10 — Measurement development</div>
+    <h1 class="sec-title">The DeVellis path</h1>
+    <p class="lead">To move ReNo from "specified" to "validated," it follows the standard scale-development sequence (DeVellis, <em>Scale Development</em>).</p>
+
+    <ol>
+      <li><strong>Define each construct.</strong> Done — §4, with explicit "not-this" boundaries.</li>
+      <li><strong>Generate a broad item pool.</strong> ~15–20 candidate items per axis, deliberately redundant, so weak items drop and a reliable ~10-item scale remains.</li>
+      <li><strong>Fix the response format.</strong> Likert agreement, continuous scoring behind the bands.</li>
+      <li><strong>Expert review</strong> for content validity — the role for the credentialed collaborator.</li>
+      <li><strong>Include validation items</strong> (§12) so convergent validity is tested in the same sitting.</li>
+      <li><strong>Administer to a development sample.</strong> The launch itself is a viable first data-collection engine.</li>
+      <li><strong>Item &amp; factor analysis</strong> — confirm five clean factors; drop cross-loading items.</li>
+      <li><strong>Optimize scale length</strong> — reliability vs brevity.</li>
+    </ol>
+
+    <h2>Item design rules</h2>
+    <ul>
+      <li><strong>One construct per item</strong> — the point of §6.</li>
+      <li><strong>Balanced reverse-scoring</strong> so acquiescence bias does not inflate a pole.</li>
+      <li><strong>Behaviourally anchored</strong> — an observable action, never a trait word. Parents rate behaviour accurately but infer traits poorly.</li>
+      <li><strong>Two phrasings</strong> — adult self-report, and parent-observer for the 8–14 youth version.</li>
+    </ul>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:24%">Form</th><th style="width:16%">Scores toward</th><th>Item (Axis 1, Energy Orientation)</th></tr></thead>
+      <tbody>
+        <tr><td>Adult</td><td class="code">Outward</td><td>"After a long social event I feel energized rather than drained."</td></tr>
+        <tr><td>Adult (reverse)</td><td class="code">Inward</td><td>"I need time alone to recharge after being around people."</td></tr>
+        <tr><td>Parent-observer</td><td class="code">Outward</td><td>"After a big group activity my child is wound-up and lively rather than tired and quiet."</td></tr>
+        <tr><td>Parent-observer (reverse)</td><td class="code">Inward</td><td>"My child retreats to a quiet activity to recover after lots of social time."</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 11 STABILITY ═══════════════ -->
+  <section class="sec" id="s11">
+    <div class="sec-num">11 — The stability hypothesis</div>
+    <h1 class="sec-title">Does structure stabilize as the brain matures?</h1>
+    <p class="lead">ReNo's guiding question. Users re-test over time and profiles are compared. This section states honestly what the literature supports and what the design must do to yield a real finding rather than an artifact.</p>
+
+    <h2>What the evidence actually shows</h2>
+    <ul>
+      <li><strong>A measurable core emerges in middle childhood.</strong> The empirical basis for the age-8 floor: below ~7–8 the Big Five structure is under-differentiated; by 8 it is crystallized enough to assess. The "stabilizes as the brain develops" theory is directionally supported.</li>
+      <li><strong>Rank-order stability rises with age but is not yet high in 8–14.</strong> Consistency climbs through childhood and only plateaus near age 50 (Roberts &amp; DelVecchio). The honest framing is "an increasingly stable core," not "fixed."</li>
+      <li><strong>Mean-level maturation happens even in stable people</strong> (the maturity principle): normative drift toward more conscientiousness, agreeableness, emotional stability. Rank can hold while absolute scores move.</li>
+      <li><strong>The core holds while the shadow develops</strong> (§8) — the developmental claim ReNo actually makes.</li>
+    </ul>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>The design trap — and why continuous scoring is the fix</div>
+      <p>A categorical type re-tested annually manufactures instability: a person near a cut-point flips on trivial fluctuation. ReNo measures stability on the <strong>continuous 0–100 axes, never bands or type</strong> — which requires knowing test-retest reliability first, because without it true change cannot be separated from measurement error. That separation is the entire study.</p>
+    </div>
+
+    <h2>Design requirements</h2>
+    <ul>
+      <li>Store and analyze raw continuous scores with item-level responses and timestamps, from launch.</li>
+      <li>Establish test-retest reliability (short interval) before interpreting long-interval change.</li>
+      <li>Report rank-order, mean-level, and profile stability separately.</li>
+      <li>Model change by age band, expecting genuinely lower stability across 8–14.</li>
+    </ul>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 12 VALIDATION ═══════════════ -->
+  <section class="sec" id="s12">
+    <div class="sec-num">12 — Validation &amp; publication</div>
+    <h1 class="sec-title">Correlate where it should, diverge where it should</h1>
+    <p class="lead">To claim validity, ReNo axes must correlate with established instruments (convergent) and behave distinctly where they should (discriminant).</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:30%">Instrument</th><th style="width:26%">Validates</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><b>NEO-PI-R</b></td><td>Full Big Five, facet-level</td><td>Gold-standard convergent check for Axes 2, 4, 5 (and Extraversion vs Axis 1).</td></tr>
+        <tr><td><b>TIPI</b></td><td>Big Five, brief</td><td>Low-friction embed in the post-purchase flow.</td></tr>
+        <tr><td><b>Holland RIASEC inventory</b></td><td>Vocational interests</td><td>Validates the Level-2 profession mapping.</td></tr>
+        <tr><td><b>Basic Psychological Needs Scale</b></td><td>SDT needs</td><td>Validates the motivational layer.</td></tr>
+        <tr><td><b>MMTIC</b></td><td>Child type measurement</td><td>Closest existing benchmark for the youth instrument.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>One operational fact</div>
+      <p>The publication pathway depends on one thing: <strong>item-level, timestamped response data must be collected from day one.</strong> Research consent and follow-up items are embedded in the post-purchase flow at launch, so the dataset for a validation-and-stability paper accumulates as a by-product of ordinary sales.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 13 ETHICS ═══════════════ -->
+  <section class="sec" id="s13">
+    <div class="sec-num">13 — Ethics, framing &amp; data separation</div>
+    <h1 class="sec-title">A duty of care</h1>
+    <p class="lead">A personality product aimed at children carries responsibilities a career quiz does not. Adult and youth data are physically separated and never aggregated in any view or analysis.</p>
+
+    <ul>
+      <li><strong>Normal-range only.</strong> Axis 5 measures temperament, not pathology. The words <em>neurotic, unstable, anxious</em> never appear. The strengths-based frame is Sensitive ↔ Steady (cf. Aron's highly-sensitive-child work) — accurate, not spin.</li>
+      <li><strong>The shadow is a growth edge, never a deficit</strong> — especially for a child. No profile tells a parent their child has a "dark side"; it shows where support helps (SDT competence).</li>
+      <li><strong>Empower the parent, do not diagnose the child.</strong> Guidance is "how to support a child like this," never a verdict.</li>
+      <li><strong>Transparency.</strong> The youth report states it is based on parent observation; the methodology is available to the high-involvement parent (ELM).</li>
+      <li><strong>Consent for research is explicit, separate, and revocable</strong> — opt-in, never a condition of purchase.</li>
+    </ul>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ APPENDIX ═══════════════ -->
+  <section class="sec" id="sa">
+    <div class="sec-num">A — Appendix</div>
+    <h1 class="sec-title">Code reference</h1>
+
+    <table class="m-table">
+      <thead><tr><th style="width:40%">Axis</th><th>Plus pole</th><th>Minus pole</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 — Energy Orientation</b></td><td><span class="pole" style="background:var(--ax1)">O — Outward</span></td><td>W — Inward</td></tr>
+        <tr><td><b>2 — Information Focus</b></td><td><span class="pole" style="background:var(--ax2)">C — Concrete</span></td><td>A — Abstract</td></tr>
+        <tr><td><b>3 — Decision Basis</b></td><td><span class="pole" style="background:var(--ax3)">L — Logic</span></td><td>V — Values</td></tr>
+        <tr><td><b>4 — Structure Preference</b></td><td><span class="pole" style="background:var(--ax4)">D — Ordered</span></td><td>F — Flexible</td></tr>
+        <tr><td><b>5 — Emotional Response</b></td><td><span class="pole" style="background:var(--ax5)">S — Steady</span></td><td>R — Reactive</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Format:</strong> <span class="tag-inline">[pole letter][band digit]</span> per axis, fixed order 1–5, separated by middots. Band digit 0 = balanced. The shadow/growth edge is derived from these five, not coded separately.</p>
+
+    <div class="pq">One-line summary: five clean axes, scored continuously, banded for reading, expressed as one language-neutral code, named by a single dominant-axis totem or archetype, with a derived <b>growth edge</b> — the stable core reserved for the science, the story reserved for the person, and both tracked over time in the passport.</div>
+
+    <hr class="rule"/>
+    <p style="font-size:9pt;color:var(--ink-mute)"><em>ReNo Methodology v1.1 — working draft, July 2026. Constructs and architecture specified; empirical validation pending per Sections 10–12. Prepared for internal use and research-collaborator review. Consumer-facing language is developed separately and is out of scope.</em></p>
+  </section>
+
+</doc-page>
+<script>
+// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* BEGIN USAGE */
+/**
+ * <doc-page> — paged-document shell for printable HTML.
+ *
+ * On screen the document renders as a single continuous sheet on a desk
+ * background (Google Docs' pageless view): you scroll one tall page card.
+ * There is no manual page-splitting — write the whole document as normal
+ * flow inside <doc-page> and the browser's print engine paginates it at
+ * export.
+ *
+ * At print the component injects `@page { size: …; margin: 0 }` (which
+ * leaves Chrome no margin box to draw its date/URL/page-count header in)
+ * and moves the visual margin onto the sheet's own padding, so the printed
+ * page has the same inset you see on screen. Standard break-hygiene rules
+ * (`break-inside: avoid` on figures, code blocks, images and table rows;
+ * `orphans/widows: 3`) are applied so paragraphs and groups split cleanly.
+ * On screen and at print, headings default to `text-wrap: balance` and
+ * body text (p, li, blockquote, figcaption) to `text-wrap: pretty`, so
+ * the document avoids widowed/orphaned words; the defaults have zero
+ * specificity, so any text-wrap you declare on those elements wins.
+ *
+ * Usage:
+ *   <style>doc-page:not(:defined){visibility:hidden}</style>
+ *   <doc-page size="letter" margin="0.75in">
+ *     <h1>Title</h1>
+ *     <p>…body…</p>
+ *   </doc-page>
+ *   &lt;script src="doc-page.js">&lt;/script>
+ *
+ * Attributes:
+ *   size    — letter | a4 | legal (default letter)
+ *   width / height — explicit CSS lengths, override `size`
+ *   margin  — printable inset on every page (default 0.75in)
+ *
+ * Running header/footer (optional): give an element `slot="header"` or
+ * `slot="footer"` and it repeats on every printed page via
+ * `position: fixed`. To keep body text from sliding under it, the
+ * component prints inside a single-cell table whose <thead>/<tfoot> are
+ * spacers sized to the header/footer height — browsers repeat thead/tfoot
+ * on every page, so each sheet's content starts below the header and ends
+ * above the footer. On screen the header/footer render once at the
+ * top/bottom of the sheet.
+ *
+ * Author content as static HTML so the user can click-to-edit any text
+ * directly. Do not set width/padding/background on the document body —
+ * the component owns the sheet box.
+ */
+/* END USAGE */
+
+(() => {
+  const PAPER = {
+    letter: ['8.5in', '11in'],
+    a4: ['210mm', '297mm'],
+    legal: ['8.5in', '14in'],
+  };
+  const CSS_LENGTH = /^\d+(\.\d+)?(px|in|mm|cm|pt|pc)$/;
+  const safeLen = (v, fb) => (CSS_LENGTH.test((v || '').trim()) ? v.trim() : fb);
+
+  const stylesheet = `
+    :host {
+      position: relative;
+      display: block;
+      min-height: 100vh;
+      background: #ece8dd;
+      padding: 48px 24px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --doc-page-w: 8.5in;
+      --doc-page-h: 11in;
+      --doc-page-margin: 0.75in;
+      --doc-hdr-h: 0px;
+      --doc-ftr-h: 0px;
+    }
+    .sheet {
+      width: var(--doc-page-w);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 14px rgba(20, 20, 19, 0.12);
+      border-radius: 2px;
+      box-sizing: border-box;
+      padding: var(--doc-page-margin);
+    }
+    .frame { width: 100%; border-collapse: collapse; }
+    .frame td, .frame th { padding: 0; text-align: left; font-weight: inherit; }
+    .hdr-space { height: var(--doc-hdr-h); }
+    .ftr-space { height: var(--doc-ftr-h); }
+    ::slotted([slot="header"]),
+    ::slotted([slot="footer"]) { display: block; box-sizing: border-box; }
+    @media print {
+      :host { background: none; padding: 0; min-height: 0; }
+      .sheet {
+        width: auto; margin: 0; box-shadow: none; border-radius: 0;
+        padding: 0 var(--doc-page-margin);
+      }
+      /* The thead/tfoot spacers repeat on every page, so they carry the
+       * vertical page margin (which the sheet's own padding cannot, since
+       * that padding is consumed once on the first/last page). The running
+       * header/footer are fixed inside that band. */
+      .hdr-space { height: max(var(--doc-page-margin), calc(var(--doc-hdr-h) + 0.35in)); }
+      .ftr-space { height: max(var(--doc-page-margin), calc(var(--doc-ftr-h) + 0.35in)); }
+      ::slotted([slot="header"]) {
+        position: fixed; top: 0; left: 0; right: 0; margin: 0;
+        padding: calc(var(--doc-page-margin) * 0.45) var(--doc-page-margin) 0;
+      }
+      ::slotted([slot="footer"]) {
+        position: fixed; bottom: 0; left: 0; right: 0; margin: 0;
+        padding: 0 var(--doc-page-margin) calc(var(--doc-page-margin) * 0.45);
+      }
+    }
+  `;
+
+  class DocPage extends HTMLElement {
+    static get observedAttributes() { return ['size', 'width', 'height', 'margin']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._mo = typeof MutationObserver === 'function'
+        ? new MutationObserver(() => this._scheduleMeasure())
+        : null;
+    }
+
+    get pageWidth() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('width'), named ? named[0] : PAPER.letter[0]);
+    }
+    get pageHeight() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('height'), named ? named[1] : PAPER.letter[1]);
+    }
+    get pageMargin() { return safeLen(this.getAttribute('margin'), '0.75in'); }
+
+    connectedCallback() {
+      if (!this._sheet) this._render();
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._ensureTextWrapDefaults();
+      if (this._mo) this._mo.observe(this, {
+        subtree: true, childList: true, characterData: true, attributes: true,
+      });
+      this._onResize = () => this._scheduleMeasure();
+      window.addEventListener('resize', this._onResize);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => this._scheduleMeasure());
+      }
+      this._scheduleMeasure();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('resize', this._onResize);
+      if (this._mo) this._mo.disconnect();
+      if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+      // Drop the head rules when the last doc-page leaves, so a deleted
+      // document's @page geometry and text-wrap defaults can't apply to
+      // whatever replaces it.
+      if (!document.querySelector('doc-page')) {
+        ['doc-page-print', 'doc-page-text-wrap'].forEach((id) => {
+          const tag = document.getElementById(id);
+          if (tag) tag.remove();
+        });
+      }
+    }
+
+    attributeChangedCallback() {
+      if (!this._sheet) return;
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._scheduleMeasure();
+    }
+
+    _render() {
+      this._root.innerHTML = `
+        <style>${stylesheet}</style>
+        <style id="vars"></style>
+        <div class="sheet" data-screen-label="Document">
+          <table class="frame" role="presentation">
+            <thead><tr><th><div class="hdr-space"><slot name="header"></slot></div></th></tr></thead>
+            <tbody><tr><td class="body"><slot></slot></td></tr></tbody>
+            <tfoot><tr><td><div class="ftr-space"><slot name="footer"></slot></div></td></tr></tfoot>
+          </table>
+        </div>`;
+      this._sheet = this._root.querySelector('.sheet');
+      this._vars = this._root.getElementById('vars');
+    }
+
+    /** Runtime sizing lives in a shadow <style> :host rule, never on the
+     *  light-DOM host element, so serialize-persist can't write it back. */
+    _syncSize(hdrH, ftrH) {
+      this._vars.textContent = ':host{' +
+        '--doc-page-w:' + this.pageWidth + ';' +
+        '--doc-page-h:' + this.pageHeight + ';' +
+        '--doc-page-margin:' + this.pageMargin + ';' +
+        '--doc-hdr-h:' + (hdrH || 0) + 'px;' +
+        '--doc-ftr-h:' + (ftrH || 0) + 'px}';
+    }
+
+    /** @page is a no-op inside shadow DOM, so the rule lives in <head>.
+     *  Re-appended on every sync so it stays last in source order — the
+     *  @page cascade is source-order per descriptor, so this rule wins
+     *  over any other @page rule in the document. */
+    _syncPrintPageRule() {
+      const id = 'doc-page-print';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+      }
+      document.head.appendChild(tag);
+      tag.textContent =
+        '@page { size: ' + this.pageWidth + ' ' + this.pageHeight + '; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; height: auto !important; overflow: visible !important; } ' +
+        'h1,h2,h3,h4,h5,h6 { break-after: avoid; } ' +
+        'figure,pre,blockquote,img,svg,tr { break-inside: avoid; } ' +
+        'p,li { orphans: 3; widows: 3; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } ' +
+        '*, *::before, *::after { animation-delay: -99s !important; animation-duration: .001s !important; ' +
+        'animation-iteration-count: 1 !important; animation-fill-mode: both !important; ' +
+        'animation-play-state: running !important; transition-duration: 0s !important; } }';
+    }
+
+    /** Typographic defaults for document text: balance headings, avoid
+     *  widowed/orphaned words in body copy (browsers without text-wrap
+     *  support drop the declarations). Zero-specificity via :where() so
+     *  any text-wrap authored on those elements wins; document-level so the
+     *  rules reach the slotted (light DOM) content — shadow styles can't.
+     *  data-omelette-injected marks the tag for the host editor to strip
+     *  at serialize, so it is never written back as authored source. */
+    _ensureTextWrapDefaults() {
+      if (document.getElementById('doc-page-text-wrap')) return;
+      const tag = document.createElement('style');
+      tag.id = 'doc-page-text-wrap';
+      tag.setAttribute('data-omelette-injected', '');
+      tag.textContent =
+        ':where(h1,h2,h3,h4,h5,h6){text-wrap:balance}' +
+        ':where(p,li,blockquote,figcaption){text-wrap:pretty}';
+      document.head.appendChild(tag);
+    }
+
+    _scheduleMeasure() {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._measure(); });
+    }
+
+    /** Slot heights feed the print spacers (--doc-hdr-h / --doc-ftr-h), so
+     *  they re-measure on content mutation, resize, and font load. */
+    _measure() {
+      const hdr = this.querySelector(':scope > [slot="header"]');
+      const ftr = this.querySelector(':scope > [slot="footer"]');
+      this._syncSize(hdr ? hdr.offsetHeight : 0, ftr ? ftr.offsetHeight : 0);
+    }
+  }
+
+  if (!customElements.get('doc-page')) {
+    customElements.define('doc-page', DocPage);
+  }
+})();
+
+</script>
+<script>
+/* =====================================================================
+   PsyID · Methodology document JS  (shared)
+   Renders the pentagon radar + fills axis-pill widths from data-*.
+   ===================================================================== */
+(function(){
+  var AX = ['#2244E0','#6A85F0','#8A5CD6','#FF7A3D','#FF5A5A'];
+  function polar(cx,cy,r,deg){var a=(deg-90)*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};}
+
+  function buildRadar(el){
+    var vals  = (el.getAttribute('data-values')||'0.5,0.5,0.5,0.5,0.5').split(',').map(Number);
+    var labs  = (el.getAttribute('data-labels')||'').split(',');
+    var codes = (el.getAttribute('data-codes')||'').split(',');
+    var size  = parseInt(el.getAttribute('data-size')||'300',10);
+    var theme = el.getAttribute('data-theme')||'light';
+    var n = vals.length, cx=size/2, cy=size/2, maxR=size/2-40, step=360/n;
+    var light = theme==='light';
+    var ring = light?'#E4DCCD':'rgba(255,255,255,.16)';
+    var axis = light?'#E4DCCD':'rgba(255,255,255,.22)';
+    var txt  = light?'#82879F':'rgba(255,255,255,.7)';
+    var code = light?'#0E1230':'#fff';
+    var i,ri,rr,pp,e,p,pts=[],dp=[];
+    var svg='';
+    for(ri=1;ri<=4;ri++){rr=(ri/4)*maxR;pp=[];for(i=0;i<n;i++){p=polar(cx,cy,rr,i*step);pp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}svg+='<polygon points="'+pp.join(' ')+'" fill="none" stroke="'+ring+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){e=polar(cx,cy,maxR,i*step);svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+axis+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){p=polar(cx,cy,vals[i]*maxR,i*step);pts.push(p);dp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}
+    var fill=light?'rgba(255,122,61,.14)':'rgba(255,165,72,.22)';
+    var stroke=light?'#FF7A3D':'rgba(255,255,255,.92)';
+    svg+='<polygon points="'+dp.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" stroke-linejoin="round"/>';
+    for(i=0;i<n;i++){svg+='<circle cx="'+pts[i].x.toFixed(1)+'" cy="'+pts[i].y.toFixed(1)+'" r="4.5" fill="#fff" stroke="'+AX[i%5]+'" stroke-width="2.5"/>';}
+    for(i=0;i<n;i++){
+      var lp=polar(cx,cy,maxR+22,i*step);
+      var anchor=lp.x<cx-2?'end':(lp.x>cx+2?'start':'middle');
+      var dy=lp.y<cy-2?'-2':(lp.y>cy+2?'11':'4');
+      var lab=(labs[i]||'').trim().toUpperCase(), cd=(codes[i]||'').trim();
+      svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+dy+'" text-anchor="'+anchor+'" font-family="Geist Mono, monospace" font-size="9" letter-spacing="1.2" fill="'+txt+'">'+lab+'</text>';
+      if(cd)svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+(parseFloat(dy)+12)+'" text-anchor="'+anchor+'" font-family="Geist, system-ui" font-weight="800" font-size="12" fill="'+code+'">'+cd+'</text>';
+    }
+    var pad=46;
+    el.innerHTML='<svg viewBox="'+(-pad)+' 0 '+(size+2*pad)+' '+size+'" width="'+(size+2*pad)+'" height="'+size+'" fill="none">'+svg+'</svg>';
+  }
+
+  function run(){
+    document.querySelectorAll('.radar-chart').forEach(buildRadar);
+    document.querySelectorAll('.axis-pill[data-value]').forEach(function(el){
+      var v=parseFloat(el.getAttribute('data-value')||'0.5');
+      var f=el.querySelector('.ap-f'); if(f)f.style.width=(v*100).toFixed(0)+'%';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run); else run();
+})();
+
+</script>
+</body>
+</html>

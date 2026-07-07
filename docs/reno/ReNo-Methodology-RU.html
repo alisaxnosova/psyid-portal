@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Методология ReNo · v1.1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* =====================================================================
+   PsyID · Methodology document system   (shared by all 4 documents)
+   Aligned to the Element Vault · ReNo v1.1
+   ===================================================================== */
+
+:root{
+  --navy:#050C2E; --ink:#0E1230; --ink-soft:#40456A; --ink-mute:#82879F;
+  --blue:#2244E0; --blue-soft:#6A85F0; --violet:#8A5CD6; --coral:#FF5A5A;
+  --orange:#FF7A3D; --orange-hot:#FF9540; --gold:#FFC074; --gold-deep:#C98A2E;
+
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+
+  --paper:#FBF9F5; --paper-2:#F3EEE5; --paper-3:#ECE4D7;
+  --line:#E4DCCD; --line-2:#D3C9B8;
+
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+
+  --grad-hero:linear-gradient(135deg,#0A143F 0%,#0D1E6A 30%,#4B266A 56%,#B23A4C 78%,#FF823F 100%);
+  --grad-axis:linear-gradient(95deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+  --grad-orange:linear-gradient(95deg,var(--orange),var(--gold));
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+}
+
+*{box-sizing:border-box;}
+doc-page:not(:defined){visibility:hidden;}
+body{margin:0;background:#211E17;}
+doc-page{
+  --doc-accent:var(--orange);
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font); font-size:11pt; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv01";
+}
+
+/* ── Running header / footer ─────────────────────────────── */
+.doc-head{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-mute); padding-bottom:9px; border-bottom:1px solid var(--line);
+}
+.doc-head .dh-brand{font-family:var(--font);font-weight:800;letter-spacing:-.02em;font-size:10pt;color:var(--ink);text-transform:none;}
+.doc-head .dh-brand i{color:var(--orange);font-style:normal;}
+.doc-foot{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-mute); padding-top:9px; border-top:1px solid var(--line);
+}
+
+/* ── Base type ───────────────────────────────────────────── */
+doc-page p{margin:0 0 12px; color:var(--ink-soft); }
+doc-page strong,doc-page b{color:var(--ink);font-weight:600;}
+doc-page em{font-style:italic;}
+a{color:var(--orange);text-decoration:none;} a:hover{color:var(--orange-hot);}
+
+.lead{font-size:14.5pt;line-height:1.5;color:var(--ink);font-weight:500;letter-spacing:-.01em;margin-bottom:20px;text-wrap:pretty;}
+
+/* ── Section header ──────────────────────────────────────── */
+.sec{margin-top:40px;}
+.sec:first-of-type{margin-top:0;}
+.sec-num{font-family:var(--mono);font-size:9pt;letter-spacing:.24em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+h1.sec-title{font-size:26pt;font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0 0 16px;color:var(--ink);}
+h2{font-size:15pt;font-weight:700;letter-spacing:-.02em;margin:26px 0 10px;color:var(--ink);}
+h3{font-family:var(--mono);font-size:9pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin:22px 0 8px;}
+.rule{height:1px;background:var(--line);border:none;margin:26px 0;}
+
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--orange);}
+
+/* ── Lists ───────────────────────────────────────────────── */
+doc-page ul,doc-page ol{margin:0 0 14px;padding-left:0;list-style:none;}
+doc-page li{position:relative;padding-left:22px;margin-bottom:8px;color:var(--ink-soft);}
+doc-page ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--doc-accent);}
+doc-page ol{counter-reset:li;}
+doc-page ol li{counter-increment:li;}
+doc-page ol li::before{content:counter(li);position:absolute;left:0;top:0;font-family:var(--mono);font-size:9pt;font-weight:600;color:var(--orange);}
+
+/* ── Cover ───────────────────────────────────────────────── */
+.cover{
+  position:relative; margin:-0.9in -0.9in 0; padding:0.9in 0.9in 0.8in;
+  min-height:9.4in; color:#fff; display:flex; flex-direction:column;
+  background:var(--grad-hero); overflow:hidden; break-after:page;
+}
+.cover::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 84% 88%, rgba(255,165,72,.55), transparent 60%),
+  radial-gradient(ellipse 50% 45% at 22% 30%, rgba(58,98,232,.5), transparent 60%);pointer-events:none;}
+.cover>*{position:relative;z-index:1;}
+.cover .cover-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.cover-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17pt;letter-spacing:-.03em;}
+.cover-brand i{color:var(--gold);font-style:normal;}
+.cover-status{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 13px;}
+.cover-mid{margin-top:auto;}
+.cover-kicker{font-family:var(--mono);font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:18px;}
+.cover h1{font-size:52pt;font-weight:800;letter-spacing:-.045em;line-height:.98;margin:0 0 22px;color:#fff;}
+.cover .sub{font-size:14pt;line-height:1.5;color:rgba(255,255,255,.82);max-width:34ch;font-weight:400;margin-bottom:30px;text-wrap:pretty;}
+.cover-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;border-top:1px solid rgba(255,255,255,.2);padding-top:22px;max-width:560px;}
+.cover-meta dt{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.cover-meta dd{font-size:10.5pt;color:#fff;font-weight:500;margin:0;}
+.cover-sig{margin-top:26px;display:flex;gap:7px;align-items:center;}
+.cover-sig .cs{font-family:var(--mono);font-weight:600;font-size:13pt;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:8px 4px;min-width:46px;text-align:center;}
+.cover-sig .cs b{font-family:var(--font);font-weight:800;color:var(--gold);}
+.cover-sig .cs span{color:rgba(255,255,255,.55);}
+
+/* ── Constellation mark ──────────────────────────────────── */
+.constell{display:inline-block;line-height:0;}
+
+/* ── Contents ────────────────────────────────────────────── */
+.toc{display:flex;flex-direction:column;gap:0;margin-top:10px;}
+.toc a{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);}
+.toc a:hover{color:var(--orange);}
+.toc .toc-n{font-family:var(--mono);font-size:9pt;color:var(--orange);width:26px;flex:none;}
+.toc .toc-t{font-weight:600;font-size:12pt;letter-spacing:-.01em;flex:1;}
+.toc .toc-d{font-size:10pt;color:var(--ink-mute);}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.m-table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:9.5pt;}
+.m-table thead th{
+  font-family:var(--mono);font-size:8pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);text-align:left;font-weight:600;
+  padding:0 12px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom;
+}
+.m-table tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);line-height:1.5;}
+.m-table tbody tr:last-child td{border-bottom:none;}
+.m-table td b,.m-table td strong{color:var(--ink);}
+.m-table .code{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+.m-table.zebra tbody tr:nth-child(even){background:var(--paper-2);}
+.m-table .pole{font-family:var(--mono);font-weight:600;color:#fff;border-radius:6px;padding:2px 8px;display:inline-block;font-size:8.5pt;}
+
+/* ── Callouts ────────────────────────────────────────────── */
+.callout{border-radius:16px;padding:20px 22px;margin:18px 0;background:var(--paper-2);border:1px solid var(--line);break-inside:avoid;}
+.callout .co-label{font-family:var(--mono);font-size:8pt;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+.callout .co-label .dot{width:7px;height:7px;border-radius:50%;}
+.callout p:last-child{margin-bottom:0;}
+.callout p{color:var(--ink-soft);}
+
+.callout.honest{background:linear-gradient(180deg,#FFF6E6,#FDF0D8);border-color:#F0DDB6;}
+.callout.honest .co-label{color:var(--gold-deep);} .callout.honest .co-label .dot{background:var(--gold-deep);}
+.callout.principle{background:var(--ink);border-color:var(--ink);}
+.callout.principle .co-label{color:var(--gold);} .callout.principle .co-label .dot{background:var(--gold);}
+.callout.principle p{color:rgba(255,255,255,.82);} .callout.principle strong{color:#fff;}
+.callout.framing{background:linear-gradient(180deg,#FFEEEC,#FFE4E1);border-color:#F6C9C4;}
+.callout.framing .co-label{color:var(--coral);} .callout.framing .co-label .dot{background:var(--coral);}
+.callout.note{background:var(--paper-2);}
+.callout.note .co-label{color:var(--blue);} .callout.note .co-label .dot{background:var(--blue);}
+
+/* ── Pull quote ──────────────────────────────────────────── */
+.pq{font-size:19pt;font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.3;color:var(--ink);border-left:3px solid var(--orange);padding-left:22px;margin:22px 0;text-wrap:pretty;}
+.pq b{font-style:normal;background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ── Axis legend cards ───────────────────────────────────── */
+.axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.axis-grid.five{grid-template-columns:repeat(5,1fr);gap:9px;}
+.axis-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 16px;border-top:4px solid var(--ax);break-inside:avoid;}
+.axis-card .ac-no{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);}
+.axis-card .ac-name{font-weight:700;font-size:12pt;letter-spacing:-.02em;margin:5px 0 11px;color:var(--ink);}
+.axis-card .ac-pole{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:9pt;color:var(--ink-soft);line-height:1.35;}
+.axis-card .ac-pole .p{font-family:var(--mono);font-weight:600;font-size:11pt;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;background:var(--ax);flex:none;}
+.axis-card .ac-pole .p.minus{background:transparent;color:var(--ax);border:1.5px solid var(--ax);}
+.axis-card.five .ac-name{font-size:10.5pt;}
+
+/* ── Signature code block ────────────────────────────────── */
+.sig-code{display:flex;gap:8px;margin:16px 0;}
+.sig-slot{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 8px 10px;text-align:center;position:relative;overflow:hidden;break-inside:avoid;}
+.sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax);}
+.sig-slot .sa{font-family:var(--mono);font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;}
+.sig-slot .sv{font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1;display:flex;align-items:baseline;justify-content:center;gap:1px;}
+.sig-slot .sv b{font-size:26pt;color:var(--ax);} .sig-slot .sv span{font-size:15pt;color:var(--ink-mute);}
+.sig-slot .sp{font-size:8.5pt;color:var(--ink-soft);margin-top:6px;font-weight:600;}
+.sig-slot.balanced::before{background:var(--line-2);} .sig-slot.balanced .sv b{color:var(--ink-mute);} .sig-slot.balanced .sv span{color:var(--ink-mute);}
+.sig-inline{font-family:var(--mono);font-weight:600;font-size:14pt;letter-spacing:.02em;color:var(--ink);display:inline-flex;gap:9px;align-items:center;}
+.sig-inline .d{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);}
+
+/* ── Band scale ──────────────────────────────────────────── */
+.band-scale{margin:16px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.band-row{display:grid;grid-template-columns:40px 92px 1fr;align-items:center;gap:14px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);}
+.band-row:last-child{border-bottom:none;}
+.band-row .bd{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:16pt;color:#fff;}
+.band-row.b0 .bd{background:var(--line-2);color:var(--ink);}
+.band-row .br{font-family:var(--mono);font-size:9pt;color:var(--ink-soft);}
+.band-row .bt b{color:var(--ink);font-weight:700;} .band-row .bt span{color:var(--ink-soft);}
+
+/* ── Growth edge card ────────────────────────────────────── */
+.growth{border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,#131A3E,#2A1C4A 60%,#45213F);color:#fff;position:relative;overflow:hidden;margin:18px 0;break-inside:avoid;}
+.growth::after{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,72,.45),transparent 70%);}
+.growth .g-eye{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;position:relative;}
+.growth .g-title{font-weight:800;font-size:16pt;letter-spacing:-.02em;margin-bottom:7px;position:relative;}
+.growth .g-title span{color:var(--gold);}
+.growth p{color:rgba(255,255,255,.82);position:relative;margin:0;}
+
+/* ── Radar figure ────────────────────────────────────────── */
+.fig{margin:18px 0;break-inside:avoid;}
+.fig .radar-chart{display:block;}
+.fig-dark{background:var(--grad-hero);border-radius:18px;padding:26px;display:flex;gap:26px;align-items:center;color:#fff;}
+.fig-dark .fd-side{flex:1;}
+.fig-dark .fd-side h4{font-size:13pt;font-weight:700;margin:0 0 6px;color:#fff;letter-spacing:-.01em;}
+.fig-dark .fd-side p{color:rgba(255,255,255,.78);margin:0;font-size:10pt;}
+.figcap{font-family:var(--mono);font-size:8pt;letter-spacing:.06em;color:var(--ink-mute);margin-top:10px;text-transform:uppercase;}
+
+/* ── Axis pill (list) ────────────────────────────────────── */
+.axis-pill{display:flex;align-items:center;gap:12px;margin:8px 0;}
+.axis-pill .ap-n{font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);width:96px;flex:none;}
+.axis-pill .ap-t{flex:1;height:7px;background:var(--paper-3);border-radius:999px;overflow:hidden;}
+.axis-pill .ap-f{height:100%;border-radius:999px;background:var(--ax);}
+.axis-pill .ap-c{font-family:var(--mono);font-size:9.5pt;font-weight:600;color:var(--ink);width:30px;text-align:right;}
+
+/* ── Two-column feature (products) ───────────────────────── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.split .col{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;break-inside:avoid;}
+.split .col.blue{border-top:4px solid var(--blue);}
+.split .col.coral{border-top:4px solid var(--coral);}
+.split .col h4{font-size:13pt;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em;}
+.split .col .tag{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;}
+.split .col p{font-size:10pt;margin:0;}
+
+/* ── Stat row ────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.stat{background:var(--ink);border-radius:14px;padding:18px 16px;color:#fff;}
+.stat .sv{font-weight:800;font-size:32pt;letter-spacing:-.04em;line-height:1;}
+.stat .sv.or{background:var(--grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sv.bl{background:linear-gradient(95deg,var(--blue-soft),#fff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .sl{font-size:8.5pt;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.4;}
+
+/* ── Small helpers ───────────────────────────────────────── */
+.mono{font-family:var(--mono);}
+.tag-inline{font-family:var(--mono);font-size:8.5pt;background:var(--paper-3);border-radius:5px;padding:1px 6px;color:var(--ink);}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:5px 12px;}
+.badge.orange{background:rgba(255,122,61,.12);color:var(--orange);}
+.badge.blue{background:rgba(34,68,224,.1);color:var(--blue);}
+.page-break{break-after:page;height:0;}
+.avoid-break{break-inside:avoid;}
+
+/* ── Print / PDF · Letter ──────────────────────────────────── */
+@media print{
+  doc-page{font-size:10.5pt;line-height:1.55;}
+  .cover{
+    margin:0 0 0.25in; padding:0.55in 0.5in 0.5in;
+    min-height:8.5in; border-radius:20px; break-after:page;
+  }
+  .cover h1{font-size:44pt;}
+  .cover .sub{font-size:12.5pt;margin-bottom:24px;}
+  .cover-meta{padding-top:18px;}
+  .sec-num,h1.sec-title,h2,h3,.eyebrow,.lead{break-after:avoid;}
+  .sec{margin-top:0;}
+  .callout,.pq,.growth,.fig,.split,.stats,.band-scale,
+  .sig-code,.axis-grid,.axis-card,.axis-pill,figure{break-inside:avoid;}
+  .toc{break-inside:auto;} .toc a{break-inside:avoid;}
+  .m-table{break-inside:auto;}
+  .m-table thead{display:table-header-group;}
+  .m-table tr{break-inside:avoid;}
+}
+
+</style>
+<style>doc-page:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<doc-page size="letter" margin="0.9in">
+
+  <div slot="header" class="doc-head">
+    <span class="dh-brand">Psy<i>ID</i></span>
+    <span>Методология ReNo · v1.1 · Внутренний документ</span>
+  </div>
+  <div slot="footer" class="doc-foot">
+    <span>Рабочий документ до валидации</span>
+    <span>Июль 2026</span>
+  </div>
+
+  <!-- ═══════════════ ОБЛОЖКА ═══════════════ -->
+  <section class="cover">
+    <svg class="cover-bg" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A143F"></stop><stop offset="0.3" stop-color="#0D1E6A"></stop><stop offset="0.56" stop-color="#4B266A"></stop><stop offset="0.78" stop-color="#B23A4C"></stop><stop offset="1" stop-color="#FF823F"></stop></linearGradient></defs><rect width="100" height="100" fill="url(#coverGrad)"></rect></svg>
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="constell" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+            <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/>
+            <circle cx="50" cy="16" r="6.5" fill="#6A85F0"/><circle cx="84" cy="40" r="6.5" fill="#8A5CD6"/>
+            <circle cx="71" cy="79" r="6.5" fill="#FF7A3D"/><circle cx="29" cy="79" r="6.5" fill="#FF5A5A"/>
+            <circle cx="16" cy="40" r="6.5" fill="#2244E0"/>
+          </svg>
+        </span>
+        <span class="wordmark">Psy<i>ID</i></span>
+      </div>
+      <div class="cover-status">Статус · Рабочий документ до валидации</div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-kicker">Методологический документ · Внутренний</div>
+      <h1>Методология<br/>ReNo</h1>
+      <div class="sub">Пятиосевая модель для измерения структуры личности, отслеживания её во времени и перевода в развивающие и профориентационные рекомендации — для взрослых и для детей.</div>
+      <dl class="cover-meta">
+        <div><dt>Инструмент</dt><dd>ReNo — пятиосевая модель личности</dd></div>
+        <div><dt>Продукты</dt><dd>PsyID (15–45) · PsyID Youth (8–14)</dd></div>
+        <div><dt>Версия</dt><dd>1.1 — рабочий черновик · июль 2026</dd></div>
+        <div><dt>Формат подписи</dt><dd class="mono">W2 · A4 · V3 · F4 · S2</dd></div>
+      </dl>
+      <div class="cover-sig">
+        <div class="cs"><b>W</b><span>2</span></div>
+        <div class="cs"><b>A</b><span>4</span></div>
+        <div class="cs"><b>V</b><span>3</span></div>
+        <div class="cs"><b>F</b><span>4</span></div>
+        <div class="cs"><b>S</b><span>2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 00 О ДОКУМЕНТЕ + СОДЕРЖАНИЕ ═══════════════ -->
+  <section class="sec">
+    <div class="sec-num">00 — О документе</div>
+    <h1 class="sec-title">Что это за документ</h1>
+    <p class="lead">Документ определяет инструмент ReNo: его теоретические основания, пять осей измерения, систему оценки и кодирования, производную «тень» / зону роста, архитектуру профиля и эмпирический маршрут, необходимый для валидации.</p>
+    <p>Это методологический документ, а не маркетинговый материал. Он описывает, что именно измеряет ReNo и почему — на языке, понятном психометристу или научному соавтору. Потребительский перевод этих конструктов — тёплый, обращённый к родителю язык, тотемы-животные, рекламные тексты — сознательно вынесен в отдельный слой и в этот документ не входит.</p>
+
+    <div class="callout honest">
+      <div class="co-label"><span class="dot"></span>Честный статус</div>
+      <p>На данный момент ReNo — это <strong>теоретически описанный, но эмпирически невалидированный</strong> инструмент. Конструкты, оси и логика оценки определены здесь; надёжность, факторная структура и популяционные нормы — это пункты дорожной карты, а не достигнутые факты. Ничто из изложенного нельзя представлять клиентам или инвесторам как валидированный психометрический результат до завершения исследования из раздела 10.</p>
+    </div>
+
+    <h2>Содержание</h2>
+    <nav class="toc">
+      <a href="#s1"><span class="toc-n">01</span><span class="toc-t">Цель и охват</span><span class="toc-d">Два продукта, один движок</span></a>
+      <a href="#s2"><span class="toc-n">02</span><span class="toc-t">Теоретические основания</span><span class="toc-d">Атрибуция и ИС</span></a>
+      <a href="#s3"><span class="toc-n">03</span><span class="toc-t">Трёхуровневая архитектура</span><span class="toc-d">МакАдамс</span></a>
+      <a href="#s4"><span class="toc-n">04</span><span class="toc-t">Пять осей</span><span class="toc-d">Измерительная опора</span></a>
+      <a href="#s5"><span class="toc-n">05</span><span class="toc-t">Оценка и код интенсивности</span><span class="toc-d">0–100, банды 0–5</span></a>
+      <a href="#s6"><span class="toc-n">06</span><span class="toc-t">Гигиена конструктов</span><span class="toc-d">Что было разделено</span></a>
+      <a href="#s7"><span class="toc-n">07</span><span class="toc-t">Архитектура именования типов</span><span class="toc-d">Тотемы и архетипы</span></a>
+      <a href="#s8"><span class="toc-n">08</span><span class="toc-t">Тень / зона роста</span><span class="toc-d">Производная, не измерение</span></a>
+      <a href="#s9"><span class="toc-n">09</span><span class="toc-t">Профиль и паспорт</span><span class="toc-d">Разобранный пример</span></a>
+      <a href="#s10"><span class="toc-n">10</span><span class="toc-t">Разработка измерения</span><span class="toc-d">Путь ДеВеллиса</span></a>
+      <a href="#s11"><span class="toc-n">11</span><span class="toc-t">Стабильность и лонгитюд</span><span class="toc-d">Ключевой вопрос</span></a>
+      <a href="#s12"><span class="toc-n">12</span><span class="toc-t">Валидация и публикация</span><span class="toc-d">Конвергентные проверки</span></a>
+      <a href="#s13"><span class="toc-n">13</span><span class="toc-t">Этика, подача и разделение данных</span><span class="toc-d">Долг заботы</span></a>
+      <a href="#sa"><span class="toc-n">A</span><span class="toc-t">Приложение — справочник кода</span><span class="toc-d">Пять слотов</span></a>
+    </nav>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 01 ЦЕЛЬ ═══════════════ -->
+  <section class="sec" id="s1">
+    <div class="sec-num">01 — Цель и охват</div>
+    <h1 class="sec-title">Один движок, два продукта</h1>
+    <p class="lead">ReNo измеряет устойчивую структуру личности человека, отслеживает, как она консолидируется со временем, и переводит эту структуру в рекомендации о соответствии — образовательном, профессиональном и развивающем.</p>
+    <p>Инструмент питает два продукта, у которых общий движок, но которые никогда нельзя смешивать.</p>
+
+    <div class="split">
+      <div class="col blue">
+        <h4>PsyID — взрослый</h4>
+        <div class="tag">Самоотчёт · английский · 15–45</div>
+        <p>Для людей, разбирающихся со своей жизнью — соответствие профессии, идентичность, решения на распутье. Верхнего возрастного порога нет; старшие взрослые тоже желанны, но продукт создан для тех, кто активно ищет направление. Поставляется как многоуровневые отчёты.</p>
+      </div>
+      <div class="col coral">
+        <h4>PsyID Youth — дети</h4>
+        <div class="tag">Наблюдение родителя · русский · 8–14</div>
+        <p>«Психологический паспорт», который заполняет родитель, дающий развивающие рекомендации и направления профессий для ребёнка.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Почему нижний порог — 8, а не 6</div>
+      <p>Примерно до 7–8 лет личность ребёнка ещё очень пластична, а её структура пока не поддаётся надёжному измерению — ранний темперамент реален, но недостаточно дифференцирован, и само- или родительский отчёт в этом возрасте несёт слишком много шума. Рабочая гипотеза: по мере созревания мозга проступает измеримое, всё более устойчивое ядро. Поэтому ReNo начинается с 8 лет, рассматривает окно 8–14 как <strong>консолидирующийся</strong> профиль, а не фиксированный (раздел 11), и в 15 лет передаёт человека взрослому инструменту самоотчёта — чистый переход от наблюдения родителя к самонаблюдению.</p>
+    </div>
+
+    <h2>Паспорт лонгитюден по замыслу</h2>
+    <p>Оба продукта создают паспорт — не разовый результат, а датированную запись, которую пользователь накапливает за многократные тесты, чтобы видеть историю своей личности по годам. Это ключевая функция, а не дополнение: именно она превращает тест в развивающую запись и является тем же механизмом, который делает возможным исследование стабильности (раздел 11).</p>
+    <p>ReNo несёт двойной мандат. Коммерчески он производит отчёты и паспорт, который люди будут платить, чтобы поддерживать. Научно он с первого дня спроектирован собирать данные на уровне пунктов, с метками времени и повторяемые — необходимые, чтобы проверить настоящий вопрос о стабильности и развитии личности.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 02 ОСНОВАНИЯ ═══════════════ -->
+  <section class="sec" id="s2">
+    <div class="sec-num">02 — Теоретические основания</div>
+    <h1 class="sec-title">На плечах нескольких традиций</h1>
+    <p class="lead">ReNo — не одно-теоретический инструмент. Он сводит несколько устоявшихся традиций в одну архитектуру, используя модель личности МакАдамса как интегрирующую опору.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:26%">Традиция</th><th>Что даёт</th><th style="width:28%">Роль в ReNo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Юнг</b> — Психологические типы (1921)</td><td>Типы-установки (интроверсия/экстраверсия), четыре функции и подчинённая функция и тень.</td><td>Происхождение осей 1–3 и тени (§8).</td></tr>
+        <tr><td><b>Лоуренс</b> — People Types &amp; Tiger Stripes</td><td>Тип в применении к обучению; персона/тень; пожизненное развитие типа.</td><td>Обосновывает зону роста и утверждение о развитии во времени.</td></tr>
+        <tr><td><b>Холланд</b> — RIASEC</td><td>Шесть профессионально-интересовых типов.</td><td>Мост от измеренных черт к соответствию профессии (Уровень 2).</td></tr>
+        <tr><td><b>Деси и Райан</b> — Теория самодетерминации</td><td>Три базовые потребности: автономия, компетентность, связанность.</td><td>Мотивационный слой рекомендаций.</td></tr>
+        <tr><td><b>Мюррей</b> — Explorations in Personality</td><td>Персонология: внутренние потребности × давление среды.</td><td>Задаёт рамку «человек × среда».</td></tr>
+        <tr><td><b>МакАдамс</b> — трёхуровневая модель</td><td>Черты, характерные адаптации, нарративная идентичность.</td><td>Интегрирующая архитектура (§3).</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Об атрибуции и интеллектуальной собственности</div>
+      <p>Создание нового инструмента, вдохновлённого этими мыслителями, — стандартная и легитимная научная практика, и называть их — правильный ход. Научные идеи и теории не охраняются авторским правом — интроверсия, типы RIASEC, трёхуровневая модель суть идеи, на которых свободно можно строить, — а цитирование как раз и отличает построение теории от плагиата. Две черты, которые нельзя переходить: <strong>(1)</strong> не воспроизводить чужое охраняемое выражение — точные формулировки, тексты пунктов, таблицы (ReNo перефразирует и переписывает повсюду); <strong>(2)</strong> не использовать чужие товарные знаки в брендинге — MBTI®, Myers-Briggs®, брендированные названия 16 типов, Self-Directed Search® — и не подразумевать, что их валидация переносится на ReNo. Переименование в разделе 4 существует именно для того, чтобы держаться в стороне от этой черты. Это общая информация, а не юридическая консультация; краткая проверка ИС перед коммерческим запуском желательна.</p>
+    </div>
+
+    <p><strong>Сознательный разрыв.</strong> Слой черт ReNo пересекается с «Большой пятёркой», но ReNo — не инструмент «Большой пятёрки». «Большая пятёрка» — это внешний эталон, относительно которого оси ReNo будут валидироваться (§12), а не компонент модели.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 03 ТРИ УРОВНЯ ═══════════════ -->
+  <section class="sec" id="s3">
+    <div class="sec-num">03 — Трёхуровневая архитектура</div>
+    <h1 class="sec-title">Что каждой части позволено утверждать</h1>
+    <p class="lead">Каждый профиль ReNo организован по трём уровням МакАдамса. Это задаёт, что именно вправе утверждать каждая часть профиля.</p>
+
+    <table class="m-table">
+      <thead><tr><th style="width:22%">Уровень</th><th>Что это</th><th style="width:26%">Компонент ReNo</th><th style="width:16%">Тариф</th></tr></thead>
+      <tbody>
+        <tr><td><b>Уровень 1</b><br/>Диспозиционные черты</td><td>Широкие, вне контекста, относительно устойчивые тенденции. «Психология незнакомца».</td><td>Пять измеряемых осей.</td><td>Тариф 1 — «Кто я?»</td></tr>
+        <tr><td><b>Уровень 2</b><br/>Характерные адаптации</td><td>Цели, мотивы, интересы, совладание — в контексте роли и времени.</td><td>Карта RIASEC; потребности SDT; направления профессий; зона роста.</td><td>Тариф 2 — «Где моё место?»</td></tr>
+        <tr><td><b>Уровень 3</b><br/>Нарративная идентичность</td><td>Внутренняя, развивающаяся история жизни, придающая ей единство и смысл.</td><td>Архетип / тотем и его сюжетная рамка.</td><td>Тариф 3 — «Что дальше?»</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Правило, которое это устанавливает</div>
+      <p>Измерительное утверждение (Уровень 1) и история (Уровень 3) — это разные типы высказываний. Оценки по осям можно защищать как данные; <strong>архетип же явно является нарративом и никогда не подаётся как измеренный результат.</strong> Именно разделение уровней сохраняет честность ReNo по мере роста из теста в исследовательский инструмент.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 04 ПЯТЬ ОСЕЙ ═══════════════ -->
+  <section class="sec" id="s4">
+    <div class="sec-num">04 — Пять осей</div>
+    <h1 class="sec-title">Измерительная опора</h1>
+    <p class="lead">ReNo измеряет пять ортогональных осей. Каждая — это спектр, оцениваемый 0–100, а не категория. Ось 5 (Эмоциональный отклик) новая в v1.1 и существует отчасти для того, чтобы очистить оси 3 и 4 от загрязнения (§6).</p>
+
+    <div class="axis-grid five">
+      <div class="axis-card five" style="--ax:var(--ax1)">
+        <div class="ac-no">Ось 1</div><div class="ac-name">Ориентация энергии</div>
+        <div class="ac-pole"><span class="p">O</span>Вовне</div>
+        <div class="ac-pole"><span class="p minus">W</span>Внутрь</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax2)">
+        <div class="ac-no">Ось 2</div><div class="ac-name">Фокус информации</div>
+        <div class="ac-pole"><span class="p">C</span>Конкретика</div>
+        <div class="ac-pole"><span class="p minus">A</span>Абстракция</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax3)">
+        <div class="ac-no">Ось 3</div><div class="ac-name">Основа решений</div>
+        <div class="ac-pole"><span class="p">L</span>Логика</div>
+        <div class="ac-pole"><span class="p minus">V</span>Ценности</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax4)">
+        <div class="ac-no">Ось 4</div><div class="ac-name">Организация</div>
+        <div class="ac-pole"><span class="p">D</span>Порядок</div>
+        <div class="ac-pole"><span class="p minus">F</span>Гибкость</div>
+      </div>
+      <div class="axis-card five" style="--ax:var(--ax5)">
+        <div class="ac-no">Ось 5 · новая</div><div class="ac-name">Эмоц. отклик</div>
+        <div class="ac-pole"><span class="p">S</span>Устойчивость</div>
+        <div class="ac-pole"><span class="p minus">R</span>Реактивность</div>
+      </div>
+    </div>
+
+    <table class="m-table">
+      <thead><tr><th style="width:20%">Измерение</th><th>Конструкт</th><th style="width:28%">Родословие и граница</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 · Ориентация энергии</b></td><td>Куда привычно направлены внимание и энергия — внешний мир людей/действия против внутреннего мира понятий/рефлексии.</td><td>Типы-установки Юнга. <em>Не</em> общительность и не социальный навык.</td></tr>
+        <tr><td><b>2 · Фокус информации</b></td><td>Какой информации доверяют первой — конкретный факт/деталь против паттерна/смысла/возможности.</td><td>Ощущение/интуиция Юнга; мост к RIASEC. <em>Не</em> интеллект и не дотошность.</td></tr>
+        <tr><td><b>3 · Основа решений</b></td><td>Критерий, на котором держится решение — безличный анализ против человекоцентричных ценностей.</td><td>Мышление/чувство Юнга. <em>Не</em> хладнокровие под давлением (→ Ось 5).</td></tr>
+        <tr><td><b>4 · Организация</b></td><td>Как управляются внешний мир и время — планирование/порядок/завершённость против спонтанности/гибкости.</td><td>Расширение Майерс; ≈ Добросовестность. <em>Не</em> устойчивость, риск или поиск новизны.</td></tr>
+        <tr><td><b>5 · Эмоциональный отклик</b></td><td>Базовый эмоциональный темп — ровный и трудно выводимый из равновесия против быстро и глубоко затрагиваемого.</td><td>Эмоциональная стабильность «Большой пятёрки». <em>Не</em> клиника — только норма темперамента.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Дисциплина именования</div>
+      <p>Оси названы по измерению, а не по полюсу, так что оценка 0–100 читается как позиция на спектре. Буквы полюсов языконейтральны и визуально различимы (O / W избегают «I как единица» и коллизии с E; D = or<b>D</b>ered). Система отказывается от всей лексики MBTI и соционики — и чтобы избежать чужой ИС, и чтобы снять коллизию: Юнг называет «рациональным» именно оценивающий полюс, чему старые ярлыки противоречили.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 05 ОЦЕНКА ═══════════════ -->
+  <section class="sec" id="s5">
+    <div class="sec-num">05 — Оценка и код интенсивности</div>
+    <h1 class="sec-title">Непрерывная оценка, банды для чтения</h1>
+    <p class="lead">Каждая ось даёт непрерывную оценку 0–100, разбитую на уровни интенсивности по полюсу для чтения и выраженную компактным кодом — но именно сырая оценка всегда является записью.</p>
+
+    <div class="band-scale">
+      <div class="band-row"><div class="bd" style="background:var(--ax5)">5</div><div class="br">81–100</div><div class="bt"><b>Максимальный</b> — <span>черта доминирует в поведении</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax4)">4</div><div class="br">61–80</div><div class="bt"><b>Сильный</b> — <span>ясно и стабильно выражен</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax3)">3</div><div class="br">41–60</div><div class="bt"><b>Выраженный</b> — <span>присутствует, ситуативно</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax2)">2</div><div class="br">21–40</div><div class="bt"><b>Умеренный</b> — <span>лёгкий наклон</span></div></div>
+      <div class="band-row"><div class="bd" style="background:var(--ax1)">1</div><div class="br">1–20</div><div class="bt"><b>Слабый</b> — <span>едва отличим от баланса</span></div></div>
+      <div class="band-row b0"><div class="bd">0</div><div class="br">~50 баланс</div><div class="bt"><b>Сбалансированный</b> — <span>значимого наклона нет</span></div></div>
+    </div>
+
+    <h2>Подпись</h2>
+    <p>Полная подпись ReNo — это пять слотов: буква полюса плюс цифра банда, соединённые разделителями. Это богаче четырёхбуквенного типа: O3 и O5 различимы, поэтому сравнение год к году идёт по градуированной шкале, а не по бинарной «перевернулось / нет». Она также полностью языконейтральна — одинакова для взрослого-англичанина и родителя-русскоязычного; локализуется только архетип сверху.</p>
+
+    <div class="sig-code">
+      <div class="sig-slot" style="--ax:var(--ax1)"><div class="sa">Энергия</div><div class="sv"><b>W</b><span>2</span></div><div class="sp">Внутрь</div></div>
+      <div class="sig-slot" style="--ax:var(--ax2)"><div class="sa">Информация</div><div class="sv"><b>A</b><span>4</span></div><div class="sp">Абстракция</div></div>
+      <div class="sig-slot" style="--ax:var(--ax3)"><div class="sa">Решения</div><div class="sv"><b>V</b><span>3</span></div><div class="sp">Ценности</div></div>
+      <div class="sig-slot" style="--ax:var(--ax4)"><div class="sa">Организация</div><div class="sv"><b>F</b><span>4</span></div><div class="sp">Гибкость</div></div>
+      <div class="sig-slot" style="--ax:var(--ax5)"><div class="sa">Эмоция</div><div class="sv"><b>S</b><span>2</span></div><div class="sp">Устойчивость</div></div>
+    </div>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Непреложный принцип</div>
+      <p><strong>Сырая оценка 0–100 — это запись; банд и код — только слой отображения.</strong> Каждый расчёт надёжности, сравнение стабильности и публикуемый анализ идут по непрерывной оценке. Банды сообщают; они никогда не вычисляют. Анализ по бандам порождал бы ложную нестабильность везде, где оценка стоит у границы банда (60 против 61).</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 06 ГИГИЕНА ═══════════════ -->
+  <section class="sec" id="s6">
+    <div class="sec-num">06 — Гигиена конструктов</div>
+    <h1 class="sec-title">Что было разделено</h1>
+    <p class="lead">Прежний рубрикатор богато измерял поведение, но допускал перетекание разных конструктов между осями. Ось, несущая два конструкта, не факторизуется чисто, а перекрёстно нагруженные пункты — главная причина, по которой оценки дрейфуют год к году без реальных изменений. v1.1 проводит сознательное разделение.</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:34%">Дескриптор в старом рубрикаторе</th><th style="width:22%">Был привязан к</th><th>Действие в v1.1</th></tr></thead>
+      <tbody>
+        <tr><td>«Сохраняет спокойствие, когда другие теряют контроль»</td><td>Ось 3 — Основа решений</td><td>→ Перенести на Ось 5. Стрессоустойчивость, а не логика решений.</td></tr>
+        <tr><td>«Эмоциональная стабильность»</td><td>Ось 4 — Организация</td><td>→ Перенести на Ось 5. Никогда не конструкт организации.</td></tr>
+        <tr><td>«Перепады настроения двигают продуктивность»</td><td>Ось 4 — Организация</td><td>→ Перенести на Ось 5. Эмоциональный темп.</td></tr>
+        <tr><td>Склонность к риску</td><td>Ось 4 — Организация</td><td>→ Убрать как прямое измерение. Смесь низкой Добросовестности, низкого Нейротизма, высокой Экстраверсии — грузит три оси. Пусть проявляется, но не измеряется.</td></tr>
+        <tr><td>Консерватор против новатора</td><td>Ось 4 — Организация</td><td>→ Свернуть в Ось 2. Открытость новизне — тот же сигнал, что Конкретика↔Абстракция.</td></tr>
+      </tbody>
+    </table>
+
+    <p>После этого прохода <strong>Ось 4 измеряет только порядок-против-спонтанности и «стартер против финишёра»</strong> — чистую Добросовестность, — а эмоциональное содержание теперь чисто живёт на Оси 5. Именно эта версия выдерживает факторный анализ и даёт надёжное лонгитюдное чтение.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 07 ИМЕНОВАНИЕ ═══════════════ -->
+  <section class="sec" id="s7">
+    <div class="sec-num">07 — Архитектура именования типов</div>
+    <h1 class="sec-title">Код — движок; имя — приборная панель</h1>
+    <p class="lead">Пользователь никогда не помнит пять осей. Он помнит одно имя. Два продукта используют разные «скины» именования поверх общей опоры кода.</p>
+
+    <div class="split">
+      <div class="col coral">
+        <h4>Дети — тотемы-животные</h4>
+        <div class="tag">Задача: успокоить + гордость</div>
+        <p>Родитель помнит «моя дочь — Лиса». Животное — крючок Системы 1; методология лежит ниже сгиба для вовлечённого родителя.</p>
+      </div>
+      <div class="col blue">
+        <h4>Взрослые — архетипы-роли</h4>
+        <div class="tag">Задача: самопонимание + решения</div>
+        <p>«Устойчивый Строитель», «Быстрый Импровизатор». Названная роль читается как инсайт и несёт авторитет; взрослому, названному «Совой», покажется, что его считают ребёнком.</p>
+      </div>
+    </div>
+
+    <h2>Три правила, держащие систему</h2>
+    <ul>
+      <li><strong>Общая невидимая опора.</strong> Пятиосевой код идентичен в обоих продуктах — именно это делает их одной семьёй, а не двумя тестами.</li>
+      <li><strong>Имя — это отображение, а не написание.</strong> Не заставляйте буквы осей складываться в слово; имя — это ярлык, прикреплённый к области пространства кода, как «Архитектор» прикреплён к координате.</li>
+      <li><strong>Имя — от доминирующей оси с высоким бандом.</strong> Почти сбалансированный профиль (банд 0–1) получает отдельное «адаптивное / многогранное» имя, а не втискивается в сильный полюс.</li>
+    </ul>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Мост для кросс-продаж</div>
+      <p>Каждое детское животное отображается в свой взрослый архетип по тому же полюсу оси (детская «Лиса» → взрослый «Импровизатор»). Эта пара — буквальный механизм кросс-продажи: родитель, уже приверженный рамке для ребёнка, легче конвертируется на себя (приверженность и последовательность по Чалдини). <strong>Ось 5 исключена из заголовочного имени</strong> — ни один ребёнок не «Реактивный», — и любой набор животных проверяется на коннотации в целевой культуре.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 08 ТЕНЬ ═══════════════ -->
+  <section class="sec" id="s8">
+    <div class="sec-num">08 — Тень / зона роста</div>
+    <h1 class="sec-title">Ядро держится; тень растёт</h1>
+    <p class="lead">У каждого профиля есть лицо и изнанка. Доминирующие предпочтения — лицо, персона, которой человек ведёт. Тень — изнанка: недоразвитые противоположные полюса и особенно наименее развитая ось, где человек действует менее осознанно. ReNo выводит это как зону роста.</p>
+
+    <div class="growth">
+      <div class="g-eye">Зона роста · производная, не измерение</div>
+      <div class="g-title">Интерпретация Уровня 2/3 <span>— без слота кода</span></div>
+      <p>Тень вычисляется из существующих пяти осей — противоположный полюс каждого доминирующего предпочтения, со сдвигом к наименее развитой оси (ближайшей к балансу или с наименьшим бандом среди ведущих функций). Она не получает ни слота кода, ни собственного банда уверенности.</p>
+    </div>
+
+    <h2>Почему это повод пройти тест снова</h2>
+    <p>Утверждение Юнга не в том, что человек никогда не меняется, — а в том, что <strong>ядро предпочтений устойчиво, тогда как тень / подчинённые функции развиваются на протяжении жизни</strong> (индивидуация; «развитие типа» Лоуренса). Структура держится; тень растёт. Это снимает кажущийся парадокс лонгитюдного продукта: если бы личность была полностью фиксирована, зачем перепроверять? Потому что паспорт отслеживает сразу две вещи — устойчивое ядро (которое должно держаться) и развивающуюся зону роста (которая должна двигаться). Перетест ищет не изменения ядра; он наблюдает, как созревает тень.</p>
+
+    <div class="callout framing">
+      <div class="co-label"><span class="dot"></span>Правило подачи — чувствительное</div>
+      <p>Для взрослых «тень / нераскрытый потенциал / где вы сами себе мешаете» — привлекательный крючок. Но в профиле ребёнка, показанном родителю, «тень» и «не раскрывает потенциал» <strong>никогда</strong> не должны читаться как дефицит или мрачный вердикт ребёнку. Обращённая к родителю рамка — с опорой на сильные стороны и развитие: «зона роста», «проявляющиеся сильные стороны», «где ребёнку поможет поддержка» — на основе SDT, никогда не ярлык. Тот же конструкт, язык под этап жизни — ровно как с Осью 5.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 09 ПРОФИЛЬ + ПАСПОРТ ═══════════════ -->
+  <section class="sec" id="s9">
+    <div class="sec-num">09 — Профиль и паспорт</div>
+    <h1 class="sec-title">Разобранный пример</h1>
+    <p class="lead">Как один код — <span class="mono">W2 · A4 · V3 · F4 · S2</span> — разворачивается в три уровня и как паспорт записывает его во времени. Пример профиля: <strong>Lis</strong>.</p>
+
+    <div class="fig">
+      <div class="fig-dark">
+        <div class="radar-chart" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Энергия,Инфо,Решения,Организ.,Эмоция" data-codes="W2,A4,V3,F4,S2" data-size="260" data-theme="gradient"></div>
+        <div class="fd-side">
+          <h4>Рефлексирующий Исследователь</h4>
+          <p>Уровень 1, визуализированный. Каждая ось — позиция на спектре к своему плюс-полюсу, показанная с бандом уверенности: небольшое движение на следующий год внутри банда читается как стабильность, а не изменение.</p>
+        </div>
+      </div>
+    </div>
+
+    <table class="m-table">
+      <thead><tr><th>Ось</th><th>Сырая (0–100)</th><th>Банд</th><th>Код</th><th style="width:34%">Чтение</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ориентация энергии</b></td><td>32 — Внутрь</td><td>2</td><td class="code">W2</td><td>Слегка вовнутрь; восстанавливается в одиночестве, разогревается в малых группах.</td></tr>
+        <tr><td><b>Фокус информации</b></td><td>71 — Абстракция</td><td>4</td><td class="code">A4</td><td>Сильно абстрактный; тянется к идеям, паттернам, «что если».</td></tr>
+        <tr><td><b>Основа решений</b></td><td>54 — Ценности</td><td>3</td><td class="code">V3</td><td>Выраженно ценностный; сперва взвешивает людей и справедливость.</td></tr>
+        <tr><td><b>Организация</b></td><td>68 — Гибкость</td><td>4</td><td class="code">F4</td><td>Сильно гибкий; импровизирует, сопротивляется жёстким графикам.</td></tr>
+        <tr><td><b>Эмоциональный отклик</b></td><td>38 — Скорее устойчивый</td><td>2</td><td class="code">S2</td><td>Достаточно устойчивый; изредка чувствителен при реальном стрессе.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="growth">
+      <div class="g-eye">Зона роста · производная</div>
+      <div class="g-title">Ориентация энергии <span>· W2, почти баланс</span></div>
+      <p>Наименее развитая ось направляет тень к развитию внешнего выражения: высказываться, проявлять инициативу. Для родителя это формулируется как «где немного поддержки окупается», а не слабость.</p>
+    </div>
+
+    <h2>Что содержат три уровня</h2>
+    <ul>
+      <li><strong>Уровень 1 — измерен.</strong> Пять осей как позиции на спектре, каждая с бандом уверенности, а не с ложно-точной точкой («71, вероятно 64–78»). Визуализируется радаром. Банд защищает обещание перетеста.</li>
+      <li><strong>Уровень 2 — интерпретация.</strong> Код, переведённый в паттерны: направление RIASEC и соответствие профессии, мотивационный профиль SDT и зона роста (§8).</li>
+      <li><strong>Уровень 3 — нарратив.</strong> Архетип/тотем и короткая сюжетная рамка — то, что человек скриншотит. Явно история.</li>
+    </ul>
+
+    <h2>Паспорт</h2>
+    <p>Каждый тест пишет датированную запись в паспорт пользователя. За годы паспорт показывает две линии тренда: <strong>устойчивое ядро</strong> (доминирующие оси, которые должны держаться внутри своих бандов уверенности) и <strong>зону роста</strong> (которая должна развиваться). Для детского продукта прямо указывается, что он основан на наблюдении родителя, что естественно настраивает на ежегодный перетест.</p>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 10 РАЗРАБОТКА ═══════════════ -->
+  <section class="sec" id="s10">
+    <div class="sec-num">10 — Разработка измерения</div>
+    <h1 class="sec-title">Путь ДеВеллиса</h1>
+    <p class="lead">Чтобы перевести ReNo из «описанного» в «валидированное», он следует стандартной последовательности разработки шкал (DeVellis, <em>Scale Development</em>).</p>
+
+    <ol>
+      <li><strong>Определить каждый конструкт.</strong> Сделано — §4, с явными границами «не это».</li>
+      <li><strong>Сгенерировать широкий пул пунктов.</strong> ~15–20 кандидатов на ось, сознательно избыточно, чтобы слабые отпали, а осталась надёжная шкала из ~10 пунктов.</li>
+      <li><strong>Зафиксировать формат ответа.</strong> Согласие по Лайкерту, непрерывная оценка за бандами.</li>
+      <li><strong>Экспертная проверка</strong> содержательной валидности — роль для дипломированного соавтора.</li>
+      <li><strong>Включить валидационные пункты</strong> (§12), чтобы конвергентная валидность проверялась в том же сеансе.</li>
+      <li><strong>Провести на выборке разработки.</strong> Сам запуск — жизнеспособный первый сборщик данных.</li>
+      <li><strong>Анализ пунктов и факторов</strong> — подтвердить пять чистых факторов; убрать перекрёстно нагруженные пункты.</li>
+      <li><strong>Оптимизировать длину шкалы</strong> — надёжность против краткости.</li>
+    </ol>
+
+    <h2>Правила дизайна пунктов</h2>
+    <ul>
+      <li><strong>Один конструкт на пункт</strong> — смысл §6.</li>
+      <li><strong>Сбалансированное обратное кодирование</strong>, чтобы уступчивость не раздувала полюс.</li>
+      <li><strong>Поведенчески заякорено</strong> — наблюдаемое действие, никогда не слово-черта. Родители точно оценивают поведение, но плохо выводят черты.</li>
+      <li><strong>Две формулировки</strong> — самоотчёт взрослого и наблюдение родителя для детской версии 8–14.</li>
+    </ul>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:24%">Форма</th><th style="width:16%">В сторону</th><th>Пункт (Ось 1, Ориентация энергии)</th></tr></thead>
+      <tbody>
+        <tr><td>Взрослый</td><td class="code">Вовне</td><td>«После долгого светского события я чувствую прилив сил, а не опустошение».</td></tr>
+        <tr><td>Взрослый (обратный)</td><td class="code">Внутрь</td><td>«Мне нужно время наедине, чтобы восстановиться после общения».</td></tr>
+        <tr><td>Родитель-наблюдатель</td><td class="code">Вовне</td><td>«После большой групповой активности мой ребёнок оживлён и заведён, а не устал и притих».</td></tr>
+        <tr><td>Родитель (обратный)</td><td class="code">Внутрь</td><td>«Мой ребёнок уходит в тихое занятие, чтобы прийти в себя после долгого общения».</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 11 СТАБИЛЬНОСТЬ ═══════════════ -->
+  <section class="sec" id="s11">
+    <div class="sec-num">11 — Гипотеза стабильности</div>
+    <h1 class="sec-title">Стабилизируется ли структура по мере созревания мозга?</h1>
+    <p class="lead">Ведущий вопрос ReNo. Пользователи проходят тест повторно, и профили сравниваются. Этот раздел честно излагает, что поддерживает литература и что должен делать дизайн, чтобы получить настоящий результат, а не артефакт.</p>
+
+    <h2>Что показывают данные на самом деле</h2>
+    <ul>
+      <li><strong>Измеримое ядро проступает в среднем детстве.</strong> Эмпирическая основа порога в 8 лет: до ~7–8 структура «Большой пятёрки» недостаточно дифференцирована; к 8 она достаточно оформлена для оценки. Теория «стабилизируется по мере развития мозга» направленно подтверждается.</li>
+      <li><strong>Ранговая стабильность растёт с возрастом, но в 8–14 ещё не высока.</strong> Согласованность растёт через детство и выходит на плато лишь к ~50 годам (Робертс и ДельВеккио). Честная формулировка — «всё более устойчивое ядро», а не «фиксированное».</li>
+      <li><strong>Средне-уровневое созревание происходит даже у стабильных людей</strong> (принцип зрелости): нормативный дрейф к большей добросовестности, доброжелательности, эмоциональной стабильности. Ранг может держаться, пока абсолютные оценки движутся.</li>
+      <li><strong>Ядро держится, пока тень развивается</strong> (§8) — то развивающее утверждение, которое ReNo действительно делает.</li>
+    </ul>
+
+    <div class="callout principle">
+      <div class="co-label"><span class="dot"></span>Ловушка дизайна — и почему непрерывная оценка её решает</div>
+      <p>Категориальный тип при ежегодном перетесте порождает нестабильность: человек у порога переворачивается на пустяковой флуктуации. ReNo измеряет стабильность по <strong>непрерывным осям 0–100, никогда по бандам или типу</strong> — что требует сперва знать ретестовую надёжность, ведь без неё истинное изменение не отделить от ошибки измерения. Это разделение и есть всё исследование.</p>
+    </div>
+
+    <h2>Требования к дизайну</h2>
+    <ul>
+      <li>Хранить и анализировать сырые непрерывные оценки с ответами на уровне пунктов и метками времени, с запуска.</li>
+      <li>Установить ретестовую надёжность (короткий интервал) до интерпретации изменений на длинном интервале.</li>
+      <li>Отдельно отчитываться о ранговой, средне-уровневой и профильной стабильности.</li>
+      <li>Моделировать изменение по возрастным полосам, ожидая закономерно более низкую стабильность в 8–14.</li>
+    </ul>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 12 ВАЛИДАЦИЯ ═══════════════ -->
+  <section class="sec" id="s12">
+    <div class="sec-num">12 — Валидация и публикация</div>
+    <h1 class="sec-title">Коррелировать где нужно, расходиться где нужно</h1>
+    <p class="lead">Чтобы заявить о валидности, оси ReNo должны коррелировать с устоявшимися инструментами (конвергентно) и вести себя отлично там, где должны (дискриминантно).</p>
+
+    <table class="m-table zebra">
+      <thead><tr><th style="width:30%">Инструмент</th><th style="width:26%">Валидирует</th><th>Использование</th></tr></thead>
+      <tbody>
+        <tr><td><b>NEO-PI-R</b></td><td>Вся «Большая пятёрка», на уровне фасетов</td><td>Эталонная конвергентная проверка осей 2, 4, 5 (и Экстраверсия против Оси 1).</td></tr>
+        <tr><td><b>TIPI</b></td><td>«Большая пятёрка», кратко</td><td>Низкофрикционное встраивание в поток после покупки.</td></tr>
+        <tr><td><b>Опросник RIASEC (Холланд)</b></td><td>Профессиональные интересы</td><td>Валидирует карту профессий Уровня 2.</td></tr>
+        <tr><td><b>Basic Psychological Needs Scale</b></td><td>Потребности SDT</td><td>Валидирует мотивационный слой.</td></tr>
+        <tr><td><b>MMTIC</b></td><td>Детское измерение типа</td><td>Ближайший существующий бенчмарк для детского инструмента.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <div class="co-label"><span class="dot"></span>Один операционный факт</div>
+      <p>Путь к публикации зависит от одного: <strong>данные ответов на уровне пунктов с метками времени должны собираться с первого дня.</strong> Согласие на исследование и последующие пункты встроены в поток после покупки на запуске, так что набор данных для статьи о валидации и стабильности накапливается как побочный продукт обычных продаж.</p>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ 13 ЭТИКА ═══════════════ -->
+  <section class="sec" id="s13">
+    <div class="sec-num">13 — Этика, подача и разделение данных</div>
+    <h1 class="sec-title">Долг заботы</h1>
+    <p class="lead">Продукт о личности, нацеленный на детей, несёт ответственность, которой нет у карьерного теста. Данные взрослых и детей физически разделены и никогда не агрегируются ни в одном представлении или анализе.</p>
+
+    <ul>
+      <li><strong>Только норма.</strong> Ось 5 измеряет темперамент, а не патологию. Слова <em>невротичный, нестабильный, тревожный</em> никогда не появляются. Рамка на сильных сторонах — Чувствительность ↔ Устойчивость (ср. работы Арон о высокочувствительном ребёнке) — точная, а не приукрашивание.</li>
+      <li><strong>Тень подаётся как зона роста, никогда как дефицит</strong> — особенно для ребёнка. Ни один профиль не говорит родителю, что у ребёнка есть «тёмная сторона»; он показывает, где помогает поддержка (компетентность по SDT).</li>
+      <li><strong>Наделять силой родителя, не диагностировать ребёнка.</strong> Рекомендации — «как поддержать такого ребёнка», никогда не вердикт.</li>
+      <li><strong>Прозрачность.</strong> Детский отчёт указывает, что основан на наблюдении родителя; методология доступна высоко-вовлечённому родителю (ELM).</li>
+      <li><strong>Согласие на исследование явное, отдельное и отзывное</strong> — по выбору, никогда не условие покупки.</li>
+    </ul>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- ═══════════════ ПРИЛОЖЕНИЕ ═══════════════ -->
+  <section class="sec" id="sa">
+    <div class="sec-num">A — Приложение</div>
+    <h1 class="sec-title">Справочник кода</h1>
+
+    <table class="m-table">
+      <thead><tr><th style="width:40%">Ось</th><th>Плюс-полюс</th><th>Минус-полюс</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 — Ориентация энергии</b></td><td><span class="pole" style="background:var(--ax1)">O — Вовне</span></td><td>W — Внутрь</td></tr>
+        <tr><td><b>2 — Фокус информации</b></td><td><span class="pole" style="background:var(--ax2)">C — Конкретика</span></td><td>A — Абстракция</td></tr>
+        <tr><td><b>3 — Основа решений</b></td><td><span class="pole" style="background:var(--ax3)">L — Логика</span></td><td>V — Ценности</td></tr>
+        <tr><td><b>4 — Организация</b></td><td><span class="pole" style="background:var(--ax4)">D — Порядок</span></td><td>F — Гибкость</td></tr>
+        <tr><td><b>5 — Эмоциональный отклик</b></td><td><span class="pole" style="background:var(--ax5)">S — Устойчивость</span></td><td>R — Реактивность</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Формат:</strong> <span class="tag-inline">[буква полюса][цифра банда]</span> на ось, фиксированный порядок 1–5, разделены точками. Цифра банда 0 = баланс. Тень/зона роста производится из этих пяти, а не кодируется отдельно.</p>
+
+    <div class="pq">Итог в одну строку: пять чистых осей, оцениваемых непрерывно, разбитых на банды для чтения, выраженных одним языконейтральным кодом, названных одним тотемом или архетипом доминирующей оси, с производной <b>зоной роста</b> — устойчивое ядро отдано науке, история отдана человеку, и оба отслеживаются во времени в паспорте.</div>
+
+    <hr class="rule"/>
+    <p style="font-size:9pt;color:var(--ink-mute)"><em>Методология ReNo v1.1 — рабочий черновик, июль 2026. Конструкты и архитектура описаны; эмпирическая валидация ожидается согласно разделам 10–12. Подготовлено для внутреннего использования и рецензии научного соавтора. Потребительский язык разрабатывается отдельно и выходит за рамки документа.</em></p>
+  </section>
+
+</doc-page>
+<script>
+// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* BEGIN USAGE */
+/**
+ * <doc-page> — paged-document shell for printable HTML.
+ *
+ * On screen the document renders as a single continuous sheet on a desk
+ * background (Google Docs' pageless view): you scroll one tall page card.
+ * There is no manual page-splitting — write the whole document as normal
+ * flow inside <doc-page> and the browser's print engine paginates it at
+ * export.
+ *
+ * At print the component injects `@page { size: …; margin: 0 }` (which
+ * leaves Chrome no margin box to draw its date/URL/page-count header in)
+ * and moves the visual margin onto the sheet's own padding, so the printed
+ * page has the same inset you see on screen. Standard break-hygiene rules
+ * (`break-inside: avoid` on figures, code blocks, images and table rows;
+ * `orphans/widows: 3`) are applied so paragraphs and groups split cleanly.
+ * On screen and at print, headings default to `text-wrap: balance` and
+ * body text (p, li, blockquote, figcaption) to `text-wrap: pretty`, so
+ * the document avoids widowed/orphaned words; the defaults have zero
+ * specificity, so any text-wrap you declare on those elements wins.
+ *
+ * Usage:
+ *   <style>doc-page:not(:defined){visibility:hidden}</style>
+ *   <doc-page size="letter" margin="0.75in">
+ *     <h1>Title</h1>
+ *     <p>…body…</p>
+ *   </doc-page>
+ *   <script src="doc-page.js"><\/script>
+ *
+ * Attributes:
+ *   size    — letter | a4 | legal (default letter)
+ *   width / height — explicit CSS lengths, override `size`
+ *   margin  — printable inset on every page (default 0.75in)
+ *
+ * Running header/footer (optional): give an element `slot="header"` or
+ * `slot="footer"` and it repeats on every printed page via
+ * `position: fixed`. To keep body text from sliding under it, the
+ * component prints inside a single-cell table whose <thead>/<tfoot> are
+ * spacers sized to the header/footer height — browsers repeat thead/tfoot
+ * on every page, so each sheet's content starts below the header and ends
+ * above the footer. On screen the header/footer render once at the
+ * top/bottom of the sheet.
+ *
+ * Author content as static HTML so the user can click-to-edit any text
+ * directly. Do not set width/padding/background on the document body —
+ * the component owns the sheet box.
+ */
+/* END USAGE */
+
+(() => {
+  const PAPER = {
+    letter: ['8.5in', '11in'],
+    a4: ['210mm', '297mm'],
+    legal: ['8.5in', '14in'],
+  };
+  const CSS_LENGTH = /^\d+(\.\d+)?(px|in|mm|cm|pt|pc)$/;
+  const safeLen = (v, fb) => (CSS_LENGTH.test((v || '').trim()) ? v.trim() : fb);
+
+  const stylesheet = `
+    :host {
+      position: relative;
+      display: block;
+      min-height: 100vh;
+      background: #ece8dd;
+      padding: 48px 24px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --doc-page-w: 8.5in;
+      --doc-page-h: 11in;
+      --doc-page-margin: 0.75in;
+      --doc-hdr-h: 0px;
+      --doc-ftr-h: 0px;
+    }
+    .sheet {
+      width: var(--doc-page-w);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 14px rgba(20, 20, 19, 0.12);
+      border-radius: 2px;
+      box-sizing: border-box;
+      padding: var(--doc-page-margin);
+    }
+    .frame { width: 100%; border-collapse: collapse; }
+    .frame td, .frame th { padding: 0; text-align: left; font-weight: inherit; }
+    .hdr-space { height: var(--doc-hdr-h); }
+    .ftr-space { height: var(--doc-ftr-h); }
+    ::slotted([slot="header"]),
+    ::slotted([slot="footer"]) { display: block; box-sizing: border-box; }
+    @media print {
+      :host { background: none; padding: 0; min-height: 0; }
+      .sheet {
+        width: auto; margin: 0; box-shadow: none; border-radius: 0;
+        padding: 0 var(--doc-page-margin);
+      }
+      /* The thead/tfoot spacers repeat on every page, so they carry the
+       * vertical page margin (which the sheet's own padding cannot, since
+       * that padding is consumed once on the first/last page). The running
+       * header/footer are fixed inside that band. */
+      .hdr-space { height: max(var(--doc-page-margin), calc(var(--doc-hdr-h) + 0.35in)); }
+      .ftr-space { height: max(var(--doc-page-margin), calc(var(--doc-ftr-h) + 0.35in)); }
+      ::slotted([slot="header"]) {
+        position: fixed; top: 0; left: 0; right: 0; margin: 0;
+        padding: calc(var(--doc-page-margin) * 0.45) var(--doc-page-margin) 0;
+      }
+      ::slotted([slot="footer"]) {
+        position: fixed; bottom: 0; left: 0; right: 0; margin: 0;
+        padding: 0 var(--doc-page-margin) calc(var(--doc-page-margin) * 0.45);
+      }
+    }
+  `;
+
+  class DocPage extends HTMLElement {
+    static get observedAttributes() { return ['size', 'width', 'height', 'margin']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._mo = typeof MutationObserver === 'function'
+        ? new MutationObserver(() => this._scheduleMeasure())
+        : null;
+    }
+
+    get pageWidth() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('width'), named ? named[0] : PAPER.letter[0]);
+    }
+    get pageHeight() {
+      const named = PAPER[(this.getAttribute('size') || '').toLowerCase()];
+      return safeLen(this.getAttribute('height'), named ? named[1] : PAPER.letter[1]);
+    }
+    get pageMargin() { return safeLen(this.getAttribute('margin'), '0.75in'); }
+
+    connectedCallback() {
+      if (!this._sheet) this._render();
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._ensureTextWrapDefaults();
+      if (this._mo) this._mo.observe(this, {
+        subtree: true, childList: true, characterData: true, attributes: true,
+      });
+      this._onResize = () => this._scheduleMeasure();
+      window.addEventListener('resize', this._onResize);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => this._scheduleMeasure());
+      }
+      this._scheduleMeasure();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('resize', this._onResize);
+      if (this._mo) this._mo.disconnect();
+      if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+      // Drop the head rules when the last doc-page leaves, so a deleted
+      // document's @page geometry and text-wrap defaults can't apply to
+      // whatever replaces it.
+      if (!document.querySelector('doc-page')) {
+        ['doc-page-print', 'doc-page-text-wrap'].forEach((id) => {
+          const tag = document.getElementById(id);
+          if (tag) tag.remove();
+        });
+      }
+    }
+
+    attributeChangedCallback() {
+      if (!this._sheet) return;
+      this._syncSize();
+      this._syncPrintPageRule();
+      this._scheduleMeasure();
+    }
+
+    _render() {
+      this._root.innerHTML = `
+        <style>${stylesheet}</style>
+        <style id="vars"></style>
+        <div class="sheet" data-screen-label="Document">
+          <table class="frame" role="presentation">
+            <thead><tr><th><div class="hdr-space"><slot name="header"></slot></div></th></tr></thead>
+            <tbody><tr><td class="body"><slot></slot></td></tr></tbody>
+            <tfoot><tr><td><div class="ftr-space"><slot name="footer"></slot></div></td></tr></tfoot>
+          </table>
+        </div>`;
+      this._sheet = this._root.querySelector('.sheet');
+      this._vars = this._root.getElementById('vars');
+    }
+
+    /** Runtime sizing lives in a shadow <style> :host rule, never on the
+     *  light-DOM host element, so serialize-persist can't write it back. */
+    _syncSize(hdrH, ftrH) {
+      this._vars.textContent = ':host{' +
+        '--doc-page-w:' + this.pageWidth + ';' +
+        '--doc-page-h:' + this.pageHeight + ';' +
+        '--doc-page-margin:' + this.pageMargin + ';' +
+        '--doc-hdr-h:' + (hdrH || 0) + 'px;' +
+        '--doc-ftr-h:' + (ftrH || 0) + 'px}';
+    }
+
+    /** @page is a no-op inside shadow DOM, so the rule lives in <head>.
+     *  Re-appended on every sync so it stays last in source order — the
+     *  @page cascade is source-order per descriptor, so this rule wins
+     *  over any other @page rule in the document. */
+    _syncPrintPageRule() {
+      const id = 'doc-page-print';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+      }
+      document.head.appendChild(tag);
+      tag.textContent =
+        '@page { size: ' + this.pageWidth + ' ' + this.pageHeight + '; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; height: auto !important; overflow: visible !important; } ' +
+        'h1,h2,h3,h4,h5,h6 { break-after: avoid; } ' +
+        'figure,pre,blockquote,img,svg,tr { break-inside: avoid; } ' +
+        'p,li { orphans: 3; widows: 3; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } ' +
+        '*, *::before, *::after { animation-delay: -99s !important; animation-duration: .001s !important; ' +
+        'animation-iteration-count: 1 !important; animation-fill-mode: both !important; ' +
+        'animation-play-state: running !important; transition-duration: 0s !important; } }';
+    }
+
+    /** Typographic defaults for document text: balance headings, avoid
+     *  widowed/orphaned words in body copy (browsers without text-wrap
+     *  support drop the declarations). Zero-specificity via :where() so
+     *  any text-wrap authored on those elements wins; document-level so the
+     *  rules reach the slotted (light DOM) content — shadow styles can't.
+     *  data-omelette-injected marks the tag for the host editor to strip
+     *  at serialize, so it is never written back as authored source. */
+    _ensureTextWrapDefaults() {
+      if (document.getElementById('doc-page-text-wrap')) return;
+      const tag = document.createElement('style');
+      tag.id = 'doc-page-text-wrap';
+      tag.setAttribute('data-omelette-injected', '');
+      tag.textContent =
+        ':where(h1,h2,h3,h4,h5,h6){text-wrap:balance}' +
+        ':where(p,li,blockquote,figcaption){text-wrap:pretty}';
+      document.head.appendChild(tag);
+    }
+
+    _scheduleMeasure() {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._measure(); });
+    }
+
+    /** Slot heights feed the print spacers (--doc-hdr-h / --doc-ftr-h), so
+     *  they re-measure on content mutation, resize, and font load. */
+    _measure() {
+      const hdr = this.querySelector(':scope > [slot="header"]');
+      const ftr = this.querySelector(':scope > [slot="footer"]');
+      this._syncSize(hdr ? hdr.offsetHeight : 0, ftr ? ftr.offsetHeight : 0);
+    }
+  }
+
+  if (!customElements.get('doc-page')) {
+    customElements.define('doc-page', DocPage);
+  }
+})();
+
+</script>
+<script>
+/* =====================================================================
+   PsyID · Methodology document JS  (shared)
+   Renders the pentagon radar + fills axis-pill widths from data-*.
+   ===================================================================== */
+(function(){
+  var AX = ['#2244E0','#6A85F0','#8A5CD6','#FF7A3D','#FF5A5A'];
+  function polar(cx,cy,r,deg){var a=(deg-90)*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};}
+
+  function buildRadar(el){
+    var vals  = (el.getAttribute('data-values')||'0.5,0.5,0.5,0.5,0.5').split(',').map(Number);
+    var labs  = (el.getAttribute('data-labels')||'').split(',');
+    var codes = (el.getAttribute('data-codes')||'').split(',');
+    var size  = parseInt(el.getAttribute('data-size')||'300',10);
+    var theme = el.getAttribute('data-theme')||'light';
+    var n = vals.length, cx=size/2, cy=size/2, maxR=size/2-40, step=360/n;
+    var light = theme==='light';
+    var ring = light?'#E4DCCD':'rgba(255,255,255,.16)';
+    var axis = light?'#E4DCCD':'rgba(255,255,255,.22)';
+    var txt  = light?'#82879F':'rgba(255,255,255,.7)';
+    var code = light?'#0E1230':'#fff';
+    var i,ri,rr,pp,e,p,pts=[],dp=[];
+    var svg='';
+    for(ri=1;ri<=4;ri++){rr=(ri/4)*maxR;pp=[];for(i=0;i<n;i++){p=polar(cx,cy,rr,i*step);pp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}svg+='<polygon points="'+pp.join(' ')+'" fill="none" stroke="'+ring+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){e=polar(cx,cy,maxR,i*step);svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+axis+'" stroke-width="1"/>';}
+    for(i=0;i<n;i++){p=polar(cx,cy,vals[i]*maxR,i*step);pts.push(p);dp.push(p.x.toFixed(1)+','+p.y.toFixed(1));}
+    var fill=light?'rgba(255,122,61,.14)':'rgba(255,165,72,.22)';
+    var stroke=light?'#FF7A3D':'rgba(255,255,255,.92)';
+    svg+='<polygon points="'+dp.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" stroke-linejoin="round"/>';
+    for(i=0;i<n;i++){svg+='<circle cx="'+pts[i].x.toFixed(1)+'" cy="'+pts[i].y.toFixed(1)+'" r="4.5" fill="#fff" stroke="'+AX[i%5]+'" stroke-width="2.5"/>';}
+    for(i=0;i<n;i++){
+      var lp=polar(cx,cy,maxR+22,i*step);
+      var anchor=lp.x<cx-2?'end':(lp.x>cx+2?'start':'middle');
+      var dy=lp.y<cy-2?'-2':(lp.y>cy+2?'11':'4');
+      var lab=(labs[i]||'').trim().toUpperCase(), cd=(codes[i]||'').trim();
+      svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+dy+'" text-anchor="'+anchor+'" font-family="Geist Mono, monospace" font-size="9" letter-spacing="1.2" fill="'+txt+'">'+lab+'</text>';
+      if(cd)svg+='<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+(parseFloat(dy)+12)+'" text-anchor="'+anchor+'" font-family="Geist, system-ui" font-weight="800" font-size="12" fill="'+code+'">'+cd+'</text>';
+    }
+    var pad=46;
+    el.innerHTML='<svg viewBox="'+(-pad)+' 0 '+(size+2*pad)+' '+size+'" width="'+(size+2*pad)+'" height="'+size+'" fill="none">'+svg+'</svg>';
+  }
+
+  function run(){
+    document.querySelectorAll('.radar-chart').forEach(buildRadar);
+    document.querySelectorAll('.axis-pill[data-value]').forEach(function(el){
+      var v=parseFloat(el.getAttribute('data-value')||'0.5');
+      var f=el.querySelector('.ap-f'); if(f)f.style.width=(v*100).toFixed(0)+'%';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run); else run();
+})();
+
+</script>
+</body>
+</html>

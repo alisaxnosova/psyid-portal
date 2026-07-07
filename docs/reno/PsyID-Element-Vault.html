@@ -1,0 +1,1492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>PsyID — Element Vault · ReNo v1.1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+<!-- =====================================================================
+     PSYID ELEMENT VAULT  ·  aligned to ReNo Methodology v1.1
+     ─────────────────────────────────────────────────────────────────────
+     FIVE orthogonal axes, each scored 0–100 (continuous), banded 0–5 for
+     reading, expressed as a language-neutral code:  W2 · A4 · V3 · F4 · S2
+
+       Axis 1  Energy Orientation      O Outward  / W Inward
+       Axis 2  Information Focus        C Concrete / A Abstract
+       Axis 3  Decision Basis          L Logic    / V Values
+       Axis 4  Structure Preference    D Ordered  / F Flexible
+       Axis 5  Emotional Response      S Steady   / R Reactive   (new in v1)
+
+     All elements are pure HTML + CSS/JS. No framework, no build step.
+     Copy any block into a report template and it renders immediately.
+
+     Data-driven components:
+       • Radar:      data-values="0.32,0.71,0.54,0.68,0.38"  data-variant="pentagon|petal|spoke"
+       • Spectrum:   data-value="0.32" (0=minus pole, 1=plus pole)  data-ci="0.24,0.42"
+       • Signature:  built from .sig-slot children
+       • Confidence: data-value="71" data-lo="64" data-hi="78"
+       • Axis pill / fit bar / conf ring auto-read their data-* attrs
+     ===================================================================== -->
+
+<style>
+/* ─────────────────────────────────────────────────────────
+   DESIGN TOKENS  ← edit these to retheme everything at once
+──────────────────────────────────────────────────────────── */
+:root {
+  /* Core palette */
+  --navy:        #050C2E;
+  --navy-2:      #0B1A56;
+  --blue:        #2244E0;
+  --blue-soft:   #6A85F0;
+  --blue-tint:   #DCE2FF;
+  --violet:      #8A5CD6;
+  --coral:       #FF5A5A;
+  --orange:      #FF7A3D;
+  --orange-hot:  #FF9540;
+  --gold:        #FFC074;
+  --gold-tint:   #FFF0D6;
+
+  /* Per-axis hues (walk the hero gradient, one per axis) */
+  --ax1: #2244E0;   /* Energy Orientation  */
+  --ax2: #6A85F0;   /* Information Focus    */
+  --ax3: #8A5CD6;   /* Decision Basis       */
+  --ax4: #FF7A3D;   /* Structure Preference */
+  --ax5: #FF5A5A;   /* Emotional Response   */
+
+  /* Neutral paper */
+  --paper:       #F6F1EA;
+  --paper-2:     #EDE7DC;
+  --paper-3:     #E4DCCF;
+
+  /* Ink */
+  --ink:         #0E1230;
+  --ink-soft:    #4F5470;
+  --ink-mute:    #8A8FA8;
+  --line:        #E0D9CE;
+  --line-dark:   #C8C0B4;
+
+  /* Typography */
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-sans:    'Geist', system-ui, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, monospace;
+
+  /* Radius scale */
+  --r-xs:  8px;
+  --r-sm:  12px;
+  --r-md:  18px;
+  --r-lg:  26px;
+  --r-xl:  36px;
+  --r-full: 999px;
+
+  /* Gradients */
+  --grad-orange: linear-gradient(95deg, var(--orange), var(--gold));
+  --grad-blue:   linear-gradient(95deg, var(--blue), var(--blue-soft));
+  --grad-coral:  linear-gradient(135deg, var(--coral), var(--orange));
+  --grad-axis:   linear-gradient(90deg, var(--ax1), var(--ax2), var(--ax3), var(--ax4), var(--ax5));
+  --grad-hero:   linear-gradient(140deg, #040924 0%, #0D1E6A 35%, #3D1E5A 60%, #A83040 80%, #FF7030 100%);
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESET + BASE
+──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: #16141D;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+}
+a { color: var(--orange); }
+a:hover { color: var(--orange-hot); }
+
+/* ─────────────────────────────────────────────────────────
+   VAULT SHELL  (sidebar + content area)
+──────────────────────────────────────────────────────────── */
+.vault-sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 236px;
+  background: #0E0D16; overflow-y: auto; z-index: 50;
+  display: flex; flex-direction: column; padding: 28px 0 40px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.vault-sidebar .sb-brand {
+  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  letter-spacing: -.03em; color: #fff; padding: 0 22px 8px;
+}
+.vault-sidebar .sb-brand i { color: var(--orange); font-style: normal; }
+.vault-sidebar .sb-ver {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255,255,255,.32); padding: 0 22px 22px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.vault-sidebar .sb-tag {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  padding: 20px 22px 8px;
+}
+.vault-sidebar a {
+  display: block; padding: 8px 22px; font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,.55); text-decoration: none;
+  transition: color .15s, background .15s;
+}
+.vault-sidebar a:hover { color: #fff; background: rgba(255,255,255,.05); }
+.vault-sidebar a .new {
+  font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em;
+  color: var(--navy); background: var(--gold); padding: 1px 5px; border-radius: 4px;
+  margin-left: 7px; vertical-align: middle; text-transform: uppercase;
+}
+
+.vault-content {
+  margin-left: 236px; flex: 1;
+  padding: 56px 52px 100px;
+  max-width: 1120px;
+}
+
+/* Section scaffold */
+.vault-section { margin-bottom: 80px; scroll-margin-top: 24px; }
+.vault-section-title {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+  margin-bottom: 6px;
+}
+.vault-section-head {
+  font-family: var(--font-display); font-weight: 700; font-size: 28px;
+  letter-spacing: -.03em; color: #fff; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px;
+}
+.vault-section-head .flag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--navy); background: var(--gold);
+  padding: 3px 9px; border-radius: var(--r-full); font-weight: 600;
+}
+.vault-section-sub {
+  font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 36px;
+  max-width: 62ch; line-height: 1.55;
+}
+.vault-section-sub code, .kbd {
+  font-family: var(--font-mono); background: rgba(255,255,255,.08);
+  padding: 1px 6px; border-radius: 4px; font-size: 13px; color: rgba(255,255,255,.8);
+}
+.vault-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 20px; }
+.vault-col { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 220px; }
+
+/* Component label under each element */
+.comp-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  margin-top: 8px;
+}
+
+/* Preview cards */
+.on-paper {
+  background: var(--paper); border-radius: var(--r-lg);
+  padding: 28px; display: flex; flex-direction: column; gap: 16px;
+}
+.on-dark {
+  background: var(--ink); border-radius: var(--r-lg);
+  padding: 28px; display: flex; flex-direction: column; gap: 16px;
+}
+.on-grad {
+  background: var(--grad-hero); border-radius: var(--r-lg);
+  padding: 28px; display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────
+   AXIS LEGEND  (reference strip)
+──────────────────────────────────────────────────────────── */
+.axis-legend { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+.axis-legend .al {
+  background: var(--paper); border-radius: var(--r-md); padding: 16px 16px 18px;
+  border-top: 4px solid var(--ax);
+}
+.axis-legend .al .al-no {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.axis-legend .al .al-name {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  letter-spacing: -.02em; color: var(--ink); margin: 6px 0 12px;
+}
+.axis-legend .al .al-poles { display: flex; align-items: center; gap: 8px; }
+.axis-legend .al .al-pole {
+  font-family: var(--font-mono); font-weight: 600; font-size: 15px;
+  width: 30px; height: 30px; border-radius: var(--r-xs); display: grid; place-items: center;
+  color: #fff; background: var(--ax);
+}
+.axis-legend .al .al-pole.minus { background: transparent; color: var(--ax); border: 1.5px solid var(--ax); }
+.axis-legend .al .al-poletext {
+  font-size: 11px; color: var(--ink-soft); line-height: 1.35; flex: 1;
+}
+
+/* ─────────────────────────────────────────────────────────
+   COLOR SWATCHES
+──────────────────────────────────────────────────────────── */
+.swatch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.swatch { border-radius: var(--r-sm); overflow: hidden; }
+.swatch .sw-color { height: 56px; }
+.swatch .sw-label {
+  background: rgba(255,255,255,.05); padding: 7px 10px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: rgba(255,255,255,.6);
+  line-height: 1.6;
+}
+.swatch .sw-label b { display: block; color: rgba(255,255,255,.88); font-size: 11px; }
+
+/* ─────────────────────────────────────────────────────────
+   TYPOGRAPHY
+──────────────────────────────────────────────────────────── */
+.type-scale { display: flex; flex-direction: column; gap: 14px; }
+.type-row { display: flex; align-items: baseline; gap: 18px; }
+.type-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: rgba(255,255,255,.35); min-width: 120px; flex: none; }
+
+/* ─────────────────────────────────────────────────────────
+   BRAND MARK
+──────────────────────────────────────────────────────────── */
+.brand-mark {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em;
+  color: var(--ink);
+}
+/* Official mark = the constellation (5 axis dots on a faint pentagon). */
+.brand-mark .mk {
+  flex: none; display: grid; place-items: center;
+  color: var(--ink);
+}
+.brand-mark .mk svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.brand-mark[data-size="sm"]{ font-size: 16px; }
+.brand-mark[data-size="sm"] .mk{ width: 24px; height: 24px; }
+.brand-mark[data-size="md"]{ font-size: 22px; }
+.brand-mark[data-size="md"] .mk{ width: 32px; height: 32px; }
+.brand-mark[data-size="lg"]{ font-size: 36px; }
+.brand-mark[data-size="lg"] .mk{ width: 48px; height: 48px; }
+.brand-mark.white{ color: #fff; }
+.brand-mark i { color: var(--orange); font-style: normal; }
+
+/* ─────────────────────────────────────────────────────────
+   CODE CHIPS  (pole + band digit)
+──────────────────────────────────────────────────────────── */
+.code-chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.code-chip {
+  padding: 10px 16px; border-radius: var(--r-xs);
+  font-family: var(--font-mono); font-weight: 600; font-size: 18px;
+  letter-spacing: .04em; border: 1.5px solid var(--line);
+  background: var(--paper); color: var(--ink);
+  display: inline-flex; align-items: baseline; gap: 1px;
+}
+.code-chip .bd { font-size: 13px; color: var(--ink-mute); }
+.code-chip.active {
+  background: var(--grad-coral); border-color: transparent; color: #fff;
+}
+.code-chip.active .bd { color: rgba(255,255,255,.85); }
+.code-chip.dark {
+  background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); color: #fff;
+}
+.code-chip.dark .bd { color: rgba(255,255,255,.55); }
+.code-chip.dark.active { background: var(--grad-coral); border-color: transparent; }
+.code-chip.sm { font-size: 14px; padding: 6px 11px; }
+.code-chip.sm .bd { font-size: 10px; }
+
+/* ─────────────────────────────────────────────────────────
+   SIGNATURE CODE   (five-slot passport code)
+──────────────────────────────────────────────────────────── */
+.sig-code { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+.sig-slot {
+  flex: 1; min-width: 84px; background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 14px 12px 12px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.sig-slot::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--ax);
+}
+.sig-slot .ss-axis {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+}
+.sig-slot .ss-code {
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em;
+  color: var(--ink); line-height: 1; display: flex; align-items: baseline; justify-content: center; gap: 2px;
+}
+.sig-slot .ss-code b { font-size: 34px; }
+.sig-slot .ss-code span { font-size: 20px; color: var(--ax); font-weight: 700; }
+.sig-slot .ss-pole {
+  font-size: 11px; color: var(--ink-soft); margin-top: 8px; font-weight: 600;
+}
+.sig-slot.balanced::before { background: var(--line-dark); }
+.sig-slot.balanced .ss-code span { color: var(--ink-mute); }
+/* Dark variant */
+.sig-code.dark .sig-slot { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.12); }
+.sig-code.dark .ss-code b { color: #fff; }
+.sig-code.dark .ss-pole { color: rgba(255,255,255,.6); }
+.sig-code.dark .ss-axis { color: rgba(255,255,255,.4); }
+/* Inline one-line form */
+.sig-inline {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-weight: 600; font-size: 22px;
+  letter-spacing: .02em; color: var(--ink);
+}
+.sig-inline .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-mute); }
+.sig-inline.white { color: #fff; }
+.sig-inline.white .dot { background: rgba(255,255,255,.4); }
+
+/* ─────────────────────────────────────────────────────────
+   INTENSITY / BAND SCALE   (0–5 reading rubric)
+──────────────────────────────────────────────────────────── */
+.band-scale { display: flex; flex-direction: column; gap: 2px; }
+.band-row {
+  display: grid; grid-template-columns: 44px 96px 1fr; align-items: center; gap: 16px;
+  padding: 12px 16px; background: #fff; border: 1px solid var(--line);
+}
+.band-row:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+.band-row:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
+.band-row + .band-row { border-top: none; }
+.band-row .b-digit {
+  font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #fff;
+  width: 40px; height: 40px; border-radius: var(--r-xs); display: grid; place-items: center;
+}
+.band-row .b-range {
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); letter-spacing: .04em;
+}
+.band-row .b-read b { font-weight: 700; color: var(--ink); font-size: 14px; }
+.band-row .b-read span { color: var(--ink-soft); font-size: 13px; }
+.band-row.b0 .b-digit { background: var(--line-dark); color: var(--ink); }
+
+/* ─────────────────────────────────────────────────────────
+   RADAR / PENTAGON  (5-axis, variant-driven)
+──────────────────────────────────────────────────────────── */
+.radar-chart { display: inline-block; position: relative; }
+.radar-chart svg { display: block; }
+
+/* ─────────────────────────────────────────────────────────
+   SPECTRUM BAR  (single axis, bipolar)
+──────────────────────────────────────────────────────────── */
+.spectrum-bar { display: flex; flex-direction: column; gap: 0; }
+.spectrum-bar .sp-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.spectrum-bar .sp-name { font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.spectrum-bar .sp-name small {
+  font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); margin-left: 8px;
+}
+.spectrum-bar .sp-conf {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+  background: rgba(255,122,61,.1); color: var(--orange); padding: 4px 10px; border-radius: var(--r-full);
+}
+.spectrum-bar .sp-ends {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 7px;
+}
+.spectrum-bar .sp-track {
+  height: 14px; border-radius: var(--r-full); position: relative;
+  background: linear-gradient(90deg, var(--blue) 0%, #C6CFF6 46%, #F4D9C6 54%, var(--coral) 100%);
+}
+.spectrum-bar .sp-mid { position: absolute; top: -4px; bottom: -4px; left: 50%; width: 1px; background: var(--line-dark); }
+.spectrum-bar .sp-ci {
+  position: absolute; top: 50%; transform: translateY(-50%); height: 18px;
+  background: rgba(14,18,48,.12); border-radius: var(--r-full);
+}
+.spectrum-bar .sp-thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  border: 3px solid var(--ink); box-shadow: 0 4px 14px rgba(0,0,0,.25); z-index: 2;
+}
+.spectrum-bar .sp-pole {
+  position: absolute; top: 22px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; font-weight: 700;
+}
+.spectrum-bar .sp-pole.l { left: 0; color: var(--blue); }
+.spectrum-bar .sp-pole.r { right: 0; color: var(--coral); }
+.spectrum-bar .sp-desc { margin-top: 42px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+
+/* ─────────────────────────────────────────────────────────
+   CONFIDENCE INTERVAL BAR   (0–100 point + range)
+──────────────────────────────────────────────────────────── */
+.ci-bar { display: flex; flex-direction: column; gap: 8px; }
+.ci-bar .ci-head { display: flex; justify-content: space-between; align-items: baseline; }
+.ci-bar .ci-name { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.ci-bar .ci-read { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); }
+.ci-bar .ci-read b { color: var(--ink); font-size: 15px; font-family: var(--font-display); font-weight: 800; }
+.ci-bar .ci-track { position: relative; height: 8px; background: var(--line); border-radius: var(--r-full); }
+.ci-bar .ci-scale { position: absolute; inset: 0; }
+.ci-bar .ci-range { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, var(--blue), var(--coral)); opacity: .35; border-radius: var(--r-full); }
+.ci-bar .ci-fill { position: absolute; top: 0; bottom: 0; left: 0; background: linear-gradient(90deg, var(--blue), var(--coral)); border-radius: var(--r-full); }
+.ci-bar .ci-dot { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--ink); transform: translate(-50%,-50%); box-shadow: 0 3px 10px rgba(0,0,0,.2); }
+.ci-bar .ci-ticks { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; color: var(--ink-mute); letter-spacing: .1em; }
+
+/* ─────────────────────────────────────────────────────────
+   AXIS PILL  (compact list bar)
+──────────────────────────────────────────────────────────── */
+.axis-pill { display: flex; align-items: center; gap: 12px; }
+.axis-pill .ap-name {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); width: 92px; flex: none;
+}
+.axis-pill .ap-track { flex: 1; height: 7px; background: var(--line); border-radius: var(--r-full); overflow: hidden; }
+.axis-pill .ap-fill { height: 100%; border-radius: var(--r-full); background: var(--ax, linear-gradient(90deg, var(--blue), var(--coral))); transition: width .4s ease; }
+.axis-pill .ap-code { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--ink); width: 34px; text-align: right; }
+
+/* ─────────────────────────────────────────────────────────
+   CONFIDENCE RING
+──────────────────────────────────────────────────────────── */
+.conf-ring { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; }
+.conf-ring svg { display: block; }
+.conf-ring .cr-wrap { position: relative; display: inline-block; }
+.conf-ring .cr-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); text-align: center; }
+
+/* ─────────────────────────────────────────────────────────
+   FIT BAR
+──────────────────────────────────────────────────────────── */
+.fit-bar { height: 4px; border-radius: var(--r-full); background: var(--line); margin-top: 7px; overflow: hidden; }
+.fit-bar .fb-fill { height: 100%; border-radius: var(--r-full); background: linear-gradient(90deg, var(--blue), var(--coral)); transition: width .5s ease; }
+
+/* ─────────────────────────────────────────────────────────
+   TRAIT CHIPS
+──────────────────────────────────────────────────────────── */
+.trait-chips-wrap { display: flex; flex-wrap: wrap; gap: 9px; }
+.trait-chip {
+  padding: 9px 16px; border-radius: var(--r-full); font-size: 14px; font-weight: 600;
+  border: 1.5px solid var(--line); background: #fff; color: var(--ink);
+  transition: border-color .15s, transform .15s;
+}
+.trait-chip:hover { border-color: var(--orange); transform: translateY(-2px); }
+.trait-chip.active { background: var(--grad-orange); border-color: transparent; color: #fff; }
+
+/* ─────────────────────────────────────────────────────────
+   GROWTH EDGE / SHADOW CARD
+──────────────────────────────────────────────────────────── */
+.growth-edge {
+  border-radius: var(--r-lg); padding: 26px 28px;
+  background: linear-gradient(135deg, #131A3E 0%, #2A1C4A 60%, #45213F 100%);
+  color: #fff; position: relative; overflow: hidden;
+}
+.growth-edge::after {
+  content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(255,165,72,.5), transparent 70%);
+}
+.growth-edge .ge-eyebrow {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 9px;
+}
+.growth-edge .ge-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.growth-edge .ge-axis {
+  font-family: var(--font-display); font-weight: 800; font-size: 24px; letter-spacing: -.03em;
+  margin-bottom: 6px;
+}
+.growth-edge .ge-axis span { color: var(--gold); }
+.growth-edge .ge-body { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.8); max-width: 54ch; }
+.growth-edge .ge-tag {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.65); background: rgba(255,255,255,.08); padding: 6px 12px; border-radius: var(--r-full);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.growth-edge.parent { background: linear-gradient(135deg, #1B2A5C 0%, #2E4A8C 100%); }
+
+/* ─────────────────────────────────────────────────────────
+   CAREER / RIASEC CARD
+──────────────────────────────────────────────────────────── */
+.career-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 16px 20px; display: flex; align-items: center; gap: 16px;
+  transition: transform .2s, box-shadow .2s;
+}
+.career-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -16px rgba(14,18,48,.25); }
+.career-card .cc-icon { width: 40px; height: 40px; border-radius: var(--r-xs); display: grid; place-items: center; flex: none; background: var(--grad-blue); }
+.career-card .cc-icon svg { width: 18px; height: 18px; }
+.career-card .cc-icon.coral { background: var(--grad-coral); }
+.career-card .cc-icon.gold  { background: var(--grad-orange); }
+.career-card .cc-riasec {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: var(--ink-mute);
+  border: 1px solid var(--line); border-radius: var(--r-full); padding: 2px 8px; margin-left: 8px;
+}
+.career-card .cc-body { flex: 1; }
+.career-card .cc-name { font-weight: 700; font-size: 15px; letter-spacing: -.01em; color: var(--ink); display: flex; align-items: center; }
+.career-card .cc-desc { font-size: 12.5px; color: var(--ink-mute); margin-top: 2px; }
+
+/* ─────────────────────────────────────────────────────────
+   EXPERIMENT CARD  (dark)
+──────────────────────────────────────────────────────────── */
+.exp-card {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-md); padding: 26px 26px 24px; backdrop-filter: blur(10px);
+  display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start;
+}
+.exp-card .ec-num {
+  width: 48px; height: 48px; border-radius: var(--r-sm); display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #fff; flex: none;
+}
+.exp-card .ec-num.blue  { background: var(--grad-blue); }
+.exp-card .ec-num.coral { background: var(--grad-coral); }
+.exp-card .ec-num.gold  { background: var(--grad-orange); color: var(--ink); }
+.exp-card .ec-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 7px; }
+.exp-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -.025em; color: #fff; margin-bottom: 10px; }
+.exp-card p { font-size: 14px; color: rgba(255,255,255,.72); line-height: 1.6; }
+.exp-card .ec-timeline { margin-top: 14px; display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.exp-card .ec-timeline .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex: none; }
+
+/* ─────────────────────────────────────────────────────────
+   STAT BLOCK
+──────────────────────────────────────────────────────────── */
+.stat-block { border: 1px solid rgba(255,255,255,.14); border-radius: var(--r-md); padding: 26px 24px; background: rgba(255,255,255,.05); }
+.stat-block .sb-val { font-family: var(--font-display); font-weight: 800; font-size: 60px; letter-spacing: -.04em; line-height: 1; }
+.stat-block .sb-val.or { background: var(--grad-orange); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat-block .sb-val.bl { background: var(--grad-blue);   -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat-block .sb-val.wh { color: #fff; }
+.stat-block .sb-label { font-size: 14px; color: rgba(255,255,255,.75); margin-top: 12px; line-height: 1.5; }
+
+/* ─────────────────────────────────────────────────────────
+   PROFILE / PASSPORT CARD
+──────────────────────────────────────────────────────────── */
+.profile-card { background: #fff; border-radius: var(--r-xl); overflow: hidden; box-shadow: 0 20px 50px -24px rgba(14,18,48,.28); }
+.profile-card .pc-head {
+  background: var(--ink); color: #fff; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+}
+.profile-card .pc-head .pc-no { color: var(--gold); }
+.profile-card .pc-body { padding: 20px 22px; display: grid; grid-template-columns: auto 1fr; gap: 16px; }
+.profile-card .pc-avatar {
+  width: 80px; height: 98px; border-radius: var(--r-md);
+  background: linear-gradient(150deg, var(--blue-tint), var(--gold-tint));
+  display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 30px; color: var(--ink);
+}
+.profile-card .pc-meta dt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-top: 8px; }
+.profile-card .pc-meta dt:first-child { margin-top: 0; }
+.profile-card .pc-meta dd { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
+.profile-card .pc-code { padding: 4px 22px 10px; display: flex; gap: 6px; }
+.profile-card .pc-foot { padding: 12px 22px 18px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); }
+.profile-card .pc-foot .pc-date { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+.profile-card .pc-seal { font-family: var(--font-display); font-weight: 800; font-size: 13px; color: var(--blue); border: 2px solid var(--blue); border-radius: var(--r-xs); padding: 3px 9px; letter-spacing: .02em; transform: rotate(-6deg); display: inline-block; }
+
+/* ─────────────────────────────────────────────────────────
+   EYEBROW / SECTION LABEL
+──────────────────────────────────────────────────────────── */
+.eyebrow { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: "—"; opacity: .5; }
+.eyebrow.orange { color: var(--orange); }
+.eyebrow.blue   { color: var(--blue); }
+.eyebrow.mute   { color: var(--ink-mute); }
+.eyebrow.white  { color: rgba(255,255,255,.55); }
+
+/* ─────────────────────────────────────────────────────────
+   PULL QUOTE
+──────────────────────────────────────────────────────────── */
+.pull-quote { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 28px; letter-spacing: -.025em; line-height: 1.3; color: var(--ink); border-left: 3px solid var(--orange); padding-left: 22px; }
+.pull-quote b { font-style: normal; background: var(--grad-orange); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pull-quote.dark { color: #fff; }
+.pull-quote-by { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); margin-top: 16px; display: flex; align-items: center; gap: 12px; }
+.pull-quote-by .rule { width: 32px; height: 1px; background: var(--orange); }
+
+/* ─────────────────────────────────────────────────────────
+   BUTTONS
+──────────────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 9px; border-radius: var(--r-full); padding: 13px 22px; font-family: var(--font-sans); font-weight: 600; font-size: 15px; cursor: pointer; border: none; transition: transform .15s, box-shadow .2s; white-space: nowrap; }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+.btn-orange { background: linear-gradient(95deg, #FF5C72 0%, #FF8A45 100%); color: #fff; box-shadow: 0 10px 28px -10px rgba(255,114,80,.6); }
+.btn-blue { background: var(--grad-blue); color: #fff; box-shadow: 0 10px 28px -10px rgba(34,68,224,.5); }
+.btn-ink { background: var(--ink); color: #fff; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: #fff; }
+.btn-ghost-white { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.4); }
+.btn-ghost-white:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+.btn.sm { font-size: 13px; padding: 9px 16px; }
+
+/* ─────────────────────────────────────────────────────────
+   PAGE HEADER / FOOTER
+──────────────────────────────────────────────────────────── */
+.report-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--line); background: #fff; }
+.report-header .rh-brand { font-weight: 800; font-size: 17px; letter-spacing: -.03em; color: var(--ink); }
+.report-header .rh-brand i { color: var(--orange); font-style: normal; }
+.report-header .rh-pg { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.report-footer { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); background: #fff; }
+.dot-pager { display: flex; gap: 6px; align-items: center; }
+.dot-pager .dp { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.dot-pager .dp.on { background: var(--orange); }
+
+/* ─────────────────────────────────────────────────────────
+   BADGE / TAG
+──────────────────────────────────────────────────────────── */
+.badge { display: inline-flex; align-items: center; gap: 8px; border-radius: var(--r-full); padding: 7px 14px; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.badge .badge-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.badge.orange { background: rgba(255,122,61,.12); color: var(--orange); }
+.badge.orange .badge-dot { background: var(--orange); }
+.badge.blue   { background: var(--blue-tint); color: var(--blue); }
+.badge.blue .badge-dot   { background: var(--blue); }
+.badge.dark   { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.88); }
+.badge.dark .badge-dot   { background: linear-gradient(135deg, var(--orange), var(--coral)); box-shadow: 0 0 8px var(--orange); }
+
+/* ─────────────────────────────────────────────────────────
+   COVER GRADIENT
+──────────────────────────────────────────────────────────── */
+.cover-swatch { border-radius: var(--r-lg); overflow: hidden; height: 200px; position: relative; }
+.cover-swatch .csw-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 88% 88%, rgba(255,165,72,.85) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 72% 70%, rgba(255,98,82,.85) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 30% 38%, rgba(58,98,232,.85) 0%, transparent 60%),
+    linear-gradient(125deg, #050B36 0%, #0E1F6E 30%, #4B266A 55%, #B23A4C 75%, #FF823F 100%);
+}
+.cover-swatch .csw-label { position: absolute; bottom: 18px; left: 22px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+
+/* ─────────────────────────────────────────────────────────
+   SCORE PILL
+──────────────────────────────────────────────────────────── */
+.score-pill { display: inline-flex; align-items: center; gap: 12px; background: var(--paper-2); border-radius: var(--r-md); padding: 14px 18px; }
+.score-pill .sp-num { font-family: var(--font-display); font-weight: 800; font-size: 34px; letter-spacing: -.04em; line-height: 1; }
+.score-pill .sp-num.or { background: var(--grad-orange); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.score-pill .sp-num.bl { background: var(--grad-blue); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.score-pill .sp-meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────────── -->
+<aside class="vault-sidebar">
+  <div class="sb-brand">Psy<i>ID</i></div>
+  <div class="sb-ver">Element Vault · ReNo v1.1</div>
+
+  <div class="sb-tag">Foundations</div>
+  <a href="#axes">The five axes</a>
+  <a href="#colors">Colors</a>
+  <a href="#type">Typography</a>
+  <a href="#brand">Brand mark</a>
+
+  <div class="sb-tag">The Code</div>
+  <a href="#code-chips">Code chips</a>
+  <a href="#signature">Signature code <span class="new">new</span></a>
+  <a href="#band-scale">Band scale <span class="new">new</span></a>
+
+  <div class="sb-tag">Data Elements</div>
+  <a href="#radar">Radar — 3 options</a>
+  <a href="#spectrum">Spectrum bar</a>
+  <a href="#ci-bar">Confidence interval <span class="new">new</span></a>
+  <a href="#axis-pill">Axis pill</a>
+  <a href="#conf-ring">Confidence ring</a>
+  <a href="#fit-bar">Fit bar</a>
+
+  <div class="sb-tag">Cards &amp; Content</div>
+  <a href="#trait-chips">Trait chips</a>
+  <a href="#growth-edge">Growth edge <span class="new">new</span></a>
+  <a href="#career-card">Career / RIASEC</a>
+  <a href="#exp-card">Experiment card</a>
+  <a href="#stat-block">Stat block</a>
+  <a href="#profile-card">Profile / Passport</a>
+  <a href="#pull-quote">Pull quote</a>
+
+  <div class="sb-tag">UI Atoms</div>
+  <a href="#buttons">Buttons</a>
+  <a href="#badges">Badges</a>
+  <a href="#eyebrow">Eyebrow labels</a>
+  <a href="#page-chrome">Page header/footer</a>
+  <a href="#cover-grad">Cover gradient</a>
+</aside>
+
+<!-- ── MAIN CONTENT ────────────────────────────────────────────── -->
+<main class="vault-content">
+
+  <div style="margin-bottom:48px">
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px">PsyID · Design System · aligned to ReNo Methodology v1.1</div>
+    <div style="font-family:var(--font-display);font-weight:800;font-size:44px;letter-spacing:-.04em;color:#fff;margin-bottom:12px">Element Vault</div>
+    <div style="font-size:16px;color:rgba(255,255,255,.55);max-width:64ch;line-height:1.6">Rebuilt for the <b style="color:#fff;font-weight:600">five-axis</b> ReNo model. Every axis is a spectrum scored <span class="kbd">0–100</span>, banded <span class="kbd">0–5</span> for reading, and expressed as one language-neutral code — e.g. <span class="kbd">W2 · A4 · V3 · F4 · S2</span>. Copy any element, change its <span class="kbd">data-*</span> attributes, and it renders automatically.</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+      <div class="badge dark"><span class="badge-dot"></span>5 axes · 94 items</div>
+      <div class="badge dark"><span class="badge-dot"></span>Continuous 0–100 scoring</div>
+      <div class="badge dark"><span class="badge-dot"></span>Derived growth edge</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ THE FIVE AXES ════════════════════════ -->
+  <div class="vault-section" id="axes">
+    <div class="vault-section-title">01 / Foundations</div>
+    <div class="vault-section-head">The five axes <span class="flag">v1.1</span></div>
+    <div class="vault-section-sub">The measurement spine shared by both products. Each axis is orthogonal, scored 0–100, and points toward its <b>plus pole</b> (the reference direction a score of 100 indicates). Axis 5 — Emotional Response — is new in v1.1 and absorbs the composure/stability content that used to contaminate axes 3 and 4.</div>
+    <div class="on-paper">
+      <div class="axis-legend">
+        <div class="al" style="--ax:var(--ax1)">
+          <div class="al-no">Axis 1</div>
+          <div class="al-name">Energy Orientation</div>
+          <div class="al-poles"><span class="al-pole">O</span><span class="al-poletext">Outward — outer world of people &amp; action</span></div>
+          <div class="al-poles" style="margin-top:8px"><span class="al-pole minus">W</span><span class="al-poletext">Inward — inner world of concept &amp; reflection</span></div>
+        </div>
+        <div class="al" style="--ax:var(--ax2)">
+          <div class="al-no">Axis 2</div>
+          <div class="al-name">Information Focus</div>
+          <div class="al-poles"><span class="al-pole">C</span><span class="al-poletext">Concrete — trusts fact &amp; detail first</span></div>
+          <div class="al-poles" style="margin-top:8px"><span class="al-pole minus">A</span><span class="al-poletext">Abstract — trusts pattern &amp; possibility</span></div>
+        </div>
+        <div class="al" style="--ax:var(--ax3)">
+          <div class="al-no">Axis 3</div>
+          <div class="al-name">Decision Basis</div>
+          <div class="al-poles"><span class="al-pole">L</span><span class="al-poletext">Logic — impersonal analysis</span></div>
+          <div class="al-poles" style="margin-top:8px"><span class="al-pole minus">V</span><span class="al-poletext">Values — person-centred criteria</span></div>
+        </div>
+        <div class="al" style="--ax:var(--ax4)">
+          <div class="al-no">Axis 4</div>
+          <div class="al-name">Structure Preference</div>
+          <div class="al-poles"><span class="al-pole">D</span><span class="al-poletext">Ordered — planning, order, closure</span></div>
+          <div class="al-poles" style="margin-top:8px"><span class="al-pole minus">F</span><span class="al-poletext">Flexible — spontaneity &amp; openness</span></div>
+        </div>
+        <div class="al" style="--ax:var(--ax5)">
+          <div class="al-no">Axis 5 · new</div>
+          <div class="al-name">Emotional Response</div>
+          <div class="al-poles"><span class="al-pole">S</span><span class="al-poletext">Steady — even-keeled, slow to rattle</span></div>
+          <div class="al-poles" style="margin-top:8px"><span class="al-pole minus">R</span><span class="al-poletext">Reactive — quickly &amp; deeply affected</span></div>
+        </div>
+      </div>
+      <div class="comp-label">Plus pole (filled) = O · C · L · D · S. Set the accent per axis with <span style="text-transform:none;letter-spacing:0">--ax</span>.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ COLORS ════════════════════════ -->
+  <div class="vault-section" id="colors">
+    <div class="vault-section-title">01 / Foundations</div>
+    <div class="vault-section-head">Colors</div>
+    <div class="vault-section-sub">Edit <code>:root</code> variables to retheme everything at once. The five per-axis hues (<code>--ax1…--ax5</code>) walk the hero gradient so a radar or signature reads left-to-right as blue → coral.</div>
+    <div class="swatch-grid" style="margin-bottom:10px">
+      <div class="swatch"><div class="sw-color" style="background:#2244E0"></div><div class="sw-label"><b>--ax1 · Energy</b>#2244E0</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#6A85F0"></div><div class="sw-label"><b>--ax2 · Info</b>#6A85F0</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#8A5CD6"></div><div class="sw-label"><b>--ax3 · Decision</b>#8A5CD6</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#FF7A3D"></div><div class="sw-label"><b>--ax4 · Structure</b>#FF7A3D</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#FF5A5A"></div><div class="sw-label"><b>--ax5 · Emotion</b>#FF5A5A</div></div>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="sw-color" style="background:#050C2E"></div><div class="sw-label"><b>--navy</b>#050C2E</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#0E1230"></div><div class="sw-label"><b>--ink</b>#0E1230</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#FFC074"></div><div class="sw-label"><b>--gold</b>#FFC074</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#F6F1EA"></div><div class="sw-label"><b>--paper</b>#F6F1EA</div></div>
+      <div class="swatch"><div class="sw-color" style="background:#EDE7DC"></div><div class="sw-label"><b>--paper-2</b>#EDE7DC</div></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ TYPOGRAPHY ════════════════════════ -->
+  <div class="vault-section" id="type">
+    <div class="vault-section-title">01 / Foundations</div>
+    <div class="vault-section-head">Typography</div>
+    <div class="on-paper">
+      <div class="type-scale">
+        <div class="type-row"><div class="type-meta">Display / 80px / 800</div><div style="font-family:var(--font-display);font-size:80px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink)">Lis</div></div>
+        <div class="type-row"><div class="type-meta">Heading / 42px / 800</div><div style="font-family:var(--font-display);font-size:42px;font-weight:800;letter-spacing:-.035em;color:var(--ink)">Five axes of character</div></div>
+        <div class="type-row"><div class="type-meta">Title / 26px / 700</div><div style="font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:-.025em;color:var(--ink)">The Reflective Explorer</div></div>
+        <div class="type-row"><div class="type-meta">Body / 16px / 400</div><div style="font-size:16px;color:var(--ink-soft);max-width:48ch;line-height:1.6">Each axis is a spectrum, not a category. The raw 0–100 score is always the record; the band is only a way to read it.</div></div>
+        <div class="type-row"><div class="type-meta">Mono / signature</div><div style="font-family:var(--font-mono);font-size:22px;letter-spacing:.04em;color:var(--ink)">W2 · A4 · V3 · F4 · S2</div></div>
+        <div class="type-row"><div class="type-meta">Mono label / 11px</div><div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute)">— Profile · Nº 0001 —</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ BRAND MARK ════════════════════════ -->
+  <div class="vault-section" id="brand">
+    <div class="vault-section-title">01 / Foundations</div>
+    <div class="vault-section-head">Brand mark <span class="flag">official</span></div>
+    <div class="vault-section-sub">The official mark is the <b>constellation</b> — one dot per axis, each in its own hue, held in a faint pentagon. Add <code>data-size="sm|md|lg"</code> to resize. Add <code>class="white"</code> for dark backgrounds.</div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <symbol id="mkConstell" viewBox="0 0 100 100">
+        <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="currentColor" stroke-opacity=".3" stroke-width="3.5"></polygon>
+        <circle cx="50" cy="16" r="8.5" fill="#2244E0"></circle>
+        <circle cx="84" cy="40" r="8.5" fill="#6A85F0"></circle>
+        <circle cx="71" cy="79" r="8.5" fill="#8A5CD6"></circle>
+        <circle cx="29" cy="79" r="8.5" fill="#FF7A3D"></circle>
+        <circle cx="16" cy="40" r="8.5" fill="#FF5A5A"></circle>
+      </symbol>
+    </defs></svg>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1">
+        <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <div class="brand-mark" data-size="sm"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+          <div class="brand-mark" data-size="md"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+          <div class="brand-mark" data-size="lg"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+        </div>
+        <div class="comp-label">data-size="sm / md / lg"</div>
+      </div>
+      <div class="on-dark" style="flex:1">
+        <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <div class="brand-mark white" data-size="sm"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+          <div class="brand-mark white" data-size="md"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+          <div class="brand-mark white" data-size="lg"><span class="mk"><svg viewBox="0 0 100 100"><use href="#mkConstell"></use></svg></span><span class="wm">Psy<i>ID</i></span></div>
+        </div>
+        <div class="comp-label">class="white" for dark backgrounds</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CODE CHIPS ════════════════════════ -->
+  <div class="vault-section" id="code-chips">
+    <div class="vault-section-title">02 / The Code</div>
+    <div class="vault-section-head">Code chips</div>
+    <div class="vault-section-sub">Each chip is one axis: a <b>pole letter</b> plus a <b>band digit</b> 0–5. Five chips in fixed order (EO · IF · DB · SP · ER) make a full signature. Add <code>class="active"</code> to highlight the dominant axis.</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1">
+        <div class="code-chip-row">
+          <div class="code-chip">W<span class="bd">2</span></div>
+          <div class="code-chip active">A<span class="bd">4</span></div>
+          <div class="code-chip">V<span class="bd">3</span></div>
+          <div class="code-chip active">F<span class="bd">4</span></div>
+          <div class="code-chip">S<span class="bd">2</span></div>
+        </div>
+        <div class="comp-label">Light · active = high-band dominant axis</div>
+      </div>
+      <div class="on-dark" style="flex:1">
+        <div class="code-chip-row">
+          <div class="code-chip dark">W<span class="bd">2</span></div>
+          <div class="code-chip dark active">A<span class="bd">4</span></div>
+          <div class="code-chip dark">V<span class="bd">3</span></div>
+          <div class="code-chip dark active">F<span class="bd">4</span></div>
+          <div class="code-chip dark">S<span class="bd">2</span></div>
+        </div>
+        <div class="comp-label">Dark · class="dark active"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SIGNATURE CODE ════════════════════════ -->
+  <div class="vault-section" id="signature">
+    <div class="vault-section-title">02 / The Code</div>
+    <div class="vault-section-head">Signature code <span class="flag">new</span></div>
+    <div class="vault-section-sub">The full five-slot passport code. Each slot carries the axis name, the pole+band, and the pole word. A near-balanced axis (band 0) renders muted with class <code>balanced</code>. Also available as a one-line inline form.</div>
+    <div class="on-paper" style="gap:22px">
+      <div class="sig-code">
+        <div class="sig-slot" style="--ax:var(--ax1)"><div class="ss-axis">Energy</div><div class="ss-code"><b>W</b><span>2</span></div><div class="ss-pole">Inward</div></div>
+        <div class="sig-slot" style="--ax:var(--ax2)"><div class="ss-axis">Information</div><div class="ss-code"><b>A</b><span>4</span></div><div class="ss-pole">Abstract</div></div>
+        <div class="sig-slot" style="--ax:var(--ax3)"><div class="ss-axis">Decision</div><div class="ss-code"><b>V</b><span>3</span></div><div class="ss-pole">Values</div></div>
+        <div class="sig-slot" style="--ax:var(--ax4)"><div class="ss-axis">Structure</div><div class="ss-code"><b>F</b><span>4</span></div><div class="ss-pole">Flexible</div></div>
+        <div class="sig-slot" style="--ax:var(--ax5)"><div class="ss-axis">Emotion</div><div class="ss-code"><b>S</b><span>2</span></div><div class="ss-pole">Steady</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div class="sig-inline">W2<span class="dot"></span>A4<span class="dot"></span>V3<span class="dot"></span>F4<span class="dot"></span>S2</div>
+        <div class="comp-label" style="margin:0">class="sig-inline" · one-line form</div>
+      </div>
+    </div>
+    <div class="on-dark" style="margin-top:16px">
+      <div class="sig-code dark">
+        <div class="sig-slot" style="--ax:var(--ax1)"><div class="ss-axis">Energy</div><div class="ss-code"><b>O</b><span>5</span></div><div class="ss-pole">Outward</div></div>
+        <div class="sig-slot" style="--ax:var(--ax2)"><div class="ss-axis">Information</div><div class="ss-code"><b>C</b><span>3</span></div><div class="ss-pole">Concrete</div></div>
+        <div class="sig-slot balanced" style="--ax:var(--ax3)"><div class="ss-axis">Decision</div><div class="ss-code"><b>L</b><span>0</span></div><div class="ss-pole">Balanced</div></div>
+        <div class="sig-slot" style="--ax:var(--ax4)"><div class="ss-axis">Structure</div><div class="ss-code"><b>D</b><span>4</span></div><div class="ss-pole">Ordered</div></div>
+        <div class="sig-slot" style="--ax:var(--ax5)"><div class="ss-axis">Emotion</div><div class="ss-code"><b>S</b><span>3</span></div><div class="ss-pole">Steady</div></div>
+      </div>
+      <div class="comp-label">Dark variant · class="sig-code dark" — third slot shows a balanced (band 0) axis</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ BAND SCALE ════════════════════════ -->
+  <div class="vault-section" id="band-scale">
+    <div class="vault-section-title">02 / The Code</div>
+    <div class="vault-section-head">Band scale <span class="flag">new</span></div>
+    <div class="vault-section-sub">The intensity rubric: a continuous 0–100 score bands into six reading levels per pole. <b>Bands communicate; they never compute</b> — every reliability and stability calculation runs on the raw score, never the band.</div>
+    <div class="band-scale">
+      <div class="band-row"><div class="b-digit" style="background:var(--ax5)">5</div><div class="b-range">81–100</div><div class="b-read"><b>Maximal</b> — <span>the trait dominates behaviour</span></div></div>
+      <div class="band-row"><div class="b-digit" style="background:var(--ax4)">4</div><div class="b-range">61–80</div><div class="b-read"><b>Strong</b> — <span>clearly, consistently expressed</span></div></div>
+      <div class="band-row"><div class="b-digit" style="background:var(--ax3)">3</div><div class="b-range">41–60</div><div class="b-read"><b>Pronounced</b> — <span>present, situational</span></div></div>
+      <div class="band-row"><div class="b-digit" style="background:var(--ax2)">2</div><div class="b-range">21–40</div><div class="b-read"><b>Moderate</b> — <span>a mild lean</span></div></div>
+      <div class="band-row"><div class="b-digit" style="background:var(--ax1)">1</div><div class="b-range">1–20</div><div class="b-read"><b>Slight</b> — <span>barely distinguishable from balanced</span></div></div>
+      <div class="band-row b0"><div class="b-digit">0</div><div class="b-range">~50 · CI spans 50</div><div class="b-read"><b>Balanced</b> — <span>no meaningful lean</span></div></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ RADAR — 3 OPTIONS ════════════════════════ -->
+  <div class="vault-section" id="radar">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Radar — pick one <span class="flag">3 options</span></div>
+    <div class="vault-section-sub">Five axes need a pentagon, not a diamond. Three ways to draw it — same data, same <code>data-values="0.32,0.71,0.54,0.68,0.38"</code>, switch with <code>data-variant</code>. <b>Tell me which you prefer</b> and I'll standardise on it across both documents. Values map each axis toward its plus pole (O·C·L·D·S).</div>
+
+    <div class="vault-row" style="gap:16px">
+      <div class="on-paper" style="flex:1;min-width:300px;align-items:center">
+        <div class="radar-chart" data-variant="pentagon" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Energy,Info,Decision,Structure,Emotion" data-codes="W2,A4,V3,F4,S2" data-size="300" data-theme="light"></div>
+        <div class="comp-label" style="text-align:center">Option A — <b style="color:var(--orange)">Pentagon web</b> · data-variant="pentagon"</div>
+      </div>
+      <div class="on-paper" style="flex:1;min-width:300px;align-items:center">
+        <div class="radar-chart" data-variant="petal" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Energy,Info,Decision,Structure,Emotion" data-codes="W2,A4,V3,F4,S2" data-size="300" data-theme="light"></div>
+        <div class="comp-label" style="text-align:center">Option B — <b style="color:var(--orange)">Petal bloom</b> · data-variant="petal"</div>
+      </div>
+    </div>
+    <div class="vault-row" style="gap:16px">
+      <div class="on-paper" style="flex:1;min-width:300px;align-items:center">
+        <div class="radar-chart" data-variant="spoke" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Energy,Info,Decision,Structure,Emotion" data-codes="W2,A4,V3,F4,S2" data-size="300" data-theme="light"></div>
+        <div class="comp-label" style="text-align:center">Option C — <b style="color:var(--orange)">Spoke gauge</b> · data-variant="spoke"</div>
+      </div>
+      <div class="on-grad" style="flex:1;min-width:300px;align-items:center">
+        <div class="radar-chart" data-variant="pentagon" data-values="0.32,0.71,0.54,0.68,0.38" data-labels="Energy,Info,Decision,Structure,Emotion" data-codes="W2,A4,V3,F4,S2" data-size="300" data-theme="gradient"></div>
+        <div class="comp-label" style="text-align:center">Any variant also renders on <b style="color:#fff">dark / gradient</b> · data-theme="gradient"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SPECTRUM BAR ════════════════════════ -->
+  <div class="vault-section" id="spectrum">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Spectrum bar</div>
+    <div class="vault-section-sub">One bipolar axis. <code>data-value="0.32"</code> (0 = minus pole, 1 = plus pole). Optional <code>data-ci="0.24,0.42"</code> shades the confidence interval around the thumb — the honest "likely range," not a false-precision point.</div>
+    <div class="on-paper" style="display:flex;flex-direction:column;gap:36px;">
+      <div class="spectrum-bar" data-value="0.32" data-left="Outward · O" data-right="Inward · W" data-label="Energy Orientation" data-code="W2" data-ci="0.24,0.42" data-confidence="0.79" data-desc="Lis recharges alone and warms up in small groups. Schedule solo time as a need, not a treat."></div>
+      <div class="spectrum-bar" data-value="0.71" data-left="Concrete · C" data-right="Abstract · A" data-label="Information Focus" data-code="A4" data-ci="0.64,0.78" data-confidence="0.83" data-desc="Sees the whole picture before the parts. A real strength on open-ended, creative work."></div>
+      <div class="spectrum-bar" data-value="0.54" data-left="Logic · L" data-right="Values · V" data-label="Decision Basis" data-code="V3" data-ci="0.46,0.62" data-confidence="0.71" data-desc="The final yes tends to come from values and people. Give a night before a hard call."></div>
+      <div class="spectrum-bar" data-value="0.68" data-left="Ordered · D" data-right="Flexible · F" data-label="Structure Preference" data-code="F4" data-ci="0.60,0.76" data-confidence="0.80" data-desc="Improvises and resists rigid schedules. Flexible frames beat fixed timetables."></div>
+      <div class="spectrum-bar" data-value="0.38" data-left="Reactive · R" data-right="Steady · S" data-label="Emotional Response" data-code="S2" data-ci="0.30,0.46" data-confidence="0.68" data-desc="Fairly steady, with occasional sensitivity under real stress. Normal-range temperament."></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CONFIDENCE INTERVAL ════════════════════════ -->
+  <div class="vault-section" id="ci-bar">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Confidence interval bar <span class="flag">new</span></div>
+    <div class="vault-section-sub">The raw 0–100 score shown with its likely range — <code>data-value="71" data-lo="64" data-hi="78"</code>. This is the visual that protects the re-test promise: next year's 66 shown inside the band reads as stability, not "your child changed."</div>
+    <div class="on-paper" style="max-width:560px;display:flex;flex-direction:column;gap:22px;">
+      <div class="ci-bar" data-name="Information Focus · A" data-value="71" data-lo="64" data-hi="78"></div>
+      <div class="ci-bar" data-name="Structure Preference · F" data-value="68" data-lo="60" data-hi="76"></div>
+      <div class="ci-bar" data-name="Decision Basis · V" data-value="54" data-lo="46" data-hi="62"></div>
+      <div class="ci-bar" data-name="Energy Orientation · W" data-value="32" data-lo="24" data-hi="42"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ AXIS PILL ════════════════════════ -->
+  <div class="vault-section" id="axis-pill">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Axis pill</div>
+    <div class="vault-section-sub">Compact bar for lists and passport summaries. Set <code>data-label</code>, <code>data-value="0.71"</code> and <code>data-code="A4"</code>. Colour per axis via <code>--ax</code>.</div>
+    <div class="on-paper" style="max-width:520px;display:flex;flex-direction:column;gap:13px;">
+      <div class="axis-pill" style="--ax:var(--ax1)" data-label="Energy" data-value="0.32" data-code="W2"></div>
+      <div class="axis-pill" style="--ax:var(--ax2)" data-label="Information" data-value="0.71" data-code="A4"></div>
+      <div class="axis-pill" style="--ax:var(--ax3)" data-label="Decision" data-value="0.54" data-code="V3"></div>
+      <div class="axis-pill" style="--ax:var(--ax4)" data-label="Structure" data-value="0.68" data-code="F4"></div>
+      <div class="axis-pill" style="--ax:var(--ax5)" data-label="Emotion" data-value="0.38" data-code="S2"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CONFIDENCE RING ════════════════════════ -->
+  <div class="vault-section" id="conf-ring">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Confidence ring</div>
+    <div class="vault-section-sub">Set <code>data-value="0.79"</code> (0–1) — the reliability/confidence attached to a reading, not the score itself.</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1;align-items:center;gap:24px;flex-direction:row;flex-wrap:wrap">
+        <div class="conf-ring" data-value="0.83" data-label="Information" data-theme="light"></div>
+        <div class="conf-ring" data-value="0.71" data-label="Decision" data-theme="light"></div>
+        <div class="conf-ring" data-value="0.68" data-label="Emotion" data-theme="light"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ FIT BAR ════════════════════════ -->
+  <div class="vault-section" id="fit-bar">
+    <div class="vault-section-title">03 / Data Elements</div>
+    <div class="vault-section-head">Fit bar</div>
+    <div class="vault-section-sub">Set <code>data-fill="88"</code> (0–100). Used inside career/RIASEC cards but works standalone.</div>
+    <div class="on-paper" style="max-width:480px;display:flex;flex-direction:column;gap:16px;">
+      <div><div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px;">Investigative (I) · 92%</div><div class="fit-bar" data-fill="92"><div class="fb-fill"></div></div></div>
+      <div><div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px;">Artistic (A) · 88%</div><div class="fit-bar" data-fill="88"><div class="fb-fill"></div></div></div>
+      <div><div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px;">Social (S) · 74%</div><div class="fit-bar" data-fill="74"><div class="fb-fill"></div></div></div>
+      <div><div style="font-size:13px;color:var(--ink-soft);margin-bottom:6px;">Enterprising (E) · 51%</div><div class="fit-bar" data-fill="51"><div class="fb-fill"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ TRAIT CHIPS ════════════════════════ -->
+  <div class="vault-section" id="trait-chips">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Trait chips</div>
+    <div class="on-paper">
+      <div class="trait-chips-wrap">
+        <div class="trait-chip active">imagination</div>
+        <div class="trait-chip active">empathy</div>
+        <div class="trait-chip">attentiveness</div>
+        <div class="trait-chip">principled</div>
+        <div class="trait-chip active">deep thinking</div>
+        <div class="trait-chip">loyalty</div>
+        <div class="trait-chip">originality</div>
+        <div class="trait-chip">sensitivity</div>
+      </div>
+      <div class="comp-label">Add class="active" to highlight a top strength (orange gradient).</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ GROWTH EDGE ════════════════════════ -->
+  <div class="vault-section" id="growth-edge">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Growth edge / shadow <span class="flag">new</span></div>
+    <div class="vault-section-sub">The derived shadow — the least-developed axis, the opposite of the dominant preferences. It is a Level 2/3 interpretation, <b>never a measurement</b>: no code slot, no confidence band. Two life-stage framings of the same construct.</div>
+    <div class="vault-row">
+      <div style="flex:1;min-width:320px">
+        <div class="growth-edge">
+          <div class="ge-eyebrow"><span class="dot"></span>Growth edge · derived</div>
+          <div class="ge-axis">Energy Orientation <span>· W2</span></div>
+          <div class="ge-body">The least-developed axis here is near-balanced Energy Orientation. The shadow points toward developing outward expression — speaking up, initiating. Not a weakness; the next place to grow.</div>
+          <div class="ge-tag"><span>Adult framing · "where you get in your own way"</span></div>
+        </div>
+        <div class="comp-label">Adult · class="growth-edge"</div>
+      </div>
+      <div style="flex:1;min-width:320px">
+        <div class="growth-edge parent">
+          <div class="ge-eyebrow"><span class="dot"></span>Emerging strength</div>
+          <div class="ge-axis">Where a little support pays off</div>
+          <div class="ge-body">Lis warms up slowly in new groups. Gentle encouragement to speak first — a rehearsed opening line, a small role in a familiar setting — helps this side develop at its own pace.</div>
+          <div class="ge-tag"><span>Parent framing · strengths-based, never a deficit</span></div>
+        </div>
+        <div class="comp-label">Youth / parent · class="growth-edge parent"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CAREER / RIASEC ════════════════════════ -->
+  <div class="vault-section" id="career-card">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Career / RIASEC card</div>
+    <div class="vault-section-sub">Level-2 profession fit, mapped from the code to Holland's RIASEC types. The <code>cc-riasec</code> tag shows the interest code.</div>
+    <div class="on-paper" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="career-card">
+        <div class="cc-icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 14 L7 10 L10 12 L15 6" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-name">Psychology &amp; human sciences<span class="cc-riasec">I · A</span></div>
+          <div class="cc-desc">empathy + deep thinking</div>
+          <div class="fit-bar" data-fill="92"><div class="fb-fill"></div></div>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="cc-icon coral"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="14" rx="2" stroke="#fff" stroke-width="1.6"/><line x1="6" y1="7" x2="12" y2="7" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><line x1="6" y1="10" x2="10" y2="10" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-name">Writing &amp; storytelling<span class="cc-riasec">A</span></div>
+          <div class="cc-desc">imagination + orientation to meaning</div>
+          <div class="fit-bar" data-fill="88"><div class="fb-fill"></div></div>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="cc-icon gold"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="4" stroke="#fff" stroke-width="1.6"/><path d="M4 16 C4 12 14 12 14 16" stroke="#fff" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-name">Social impact &amp; NGOs<span class="cc-riasec">S</span></div>
+          <div class="cc-desc">principled + care for others</div>
+          <div class="fit-bar" data-fill="74"><div class="fb-fill"></div></div>
+        </div>
+      </div>
+      <div class="comp-label">Icon variants: class="cc-icon" / "cc-icon coral" / "cc-icon gold"</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ EXPERIMENT CARD ════════════════════════ -->
+  <div class="vault-section" id="exp-card">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Experiment card</div>
+    <div class="vault-section-sub">Concrete, time-boxed suggestions tied to an axis or the growth edge — the actionable Level-3 layer.</div>
+    <div class="on-dark" style="display:flex;flex-direction:column;gap:14px;">
+      <div class="exp-card">
+        <div class="ec-num blue">1</div>
+        <div>
+          <div class="ec-label">— Experiment · Energy —</div>
+          <h3>An hour of quiet after school</h3>
+          <p>Give Lis 45–60 minutes with no talking and no screen. Just observe whether the evening mood improves.</p>
+          <div class="ec-timeline"><span class="dot"></span>2 weeks · observation</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="ec-num coral">2</div>
+        <div>
+          <div class="ec-label">— Experiment · Decision —</div>
+          <h3>Sleep on it</h3>
+          <p>When Lis faces a choice, don't rush it. "Tell me tomorrow morning." Watch how the answers land.</p>
+          <div class="ec-timeline"><span class="dot"></span>1 month · 3–4 decisions</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="ec-num gold">3</div>
+        <div>
+          <div class="ec-label">— Experiment · Growth edge —</div>
+          <h3>One small speaking role</h3>
+          <p>A rehearsed opening line in a familiar group. Low stakes, real practice for the outward side.</p>
+          <div class="ec-timeline"><span class="dot"></span>4–6 weeks · gentle</div>
+        </div>
+      </div>
+      <div class="comp-label">Num variants: class="ec-num blue / coral / gold"</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ STAT BLOCK ════════════════════════ -->
+  <div class="vault-section" id="stat-block">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Stat block</div>
+    <div class="vault-row">
+      <div class="on-dark" style="flex:1">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="stat-block"><div class="sb-val or">5</div><div class="sb-label">orthogonal axes, scored 0–100</div></div>
+          <div class="stat-block"><div class="sb-val bl">94</div><div class="sb-label">pilot-ready items · Likert, normative</div></div>
+          <div class="stat-block"><div class="sb-val wh">8–14</div><div class="sb-label">age window for the Youth product</div></div>
+          <div class="stat-block"><div class="sb-val or">2</div><div class="sb-label">products, one shared code spine</div></div>
+        </div>
+        <div class="comp-label">sb-val variants: class="or / bl / wh"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ PROFILE / PASSPORT ════════════════════════ -->
+  <div class="vault-section" id="profile-card">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Profile / Passport card</div>
+    <div class="vault-section-sub">Now carries the full five-slot code. Adult profiles name an <b>archetype role</b>; youth profiles name an <b>animal totem</b> — same code spine underneath (the cross-sell bridge).</div>
+    <div class="vault-row">
+      <div style="flex:1;min-width:300px">
+        <div class="profile-card">
+          <div class="pc-head"><span>Personality Passport · Adult</span><span class="pc-no">Nº 0001</span></div>
+          <div class="pc-body">
+            <div class="pc-avatar">L</div>
+            <dl class="pc-meta">
+              <dt>Name</dt><dd>Lis</dd>
+              <dt>Archetype</dt><dd>The Reflective Explorer</dd>
+              <dt>Decisions</dt><dd>on the following morning</dd>
+            </dl>
+          </div>
+          <div class="pc-code">
+            <div class="code-chip sm">W<span class="bd">2</span></div>
+            <div class="code-chip sm active">A<span class="bd">4</span></div>
+            <div class="code-chip sm">V<span class="bd">3</span></div>
+            <div class="code-chip sm active">F<span class="bd">4</span></div>
+            <div class="code-chip sm">S<span class="bd">2</span></div>
+          </div>
+          <div class="pc-foot"><span class="pc-date">Issued 06 Jul 2026</span><span class="pc-seal">SEEN</span></div>
+        </div>
+        <div class="comp-label">Adult · archetype role</div>
+      </div>
+      <div style="flex:1;min-width:300px">
+        <div class="profile-card">
+          <div class="pc-head"><span>Психологический паспорт · Youth</span><span class="pc-no">Nº 0001</span></div>
+          <div class="pc-body">
+            <div class="pc-avatar">🦊</div>
+            <dl class="pc-meta">
+              <dt>Имя</dt><dd>Лис</dd>
+              <dt>Тотем</dt><dd>Лиса</dd>
+              <dt>Решения</dt><dd>утром следующего дня</dd>
+            </dl>
+          </div>
+          <div class="pc-code">
+            <div class="code-chip sm">W<span class="bd">2</span></div>
+            <div class="code-chip sm active">A<span class="bd">4</span></div>
+            <div class="code-chip sm">V<span class="bd">3</span></div>
+            <div class="code-chip sm active">F<span class="bd">4</span></div>
+            <div class="code-chip sm">S<span class="bd">2</span></div>
+          </div>
+          <div class="pc-foot"><span class="pc-date">Выдан 06 июля 2026</span><span class="pc-seal">SEEN</span></div>
+        </div>
+        <div class="comp-label">Youth · animal totem (same code)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ PULL QUOTE ════════════════════════ -->
+  <div class="vault-section" id="pull-quote">
+    <div class="vault-section-title">04 / Cards &amp; Content</div>
+    <div class="vault-section-head">Pull quote</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1">
+        <blockquote class="pull-quote">The raw score is the record. The band only <b>reads</b> it.</blockquote>
+        <div class="pull-quote-by"><span class="rule"></span>ReNo Methodology · §05</div>
+        <div class="comp-label">Light · class="pull-quote"</div>
+      </div>
+      <div class="on-dark" style="flex:1">
+        <blockquote class="pull-quote dark">The core holds; <b>the shadow grows</b>. That is why re-testing means something.</blockquote>
+        <div class="pull-quote-by" style="color:rgba(255,255,255,.4)"><span class="rule"></span>ReNo Methodology · §08</div>
+        <div class="comp-label">Dark · add class="dark"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ BUTTONS ════════════════════════ -->
+  <div class="vault-section" id="buttons">
+    <div class="vault-section-title">05 / UI Atoms</div>
+    <div class="vault-section-head">Buttons</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1;gap:12px;flex-direction:row;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-orange">Start →</button>
+        <button class="btn btn-blue">See an example</button>
+        <button class="btn btn-ink">Download PDF</button>
+        <button class="btn btn-ghost">Learn more</button>
+        <button class="btn btn-orange sm">Start</button>
+        <div class="comp-label" style="width:100%">btn-orange / btn-blue / btn-ink / btn-ghost · add .sm for small</div>
+      </div>
+      <div class="on-dark" style="flex:1;gap:12px;flex-direction:row;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-orange">Start →</button>
+        <button class="btn btn-ghost-white">See an example</button>
+        <div class="comp-label" style="width:100%">On dark: btn-orange + btn-ghost-white</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ BADGES ════════════════════════ -->
+  <div class="vault-section" id="badges">
+    <div class="vault-section-title">05 / UI Atoms</div>
+    <div class="vault-section-head">Badges</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1;flex-direction:row;flex-wrap:wrap;gap:10px">
+        <div class="badge orange"><span class="badge-dot"></span>confidence · 0.79</div>
+        <div class="badge blue"><span class="badge-dot"></span>PsyID · 5 axes</div>
+        <div class="comp-label" style="width:100%">Light badges: class="orange / blue"</div>
+      </div>
+      <div class="on-dark" style="flex:1;flex-direction:row;flex-wrap:wrap;gap:10px">
+        <div class="badge dark"><span class="badge-dot"></span>Pre-validation working document</div>
+        <div class="comp-label" style="width:100%">Dark badge: class="dark"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ EYEBROW ════════════════════════ -->
+  <div class="vault-section" id="eyebrow">
+    <div class="vault-section-title">05 / UI Atoms</div>
+    <div class="vault-section-head">Eyebrow labels</div>
+    <div class="vault-row">
+      <div class="on-paper" style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="eyebrow orange">Profile overview</div>
+        <div class="eyebrow blue">The five axes</div>
+        <div class="eyebrow mute">Nº 0001 · 06 Jul 2026</div>
+        <div class="comp-label">class="eyebrow orange / blue / mute"</div>
+      </div>
+      <div class="on-dark" style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="eyebrow white">— Next steps —</div>
+        <div class="comp-label">class="eyebrow white"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ PAGE CHROME ════════════════════════ -->
+  <div class="vault-section" id="page-chrome">
+    <div class="vault-section-title">05 / UI Atoms</div>
+    <div class="vault-section-head">Page header / footer</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="report-header">
+        <div class="rh-brand">Psy<i>ID</i></div>
+        <div class="rh-pg">Nº 0001 · Profile · p. 02</div>
+      </div>
+      <div class="comp-label" style="color:rgba(255,255,255,.3)">class="report-header"</div>
+      <div class="report-footer">
+        <div>Lis · Nº 0001 · PsyID</div>
+        <div class="dot-pager"><span class="dp"></span><span class="dp on"></span><span class="dp"></span><span class="dp"></span><span class="dp"></span></div>
+        <div>p. 02</div>
+      </div>
+      <div class="comp-label" style="color:rgba(255,255,255,.3)">class="report-footer" · dot-pager: add class="on" to current dot</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ COVER GRADIENT ════════════════════════ -->
+  <div class="vault-section" id="cover-grad">
+    <div class="vault-section-title">05 / UI Atoms</div>
+    <div class="vault-section-head">Cover gradient</div>
+    <div class="vault-section-sub">The multi-stop radial gradient behind cover pages and hero sections. Adjust stop positions to shift the colour split.</div>
+    <div class="cover-swatch">
+      <div class="csw-bg"></div>
+      <div class="csw-label">--grad-hero · blue → purple → coral → orange</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px">
+      <div style="height:100px;border-radius:var(--r-md);background:var(--grad-blue)"><div style="padding:10px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.7)">--grad-blue</div></div>
+      <div style="height:100px;border-radius:var(--r-md);background:var(--grad-orange)"><div style="padding:10px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:rgba(14,18,48,.7)">--grad-orange</div></div>
+      <div style="height:100px;border-radius:var(--r-md);background:var(--grad-axis)"><div style="padding:10px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.85)">--grad-axis · 5 hues</div></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     JS — auto-renders data-attribute-driven components
+════════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+var AXIS_COLORS = ['#2244E0','#6A85F0','#8A5CD6','#FF7A3D','#FF5A5A'];
+
+function polar(cx,cy,r,angleDeg){
+  var a = (angleDeg-90)*Math.PI/180;
+  return { x: cx + r*Math.cos(a), y: cy + r*Math.sin(a) };
+}
+
+/* ── RADAR (pentagon | petal | spoke), N axes ─────────────────────── */
+function buildRadar(el){
+  var vals   = (el.getAttribute('data-values')||'0.5,0.5,0.5,0.5,0.5').split(',').map(Number);
+  var labs   = (el.getAttribute('data-labels')||'').split(',');
+  var codes  = (el.getAttribute('data-codes')||'').split(',');
+  var size   = parseInt(el.getAttribute('data-size')||'300',10);
+  var theme  = el.getAttribute('data-theme')||'light';
+  var variant= el.getAttribute('data-variant')||'pentagon';
+  var n = vals.length;
+  var cx = size/2, cy = size/2;
+  var maxR = size/2 - 40;
+  var step = 360/n;
+
+  var isLight = theme==='light';
+  var ringStroke = isLight ? '#E0D9CE' : 'rgba(255,255,255,0.16)';
+  var axisStroke = isLight ? '#E0D9CE' : 'rgba(255,255,255,0.20)';
+  var textFill   = isLight ? '#8A8FA8' : 'rgba(255,255,255,0.68)';
+  var codeFill   = isLight ? '#0E1230' : '#ffffff';
+  var trackFill  = isLight ? '#EDE7DC' : 'rgba(255,255,255,0.10)';
+
+  var id = 'r'+Math.random().toString(36).slice(2,7);
+  var defs = '<defs>';
+  // per-axis gradient not needed; use solid axis colors
+  defs += '</defs>';
+
+  var svg = defs;
+
+  if(variant==='pentagon'){
+    // concentric polygon rings
+    var rings = 4;
+    for(var ri=1; ri<=rings; ri++){
+      var rr = (ri/rings)*maxR;
+      var pp = [];
+      for(var i=0;i<n;i++){ var p=polar(cx,cy,rr,i*step); pp.push(p.x.toFixed(1)+','+p.y.toFixed(1)); }
+      svg += '<polygon points="'+pp.join(' ')+'" fill="none" stroke="'+ringStroke+'" stroke-width="1"/>';
+    }
+    // spokes
+    for(var i=0;i<n;i++){ var e=polar(cx,cy,maxR,i*step); svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+axisStroke+'" stroke-width="1"/>'; }
+    // data polygon
+    var dp = [];
+    var pts = [];
+    for(var i=0;i<n;i++){ var p=polar(cx,cy,vals[i]*maxR,i*step); pts.push(p); dp.push(p.x.toFixed(1)+','+p.y.toFixed(1)); }
+    var fill = isLight ? 'rgba(255,122,61,0.14)' : 'rgba(255,165,72,0.20)';
+    var stroke = isLight ? '#FF7A3D' : 'rgba(255,255,255,0.9)';
+    svg += '<polygon points="'+dp.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" stroke-linejoin="round"/>';
+    for(var i=0;i<n;i++){ svg += '<circle cx="'+pts[i].x.toFixed(1)+'" cy="'+pts[i].y.toFixed(1)+'" r="4.5" fill="#fff" stroke="'+AXIS_COLORS[i%5]+'" stroke-width="2.5"/>'; }
+  }
+  else if(variant==='petal'){
+    // faint full-length tracks + colored rounded bars from center
+    for(var i=0;i<n;i++){
+      var e = polar(cx,cy,maxR,i*step);
+      svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+trackFill+'" stroke-width="12" stroke-linecap="round"/>';
+    }
+    for(var i=0;i<n;i++){
+      var p = polar(cx,cy,Math.max(vals[i],0.04)*maxR,i*step);
+      svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+p.x.toFixed(1)+'" y2="'+p.y.toFixed(1)+'" stroke="'+AXIS_COLORS[i%5]+'" stroke-width="12" stroke-linecap="round"/>';
+      svg += '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="6.5" fill="#fff" stroke="'+AXIS_COLORS[i%5]+'" stroke-width="2.5"/>';
+    }
+    svg += '<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="'+(isLight?'#0E1230':'#fff')+'"/>';
+  }
+  else { // spoke gauge
+    for(var i=0;i<n;i++){
+      var e = polar(cx,cy,maxR,i*step);
+      // graduated track
+      svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+e.x.toFixed(1)+'" y2="'+e.y.toFixed(1)+'" stroke="'+trackFill+'" stroke-width="3" stroke-linecap="round"/>';
+      // filled portion
+      var p = polar(cx,cy,vals[i]*maxR,i*step);
+      svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+p.x.toFixed(1)+'" y2="'+p.y.toFixed(1)+'" stroke="'+AXIS_COLORS[i%5]+'" stroke-width="3" stroke-linecap="round"/>';
+      // marker
+      svg += '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="7" fill="'+AXIS_COLORS[i%5]+'"/>';
+      svg += '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3" fill="#fff"/>';
+    }
+    svg += '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="'+(isLight?'#C8C0B4':'rgba(255,255,255,0.4)')+'"/>';
+  }
+
+  // labels + codes outside
+  for(var i=0;i<n;i++){
+    var lp = polar(cx,cy,maxR+22,i*step);
+    var anchor = 'middle';
+    if(lp.x < cx-2) anchor='end'; else if(lp.x > cx+2) anchor='start';
+    var dy = lp.y < cy-2 ? '-2' : (lp.y > cy+2 ? '11' : '4');
+    var lab = (labs[i]||'').trim().toUpperCase();
+    var code = (codes[i]||'').trim();
+    svg += '<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+dy+'" text-anchor="'+anchor+'" font-family="Geist Mono, monospace" font-size="9" letter-spacing="1.2" fill="'+textFill+'">'+lab+'</text>';
+    if(code){
+      svg += '<text x="'+lp.x.toFixed(1)+'" y="'+lp.y.toFixed(1)+'" dy="'+(parseFloat(dy)+12)+'" text-anchor="'+anchor+'" font-family="Geist, system-ui" font-weight="800" font-size="12" fill="'+codeFill+'">'+code+'</text>';
+    }
+  }
+
+  var padX = 46;
+  el.innerHTML = '<svg viewBox="'+(-padX)+' 0 '+(size+2*padX)+' '+size+'" width="'+(size+2*padX)+'" height="'+size+'" fill="none">'+svg+'</svg>';
+}
+document.querySelectorAll('.radar-chart').forEach(buildRadar);
+
+/* ── SPECTRUM BAR ────────────────────────────────────────────────── */
+function buildSpectrum(el){
+  var val   = parseFloat(el.getAttribute('data-value')||'0.5');
+  var left  = el.getAttribute('data-left')||'';
+  var right = el.getAttribute('data-right')||'';
+  var label = el.getAttribute('data-label')||'';
+  var code  = el.getAttribute('data-code')||'';
+  var conf  = el.getAttribute('data-confidence')||'';
+  var desc  = el.getAttribute('data-desc')||'';
+  var ci    = (el.getAttribute('data-ci')||'').split(',').map(Number);
+  var pct   = (val*100).toFixed(0)+'%';
+
+  var ciHtml = '';
+  if(ci.length===2 && !isNaN(ci[0])){
+    var lo = ci[0]*100, hi = ci[1]*100;
+    ciHtml = '<div class="sp-ci" style="left:'+lo+'%;width:'+(hi-lo)+'%"></div>';
+  }
+  var lpole = left.indexOf('·')>-1 ? left.split('·')[1].trim() : left;
+  var rpole = right.indexOf('·')>-1 ? right.split('·')[1].trim() : right;
+
+  el.innerHTML =
+    '<div class="sp-head">'+
+      '<div class="sp-name">'+label+(code?'<small>'+code+'</small>':'')+'</div>'+
+      (conf ? '<div class="sp-conf">confidence · '+conf+'</div>' : '')+
+    '</div>'+
+    '<div class="sp-ends"><span>'+left+'</span><span>'+right+'</span></div>'+
+    '<div class="sp-track">'+
+      '<div class="sp-mid"></div>'+
+      ciHtml+
+      '<div class="sp-thumb" style="left:'+pct+'"></div>'+
+      '<div class="sp-pole l">'+lpole+'</div>'+
+      '<div class="sp-pole r">'+rpole+'</div>'+
+    '</div>'+
+    (desc ? '<div class="sp-desc">'+desc+'</div>' : '');
+}
+document.querySelectorAll('.spectrum-bar').forEach(buildSpectrum);
+
+/* ── CONFIDENCE INTERVAL BAR ─────────────────────────────────────── */
+function buildCI(el){
+  var name = el.getAttribute('data-name')||'';
+  var v  = parseFloat(el.getAttribute('data-value')||'50');
+  var lo = parseFloat(el.getAttribute('data-lo')||String(v-8));
+  var hi = parseFloat(el.getAttribute('data-hi')||String(v+8));
+  el.innerHTML =
+    '<div class="ci-head"><div class="ci-name">'+name+'</div>'+
+      '<div class="ci-read"><b>'+v+'</b> &nbsp;likely '+lo+'–'+hi+'</div></div>'+
+    '<div class="ci-track">'+
+      '<div class="ci-fill" style="width:'+v+'%"></div>'+
+      '<div class="ci-range" style="left:'+lo+'%;width:'+(hi-lo)+'%"></div>'+
+      '<div class="ci-dot" style="left:'+v+'%"></div>'+
+    '</div>'+
+    '<div class="ci-ticks"><span>0</span><span>50</span><span>100</span></div>';
+}
+document.querySelectorAll('.ci-bar[data-value]').forEach(buildCI);
+
+/* ── AXIS PILL ───────────────────────────────────────────────────── */
+function buildAxisPill(el){
+  var label = el.getAttribute('data-label')||'';
+  var val   = parseFloat(el.getAttribute('data-value')||'0.5');
+  var code  = el.getAttribute('data-code')|| (val).toFixed(2);
+  var pct   = (val*100).toFixed(0)+'%';
+  el.innerHTML =
+    '<div class="ap-name">'+label+'</div>'+
+    '<div class="ap-track"><div class="ap-fill" style="width:'+pct+'"></div></div>'+
+    '<div class="ap-code">'+code+'</div>';
+}
+document.querySelectorAll('.axis-pill[data-label]').forEach(buildAxisPill);
+
+/* ── CONFIDENCE RING ─────────────────────────────────────────────── */
+function buildConfRing(el){
+  var val   = parseFloat(el.getAttribute('data-value')||'0.7');
+  var label = el.getAttribute('data-label')||'';
+  var theme = el.getAttribute('data-theme')||'light';
+  var size  = 88, r = 36, cx = 44, cy = 44;
+  var circ  = 2*Math.PI*r;
+  var dash  = val*circ, gap = circ-dash;
+  var trackCol = theme==='light' ? '#E0D9CE' : 'rgba(255,255,255,0.12)';
+  var textCol  = theme==='light' ? '#0E1230' : '#fff';
+  var id = 'cr'+Math.random().toString(36).slice(2,7);
+  var svg =
+    '<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="none">'+
+    '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1">'+
+      '<stop offset="0%" stop-color="#2244E0"/><stop offset="100%" stop-color="#FF7A3D"/></linearGradient></defs>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" stroke="'+trackCol+'" stroke-width="6" fill="none"/>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" stroke="url(#'+id+')" stroke-width="6" fill="none" '+
+      'stroke-dasharray="'+dash+' '+gap+'" stroke-dashoffset="'+(-circ/4)+'" stroke-linecap="round"/>'+
+    '<text x="'+cx+'" y="'+cy+'" text-anchor="middle" dy="5" font-family="Geist, system-ui" font-weight="800" font-size="16" fill="'+textCol+'">'+val.toFixed(2)+'</text>'+
+    '</svg>';
+  el.innerHTML = '<div class="cr-wrap">'+svg+'</div><div class="cr-label">'+label+'</div>';
+}
+document.querySelectorAll('.conf-ring').forEach(buildConfRing);
+
+/* ── FIT BAR ─────────────────────────────────────────────────────── */
+document.querySelectorAll('.fit-bar[data-fill]').forEach(function(el){
+  var fill = el.getAttribute('data-fill');
+  var inner = el.querySelector('.fb-fill');
+  if(inner){ inner.style.width = fill+'%'; }
+});
+
+})();
+</script>
+</body>
+</html>
