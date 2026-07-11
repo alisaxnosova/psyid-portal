@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReNo v1.1 — Assessment (preview)</title>
+<style>
+:root{
+  --navy:#050C2E; --navy-2:#0B1A56; --blue:#2244E0; --blue-soft:#6A85F0;
+  --blue-tint:#DCE2FF; --violet:#8A5CD6; --coral:#FF5A5A; --orange:#FF7A3D;
+  --orange-hot:#FF9540; --gold:#FFC074; --gold-tint:#FFF0D6;
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+  --paper:#F6F1EA; --paper-2:#EDE7DC; --paper-3:#E4DCCF;
+  --ink:#0E1230; --ink-soft:#4F5470; --ink-mute:#8A8FA8;
+  --line:#E0D9CE; --line-dark:#C8C0B4;
+  --font-display:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-sans:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --r-xs:8px; --r-sm:12px; --r-md:18px; --r-lg:26px; --r-xl:36px; --r-full:999px;
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+  --grad-blue:linear-gradient(95deg,var(--blue),var(--blue-soft));
+  --grad-axis:linear-gradient(90deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+  --grad-hero:linear-gradient(140deg,#040924 0%,#0D1E6A 35%,#3D1E5A 60%,#A83040 80%,#FF7030 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:var(--font-sans);background:var(--paper);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.5;}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit}
+
+/* layout */
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+.stage-wrap{min-height:100vh;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(246,241,234,.85);
+  backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.topbar .row{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);
+  font-weight:800;letter-spacing:-.03em;font-size:18px;color:var(--ink)}
+.brand .mk{width:26px;height:26px;flex:none}
+.brand i{font-style:normal;color:var(--orange)}
+.spacer{flex:1}
+.langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-full);overflow:hidden;background:#fff}
+.langtoggle button{padding:6px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+.langtoggle button.on{background:var(--ink);color:#fff}
+.progressbar{height:3px;background:var(--paper-3)}
+.progressbar .fill{height:100%;background:var(--grad-coral);transition:width .35s cubic-bezier(.4,0,.2,1);border-radius:0 3px 3px 0}
+
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:14px}
+h1{font-family:var(--font-display);font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,5vw,44px);line-height:1.05}
+h2{font-family:var(--font-display);font-weight:750;letter-spacing:-.03em;font-size:26px;line-height:1.12}
+.lede{color:var(--ink-soft);font-size:17px;margin-top:16px;max-width:56ch}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:var(--r-full);
+  background:var(--ink);color:#fff;font-weight:650;font-size:15px;letter-spacing:.01em;transition:transform .12s,opacity .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.grad{background:var(--grad-coral)}
+.btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btnrow{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
+
+/* consent */
+.check{display:flex;gap:13px;align-items:flex-start;padding:18px;border:1px solid var(--line);
+  border-radius:var(--r-md);background:var(--paper);cursor:pointer;margin-top:24px}
+.check input{margin-top:2px;width:20px;height:20px;accent-color:var(--orange);flex:none;cursor:pointer}
+.check span{font-size:15px;color:var(--ink)}
+.err{color:var(--coral);font-size:14px;margin-top:12px;font-weight:600;min-height:18px}
+
+/* intake */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:26px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em}
+.field input,.field select{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);
+  background:#fff;font-size:15px;color:var(--ink);width:100%}
+.field input:focus,.field select:focus{outline:none;border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
+.note{color:var(--ink-mute);font-size:13.5px;margin-top:14px}
+
+/* test */
+.qcount{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink-mute);text-transform:uppercase}
+.qaxis{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.qaxis .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.qtext{font-family:var(--font-display);font-weight:700;letter-spacing:-.025em;
+  font-size:clamp(22px,3.6vw,30px);line-height:1.2;margin:14px 0 34px}
+.likert{display:flex;flex-direction:column;gap:10px}
+.lk{display:flex;align-items:center;gap:16px;width:100%;padding:16px 20px;border:1.5px solid var(--line);
+  border-radius:var(--r-md);background:#fff;text-align:left;transition:border-color .12s,background .12s,transform .1s}
+.lk:hover{border-color:var(--blue-soft);transform:translateX(2px)}
+.lk.sel{border-color:transparent;background:var(--ink);color:#fff}
+.lk .dotnum{width:30px;height:30px;flex:none;border-radius:50%;border:2px solid var(--line-dark);
+  display:grid;place-items:center;font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--ink-mute)}
+.lk.sel .dotnum{border-color:rgba(255,255,255,.5);color:#fff}
+.lk .lktext{font-size:16px;font-weight:600}
+.lk .agree{margin-left:auto;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-mute)}
+.lk.sel .agree{color:rgba(255,255,255,.6)}
+.testnav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.linkbtn{font-size:14px;font-weight:600;color:var(--ink-soft)}
+.linkbtn[disabled]{opacity:.3;pointer-events:none}
+
+/* results */
+.res-hero{background:var(--grad-hero);border-radius:var(--r-xl);padding:40px 34px;color:#fff;overflow:hidden;position:relative}
+.res-hero .eyebrow{color:rgba(255,255,255,.6)}
+.res-type{font-family:var(--font-display);font-weight:800;letter-spacing:-.04em;font-size:clamp(44px,9vw,78px);line-height:1;margin:6px 0}
+.res-type span{color:var(--gold)}
+.sig-inline{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-weight:600;
+  font-size:15px;letter-spacing:.04em;flex-wrap:wrap}
+.sig-inline .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
+.radar-stage{display:grid;place-items:center;margin:6px 0}
+.sig-code{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-top:6px}
+.sig-slot{flex:1;min-width:96px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  padding:16px 12px 13px;text-align:center;position:relative;overflow:hidden}
+.sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax)}
+.sig-slot.balanced::before{background:var(--line-dark)}
+.sig-slot .ss-axis{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+.sig-slot .ss-code{font-family:var(--font-display);font-weight:800;letter-spacing:-.03em;margin-top:6px}
+.sig-slot .ss-code b{font-size:34px;color:var(--ink)}
+.sig-slot .ss-code span{font-size:20px;color:var(--ax);font-weight:700}
+.sig-slot.balanced .ss-code span{color:var(--ink-mute)}
+.sig-slot .ss-pole{font-size:11px;color:var(--ink-soft);margin-top:8px;font-weight:600}
+.axcard{border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;background:#fff;margin-top:16px}
+.axcard .axhead{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.axcard .axswatch{width:44px;height:44px;border-radius:var(--r-sm);flex:none;display:grid;place-items:center;
+  color:#fff;font-family:var(--font-display);font-weight:800;font-size:20px}
+.axcard .axname{font-family:var(--font-display);font-weight:750;letter-spacing:-.02em;font-size:19px}
+.axcard .axmeta{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-mute);margin-top:2px}
+.axbar{height:12px;border-radius:var(--r-full);background:var(--paper-2);position:relative;margin:16px 0 6px;overflow:hidden}
+.axbar .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;background:var(--line-dark)}
+.axbar .fillpos{position:absolute;top:0;bottom:0;border-radius:var(--r-full)}
+.axpoles{display:flex;justify-content:space-between;font-size:11px;font-family:var(--font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.axpoles b{color:var(--ink-soft)}
+.axdesc{font-size:15px;color:var(--ink);margin-top:14px;line-height:1.55}
+.axframing{font-size:13.5px;color:var(--ink-soft);margin-top:10px;padding-left:14px;border-left:3px solid var(--line);font-style:italic}
+.disc{font-size:13px;color:var(--ink-mute);margin-top:34px;padding-top:22px;border-top:1px solid var(--line);line-height:1.6}
+
+/* quick-fill dev button */
+.devfill{position:fixed;right:16px;bottom:16px;z-index:50;background:var(--ink);color:#fff;
+  border-radius:var(--r-full);padding:11px 17px;font-size:13px;font-weight:650;letter-spacing:.01em;
+  box-shadow:0 8px 24px rgba(0,0,0,.22);display:inline-flex;gap:8px;align-items:center;opacity:.9}
+.devfill:hover{opacity:1}
+.devnote{position:fixed;left:16px;bottom:16px;z-index:50;font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);background:rgba(246,241,234,.8);
+  padding:6px 10px;border-radius:var(--r-full);border:1px solid var(--line)}
+
+@media(max-width:560px){
+  .grid2{grid-template-columns:1fr}
+  .stage{padding:36px 0}
+  .card{padding:22px}
+  .res-hero{padding:28px 22px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script id="reno-data" type="application/json">__RENO_DATA__</script>
+<script>
+(function(){
+"use strict";
+const DATA = JSON.parse(document.getElementById('reno-data').textContent);
+const QUESTIONS = DATA.questions;   // [{id,axis,pole,reverse,text{en,ru}}]
+const KEY = DATA.answerKey;         // {AXIS:[cells]}
+
+/* ---- axes (from src/data/reno-axes.ts) ---- */
+const AXES = [
+  {code:'EO',index:1,name:{en:'Energy Orientation',ru:'Ориентация энергии'},
+   plus:{letter:'O',label:{en:'Outward',ru:'Вовне'}},minus:{letter:'W',label:{en:'Inward',ru:'Внутрь'}},color:'#2244E0'},
+  {code:'IF',index:2,name:{en:'Information Focus',ru:'Фокус восприятия'},
+   plus:{letter:'C',label:{en:'Concrete',ru:'Конкретика'}},minus:{letter:'A',label:{en:'Abstract',ru:'Абстракция'}},color:'#6A85F0'},
+  {code:'DB',index:3,name:{en:'Decision Basis',ru:'Основа решений'},
+   plus:{letter:'L',label:{en:'Logic',ru:'Логика'}},minus:{letter:'V',label:{en:'Values',ru:'Ценности'}},color:'#8A5CD6'},
+  {code:'SP',index:4,name:{en:'Structure Preference',ru:'Организация'},
+   plus:{letter:'D',label:{en:'Ordered',ru:'Упорядоченность'}},minus:{letter:'F',label:{en:'Flexible',ru:'Гибкость'}},color:'#FF7A3D'},
+  {code:'ER',index:5,name:{en:'Emotional Response',ru:'Эмоциональный отклик'},
+   plus:{letter:'S',label:{en:'Steady',ru:'Устойчивость'}},minus:{letter:'R',label:{en:'Sensitive',ru:'Чувствительность'}},color:'#FF5A5A',excludeFromType:true},
+];
+const AXIS_BY = Object.fromEntries(AXES.map(a=>[a.code,a]));
+
+/* ---- copy (ported from src/app/reno/page.tsx) ---- */
+const T = {
+  en:{
+    disclaimer_eyebrow:'Step 1 of 3', disclaimer_heading:'Before you begin',
+    disclaimer_body:'This assessment maps how you tend to think, decide, and respond across five dimensions of temperament. It takes about 15–20 minutes. Answer honestly and go with your first instinct — there are no right or wrong answers, and no pole is “better” than the other.',
+    btn_continue:'Continue →',
+    consent_eyebrow:'Step 2 of 3', consent_heading:'Data consent',
+    consent_body:'Your results will be shared only with the specialist who issued your access code. Anonymous, aggregated data may be used for research purposes.',
+    consent_check:'I consent to the processing of my personal data.', consent_err:'Please give your consent to continue.',
+    intake_eyebrow:'Step 3 of 3 · Optional', intake_heading:'A few details',
+    intake_note:'This information is used for research purposes only. All fields are optional — feel free to skip.',
+    intake_age:'Age', intake_age_ph:'16+', intake_sex:'Sex / gender identity',
+    intake_country:'Country', intake_native_language:'Native language', intake_education:'Education level',
+    intake_occupation:'Occupation / industry', intake_occupation_ph:'e.g. Software engineer, Healthcare',
+    intake_employment:'Employment status', intake_relationship:'Relationship status',
+    intake_select_ph:'Select…', intake_skip:'Skip', intake_begin:'Begin the test →',
+    test_of:'of', test_back:'← Back', test_next:'Next', test_finish:'See results →',
+    scale:['Strongly disagree','Disagree','Neither','Agree','Strongly agree'],
+    scale_short:['Disagree','','Neutral','','Agree'],
+    res_eyebrow:'Your ReNo profile', res_type_note:'Four-letter type — Emotional Response colours guidance but is not part of the headline type.',
+    res_sig:'Full signature', res_axes_heading:'The five axes, in detail',
+    res_pole_this:'You', res_restart:'Start over', res_disclaimer:'This is a preview build for internal review. It is not a clinical instrument and does not diagnose. Scores describe temperament tendencies, not fixed traits or ability.',
+    band:['Balanced','Slight','Moderate','Pronounced','Strong','Maximal'],
+    devfill:'⚡ Quick-fill → results', devnote:'Preview build — no data is saved',
+  },
+  ru:{
+    disclaimer_eyebrow:'Шаг 1 из 3', disclaimer_heading:'Перед началом',
+    disclaimer_body:'Этот тест показывает, как вы склонны думать, принимать решения и реагировать по пяти измерениям темперамента. Он занимает около 15–20 минут. Отвечайте честно и доверяйте первому ощущению — правильных и неправильных ответов нет, и ни один полюс не «лучше» другого.',
+    btn_continue:'Продолжить →',
+    consent_eyebrow:'Шаг 2 из 3', consent_heading:'Согласие на обработку данных',
+    consent_body:'Результаты тестирования будут переданы только специалисту, выдавшему код доступа. Обезличенные данные могут использоваться в исследовательских целях.',
+    consent_check:'Я согласен(на) с обработкой моих персональных данных.', consent_err:'Необходимо согласие для продолжения.',
+    intake_eyebrow:'Шаг 3 из 3 · Опционально', intake_heading:'Немного о вас',
+    intake_note:'Эта информация используется только в исследовательских целях. Все поля необязательны.',
+    intake_age:'Возраст', intake_age_ph:'16+', intake_sex:'Пол / гендерная идентичность',
+    intake_country:'Страна', intake_native_language:'Родной язык', intake_education:'Образование',
+    intake_occupation:'Профессия / отрасль', intake_occupation_ph:'например, Программист, Медицина',
+    intake_employment:'Занятость', intake_relationship:'Семейное положение',
+    intake_select_ph:'Выберите…', intake_skip:'Пропустить', intake_begin:'Начать тест →',
+    test_of:'из', test_back:'← Назад', test_next:'Далее', test_finish:'К результатам →',
+    scale:['Совершенно не согласен(на)','Не согласен(на)','Нейтрально','Согласен(на)','Полностью согласен(на)'],
+    scale_short:['Не согласен','','Нейтрально','','Согласен'],
+    res_eyebrow:'Ваш профиль ReNo', res_type_note:'Четырёхбуквенный тип — Эмоциональный отклик влияет на рекомендации, но не входит в заголовок типа.',
+    res_sig:'Полная сигнатура', res_axes_heading:'Пять осей подробно',
+    res_pole_this:'Вы', res_restart:'Пройти заново', res_disclaimer:'Это предварительная версия для внутреннего обзора. Это не клинический инструмент и не ставит диагноз. Оценки описывают склонности темперамента, а не фиксированные черты или способности.',
+    band:['Сбалансированный','Слабый','Умеренный','Выраженный','Сильный','Максимальный'],
+    devfill:'⚡ Заполнить → результаты', devnote:'Превью — данные не сохраняются',
+  },
+};
+const OPTS = {
+  sex:{en:['Female','Male','Non-binary / gender diverse','Prefer not to say'],
+       ru:['Женщина','Мужчина','Небинарная идентичность','Не хочу указывать']},
+  education:{en:["High school","Some college","Bachelor's degree","Master's degree","Doctoral degree","Prefer not to say"],
+       ru:['Среднее','Неполное высшее','Бакалавр','Магистр','Доктор наук','Не хочу указывать']},
+  employment:{en:['Employed (full-time)','Employed (part-time)','Self-employed','Student','Job-seeking','Career transitioning','Not employed','Prefer not to say'],
+       ru:['Работаю полный день','Работаю неполный день','Самозанятый(ая)','Студент(ка)','В поиске работы','Смена карьеры','Не работаю','Не хочу указывать']},
+  relationship:{en:['Single','In a relationship','Married / partnered','Divorced / separated','Widowed','Prefer not to say'],
+       ru:['Не в отношениях','В отношениях','В браке / с партнёром','В разводе / разлучён(а)','Вдовец / вдова','Не хочу указывать']},
+};
+
+/* ---- interleave questions so axes don't clump ---- */
+function interleave(qs){
+  const byAxis={}; AXES.forEach(a=>byAxis[a.code]=[]);
+  qs.forEach(q=>{ if(byAxis[q.axis]) byAxis[q.axis].push(q); });
+  const order=[]; let more=true, i=0;
+  while(more){ more=false;
+    for(const a of AXES){ const list=byAxis[a.code]; if(i<list.length){ order.push(list[i]); more=true; } }
+    i++;
+  }
+  return order;
+}
+const ORDER = interleave(QUESTIONS);
+
+/* ---- scoring (ReNo v1.1 — QuestionBank §05) ---- */
+function scoreAxis(code, responses){
+  const items = QUESTIONS.filter(q=>q.axis===code);
+  let sum=0, n=0;
+  for(const q of items){
+    const r = responses[q.id];
+    if(r==null) continue;
+    const v = q.reverse ? (5-r)/4 : (r-1)/4;   // 0..1 toward plus pole
+    sum+=v; n++;
+  }
+  const X = n? (sum/n)*100 : 50;               // 0..100
+  const intensity = Math.abs(X-50)*2;          // 0..100
+  const cells = KEY[code].slice().sort((a,b)=>b.posMin-a.posMin);
+  let cell = cells.find(c=>X>=c.posMin) || cells[cells.length-1];
+  return { code, X, intensity, cell, answered:n, total:items.length };
+}
+function scoreAll(responses){
+  const axes = AXES.map(a=>scoreAxis(a.code,responses));
+  const byCode = Object.fromEntries(axes.map(s=>[s.code,s]));
+  const type = AXES.filter(a=>!a.excludeFromType)
+    .map(a=>{ const X=byCode[a.code].X; return X>=50?a.plus.letter:a.minus.letter; }).join('');
+  const signature = axes.map(s=>s.cell.code==='—'
+      ? '·' : s.cell.code).join(' · ');
+  return { axes, byCode, type, signature };
+}
+
+/* ---- state ---- */
+let lang = 'en';
+let stage = 'disclaimer';        // disclaimer|consent|intake|test|results
+let consent = false, consentErr = false;
+let intake = {};
+let qi = 0;                      // current question index in ORDER
+const responses = {};           // id -> 1..5
+const app = document.getElementById('app');
+const tr = ()=>T[lang];
+
+function setLang(l){ lang=l; render(); }
+function go(s){ stage=s; window.scrollTo(0,0); render(); }
+
+/* ---- svg brand mark (constellation pentagon) ---- */
+function markSVG(){
+  const pts=[]; for(let k=0;k<5;k++){const ang=(-90+k*72)*Math.PI/180; pts.push([50+40*Math.cos(ang),50+40*Math.sin(ang)]);}
+  const poly=pts.map(p=>p.join(',')).join(' ');
+  let dots=pts.map((p,k)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="7" fill="var(--ax${k+1})"/>`).join('');
+  return `<svg viewBox="0 0 100 100" class="mk"><polygon points="${poly}" fill="none" stroke="currentColor" stroke-opacity=".28" stroke-width="2"/>${dots}</svg>`;
+}
+
+/* ---- radar ---- */
+function radar(axes){
+  const R=118, CX=150, CY=140, N=5;
+  const ang=k=>(-90+k*72)*Math.PI/180;
+  const pt=(k,rad)=>[CX+rad*Math.cos(ang(k)), CY+rad*Math.sin(ang(k))];
+  let rings='';
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const p=[]; for(let k=0;k<N;k++){const[x,y]=pt(k,R*f);p.push(x.toFixed(1)+','+y.toFixed(1));}
+    rings+=`<polygon points="${p.join(' ')}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  });
+  let spokes='',labels='',dots='';
+  const dataPts=[];
+  axes.forEach((s,k)=>{
+    const a=AXIS_BY[s.code];
+    const[ex,ey]=pt(k,R);
+    spokes+=`<line x1="${CX}" y1="${CY}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="var(--line)" stroke-width="1"/>`;
+    const rad=R*(s.intensity/100);
+    const[dx,dy]=pt(k,rad);
+    dataPts.push([dx,dy]);
+    dots+=`<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="4.5" fill="${a.color}"/>`;
+    const[lx,ly]=pt(k,R+22);
+    const anchor = Math.abs(lx-CX)<6?'middle':(lx>CX?'start':'end');
+    labels+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" `
+      +`font-family="var(--font-mono)" font-size="12" font-weight="700" fill="${a.color}">${s.cell.code==='—'?a.code:s.cell.code}</text>`;
+  });
+  const dpoly=dataPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  return `<svg viewBox="0 0 300 300" width="300" height="300" class="radar" role="img" aria-label="ReNo radar">
+    ${rings}${spokes}
+    <polygon points="${dpoly}" fill="rgba(34,68,224,.12)" stroke="var(--blue)" stroke-width="2" stroke-linejoin="round"/>
+    ${dots}${labels}
+  </svg>`;
+}
+
+/* ---- render helpers ---- */
+function topbar(showProgress){
+  let pct=0;
+  if(showProgress){ pct = Math.round((Object.keys(responses).length/QUESTIONS.length)*100); }
+  return `<div class="topbar">
+    <div class="row">
+      <span class="brand">${markSVG()}Psy<i>ID</i></span>
+      <span class="spacer"></span>
+      <span class="langtoggle">
+        <button class="${lang==='en'?'on':''}" data-lang="en">EN</button>
+        <button class="${lang==='ru'?'on':''}" data-lang="ru">RU</button>
+      </span>
+    </div>
+    ${showProgress?`<div class="progressbar"><div class="fill" style="width:${pct}%"></div></div>`:''}
+  </div>`;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ---- stages ---- */
+function viewDisclaimer(){
+  const t=tr();
+  return `${topbar(false)}<div class="stage-wrap"><div class="wrap stage">
+    <div class="eyebrow">${t.disclaimer_eyebrow}</div>
+    <h1>${t.disclaimer_heading}</h1>
+    <p class="lede">${t.disclaimer_body}</p>
+    <div class="btnrow"><button class="btn grad" data-go="consent">${t.btn_continue}</button></div>
+  </div></div>`;
+}
+function viewConsent(){
+  const t=tr();
+  return `${topbar(false)}<div class="stage-wrap"><div class="wrap stage">
+    <div class="eyebrow">${t.consent_eyebrow}</div>
+    <h1>${t.consent_heading}</h1>
+    <p class="lede">${t.consent_body}</p>
+    <label class="check"><input type="checkbox" id="consent" ${consent?'checked':''}><span>${t.consent_check}</span></label>
+    <div class="err">${consentErr?t.consent_err:''}</div>
+    <div class="btnrow"><button class="btn grad" data-consent-continue>${t.btn_continue}</button></div>
+  </div></div>`;
+}
+function selField(key,label){
+  const t=tr(); const opts=OPTS[key][lang];
+  const cur=intake[key]||'';
+  return `<div class="field"><label>${label}</label><select data-intake="${key}">
+    <option value="">${t.intake_select_ph}</option>
+    ${opts.map(o=>`<option ${cur===o?'selected':''}>${esc(o)}</option>`).join('')}
+  </select></div>`;
+}
+function viewIntake(){
+  const t=tr();
+  return `${topbar(false)}<div class="stage-wrap"><div class="wrap stage">
+    <div class="eyebrow">${t.intake_eyebrow}</div>
+    <h1>${t.intake_heading}</h1>
+    <p class="note">${t.intake_note}</p>
+    <div class="grid2">
+      <div class="field"><label>${t.intake_age}</label><input type="number" min="16" max="99" placeholder="${t.intake_age_ph}" data-intake="age" value="${intake.age||''}"></div>
+      ${selField('sex',t.intake_sex)}
+      <div class="field"><label>${t.intake_country}</label><input data-intake="country" value="${esc(intake.country||'')}"></div>
+      <div class="field"><label>${t.intake_native_language}</label><input data-intake="native" value="${esc(intake.native||'')}"></div>
+      ${selField('education',t.intake_education)}
+      ${selField('employment',t.intake_employment)}
+      <div class="field full"><label>${t.intake_occupation}</label><input placeholder="${t.intake_occupation_ph}" data-intake="occupation" value="${esc(intake.occupation||'')}"></div>
+      ${selField('relationship',t.intake_relationship)}
+    </div>
+    <div class="btnrow">
+      <button class="btn grad" data-go="test">${t.intake_begin}</button>
+      <button class="btn ghost" data-go="test">${t.intake_skip}</button>
+    </div>
+  </div></div>`;
+}
+function viewTest(){
+  const t=tr();
+  const q=ORDER[qi]; const a=AXIS_BY[q.axis];
+  const cur=responses[q.id];
+  const rows=[1,2,3,4,5].map(r=>{
+    const sel=cur===r?'sel':'';
+    return `<button class="lk ${sel}" data-answer="${r}">
+      <span class="dotnum">${r}</span>
+      <span class="lktext">${t.scale[r-1]}</span>
+    </button>`;
+  }).join('');
+  return `${topbar(true)}<div class="stage-wrap"><div class="wrap stage">
+    <div class="qcount">${qi+1} ${t.test_of} ${ORDER.length}</div>
+    <div class="qaxis"><span class="dot" style="background:${a.color}"></span>${a.name[lang]}</div>
+    <div class="qtext">${esc(q.text[lang])}</div>
+    <div class="likert">${rows}</div>
+    <div class="testnav">
+      <button class="linkbtn" data-nav="-1" ${qi===0?'disabled':''}>${t.test_back}</button>
+      ${qi===ORDER.length-1
+        ? `<button class="btn grad" data-finish ${cur==null?'disabled':''}>${t.test_finish}</button>`
+        : `<button class="linkbtn" data-nav="1" ${cur==null?'disabled':''}>${t.test_next}</button>`}
+    </div>
+  </div></div>`;
+}
+function viewResults(){
+  const t=tr(); const S=scoreAll(responses);
+  const typeHtml = esc(S.type);
+  const sigInline = S.axes.map(s=>{
+    const code=s.cell.code==='—'?'—':s.cell.code;
+    return `<span>${code}</span>`;
+  }).join('<span class="dot"></span>');
+  const slots = S.axes.map((s,k)=>{
+    const a=AXIS_BY[s.code]; const bal=s.cell.pole==='0';
+    const letter = bal?'—':(s.X>=50?a.plus.letter:a.minus.letter);
+    const band = s.cell.band;
+    const poleLabel = bal?tr().band[0]:(s.X>=50?a.plus.label[lang]:a.minus.label[lang]);
+    return `<div class="sig-slot ${bal?'balanced':''}" style="--ax:${a.color}">
+      <div class="ss-axis">${a.code}</div>
+      <div class="ss-code"><b>${letter}</b>${bal?'':`<span>${band}</span>`}</div>
+      <div class="ss-pole">${poleLabel}</div>
+    </div>`;
+  }).join('');
+  const cards = S.axes.map(s=>{
+    const a=AXIS_BY[s.code]; const bal=s.cell.pole==='0';
+    const dominant = s.X>=50?a.plus:a.minus;
+    const letter = bal?'~':dominant.letter;
+    const bandName = tr().band[s.cell.band];
+    // bar: 50 is center; fill from center toward the dominant side
+    const half = Math.abs(s.X-50); // 0..50
+    const widthPct = (half/50)*50;  // 0..50 (% of full bar)
+    const leftPct = s.X>=50?50:(50-widthPct);
+    const desc = lang==='ru'?(s.cell.ru||s.cell.en):s.cell.en;
+    const framing = s.cell.framing ? (lang==='ru'?(s.cell.framing.ru||s.cell.framing.en):s.cell.framing.en) : '';
+    return `<div class="axcard">
+      <div class="axhead">
+        <div class="axswatch" style="background:${a.color}">${letter}</div>
+        <div><div class="axname">${a.name[lang]}</div>
+          <div class="axmeta">${bal?tr().band[0]:(dominant.label[lang]+' · '+bandName+' · '+Math.round(s.X)+'/100')}</div></div>
+      </div>
+      <div class="axbar"><div class="mid"></div>
+        <div class="fillpos" style="left:${leftPct}%;width:${widthPct}%;background:${a.color}"></div></div>
+      <div class="axpoles"><b>${a.minus.label[lang]}</b><span>${a.name[lang]}</span><b>${a.plus.label[lang]}</b></div>
+      <div class="axdesc">${esc(desc)}</div>
+      ${framing?`<div class="axframing">${esc(framing)}</div>`:''}
+    </div>`;
+  }).join('');
+  return `${topbar(false)}<div class="stage-wrap"><div class="wrap stage">
+    <div class="res-hero">
+      <div class="eyebrow">${t.res_eyebrow}</div>
+      <div class="res-type">${typeHtml}</div>
+      <div class="sig-inline">${sigInline}</div>
+      <div class="radar-stage">${radar(S.axes)}</div>
+    </div>
+    <p class="note" style="margin-top:18px">${t.res_type_note}</p>
+    <h2 style="margin-top:28px">${t.res_sig}</h2>
+    <div class="sig-code" style="margin-top:14px">${slots}</div>
+    <h2 style="margin-top:40px">${t.res_axes_heading}</h2>
+    ${cards}
+    <div class="btnrow"><button class="btn ghost" data-restart>${t.res_restart}</button></div>
+    <p class="disc">${t.res_disclaimer}</p>
+  </div></div>`;
+}
+
+function render(){
+  document.documentElement.lang = lang;
+  let html='';
+  if(stage==='disclaimer') html=viewDisclaimer();
+  else if(stage==='consent') html=viewConsent();
+  else if(stage==='intake') html=viewIntake();
+  else if(stage==='test') html=viewTest();
+  else if(stage==='results') html=viewResults();
+  // dev quick-fill (hidden on results)
+  if(stage!=='results') html+=`<button class="devfill" data-devfill>${tr().devfill}</button>`;
+  html+=`<div class="devnote">${tr().devnote}</div>`;
+  app.innerHTML=html;
+  wire();
+}
+
+function quickFill(){
+  // Generate a *distinctive* profile per axis (not uniform random — that would
+  // average to all-balanced because half the items are reverse-keyed). Pick a
+  // random lean per axis, answer consistently toward it, add light jitter.
+  const leans=[2,1,0,-1,-2];
+  const clamp=r=>Math.max(1,Math.min(5,r));
+  AXES.forEach(a=>{
+    const dir=leans[Math.floor(Math.random()*leans.length)];
+    QUESTIONS.filter(q=>q.axis===a.code).forEach(q=>{
+      const base = 3 + (q.reverse ? -dir : dir);        // toward the chosen lean
+      const jitter = Math.random()<0.25 ? (Math.random()<0.5?-1:1) : 0;
+      responses[q.id]=clamp(base+jitter);
+    });
+  });
+  go('results');
+}
+
+function wire(){
+  app.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  const dev=app.querySelector('[data-devfill]'); if(dev) dev.onclick=quickFill;
+
+  const c=app.querySelector('#consent'); if(c) c.onchange=()=>{consent=c.checked; consentErr=false;};
+  const cc=app.querySelector('[data-consent-continue]');
+  if(cc) cc.onclick=()=>{ if(!consent){consentErr=true;render();return;} go('intake'); };
+
+  app.querySelectorAll('[data-intake]').forEach(el=>{
+    el.oninput=el.onchange=()=>{ intake[el.dataset.intake]=el.value; };
+  });
+
+  app.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{
+    const q=ORDER[qi]; responses[q.id]=Number(b.dataset.answer);
+    if(qi<ORDER.length-1){ qi++; }
+    render();
+  });
+  app.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
+    qi=Math.min(ORDER.length-1,Math.max(0,qi+Number(b.dataset.nav))); render();
+  });
+  const fin=app.querySelector('[data-finish]'); if(fin) fin.onclick=()=>go('results');
+  const rs=app.querySelector('[data-restart]'); if(rs) rs.onclick=()=>{
+    stage='disclaimer'; qi=0; consent=false; consentErr=false;
+    for(const k in responses) delete responses[k];
+    render();
+  };
+}
+
+render();
+})();
+</script>
+</body>
+</html>
