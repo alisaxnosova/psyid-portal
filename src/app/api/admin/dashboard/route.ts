@@ -115,6 +115,9 @@ export async function GET(req: Request) {
   const jpPct: number[] = [];
 
   for (const s of completed) {
+    // Skip ReNo v1.1 (Likert) sessions — the legacy MBTI scorer can't read them and
+    // would mis-classify every one as ESFJ. They belong to the five-axis analytics.
+    if (s.answers.length && s.answers.every(a => /^[1-5]$/.test(a.answerId))) continue;
     const score = scoreSession(s.answers);
     typeCounts[score.type] = (typeCounts[score.type] ?? 0) + 1;
     eiPct.push(score.pct.E);

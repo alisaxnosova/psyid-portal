@@ -29,15 +29,27 @@ interface Intake {
   relationshipStatus?: string;
 }
 
+interface AxisV11 {
+  code: string;      // EO | IF | DB | SP | ER
+  position: number;  // 0..100 (100 = plus pole)
+  band: number;      // 0..5
+  poleLetter: string;// e.g. O / W, or — when balanced
+  signature: string; // e.g. O4, or — when balanced
+}
+
 interface ResultRow {
   sessionId: string;
   codeId: string;
   code: string;
+  participantId: string | null;
   userName: string | null;
   invoiceRef: string | null;
   status: string;
   device: 'mobile' | 'desktop' | 'unknown';
+  schema: 'v1.0' | 'v1.1';
   type: string;
+  signature?: string;
+  axesV11?: AxisV11[];
   nearBoundary: string[];
   pct: { E: number; I: number; S: number; N: number; F: number; T: number; J: number; P: number };
   scores: Record<string, number>;
@@ -46,6 +58,40 @@ interface ResultRow {
   avgResponseTimeMs: number | null;
   createdAt: string;
   completedAt: string | null;
+}
+
+const AX_META: Record<string, { name: string; short: string; color: string }> = {
+  EO: { name: 'Energy',      short: 'EO', color: '#2244E0' },
+  IF: { name: 'Information', short: 'IF', color: '#6A85F0' },
+  DB: { name: 'Decision',    short: 'DB', color: '#8A5CD6' },
+  SP: { name: 'Structure',   short: 'SP', color: '#FF7A3D' },
+  ER: { name: 'Emotional',   short: 'ER', color: '#FF5A5A' },
+};
+
+function ParticipantBadge({ id }: { id: string | null }) {
+  if (!id) return <span style={{ color: '#8A8FA8', fontSize: 11, fontFamily: "'Geist Mono',monospace" }}>—</span>;
+  const color = id.startsWith('P') ? '#2244E0' : '#FF7A3D';
+  return <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 12, fontWeight: 800, color }}>{id}</span>;
+}
+
+function SignatureCells({ axes }: { axes: AxisV11[] }) {
+  return (
+    <span style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+      {axes.map(a => {
+        const meta = AX_META[a.code];
+        const balanced = a.signature === '—';
+        return (
+          <span key={a.code} title={`${meta?.name ?? a.code} · ${a.position}/100`} style={{
+            padding: '2px 7px', borderRadius: 6, fontSize: 11, fontWeight: 800,
+            fontFamily: "'Geist Mono',monospace",
+            background: balanced ? '#F6F1EA' : `${meta?.color}18`,
+            color: balanced ? '#8A8FA8' : meta?.color,
+            border: `1px solid ${balanced ? '#E5DED2' : `${meta?.color}40`}`,
+          }}>{a.signature}</span>
+        );
+      })}
+    </span>
+  );
 }
 
 function fmt(iso: string) {
@@ -495,6 +541,71 @@ function ExpandedRow({ r }: { r: ResultRow }) {
   );
 }
 
+const SECTION_LABEL: React.CSSProperties = {
+  fontSize: 10, fontWeight: 700, color: C.inkMute, letterSpacing: '0.1em',
+  textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10,
+};
+
+function AxisPositionBar({ ax }: { ax: AxisV11 }) {
+  const meta = AX_META[ax.code];
+  const balanced = ax.signature === '—';
+  const half = Math.abs(ax.position - 50);
+  const width = (half / 50) * 50;             // 0..50 (% of full bar)
+  const left = ax.position >= 50 ? 50 : 50 - width;
+  return (
+    <div style={{ marginBottom: 11 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>
+        <span>{meta?.name ?? ax.code}</span>
+        <span style={{ color: balanced ? C.inkMute : meta?.color, fontWeight: 800 }}>{ax.signature} · {ax.position}/100</span>
+      </div>
+      <div style={{ position: 'relative', height: 8, background: C.bone, borderRadius: 99 }}>
+        <div style={{ position: 'absolute', left: '50%', top: -2, bottom: -2, width: 1.5, background: C.line }} />
+        <div style={{ position: 'absolute', top: 0, bottom: 0, left: `${left}%`, width: `${width}%`, background: balanced ? C.inkMute : meta?.color, borderRadius: 99 }} />
+      </div>
+    </div>
+  );
+}
+
+function ExpandedRowV11({ r }: { r: ResultRow }) {
+  return (
+    <tr>
+      <td colSpan={8} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
+        <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 300px', maxWidth: 440 }}>
+            <div style={SECTION_LABEL}>Five axes · continuous position</div>
+            {(r.axesV11 ?? []).map(ax => <AxisPositionBar key={ax.code} ax={ax} />)}
+          </div>
+
+          {r.intake && (
+            <div>
+              <div style={SECTION_LABEL}>Demographics</div>
+              <IntakeField label="Age"             value={r.intake.age} />
+              <IntakeField label="Sex"             value={r.intake.sex} />
+              <IntakeField label="Country"         value={r.intake.country} />
+              <IntakeField label="Native language" value={r.intake.nativeLanguage} />
+              <IntakeField label="Education"       value={r.intake.education} />
+              <IntakeField label="Occupation"      value={r.intake.occupation} />
+              <IntakeField label="Employment"      value={r.intake.employmentStatus} />
+              <IntakeField label="Relationship"    value={r.intake.relationshipStatus} />
+            </div>
+          )}
+
+          <div>
+            <div style={SECTION_LABEL}>Session</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Participant: {r.participantId ?? '— (no research consent)'}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Type: {r.type} · {r.signature}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Taker: {takerLabel(r)}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Code: {r.code}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Answers: {r.answersCount} / 94</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute, marginBottom: 4 }}>Avg response: {ms(r.avgResponseTimeMs)}</div>
+            <div style={{ fontSize: 12, fontFamily: "'Geist Mono',monospace", color: C.inkMute }}>Started: {fmt(r.createdAt)}</div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 export default function AdminResultsPage() {
   const [version, setVersion]   = useState<'v11' | 'v10'>('v11');
   const [tab, setTab]           = useState<Tab>('results');
@@ -548,7 +659,10 @@ export default function AdminResultsPage() {
     { key: 'research', label: 'Table C', table: 'Research Dataset'   },
   ];
 
-  const researchRows = results.filter(r => r.intake);
+  const v11Rows = results.filter(r => r.schema === 'v1.1');
+  const v10Rows = results.filter(r => r.schema !== 'v1.1');
+  const v11Research = v11Rows.filter(r => r.intake);
+  const researchRows = v10Rows.filter(r => r.intake);
 
   return (
     <div>
@@ -586,22 +700,149 @@ export default function AdminResultsPage() {
         })}
       </div>
 
-      {version === 'v11' && (
-        <div style={{ background: 'white', borderRadius: 20, border: `1px dashed ${C.line}`, padding: '64px 32px', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', gap: 6, marginBottom: 16 }}>
-            {['#2244E0', '#6A85F0', '#8A5CD6', '#FF7A3D', '#FF5A5A'].map(c => (
-              <span key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />
-            ))}
-          </div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: C.ink, letterSpacing: '-0.02em', marginBottom: 8 }}>ReNo v1.1 results</div>
-          <div style={{ fontSize: 13.5, color: C.inkMute, maxWidth: 470, margin: '0 auto', lineHeight: 1.6 }}>
-            New completions are recorded with the five-axis methodology — a continuous 0–100 position per
-            axis, its band, and the signature code (e.g.{' '}
-            <span style={{ fontFamily: "'Geist Mono', monospace", color: C.ink }}>W2·A4·V3·F4·S2</span>).
-            They&apos;ll appear here once the ReNo v1.1 test goes live. Old results stay in the v1.0 archive.
-          </div>
-        </div>
+      {version === 'v11' && (<>
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
+        {tabs.map(tb => {
+          const active = tab === tb.key;
+          return (
+            <button key={tb.key} onClick={() => setTab(tb.key)} style={{
+              padding: '8px 16px', borderRadius: 12, fontSize: 13, cursor: 'pointer',
+              border: `1.5px solid ${active ? C.blue : C.line}`,
+              background: active ? 'rgba(34,68,224,0.08)' : 'white',
+              color: active ? C.blue : C.inkSoft,
+              fontFamily: 'inherit', fontWeight: active ? 700 : 400, transition: 'all .15s',
+            }}>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 700, color: active ? C.blue : C.inkMute, marginRight: 8 }}>{tb.label}</span>
+              {tb.table}
+            </button>
+          );
+        })}
+      </div>
+
+      {error && (
+        <div style={{ padding: '12px 18px', borderRadius: 12, background: 'rgba(255,90,90,0.08)', border: `1px solid rgba(255,90,90,0.2)`, color: C.coral, fontSize: 13, marginBottom: 16 }}>{error}</div>
       )}
+
+      <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+
+          {/* ── TABLE B (v1.1): Assessment Results ── */}
+          {tab === 'results' && (
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 860 }}>
+              <thead>
+                <tr>
+                  <TH w={170}>test taker</TH>
+                  <TH w={100}>participant</TH>
+                  <TH w={80}>type</TH>
+                  <TH>signature</TH>
+                  <TH w={90}>device</TH>
+                  <TH w={160}>completed</TH>
+                  <TH w={40}>{''}</TH>
+                  <TH w={40}>{''}</TH>
+                </tr>
+              </thead>
+              <tbody>
+                {loading && (<tr><td colSpan={8} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>)}
+                {!loading && v11Rows.length === 0 && (
+                  <tr><td colSpan={8} style={{ padding: '72px 32px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No ReNo v1.1 results yet</div>
+                    <div style={{ fontSize: 13, color: C.inkMute }}>New five-axis completions will appear here.</div>
+                  </td></tr>
+                )}
+                {v11Rows.map(r => {
+                  const isOpen = expanded === r.sessionId;
+                  return (
+                    <>
+                      <tr key={r.sessionId}
+                        onClick={() => setExpanded(isOpen ? null : r.sessionId)}
+                        onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
+                        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                        style={{ cursor: 'pointer', transition: 'background .1s' }}
+                      >
+                        <TD><TakerCell r={r} /></TD>
+                        <TD><ParticipantBadge id={r.participantId} /></TD>
+                        <TD><span style={{ display: 'inline-block', padding: '4px 10px', borderRadius: 8, background: C.ink, color: 'white', fontFamily: "'Geist Mono',monospace", fontSize: 13, fontWeight: 800, letterSpacing: '0.06em' }}>{r.type}</span></TD>
+                        <TD>{r.axesV11 ? <SignatureCells axes={r.axesV11} /> : '—'}</TD>
+                        <TD><DeviceBadge device={r.device} /></TD>
+                        <TD mono muted>{r.completedAt ? fmt(r.completedAt) : '—'}</TD>
+                        <TD><span style={{ color: C.inkMute, fontSize: 16, display: 'block', textAlign: 'center', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span></TD>
+                        <TD>
+                          <button onClick={e => { e.stopPropagation(); deleteResult(r.sessionId); }} disabled={deleting === r.sessionId} title="Delete result"
+                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 7, border: 'none', background: 'transparent', cursor: deleting === r.sessionId ? 'not-allowed' : 'pointer', color: C.inkMute, transition: 'all .15s', padding: 0 }}
+                            onMouseEnter={e => (e.currentTarget.style.color = C.coral, e.currentTarget.style.background = 'rgba(255,90,90,0.08)')}
+                            onMouseLeave={e => (e.currentTarget.style.color = C.inkMute, e.currentTarget.style.background = 'transparent')}
+                          >
+                            {deleting === r.sessionId ? <span style={{ fontSize: 10 }}>…</span> : <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M5.5 3.5V2.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1M5.5 6v4M8.5 6v4M3 3.5l.7 7.3a1 1 0 001 .7h4.6a1 1 0 001-.7L11 3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                          </button>
+                        </TD>
+                      </tr>
+                      {isOpen && <ExpandedRowV11 key={`${r.sessionId}-exp`} r={r} />}
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+
+          {/* ── TABLE C (v1.1): Research Dataset ── */}
+          {tab === 'research' && (
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1160 }}>
+              <thead>
+                <tr>
+                  <TH w={150}>test taker</TH>
+                  <TH w={90}>participant</TH>
+                  <TH w={70}>type</TH>
+                  <TH>age</TH><TH>sex</TH><TH>country</TH><TH>language</TH><TH>education</TH><TH>employment</TH><TH>relationship</TH><TH>occupation</TH>
+                  <TH>EO</TH><TH>IF</TH><TH>DB</TH><TH>SP</TH><TH>ER</TH>
+                </tr>
+              </thead>
+              <tbody>
+                {loading && (<tr><td colSpan={16} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>)}
+                {!loading && v11Research.length === 0 && (
+                  <tr><td colSpan={16} style={{ padding: '72px 32px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No research participants yet</div>
+                    <div style={{ fontSize: 13, color: C.inkMute }}>Consenting takers who provide demographics appear here with a P-/E- number.</div>
+                  </td></tr>
+                )}
+                {v11Research.map(r => {
+                  const byCode = (c: string) => r.axesV11?.find(a => a.code === c);
+                  return (
+                    <tr key={r.sessionId}
+                      onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                      style={{ transition: 'background .1s' }}
+                    >
+                      <TD><TakerCell r={r} /></TD>
+                      <TD><ParticipantBadge id={r.participantId} /></TD>
+                      <TD mono>{r.type}</TD>
+                      <TD mono>{r.intake?.age ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.sex ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.country ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.nativeLanguage ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.education ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.employmentStatus ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.relationshipStatus ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      <TD>{r.intake?.occupation ?? <span style={{ color: C.inkMute }}>—</span>}</TD>
+                      {(['EO', 'IF', 'DB', 'SP', 'ER'] as const).map(code => {
+                        const ax = byCode(code);
+                        return <TD key={code} mono muted>{ax ? `${ax.signature}·${ax.position}` : '—'}</TD>;
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        <div style={{ padding: '10px 20px', borderTop: `1px solid ${C.line}`, display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
+          {tab === 'results'  && `${v11Rows.length} five-axis result${v11Rows.length !== 1 ? 's' : ''} · scored live with ReNo v1.1`}
+          {tab === 'research' && `${v11Research.length} participant${v11Research.length !== 1 ? 's' : ''} with research consent + demographics`}
+        </div>
+      </div>
+      </>)}
 
       {version === 'v10' && (<>
 
@@ -657,15 +898,15 @@ export default function AdminResultsPage() {
                 {loading && (
                   <tr><td colSpan={11} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>
                 )}
-                {!loading && results.length === 0 && (
+                {!loading && v10Rows.length === 0 && (
                   <tr>
                     <td colSpan={11} style={{ padding: '72px 32px', textAlign: 'center' }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No completed tests yet</div>
-                      <div style={{ fontSize: 13, color: C.inkMute }}>Results will appear here once someone finishes the assessment.</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No legacy (v1.0) results</div>
+                      <div style={{ fontSize: 13, color: C.inkMute }}>Old MBTI-format results live here. New five-axis results are under ReNo v1.1.</div>
                     </td>
                   </tr>
                 )}
-                {results.map(r => {
+                {v10Rows.map(r => {
                   const isOpen = expanded === r.sessionId;
                   return (
                     <>
@@ -784,7 +1025,7 @@ export default function AdminResultsPage() {
           fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute,
         }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
-          {tab === 'results'  && `${results.length} completed result${results.length !== 1 ? 's' : ''} · live from Redis`}
+          {tab === 'results'  && `${v10Rows.length} legacy result${v10Rows.length !== 1 ? 's' : ''} · v1.0 archive`}
           {tab === 'research' && `${researchRows.length} participant${researchRows.length !== 1 ? 's' : ''} with research data`}
         </div>
       </div>

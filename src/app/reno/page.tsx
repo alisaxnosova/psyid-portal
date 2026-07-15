@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { AXES, AXIS_BY_CODE } from '@/data/reno-axes';
+import { AXES } from '@/data/reno-axes';
 import type { RenoQuestion } from '@/data/reno-axes';
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -28,17 +28,25 @@ const CSS = `
   --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --r-sm:12px; --r-md:18px; --r-lg:26px; --r-full:999px;
   --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
-  min-height:100vh; background:var(--paper); color:var(--ink);
+  min-height:100vh; color:var(--ink);
   font-family:var(--font); line-height:1.5; -webkit-font-smoothing:antialiased;
   display:flex; flex-direction:column;
+  /* Aura design — bright base with soft blue + orange glows */
+  background:
+    radial-gradient(48% 42% at 12% 8%, rgba(34,68,224,.22), transparent 62%),
+    radial-gradient(46% 40% at 92% 14%, rgba(255,122,61,.24), transparent 62%),
+    radial-gradient(50% 46% at 84% 92%, rgba(106,133,240,.20), transparent 64%),
+    radial-gradient(44% 40% at 8% 88%, rgba(255,149,64,.18), transparent 62%),
+    #FBF8F3;
+  background-attachment:fixed;
 }
 .reno-v11 *{box-sizing:border-box}
 .reno-v11 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .reno-v11 input,.reno-v11 select{font-family:inherit}
 .reno-v11 .wrap{max-width:760px;margin:0 auto;padding:0 22px;width:100%}
-.reno-v11 .topbar{position:sticky;top:0;z-index:20;background:rgba(246,241,234,.85);
-  backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);
-  border-bottom:1px solid var(--line)}
+.reno-v11 .topbar{position:sticky;top:0;z-index:20;background:rgba(251,248,243,.72);
+  backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);
+  border-bottom:1px solid rgba(224,217,206,.6)}
 .reno-v11 .topbar .row{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px}
 .reno-v11 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:18px;color:var(--ink)}
 .reno-v11 .brand .mk{width:26px;height:26px;flex:none}
@@ -47,8 +55,8 @@ const CSS = `
 .reno-v11 .langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-full);overflow:hidden;background:#fff}
 .reno-v11 .langtoggle button{padding:6px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
 .reno-v11 .langtoggle button.on{background:var(--ink);color:#fff}
-.reno-v11 .progressbar{height:3px;background:var(--paper-3)}
-.reno-v11 .progressbar .fill{height:100%;background:var(--grad-coral);transition:width .35s cubic-bezier(.4,0,.2,1);border-radius:0 3px 3px 0}
+.reno-v11 .progressbar{height:4px;background:rgba(224,217,206,.7)}
+.reno-v11 .progressbar .fill{height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-hot,#FF9540) 40%,var(--blue-soft) 72%,var(--blue) 100%);transition:width .4s cubic-bezier(.4,0,.2,1);border-radius:0 4px 4px 0;box-shadow:0 0 10px rgba(255,122,61,.35)}
 .reno-v11 .resume{background:var(--blue-tint);color:var(--navy);padding:10px 22px;font-size:13px;font-weight:600;text-align:center}
 .reno-v11 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0}
 .reno-v11 .fadewrap{transition:opacity .25s ease,transform .25s ease}
@@ -566,8 +574,7 @@ function IntakeStage({ t, sessionId, lang, onContinue }: { t: Copy; sessionId: s
         {sel(t.intake_relationship, relationship, setRelationship, RELATIONSHIP_OPTIONS[lang])}
       </div>
       <div className="btnrow">
-        <button className="btn grad" onClick={() => save()} disabled={loading}>{loading ? '…' : t.intake_begin}</button>
-        <button className="btn ghost" onClick={() => save(true)} disabled={loading}>{t.intake_skip}</button>
+        <button className="btn grad full" onClick={() => save()} disabled={loading}>{loading ? '…' : t.intake_begin}</button>
       </div>
     </div>
   );
@@ -681,7 +688,6 @@ function TestStage({ t, sessionId, lang, onProgress, onComplete }: {
   }
 
   const q = order[index];
-  const axis = AXIS_BY_CODE[q.axis];
   const cur = responses[q.id];
   const isLast = index === order.length - 1;
 
@@ -689,7 +695,6 @@ function TestStage({ t, sessionId, lang, onProgress, onComplete }: {
     <div className="stage">
       {offline && <div className="offline">{t.test_offline}</div>}
       <div className="qcount">{index + 1} {t.test_of} {order.length}</div>
-      <div className="qaxis"><span className="dot" style={{ background: axis.color }} />{axis.name[lang]}</div>
       <div className="fadewrap" style={{ opacity: fading ? 0 : 1, transform: fading ? 'translateX(16px)' : 'none' }}>
         <div className="qtext">{q.text[lang]}</div>
         <div className="likert">

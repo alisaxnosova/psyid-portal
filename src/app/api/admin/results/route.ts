@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { scoreSession } from '@/lib/renoScore';
+import { scoreSessionV11 } from '@/lib/renoScoreV11';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
+
+// ReNo v1.1 sessions store Likert answers ('1'..'5'); legacy sessions store
+// forced-choice option ids ('a'/'b'). Detect by answer shape so each session is
+// scored with the matching engine — never the old MBTI scorer on new data.
+function isV11Session(s: RenoSession): boolean {
+  return s.answers.length > 0 && s.answers.every(a => /^[1-5]$/.test(a.answerId));
+}
+
+const EMPTY_PCT = { E: 0, I: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0 };
 
 async function verifyAdmin(req: Request): Promise<boolean> {
   const token = req.headers.get('Authorization')?.replace('Bearer ', '');
@@ -35,20 +45,16 @@ export async function GET(req: Request) {
   const results = sessions
     .filter((s): s is RenoSession => !!s && s.status === 'completed')
     .map(s => {
-      const score = scoreSession(s.answers);
       const codeEntry = codeMap.get(s.codeId);
-      return {
+      const common = {
         sessionId: s.id,
         codeId: s.codeId,
         code: codeEntry?.code ?? '—',
+        participantId: s.participantId ?? null,
         userName: codeEntry?.user_name ?? null,
         invoiceRef: codeEntry?.invoice_ref ?? null,
         status: s.status,
         device: s.device ?? 'unknown',
-        type: score.type,
-        nearBoundary: score.nearBoundary,
-        pct: score.pct,
-        scores: score.scores,
         intake: s.intake ?? null,
         answersCount: s.answers.length,
         avgResponseTimeMs: s.answers.length
@@ -56,6 +62,39 @@ export async function GET(req: Request) {
           : null,
         createdAt: s.createdAt,
         completedAt: s.completedAt ?? null,
+      };
+
+      if (isV11Session(s)) {
+        const v11 = scoreSessionV11(s.answers);
+        return {
+          ...common,
+          schema: 'v1.1' as const,
+          type: v11.type,                 // 4-letter headline, e.g. OCLD (excludes ER)
+          signature: v11.signature,       // e.g. "W2 · A4 · V3 · F4 · S2"
+          axesV11: v11.axes.map(a => ({
+            code: a.code,
+            position: Math.round(a.position),
+            band: a.band,
+            poleLetter: a.poleLetter,
+            signature: a.signature,
+          })),
+          // legacy fields kept nominal so the shared row type stays simple
+          nearBoundary: [] as string[],
+          pct: EMPTY_PCT,
+          scores: {} as Record<string, number>,
+        };
+      }
+
+      const score = scoreSession(s.answers);
+      return {
+        ...common,
+        schema: 'v1.0' as const,
+        type: score.type,
+        signature: undefined,
+        axesV11: undefined,
+        nearBoundary: score.nearBoundary,
+        pct: score.pct,
+        scores: score.scores,
       };
     })
     .sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''));
