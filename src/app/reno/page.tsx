@@ -159,9 +159,11 @@ const T = {
     test_offline: 'Could not save your answer. Please check your connection.',
     scale: ['Strongly disagree', 'Disagree', 'Neither agree nor disagree', 'Agree', 'Strongly agree'],
 
-    complete_heading: 'All done',
-    complete_body: 'Your assessment is complete. Your personality passport is ready.',
-    complete_results_btn: 'Your Results →',
+    complete_heading: 'Thank you',
+    complete_loading: 'Finalizing…',
+    complete_portal_body: 'Your assessment is complete and your personality passport is ready.',
+    complete_portal_btn: 'Go to your portal →',
+    complete_ext_body: 'Your assessment is complete. Your results will be prepared and sent to you within 24 hours. You may now close this page.',
     resume_note: 'Welcome back — continuing where you left off.',
   },
   ru: {
@@ -215,9 +217,11 @@ const T = {
     test_offline: 'Не удалось сохранить ответ. Проверьте соединение.',
     scale: ['Совершенно не согласен(на)', 'Не согласен(на)', 'Нейтрально', 'Согласен(на)', 'Полностью согласен(на)'],
 
-    complete_heading: 'Готово',
-    complete_body: 'Тест завершён. Ваш персональный паспорт готов.',
-    complete_results_btn: 'Ваши результаты →',
+    complete_heading: 'Спасибо',
+    complete_loading: 'Завершаем…',
+    complete_portal_body: 'Тест завершён, ваш паспорт личности готов.',
+    complete_portal_btn: 'Перейти в кабинет →',
+    complete_ext_body: 'Тест завершён. Ваши результаты будут подготовлены и отправлены вам в течение 24 часов. Вы можете закрыть эту страницу.',
     resume_note: 'С возвращением — продолжаем с того места, где вы остановились.',
   },
 } as const;
@@ -658,15 +662,22 @@ function TestStage({ t, sessionId, lang, onProgress, onComplete }: {
 
 /* ─── Stage 6: Complete ─── */
 function CompleteStage({ t, sessionId }: { t: Copy; sessionId: string | null }) {
+  const [result, setResult] = useState<{ isPortal: boolean; redirectUrl: string } | null>(null);
   const [apiErr, setApiErr] = useState(false);
   const [retrying, setRetrying] = useState(false);
 
   const complete = useCallback(async () => {
     if (!sessionId) return;
     setRetrying(true);
+    setApiErr(false);
     try {
       const res = await fetch(`/api/reno/sessions/${sessionId}/complete`, { method: 'POST' });
-      setApiErr(!res.ok);
+      if (res.ok) {
+        const d = (await res.json()) as { isPortal?: boolean; redirectUrl?: string };
+        setResult({ isPortal: !!d.isPortal, redirectUrl: d.redirectUrl || 'https://psyid.me/portal' });
+      } else {
+        setApiErr(true);
+      }
     } catch {
       setApiErr(true);
     } finally {
@@ -682,6 +693,8 @@ function CompleteStage({ t, sessionId }: { t: Copy; sessionId: string | null }) 
     sessionStorage.removeItem('reno_session_id');
   }, []);
 
+  const body = result?.isPortal ? t.complete_portal_body : t.complete_ext_body;
+
   return (
     <div className="card" style={{ textAlign: 'center', padding: '48px 40px' }}>
       <div className="done-icon">
@@ -690,10 +703,17 @@ function CompleteStage({ t, sessionId }: { t: Copy; sessionId: string | null }) 
         </svg>
       </div>
       <h2>{t.complete_heading}</h2>
-      <p className="lede" style={{ margin: '14px auto 30px', fontSize: 15 }}>{t.complete_body}</p>
-      {apiErr
-        ? <button className="btn grad" onClick={complete} disabled={retrying}>{retrying ? '…' : t.complete_results_btn}</button>
-        : <a href="/results" className="btn grad" style={{ textDecoration: 'none' }}>{t.complete_results_btn}</a>}
+      <p className="lede" style={{ margin: '14px auto 30px', fontSize: 15 }}>
+        {apiErr ? t.complete_ext_body : !result ? t.complete_loading : body}
+      </p>
+      {/* Portal takers get a way back to their passport; external one-time-code takers
+          simply close the page (results are delivered by their specialist). */}
+      {!apiErr && result?.isPortal && (
+        <a href={result.redirectUrl} className="btn grad" style={{ textDecoration: 'none' }}>{t.complete_portal_btn}</a>
+      )}
+      {apiErr && (
+        <button className="btn ghost" onClick={complete} disabled={retrying}>{retrying ? '…' : '↻'}</button>
+      )}
     </div>
   );
 }
