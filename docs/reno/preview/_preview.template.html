@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ReNo v1.1 — Assessment (preview)</title>
+<title>ReNo v1.2 — Assessment (preview)</title>
 <style>
 :root{
   --navy:#050C2E; --navy-2:#0B1A56; --blue:#2244E0; --blue-soft:#6A85F0;
@@ -255,7 +255,7 @@ function interleave(qs){
 }
 const ORDER = interleave(QUESTIONS);
 
-/* ---- scoring (ReNo v1.1 — QuestionBank §05) ---- */
+/* ---- scoring (ReNo v1.2 — QuestionBank §05) ---- */
 function scoreAxis(code, responses){
   const items = QUESTIONS.filter(q=>q.axis===code);
   let sum=0, n=0;
