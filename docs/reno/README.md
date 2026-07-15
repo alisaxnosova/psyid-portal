@@ -21,14 +21,17 @@ store and analyse the continuous position). A profile reads as a signature, e.g.
 | 2 | Information Focus | IF | C Concrete | A Abstract |
 | 3 | Decision Basis | DB | L Logic | V Values |
 | 4 | Structure Preference | SP | D Ordered | F Flexible |
-| 5 | Emotional Response | ER | S Steady | R Sensitive |
+| 5 | Emotional Response | ER | S Steady | R Reactive |
 
 Axis 5 (ER) never appears in the 4-letter headline type — it only colours guidance.
 
-**On the ER minus pole:** the v1.2 whitepaper's code appendix formally names it `R — Reactive`,
-while its ethics section (§13) prescribes the strengths-based frame **“Sensitive ↔ Steady”** and
-bans *neurotic / unstable / anxious*. We surface **Sensitive** (matching the Answer Key); the pole
-letter `R` is unchanged, so codes stay identical.
+**On the ER minus pole:** the pole label is **`R — Reactive`**, per the v1.2 whitepaper's code
+appendix (decided 2026-07-15; it previously read “Sensitive”).
+
+Note §13 still governs *narrative* language: the report copy stays strengths-based — depth of
+feeling, attunement — and *neurotic / unstable / anxious* never appear. The Answer Key framing
+notes already enforce this (the `R5` cell is flagged the most wording-sensitive cell). So
+**“Reactive” names the pole; it is never the tone of the write-up.**
 
 ## Documents
 - `ReNo-Methodology-EN/RU.html` — **v1.1, superseded** by the v1.2 whitepaper.

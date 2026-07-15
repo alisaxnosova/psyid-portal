@@ -40,7 +40,7 @@ export const AXES: Axis[] = [
     minus: { letter: 'F', label: { en: 'Flexible', ru: 'Гибкость' } }, color: '#FF7A3D' },
   { code: 'ER', index: 5, name: { en: 'Emotional Response', ru: 'Эмоциональный отклик' },
     plus: { letter: 'S', label: { en: 'Steady', ru: 'Устойчивость' } },
-    minus: { letter: 'R', label: { en: 'Sensitive', ru: 'Чувствительность' } }, color: '#FF5A5A',
+    minus: { letter: 'R', label: { en: 'Reactive', ru: 'Реактивность' } }, color: '#FF5A5A',
     excludeFromType: true },
 ];
 
