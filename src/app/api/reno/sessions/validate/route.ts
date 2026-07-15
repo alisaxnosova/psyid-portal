@@ -6,8 +6,8 @@ import type { RenoSession, RenoSessionsMap } from '@/app/api/reno/types';
 const CODES_KEY = 'psyid:codes';
 const RENO_SESSIONS_MAP_KEY = 'psyid:reno-sessions';
 
-// Registered portal users may retake the assessment at most once per year.
-const PORTAL_COOLDOWN_MS = 365 * 24 * 60 * 60 * 1000;
+// Registered portal users may retake the assessment at most once every 6 months.
+const PORTAL_COOLDOWN_MS = 182 * 24 * 60 * 60 * 1000;
 
 function detectDevice(req: Request): 'mobile' | 'desktop' | 'unknown' {
   const ua = req.headers.get('user-agent') ?? '';
