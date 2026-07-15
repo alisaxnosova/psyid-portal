@@ -1,29 +1,228 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Logo } from '@/components/shared/Logo';
-/* ─── Questions ─── */
-interface QuestionOption {
-  id: string;
-  text: Record<Lang, string>;
-  key: string;
-  score: number;
+import { AXES, AXIS_BY_CODE } from '@/data/reno-axes';
+import type { RenoQuestion } from '@/data/reno-axes';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ReNo v1.1 — live assessment. Ported from the approved preview
+   (docs/reno/preview/reno-v1.1-preview.html): Element Vault paper aesthetic,
+   five-axis Likert bank, EN/RU. All backend plumbing (validate → session →
+   answers-with-retries → progress → intake → complete) is preserved.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+type Lang = 'en' | 'ru';
+
+const LANG_NAMES: Record<Lang, string> = { en: 'EN', ru: 'RU' };
+
+/* ─── Scoped styles (from the preview, prefixed under .reno-v11) ─── */
+const CSS = `
+.reno-v11{
+  --navy:#050C2E; --blue:#2244E0; --blue-soft:#6A85F0; --blue-tint:#DCE2FF;
+  --violet:#8A5CD6; --coral:#FF5A5A; --orange:#FF7A3D;
+  --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
+  --paper:#F6F1EA; --paper-2:#EDE7DC; --paper-3:#E4DCCF;
+  --ink:#0E1230; --ink-soft:#4F5470; --ink-mute:#8A8FA8;
+  --line:#E0D9CE; --line-dark:#C8C0B4;
+  --font:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --r-sm:12px; --r-md:18px; --r-lg:26px; --r-full:999px;
+  --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+  min-height:100vh; background:var(--paper); color:var(--ink);
+  font-family:var(--font); line-height:1.5; -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column;
 }
-interface Question {
-  id: string;
-  axis: string;
-  type: 'wordselect';
-  text: Record<Lang, string>;
-  options: QuestionOption[];
+.reno-v11 *{box-sizing:border-box}
+.reno-v11 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.reno-v11 input,.reno-v11 select{font-family:inherit}
+.reno-v11 .wrap{max-width:760px;margin:0 auto;padding:0 22px;width:100%}
+.reno-v11 .topbar{position:sticky;top:0;z-index:20;background:rgba(246,241,234,.85);
+  backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);
+  border-bottom:1px solid var(--line)}
+.reno-v11 .topbar .row{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px}
+.reno-v11 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:18px;color:var(--ink)}
+.reno-v11 .brand .mk{width:26px;height:26px;flex:none}
+.reno-v11 .brand i{font-style:normal;color:var(--orange)}
+.reno-v11 .spacer{flex:1}
+.reno-v11 .langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-full);overflow:hidden;background:#fff}
+.reno-v11 .langtoggle button{padding:6px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+.reno-v11 .langtoggle button.on{background:var(--ink);color:#fff}
+.reno-v11 .progressbar{height:3px;background:var(--paper-3)}
+.reno-v11 .progressbar .fill{height:100%;background:var(--grad-coral);transition:width .35s cubic-bezier(.4,0,.2,1);border-radius:0 3px 3px 0}
+.reno-v11 .resume{background:var(--blue-tint);color:var(--navy);padding:10px 22px;font-size:13px;font-weight:600;text-align:center}
+.reno-v11 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0}
+.reno-v11 .fadewrap{transition:opacity .25s ease,transform .25s ease}
+.reno-v11 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px}
+.reno-v11 h1{font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0}
+.reno-v11 h2{font-weight:750;letter-spacing:-.03em;font-size:26px;line-height:1.12;margin:0}
+.reno-v11 .lede{color:var(--ink-soft);font-size:17px;margin-top:16px;max-width:56ch}
+.reno-v11 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px}
+.reno-v11 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:var(--r-full);background:var(--ink);color:#fff;font-weight:650;font-size:15px;letter-spacing:.01em;transition:transform .12s,opacity .12s}
+.reno-v11 .btn:hover{transform:translateY(-1px)}
+.reno-v11 .btn:active{transform:translateY(0)}
+.reno-v11 .btn.grad{background:var(--grad-coral)}
+.reno-v11 .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+.reno-v11 .btn.full{width:100%}
+.reno-v11 .btn[disabled]{opacity:.4;pointer-events:none}
+.reno-v11 .btnrow{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
+.reno-v11 .codebox{font-family:var(--mono);font-size:28px;letter-spacing:.25em;text-align:center;padding:14px 18px;
+  border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;color:var(--ink);width:100%;outline:none}
+.reno-v11 .codebox:focus{border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
+.reno-v11 .flabel{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em;display:block;margin-bottom:8px}
+.reno-v11 .err{color:var(--coral);font-size:14px;margin-top:12px;font-weight:600}
+.reno-v11 .footer{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-mute)}
+.reno-v11 .check{display:flex;gap:13px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper);cursor:pointer;margin-top:24px}
+.reno-v11 .check input{margin-top:2px;width:20px;height:20px;accent-color:var(--orange);flex:none;cursor:pointer}
+.reno-v11 .check span{font-size:15px;color:var(--ink)}
+.reno-v11 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:26px}
+.reno-v11 .field{display:flex;flex-direction:column;gap:7px}
+.reno-v11 .field.full{grid-column:1/-1}
+.reno-v11 .field label{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em}
+.reno-v11 .field input,.reno-v11 .field select{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:15px;color:var(--ink);width:100%}
+.reno-v11 .field input:focus,.reno-v11 .field select:focus{outline:none;border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
+.reno-v11 .note{color:var(--ink-mute);font-size:13.5px;margin-top:14px}
+.reno-v11 .qcount{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--ink-mute);text-transform:uppercase}
+.reno-v11 .qaxis{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.reno-v11 .qaxis .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.reno-v11 .qtext{font-weight:700;letter-spacing:-.025em;font-size:clamp(22px,3.6vw,30px);line-height:1.2;margin:14px 0 34px}
+.reno-v11 .likert{display:flex;flex-direction:column;gap:10px}
+.reno-v11 .lk{display:flex;align-items:center;gap:16px;width:100%;padding:16px 20px;border:1.5px solid var(--line);border-radius:var(--r-md);background:#fff;text-align:left;transition:border-color .12s,background .12s,transform .1s}
+.reno-v11 .lk:hover{border-color:var(--blue-soft);transform:translateX(2px)}
+.reno-v11 .lk.sel{border-color:transparent;background:var(--ink);color:#fff}
+.reno-v11 .lk .dotnum{width:30px;height:30px;flex:none;border-radius:50%;border:2px solid var(--line-dark);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-mute)}
+.reno-v11 .lk.sel .dotnum{border-color:rgba(255,255,255,.5);color:#fff}
+.reno-v11 .lk .lktext{font-size:16px;font-weight:600}
+.reno-v11 .lk[disabled]{opacity:.55;pointer-events:none}
+.reno-v11 .testnav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.reno-v11 .linkbtn{font-size:14px;font-weight:600;color:var(--ink-soft)}
+.reno-v11 .linkbtn[disabled]{opacity:.3;pointer-events:none}
+.reno-v11 .offline{background:#FFF0EF;border:1px solid var(--coral);border-radius:var(--r-sm);padding:10px 16px;margin-bottom:16px;color:var(--coral);font-size:13px;font-weight:600}
+.reno-v11 .done-icon{width:72px;height:72px;border-radius:50%;background:var(--grad-coral);margin:0 auto 26px;display:grid;place-items:center}
+.reno-v11 .disc{font-size:12.5px;color:var(--ink-mute);margin-top:28px;line-height:1.6}
+@media(max-width:560px){
+  .reno-v11 .grid2{grid-template-columns:1fr}
+  .reno-v11 .stage{padding:36px 0}
+  .reno-v11 .card{padding:22px}
 }
+`;
 
-/* ─── Lang ─── */
-type Lang = 'en' | 'ru' | 'es' | 'fr' | 'ar';
+/* ─── Copy (EN/RU) ─── */
+const T = {
+  en: {
+    lang_html: 'en',
+    eyebrow: 'ReNo Assessment',
+    heading: 'Welcome',
+    subtitle: 'Enter the access code you received to begin your assessment.',
+    code_label: 'Access code',
+    code_ph: '000000',
+    btn_begin: 'Begin →',
+    btn_loading: 'Checking…',
+    err_not_found: 'Code not found. Please check your entry.',
+    err_already_used: 'This code has already been used. Please contact your provider.',
+    err_expired: 'This code has expired.',
+    err_network: 'Something went wrong. Please try again.',
+    err_cooldown: 'You have already completed the assessment. You can take it again after {date}.',
+    footer: 'Your answers are confidential and secure.',
 
-const LANG_NAMES: Record<Lang, string> = {
-  en: 'English', ru: 'Русский', es: 'Español', fr: 'Français', ar: 'العربية',
-};
+    disclaimer_eyebrow: 'Step 1 of 3',
+    disclaimer_heading: 'Before you begin',
+    disclaimer_body: 'This assessment maps how you tend to think, decide, and respond across five dimensions of temperament. It takes about 15–20 minutes. Answer honestly and go with your first instinct — there are no right or wrong answers, and no pole is “better” than the other.',
+    btn_continue: 'Continue →',
 
+    consent_eyebrow: 'Step 2 of 3',
+    consent_heading: 'Data consent',
+    consent_body: 'Your results will be shared only with the specialist who issued your access code. Anonymous, aggregated data may be used for research purposes.',
+    consent_check: 'I consent to the processing of my personal data.',
+    consent_err: 'Please give your consent to continue.',
+
+    intake_eyebrow: 'Step 3 of 3 · Optional',
+    intake_heading: 'A few details',
+    intake_note: 'This information is used for research purposes only. All fields are optional — feel free to skip.',
+    intake_age: 'Age',
+    intake_age_ph: '16+',
+    intake_sex: 'Sex / gender identity',
+    intake_country: 'Country',
+    intake_native_language: 'Native language',
+    intake_education: 'Education level',
+    intake_occupation: 'Occupation / industry',
+    intake_occupation_ph: 'e.g. Software engineer, Healthcare',
+    intake_employment: 'Employment status',
+    intake_relationship: 'Relationship status',
+    intake_select_ph: 'Select…',
+    intake_skip: 'Skip',
+    intake_begin: 'Begin the test →',
+
+    test_of: 'of',
+    test_back: '← Back',
+    test_next: 'Next',
+    test_finish: 'See results →',
+    test_offline: 'Could not save your answer. Please check your connection.',
+    scale: ['Strongly disagree', 'Disagree', 'Neither agree nor disagree', 'Agree', 'Strongly agree'],
+
+    complete_heading: 'All done',
+    complete_body: 'Your assessment is complete. Your personality passport is ready.',
+    complete_results_btn: 'Your Results →',
+    resume_note: 'Welcome back — continuing where you left off.',
+  },
+  ru: {
+    lang_html: 'ru',
+    eyebrow: 'Тестирование ReNo',
+    heading: 'Добро пожаловать',
+    subtitle: 'Введите полученный код доступа, чтобы начать тестирование.',
+    code_label: 'Код доступа',
+    code_ph: '000000',
+    btn_begin: 'Начать →',
+    btn_loading: 'Проверяем…',
+    err_not_found: 'Код не найден. Проверьте правильность ввода.',
+    err_already_used: 'Этот код уже был использован. Свяжитесь с вашим специалистом.',
+    err_expired: 'Срок действия кода истёк.',
+    err_network: 'Что-то пошло не так. Попробуйте ещё раз.',
+    err_cooldown: 'Вы уже проходили тест. Пройти его снова можно после {date}.',
+    footer: 'Ваши ответы конфиденциальны и защищены.',
+
+    disclaimer_eyebrow: 'Шаг 1 из 3',
+    disclaimer_heading: 'Перед началом',
+    disclaimer_body: 'Этот тест показывает, как вы склонны думать, принимать решения и реагировать по пяти измерениям темперамента. Он занимает около 15–20 минут. Отвечайте честно и доверяйте первому ощущению — правильных и неправильных ответов нет, и ни один полюс не «лучше» другого.',
+    btn_continue: 'Продолжить →',
+
+    consent_eyebrow: 'Шаг 2 из 3',
+    consent_heading: 'Согласие на обработку данных',
+    consent_body: 'Результаты тестирования будут переданы только специалисту, выдавшему код доступа. Обезличенные данные могут использоваться в исследовательских целях.',
+    consent_check: 'Я согласен(на) с обработкой моих персональных данных.',
+    consent_err: 'Необходимо согласие для продолжения.',
+
+    intake_eyebrow: 'Шаг 3 из 3 · Опционально',
+    intake_heading: 'Немного о вас',
+    intake_note: 'Эта информация используется только в исследовательских целях. Все поля необязательны.',
+    intake_age: 'Возраст',
+    intake_age_ph: '16+',
+    intake_sex: 'Пол / гендерная идентичность',
+    intake_country: 'Страна',
+    intake_native_language: 'Родной язык',
+    intake_education: 'Образование',
+    intake_occupation: 'Профессия / отрасль',
+    intake_occupation_ph: 'например, Программист, Медицина',
+    intake_employment: 'Занятость',
+    intake_relationship: 'Семейное положение',
+    intake_select_ph: 'Выберите…',
+    intake_skip: 'Пропустить',
+    intake_begin: 'Начать тест →',
+
+    test_of: 'из',
+    test_back: '← Назад',
+    test_next: 'Далее',
+    test_finish: 'К результатам →',
+    test_offline: 'Не удалось сохранить ответ. Проверьте соединение.',
+    scale: ['Совершенно не согласен(на)', 'Не согласен(на)', 'Нейтрально', 'Согласен(на)', 'Полностью согласен(на)'],
+
+    complete_heading: 'Готово',
+    complete_body: 'Тест завершён. Ваш персональный паспорт готов.',
+    complete_results_btn: 'Ваши результаты →',
+    resume_note: 'С возвращением — продолжаем с того места, где вы остановились.',
+  },
+} as const;
+
+/* ─── Intake option lists (EN/RU) ─── */
 const COUNTRIES = [
   'Afghanistan','Albania','Algeria','Argentina','Armenia','Australia','Austria','Azerbaijan',
   'Bahrain','Bangladesh','Belarus','Belgium','Bolivia','Brazil','Bulgaria','Cambodia',
@@ -50,481 +249,84 @@ const NATIVE_LANGUAGES = [
   'Ukrainian','Urdu','Uzbek','Vietnamese','Other',
 ];
 
-const EDUCATION_OPTIONS = {
-  en: ['High school', 'Some college', 'Bachelor\'s degree', 'Master\'s degree', 'Doctoral degree', 'Prefer not to say'],
-  ru: ['Среднее', 'Неполное высшее', 'Бакалавр', 'Магистр', 'Доктор наук', 'Не хочу указывать'],
-  es: ['Secundaria', 'Universitario parcial', 'Licenciatura', 'Maestría', 'Doctorado', 'Prefiero no decir'],
-  fr: ['Lycée', 'Études supérieures partielles', 'Licence', 'Master', 'Doctorat', 'Je préfère ne pas répondre'],
-  ar: ['ثانوية', 'دراسات جامعية جزئية', 'بكالوريوس', 'ماجستير', 'دكتوراه', 'أفضل عدم الإجابة'],
-};
-
-const SEX_OPTIONS = {
+const SEX_OPTIONS: Record<Lang, string[]> = {
   en: ['Female', 'Male', 'Non-binary / gender diverse', 'Prefer not to say'],
   ru: ['Женщина', 'Мужчина', 'Небинарная идентичность', 'Не хочу указывать'],
-  es: ['Femenino', 'Masculino', 'No binario / género diverso', 'Prefiero no decir'],
-  fr: ['Féminin', 'Masculin', 'Non-binaire / genre divers', 'Je préfère ne pas répondre'],
-  ar: ['أنثى', 'ذكر', 'غير ثنائي / متنوع جنسياً', 'أفضل عدم الإجابة'],
 };
-
-const EMPLOYMENT_OPTIONS = {
+const EDUCATION_OPTIONS: Record<Lang, string[]> = {
+  en: ['High school', 'Some college', "Bachelor's degree", "Master's degree", 'Doctoral degree', 'Prefer not to say'],
+  ru: ['Среднее', 'Неполное высшее', 'Бакалавр', 'Магистр', 'Доктор наук', 'Не хочу указывать'],
+};
+const EMPLOYMENT_OPTIONS: Record<Lang, string[]> = {
   en: ['Employed (full-time)', 'Employed (part-time)', 'Self-employed', 'Student', 'Job-seeking', 'Career transitioning', 'Not employed', 'Prefer not to say'],
   ru: ['Работаю полный день', 'Работаю неполный день', 'Самозанятый(ая)', 'Студент(ка)', 'В поиске работы', 'Смена карьеры', 'Не работаю', 'Не хочу указывать'],
-  es: ['Empleado a tiempo completo', 'Empleado a tiempo parcial', 'Autónomo', 'Estudiante', 'En búsqueda de empleo', 'Transición de carrera', 'Sin empleo', 'Prefiero no decir'],
-  fr: ['Employé à temps plein', 'Employé à temps partiel', 'Indépendant', 'Étudiant', 'En recherche d\'emploi', 'Reconversion professionnelle', 'Sans emploi', 'Je préfère ne pas répondre'],
-  ar: ['موظف بدوام كامل', 'موظف بدوام جزئي', 'عامل حر', 'طالب', 'باحث عن عمل', 'تحول مهني', 'غير موظف', 'أفضل عدم الإجابة'],
 };
-
-const RELATIONSHIP_OPTIONS = {
+const RELATIONSHIP_OPTIONS: Record<Lang, string[]> = {
   en: ['Single', 'In a relationship', 'Married / partnered', 'Divorced / separated', 'Widowed', 'Prefer not to say'],
   ru: ['Не в отношениях', 'В отношениях', 'В браке / с партнёром', 'В разводе / разлучён(а)', 'Вдовец / вдова', 'Не хочу указывать'],
-  es: ['Soltero/a', 'En una relación', 'Casado/a o con pareja', 'Divorciado/a o separado/a', 'Viudo/a', 'Prefiero no decir'],
-  fr: ['Célibataire', 'En relation', 'Marié(e) / en couple', 'Divorcé(e) / séparé(e)', 'Veuf / veuve', 'Je préfère ne pas répondre'],
-  ar: ['أعزب / عزباء', 'في علاقة', 'متزوج / شريك', 'مطلق / منفصل', 'أرمل / أرملة', 'أفضل عدم الإجابة'],
 };
 
-const T = {
-  en: {
-    eyebrow: 'ReNo Assessment',
-    heading: 'Welcome',
-    subtitle: 'Enter the access code you received to begin your psychological assessment.',
-    code_label: 'Access Code',
-    code_ph: '000000',
-    btn_begin: 'Begin →',
-    btn_loading: 'Checking…',
-    err_not_found: 'Code not found. Please check your entry.',
-    err_already_used: 'This code has already been used. Please contact your provider.',
-    err_expired: 'This code has expired.',
-    err_network: 'Something went wrong. Please try again.',
-    err_cooldown: 'You have already completed the assessment. You can take it again after {date}.',
-    footer: 'Your answers are confidential and secure.',
-
-    disclaimer_eyebrow: 'Step 1 of 2',
-    disclaimer_heading: 'Before you begin',
-    disclaimer_body: 'This assessment evaluates your psychological profile across several dimensions. It takes approximately 15–20 minutes. Answer honestly and go with your first instinct — there are no right or wrong answers.',
-    btn_continue: 'Continue →',
-
-    consent_eyebrow: 'Step 2 of 2',
-    consent_heading: 'Data consent',
-    consent_body: 'Your results will be shared only with the specialist who issued your access code. Anonymous, aggregated data may be used for research purposes.',
-    consent_check: 'I consent to the processing of my personal data.',
-    consent_err: 'Please give your consent to continue.',
-
-    intake_eyebrow: 'Optional',
-    intake_heading: 'A few details',
-    intake_note: 'This information is used for research purposes only. All fields are optional — feel free to skip.',
-    intake_age: 'Age',
-    intake_age_ph: '16+',
-    intake_sex: 'Sex / gender identity',
-    intake_country: 'Country',
-    intake_country_ph: 'e.g. United States',
-    intake_native_language: 'Native language',
-    intake_native_language_ph: 'e.g. English',
-    intake_education: 'Education level',
-    intake_occupation: 'Occupation / industry',
-    intake_occupation_ph: 'e.g. Software engineer, Healthcare',
-    intake_employment: 'Employment status',
-    intake_relationship: 'Relationship status',
-    intake_select_ph: 'Select…',
-    intake_err_save: 'Could not save. Please try again.',
-    intake_skip: 'Skip',
-
-    test_question: 'Question {n} of 94',
-    test_yes: 'Yes',
-    test_no: 'No',
-    test_saving_err: 'Could not save answer. Retrying…',
-    test_offline: 'Please check your internet connection.',
-    test_finish: 'Finish test',
-
-    complete_heading: 'Thank you!',
-    complete_body: 'You have completed the assessment. Your results will be sent to your specialist.',
-    complete_btn: 'Return',
-    complete_portal_body: 'Your personality passport is ready. Open your portal to explore your profile.',
-    complete_portal_btn: 'View your passport',
-
-    resume_note: 'Your previous session was found. Continuing from where you left off.',
-  },
-  ru: {
-    eyebrow: 'Тестирование ReNo',
-    heading: 'Добро пожаловать',
-    subtitle: 'Введите код доступа, который вы получили, чтобы начать психологическое тестирование.',
-    code_label: 'Код доступа',
-    code_ph: '000000',
-    btn_begin: 'Начать →',
-    btn_loading: 'Проверяем…',
-    err_not_found: 'Код не найден. Проверьте правильность ввода.',
-    err_already_used: 'Этот код уже был использован. Свяжитесь с вашим специалистом.',
-    err_expired: 'Срок действия кода истёк.',
-    err_network: 'Что-то пошло не так. Попробуйте ещё раз.',
-    err_cooldown: 'Вы уже проходили тест. Пройти его снова можно после {date}.',
-    footer: 'Ваши ответы конфиденциальны и защищены.',
-
-    disclaimer_eyebrow: 'Шаг 1 из 2',
-    disclaimer_heading: 'Перед началом',
-    disclaimer_body: 'Этот тест оценивает ваш психологический профиль по нескольким параметрам. Он занимает около 15–20 минут. Отвечайте честно и доверяйте первому ощущению — правильных и неправильных ответов нет.',
-    btn_continue: 'Продолжить →',
-
-    consent_eyebrow: 'Шаг 2 из 2',
-    consent_heading: 'Согласие на обработку данных',
-    consent_body: 'Результаты тестирования будут переданы только специалисту, выдавшему код доступа. Обезличенные данные могут использоваться в исследовательских целях.',
-    consent_check: 'Я согласен(на) с обработкой моих персональных данных.',
-    consent_err: 'Необходимо согласие для продолжения.',
-
-    intake_eyebrow: 'Опционально',
-    intake_heading: 'Немного о вас',
-    intake_note: 'Эта информация используется только в исследовательских целях. Все поля необязательны.',
-    intake_age: 'Возраст',
-    intake_age_ph: '16+',
-    intake_sex: 'Пол / гендерная идентичность',
-    intake_country: 'Страна',
-    intake_country_ph: 'например, Россия',
-    intake_native_language: 'Родной язык',
-    intake_native_language_ph: 'например, Русский',
-    intake_education: 'Образование',
-    intake_occupation: 'Профессия / отрасль',
-    intake_occupation_ph: 'например, Программист, Медицина',
-    intake_employment: 'Занятость',
-    intake_relationship: 'Семейное положение',
-    intake_select_ph: 'Выберите…',
-    intake_err_save: 'Не удалось сохранить данные. Попробуйте ещё раз.',
-    intake_skip: 'Пропустить',
-
-    test_question: 'Вопрос {n} из 94',
-    test_yes: 'Да',
-    test_no: 'Нет',
-    test_saving_err: 'Не удалось сохранить ответ. Повторяем…',
-    test_offline: 'Проверьте интернет-соединение.',
-    test_finish: 'Завершить тест',
-
-    complete_heading: 'Спасибо!',
-    complete_body: 'Вы завершили тест. Результаты будут отправлены вашему специалисту.',
-    complete_btn: 'Вернуться',
-    complete_portal_body: 'Ваш паспорт личности готов. Откройте портал, чтобы изучить свой профиль.',
-    complete_portal_btn: 'Открыть паспорт',
-
-    resume_note: 'Найдена предыдущая сессия. Продолжаем с того места, где вы остановились.',
-  },
-  es: {
-    eyebrow: 'Evaluación ReNo',
-    heading: 'Bienvenido',
-    subtitle: 'Ingrese el código de acceso que recibió para comenzar su evaluación psicológica.',
-    code_label: 'Código de acceso',
-    code_ph: '000000',
-    btn_begin: 'Comenzar →',
-    btn_loading: 'Verificando…',
-    err_not_found: 'Código no encontrado. Por favor, verifique su ingreso.',
-    err_already_used: 'Este código ya fue utilizado. Contacte a su especialista.',
-    err_expired: 'Este código ha expirado.',
-    err_network: 'Algo salió mal. Por favor, inténtelo de nuevo.',
-    err_cooldown: 'Ya has completado la evaluación. Podrás repetirla después del {date}.',
-    footer: 'Sus respuestas son confidenciales y seguras.',
-
-    disclaimer_eyebrow: 'Paso 1 de 2',
-    disclaimer_heading: 'Antes de comenzar',
-    disclaimer_body: 'Esta evaluación valora su perfil psicológico en varias dimensiones. Toma aproximadamente 15–20 minutos. Responda honestamente siguiendo su primer instinto — no hay respuestas correctas o incorrectas.',
-    btn_continue: 'Continuar →',
-
-    consent_eyebrow: 'Paso 2 de 2',
-    consent_heading: 'Consentimiento de datos',
-    consent_body: 'Sus resultados solo se compartirán con el especialista que emitió su código de acceso. Los datos anónimos pueden utilizarse con fines de investigación.',
-    consent_check: 'Doy mi consentimiento para el procesamiento de mis datos personales.',
-    consent_err: 'Es necesario su consentimiento para continuar.',
-
-    intake_eyebrow: 'Opcional',
-    intake_heading: 'Algunos detalles',
-    intake_note: 'Esta información se utiliza únicamente con fines de investigación. Todos los campos son opcionales.',
-    intake_age: 'Edad',
-    intake_age_ph: '16+',
-    intake_sex: 'Sexo / identidad de género',
-    intake_country: 'País',
-    intake_country_ph: 'p. ej. España',
-    intake_native_language: 'Idioma nativo',
-    intake_native_language_ph: 'p. ej. Español',
-    intake_education: 'Nivel de educación',
-    intake_occupation: 'Ocupación / industria',
-    intake_occupation_ph: 'p. ej. Ingeniero de software, Salud',
-    intake_employment: 'Situación laboral',
-    intake_relationship: 'Estado civil',
-    intake_select_ph: 'Seleccionar…',
-    intake_err_save: 'No se pudieron guardar los datos. Inténtelo de nuevo.',
-    intake_skip: 'Omitir',
-
-    test_question: 'Pregunta {n} de 94',
-    test_yes: 'Sí',
-    test_no: 'No',
-    test_saving_err: 'No se pudo guardar la respuesta. Reintentando…',
-    test_offline: 'Por favor, verifique su conexión a internet.',
-    test_finish: 'Finalizar prueba',
-
-    complete_heading: '¡Gracias!',
-    complete_body: 'Ha completado la evaluación. Sus resultados serán enviados a su especialista.',
-    complete_btn: 'Volver',
-    complete_portal_body: 'Tu pasaporte de personalidad está listo. Abre tu portal para explorar tu perfil.',
-    complete_portal_btn: 'Ver tu pasaporte',
-
-    resume_note: 'Se encontró su sesión anterior. Continuando desde donde lo dejó.',
-  },
-  fr: {
-    eyebrow: 'Évaluation ReNo',
-    heading: 'Bienvenue',
-    subtitle: 'Entrez le code d\'accès que vous avez reçu pour commencer votre évaluation psychologique.',
-    code_label: 'Code d\'accès',
-    code_ph: '000000',
-    btn_begin: 'Commencer →',
-    btn_loading: 'Vérification…',
-    err_not_found: 'Code introuvable. Veuillez vérifier votre saisie.',
-    err_already_used: 'Ce code a déjà été utilisé. Veuillez contacter votre spécialiste.',
-    err_expired: 'Ce code a expiré.',
-    err_network: 'Quelque chose s\'est mal passé. Veuillez réessayer.',
-    err_cooldown: 'Vous avez déjà passé l\'évaluation. Vous pourrez la refaire après le {date}.',
-    footer: 'Vos réponses sont confidentielles et sécurisées.',
-
-    disclaimer_eyebrow: 'Étape 1 sur 2',
-    disclaimer_heading: 'Avant de commencer',
-    disclaimer_body: 'Cette évaluation mesure votre profil psychologique selon plusieurs dimensions. Elle prend environ 15 à 20 minutes. Répondez honnêtement en suivant votre premier instinct — il n\'y a pas de bonnes ou mauvaises réponses.',
-    btn_continue: 'Continuer →',
-
-    consent_eyebrow: 'Étape 2 sur 2',
-    consent_heading: 'Consentement aux données',
-    consent_body: 'Vos résultats seront partagés uniquement avec le spécialiste qui a émis votre code d\'accès. Des données anonymisées peuvent être utilisées à des fins de recherche.',
-    consent_check: 'Je consens au traitement de mes données personnelles.',
-    consent_err: 'Votre consentement est requis pour continuer.',
-
-    intake_eyebrow: 'Optionnel',
-    intake_heading: 'Quelques détails',
-    intake_note: 'Ces informations sont utilisées à des fins de recherche uniquement. Tous les champs sont optionnels.',
-    intake_age: 'Âge',
-    intake_age_ph: '16+',
-    intake_sex: 'Sexe / identité de genre',
-    intake_country: 'Pays',
-    intake_country_ph: 'ex. France',
-    intake_native_language: 'Langue maternelle',
-    intake_native_language_ph: 'ex. Français',
-    intake_education: 'Niveau d\'études',
-    intake_occupation: 'Profession / secteur',
-    intake_occupation_ph: 'ex. Ingénieur logiciel, Santé',
-    intake_employment: 'Situation professionnelle',
-    intake_relationship: 'Situation relationnelle',
-    intake_select_ph: 'Sélectionner…',
-    intake_err_save: 'Impossible de sauvegarder. Veuillez réessayer.',
-    intake_skip: 'Passer',
-
-    test_question: 'Question {n} sur 94',
-    test_yes: 'Oui',
-    test_no: 'Non',
-    test_saving_err: 'Impossible de sauvegarder la réponse. Nouvelle tentative…',
-    test_offline: 'Veuillez vérifier votre connexion internet.',
-    test_finish: 'Terminer le test',
-
-    complete_heading: 'Merci !',
-    complete_body: 'Vous avez terminé l\'évaluation. Vos résultats seront envoyés à votre spécialiste.',
-    complete_btn: 'Retour',
-    complete_portal_body: 'Votre passeport de personnalité est prêt. Ouvrez votre portail pour explorer votre profil.',
-    complete_portal_btn: 'Voir votre passeport',
-
-    resume_note: 'Votre session précédente a été trouvée. Reprise en cours.',
-  },
-  ar: {
-    eyebrow: 'تقييم ReNo',
-    heading: 'مرحباً بك',
-    subtitle: 'أدخل رمز الوصول الذي تلقيته لبدء التقييم النفسي.',
-    code_label: 'رمز الوصول',
-    code_ph: '000000',
-    btn_begin: '← ابدأ',
-    btn_loading: 'جارٍ التحقق…',
-    err_not_found: 'الرمز غير موجود. يرجى التحقق من المدخلات.',
-    err_already_used: 'هذا الرمز مستخدم بالفعل. يرجى التواصل مع متخصصك.',
-    err_expired: 'انتهت صلاحية هذا الرمز.',
-    err_network: 'حدث خطأ ما. يرجى المحاولة مجدداً.',
-    err_cooldown: 'لقد أكملت الاختبار بالفعل. يمكنك إعادته بعد {date}.',
-    footer: 'إجاباتك سرية ومحمية.',
-
-    disclaimer_eyebrow: 'الخطوة 1 من 2',
-    disclaimer_heading: 'قبل البدء',
-    disclaimer_body: 'يقيّم هذا الاختبار ملفك النفسي عبر عدة أبعاد. يستغرق نحو 15–20 دقيقة. أجب بصدق واتبع حدسك الأول — لا توجد إجابات صحيحة أو خاطئة.',
-    btn_continue: '← متابعة',
-
-    consent_eyebrow: 'الخطوة 2 من 2',
-    consent_heading: 'الموافقة على البيانات',
-    consent_body: 'لن تُشارَك نتائجك إلا مع المتخصص الذي أصدر رمز الوصول. قد تُستخدم البيانات المجهولة لأغراض بحثية.',
-    consent_check: 'أوافق على معالجة بياناتي الشخصية.',
-    consent_err: 'موافقتك مطلوبة للمتابعة.',
-
-    intake_eyebrow: 'اختياري',
-    intake_heading: 'بعض التفاصيل',
-    intake_note: 'تُستخدم هذه المعلومات لأغراض بحثية فقط. جميع الحقول اختيارية.',
-    intake_age: 'العمر',
-    intake_age_ph: '١٦+',
-    intake_sex: 'الجنس / الهوية الجندرية',
-    intake_country: 'البلد',
-    intake_country_ph: 'مثال: المملكة العربية السعودية',
-    intake_native_language: 'اللغة الأم',
-    intake_native_language_ph: 'مثال: العربية',
-    intake_education: 'المستوى التعليمي',
-    intake_occupation: 'المهنة / القطاع',
-    intake_occupation_ph: 'مثال: مهندس برمجيات، الرعاية الصحية',
-    intake_employment: 'الحالة الوظيفية',
-    intake_relationship: 'الحالة الاجتماعية',
-    intake_select_ph: 'اختر…',
-    intake_err_save: 'تعذّر حفظ البيانات. يرجى المحاولة مجدداً.',
-    intake_skip: 'تخطي',
-
-    test_question: 'سؤال {n} من 94',
-    test_yes: 'نعم',
-    test_no: 'لا',
-    test_saving_err: 'تعذّر حفظ الإجابة. إعادة المحاولة…',
-    test_offline: 'يرجى التحقق من اتصالك بالإنترنت.',
-    test_finish: 'إنهاء الاختبار',
-
-    complete_heading: 'شكراً لك!',
-    complete_body: 'لقد أكملت الاختبار. ستُرسَل نتائجك إلى متخصصك.',
-    complete_btn: 'العودة',
-    complete_portal_body: 'جواز شخصيتك جاهز. افتح بوابتك لاستكشاف ملفك.',
-    complete_portal_btn: 'عرض جوازك',
-
-    resume_note: 'تم العثور على جلستك السابقة. نستأنف من حيث توقفت.',
-  },
-} as const;
-
-type TKeys = keyof typeof T.en;
-
-/* ─── Stage type ─── */
-type Stage = 'code' | 'disclaimer' | 'consent' | 'intake' | 'test' | 'complete';
-
-/* ─── Shared helpers ─── */
-function PrimaryBtn({
-  onClick, disabled, loading, children, fullWidth,
-}: {
-  onClick?: () => void;
-  disabled?: boolean;
-  loading?: boolean;
-  children: React.ReactNode;
-  fullWidth?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled || loading}
-      className="btn-primary"
-      style={{
-        width: fullWidth ? '100%' : undefined,
-        padding: '14px 28px',
-        justifyContent: fullWidth ? 'center' : undefined,
-      }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function FieldLabel({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
-  return (
-    <label
-      htmlFor={htmlFor}
-      style={{ display: 'block', fontWeight: 600, fontSize: 13, color: 'var(--ink-2)', marginBottom: 7 }}
-    >
-      {children}
-    </label>
-  );
-}
-
-function InlineError({ message, id }: { message: string; id?: string }) {
-  if (!message) return null;
-  return (
-    <p id={id} role="alert" style={{ color: 'var(--magenta)', fontSize: 13, marginTop: 7, lineHeight: 1.5 }}>
-      {message}
-    </p>
-  );
-}
-
-const inputStyle = (hasError: boolean, highlight?: boolean): React.CSSProperties => ({
-  display: 'block',
-  width: '100%',
-  padding: '13px 16px',
-  fontSize: 15,
-  border: `2px solid ${hasError ? 'var(--magenta)' : highlight ? 'var(--violet)' : 'var(--line)'}`,
-  borderRadius: 12,
-  outline: 'none',
-  background: 'white',
-  color: 'var(--ink)',
-  boxSizing: 'border-box',
-  transition: 'border-color 0.2s',
-  fontFamily: 'inherit',
-});
-
-/* ─── Language picker ─── */
-function LangPicker({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function close(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+/* ─── Deterministic interleave so axes don't clump (stable across resumes) ─── */
+function interleave(qs: RenoQuestion[]): RenoQuestion[] {
+  const byAxis: Record<string, RenoQuestion[]> = {};
+  AXES.forEach(a => { byAxis[a.code] = []; });
+  qs.forEach(q => { if (byAxis[q.axis]) byAxis[q.axis].push(q); });
+  const order: RenoQuestion[] = [];
+  let more = true, i = 0;
+  while (more) {
+    more = false;
+    for (const a of AXES) {
+      const list = byAxis[a.code];
+      if (i < list.length) { order.push(list[i]); more = true; }
     }
-    document.addEventListener('mousedown', close);
-    return () => document.removeEventListener('mousedown', close);
-  }, []);
+    i++;
+  }
+  return order;
+}
 
+type Stage = 'code' | 'disclaimer' | 'consent' | 'intake' | 'test' | 'complete';
+type Copy = (typeof T)[Lang];
+
+/* ─── Constellation brand mark ─── */
+function BrandMark() {
+  const pts: [number, number][] = [];
+  for (let k = 0; k < 5; k++) {
+    const ang = (-90 + k * 72) * Math.PI / 180;
+    pts.push([50 + 40 * Math.cos(ang), 50 + 40 * Math.sin(ang)]);
+  }
+  const poly = pts.map(p => p.join(',')).join(' ');
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        style={{
-          display: 'flex', alignItems: 'center', gap: 6,
-          padding: '7px 12px', borderRadius: 10,
-          border: '1.5px solid var(--line)', background: 'white',
-          fontSize: 13, fontWeight: 600, color: 'var(--ink-2)',
-          cursor: 'pointer',
-        }}
-      >
-        {LANG_NAMES[lang]}
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-          <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-      {open && (
-        <div
-          role="listbox"
-          style={{
-            position: 'absolute', top: '110%', right: 0,
-            background: 'white', border: '1.5px solid var(--line)',
-            borderRadius: 12, overflow: 'hidden',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.10)',
-            zIndex: 99, minWidth: 130,
-          }}
-        >
-          {(Object.keys(LANG_NAMES) as Lang[]).map(l => (
-            <button
-              key={l}
-              role="option"
-              aria-selected={lang === l}
-              onClick={() => { onChange(l); setOpen(false); }}
-              style={{
-                display: 'block', width: '100%', textAlign: 'left',
-                padding: '10px 16px', fontSize: 13, fontWeight: lang === l ? 700 : 500,
-                color: lang === l ? 'var(--violet)' : 'var(--ink-2)',
-                background: lang === l ? 'var(--bg-2)' : 'white',
-                border: 'none', cursor: 'pointer',
-              }}
-            >
-              {LANG_NAMES[l]}
-            </button>
+    <svg viewBox="0 0 100 100" className="mk" aria-hidden="true">
+      <polygon points={poly} fill="none" stroke="currentColor" strokeOpacity="0.28" strokeWidth="2" />
+      {pts.map((p, k) => (
+        <circle key={k} cx={p[0].toFixed(1)} cy={p[1].toFixed(1)} r="7" fill={`var(--ax${k + 1})`} />
+      ))}
+    </svg>
+  );
+}
+
+/* ─── Top bar ─── */
+function TopBar({ lang, onLang, progress }: { lang: Lang; onLang: (l: Lang) => void; progress: number | null }) {
+  return (
+    <div className="topbar">
+      <div className="row">
+        <span className="brand"><BrandMark />Psy<i>ID</i></span>
+        <span className="spacer" />
+        <span className="langtoggle">
+          {(['en', 'ru'] as Lang[]).map(l => (
+            <button key={l} className={lang === l ? 'on' : ''} onClick={() => onLang(l)}>{LANG_NAMES[l]}</button>
           ))}
-        </div>
+        </span>
+      </div>
+      {progress != null && (
+        <div className="progressbar"><div className="fill" style={{ width: `${progress}%` }} /></div>
       )}
     </div>
   );
 }
 
-/* ─── Stage 1: Code Entry ─── */
-function CodeStage({
-  t,
-  onSuccess,
-}: {
-  t: (typeof T)[Lang];
-  onSuccess: (sessionId: string, resumable: boolean) => void;
-}) {
+/* ─── Stage 1: Code entry ─── */
+function CodeStage({ t, onSuccess }: { t: Copy; onSuccess: (sessionId: string, resumable: boolean) => void }) {
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -536,14 +338,12 @@ function CodeStage({
     if (code.length !== 6 || loading) return;
     setLoading(true);
     setError('');
-
     try {
       const res = await fetch('/api/reno/sessions/validate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
       });
-
       if (!res.ok) throw new Error('network');
       const data = (await res.json()) as {
         valid: boolean;
@@ -552,7 +352,6 @@ function CodeStage({
         resumable?: boolean;
         availableAt?: string;
       };
-
       if (data.valid && data.sessionId) {
         sessionStorage.setItem('reno_session_id', data.sessionId);
         onSuccess(data.sessionId, !!data.resumable);
@@ -563,9 +362,9 @@ function CodeStage({
         setError(t.err_cooldown.replace('{date}', when));
       } else {
         const msgs: Partial<Record<string, string>> = {
-          not_found:    t.err_not_found,
+          not_found: t.err_not_found,
           already_used: t.err_already_used,
-          expired:      t.err_expired,
+          expired: t.err_expired,
         };
         setError(msgs[data.reason ?? ''] ?? t.err_network);
       }
@@ -576,23 +375,17 @@ function CodeStage({
     }
   }, [code, loading, onSuccess, t]);
 
-  const isReady = code.length === 6;
-
   return (
     <div>
-      <div className="card" style={{ padding: '40px 40px 36px' }}>
-        <p className="eyebrow" style={{ marginBottom: 12 }}>{t.eyebrow}</p>
-        <h1 className="serif" style={{ fontSize: 30, letterSpacing: '-0.02em', marginBottom: 12, lineHeight: 1.2 }}>
-          {t.heading}
-        </h1>
-        <p style={{ color: 'var(--ink-3)', fontSize: 15, lineHeight: 1.65, marginBottom: 32 }}>
-          {t.subtitle}
-        </p>
-
-        <FieldLabel htmlFor="reno-code">{t.code_label}</FieldLabel>
+      <div className="card">
+        <p className="eyebrow">{t.eyebrow}</p>
+        <h1 style={{ fontSize: 32 }}>{t.heading}</h1>
+        <p className="lede" style={{ fontSize: 15, marginTop: 12, marginBottom: 26 }}>{t.subtitle}</p>
+        <label className="flabel" htmlFor="reno-code">{t.code_label}</label>
         <input
           ref={inputRef}
           id="reno-code"
+          className="codebox"
           type="text"
           inputMode="numeric"
           autoComplete="off"
@@ -600,135 +393,65 @@ function CodeStage({
           value={code}
           placeholder={t.code_ph}
           aria-label={t.code_label}
-          aria-describedby={error ? 'code-error' : undefined}
-          onChange={e => {
-            setCode(e.target.value.replace(/\D/g, ''));
-            setError('');
-          }}
+          onChange={e => { setCode(e.target.value.replace(/\D/g, '')); setError(''); }}
           onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
-          style={{
-            ...inputStyle(!!error, isReady),
-            fontSize: 28,
-            fontFamily: '"JetBrains Mono", monospace',
-            letterSpacing: '0.25em',
-            padding: '14px 18px',
-          }}
         />
-        <InlineError message={error} id="code-error" />
-
-        <div style={{ marginTop: 28 }}>
-          <PrimaryBtn onClick={handleSubmit} disabled={!isReady} loading={loading} fullWidth>
+        {error && <p className="err">{error}</p>}
+        <div className="btnrow">
+          <button className="btn grad full" onClick={handleSubmit} disabled={code.length !== 6 || loading}>
             {loading ? t.btn_loading : t.btn_begin}
-          </PrimaryBtn>
+          </button>
         </div>
       </div>
-
-      <p style={{ textAlign: 'center', marginTop: 20, fontSize: 13, color: 'var(--ink-3)', lineHeight: 1.6 }}>
-        {t.footer}
-      </p>
+      <p className="footer">{t.footer}</p>
     </div>
   );
 }
 
-/* ─── Stage 2: Disclaimer (stub — built in step c) ─── */
-function DisclaimerStage({ t, onContinue }: { t: (typeof T)[Lang]; onContinue: () => void }) {
+/* ─── Stage 2: Disclaimer ─── */
+function DisclaimerStage({ t, onContinue }: { t: Copy; onContinue: () => void }) {
   return (
-    <div className="card" style={{ padding: 40 }}>
-      <p className="eyebrow" style={{ marginBottom: 12 }}>{t.disclaimer_eyebrow}</p>
-      <h2 className="serif" style={{ fontSize: 26, letterSpacing: '-0.02em', marginBottom: 20 }}>{t.disclaimer_heading}</h2>
-      <p style={{ color: 'var(--ink-2)', fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>{t.disclaimer_body}</p>
-      <PrimaryBtn onClick={onContinue} fullWidth>{t.btn_continue}</PrimaryBtn>
+    <div className="stage">
+      <div className="eyebrow">{t.disclaimer_eyebrow}</div>
+      <h1>{t.disclaimer_heading}</h1>
+      <p className="lede">{t.disclaimer_body}</p>
+      <div className="btnrow"><button className="btn grad" onClick={onContinue}>{t.btn_continue}</button></div>
     </div>
   );
 }
 
-/* ─── Stage 3: Consent (stub — built in step c) ─── */
-function ConsentStage({ t, onContinue }: { t: (typeof T)[Lang]; onContinue: () => void }) {
+/* ─── Stage 3: Consent ─── */
+function ConsentStage({ t, onContinue }: { t: Copy; onContinue: () => void }) {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState('');
-
-  function handleContinue() {
-    if (!checked) { setError(t.consent_err); return; }
-    onContinue();
-  }
-
   return (
-    <div className="card" style={{ padding: 40 }}>
-      <p className="eyebrow" style={{ marginBottom: 12 }}>{t.consent_eyebrow}</p>
-      <h2 className="serif" style={{ fontSize: 26, letterSpacing: '-0.02em', marginBottom: 20 }}>{t.consent_heading}</h2>
-      <p style={{ color: 'var(--ink-2)', fontSize: 15, lineHeight: 1.7, marginBottom: 28 }}>{t.consent_body}</p>
-
-      <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer', marginBottom: 8 }}>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={e => { setChecked(e.target.checked); setError(''); }}
-          aria-describedby={error ? 'consent-error' : undefined}
-          style={{ marginTop: 3, width: 18, height: 18, accentColor: 'var(--violet)', flexShrink: 0, cursor: 'pointer' }}
-        />
-        <span style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.6 }}>{t.consent_check}</span>
+    <div className="stage">
+      <div className="eyebrow">{t.consent_eyebrow}</div>
+      <h1>{t.consent_heading}</h1>
+      <p className="lede">{t.consent_body}</p>
+      <label className="check">
+        <input type="checkbox" checked={checked} onChange={e => { setChecked(e.target.checked); setError(''); }} />
+        <span>{t.consent_check}</span>
       </label>
-      <InlineError message={error} id="consent-error" />
-
-      <div style={{ marginTop: 28 }}>
-        <PrimaryBtn onClick={handleContinue} fullWidth>{t.btn_continue}</PrimaryBtn>
+      {error && <p className="err">{error}</p>}
+      <div className="btnrow">
+        <button className="btn grad" onClick={() => (checked ? onContinue() : setError(t.consent_err))}>{t.btn_continue}</button>
       </div>
     </div>
   );
 }
 
-/* ─── Stage 4: Intake form ─── */
-/* ── Intake helpers — defined at module level so React doesn't remount on each keystroke ── */
-function ISelect({ id, label, value, onChange, options, placeholder }: {
-  id: string; label: string; value: string; placeholder: string;
-  onChange: (v: string) => void; options: string[];
-}) {
-  return (
-    <div style={{ marginBottom: 18 }}>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <select id={id} value={value} onChange={e => onChange(e.target.value)} style={inputStyle(false)}>
-        <option value="">{placeholder}</option>
-        {options.map(o => <option key={o} value={o}>{o}</option>)}
-      </select>
-    </div>
-  );
-}
-
-function IText({ id, label, value, onChange, placeholder, type = 'text', maxWidth }: {
-  id: string; label: string; value: string; placeholder?: string;
-  onChange: (v: string) => void; type?: string; maxWidth?: number;
-}) {
-  return (
-    <div style={{ marginBottom: 18 }}>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <input
-        id={id} type={type} inputMode={type === 'number' ? 'numeric' : undefined}
-        min={type === 'number' ? 16 : undefined}
-        placeholder={placeholder} value={value}
-        onChange={e => onChange(e.target.value)}
-        style={{ ...inputStyle(false), ...(maxWidth ? { maxWidth } : {}) }}
-      />
-    </div>
-  );
-}
-
-function IntakeStage({
-  t, sessionId, lang, onContinue,
-}: {
-  t: (typeof T)[Lang];
-  sessionId: string;
-  lang: Lang;
-  onContinue: () => void;
-}) {
-  const [age, setAge]                       = useState('');
-  const [sex, setSex]                       = useState('');
-  const [country, setCountry]               = useState('');
+/* ─── Stage 4: Intake ─── */
+function IntakeStage({ t, sessionId, lang, onContinue }: { t: Copy; sessionId: string; lang: Lang; onContinue: () => void }) {
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('');
+  const [country, setCountry] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [education, setEducation]           = useState('');
-  const [occupation, setOccupation]         = useState('');
-  const [employment, setEmployment]         = useState('');
-  const [relationship, setRelationship]     = useState('');
-  const [loading, setLoading]               = useState(false);
+  const [education, setEducation] = useState('');
+  const [occupation, setOccupation] = useState('');
+  const [employment, setEmployment] = useState('');
+  const [relationship, setRelationship] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function save(skip = false) {
     setLoading(true);
@@ -756,193 +479,95 @@ function IntakeStage({
   }
 
   const ph = t.intake_select_ph;
+  const sel = (label: string, value: string, setter: (v: string) => void, opts: string[], full = false) => (
+    <div className={`field${full ? ' full' : ''}`}>
+      <label>{label}</label>
+      <select value={value} onChange={e => setter(e.target.value)}>
+        <option value="">{ph}</option>
+        {opts.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </div>
+  );
 
   return (
-    <div className="card" style={{ padding: 40 }}>
-      <p className="eyebrow" style={{ marginBottom: 12 }}>{t.intake_eyebrow}</p>
-      <h2 className="serif" style={{ fontSize: 26, letterSpacing: '-0.02em', marginBottom: 8 }}>
-        {t.intake_heading}
-      </h2>
-      <p style={{ color: 'var(--ink-3)', fontSize: 14, lineHeight: 1.6, marginBottom: 28 }}>
-        {t.intake_note}
-      </p>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 20px' }}>
-        <IText id="intake-age" label={t.intake_age} value={age} onChange={setAge}
-          placeholder={t.intake_age_ph} type="number" maxWidth={140} />
-        <ISelect id="intake-sex" label={t.intake_sex} value={sex} onChange={setSex}
-          options={SEX_OPTIONS[lang]} placeholder={ph} />
-        <ISelect id="intake-country" label={t.intake_country} value={country} onChange={setCountry}
-          options={COUNTRIES} placeholder={ph} />
-        <ISelect id="intake-lang" label={t.intake_native_language} value={nativeLanguage}
-          onChange={setNativeLanguage} options={NATIVE_LANGUAGES} placeholder={ph} />
-        <ISelect id="intake-education" label={t.intake_education} value={education}
-          onChange={setEducation} options={EDUCATION_OPTIONS[lang]} placeholder={ph} />
-        <IText id="intake-occupation" label={t.intake_occupation} value={occupation}
-          onChange={setOccupation} placeholder={t.intake_occupation_ph} />
-        <ISelect id="intake-employment" label={t.intake_employment} value={employment}
-          onChange={setEmployment} options={EMPLOYMENT_OPTIONS[lang]} placeholder={ph} />
-        <ISelect id="intake-relationship" label={t.intake_relationship} value={relationship}
-          onChange={setRelationship} options={RELATIONSHIP_OPTIONS[lang]} placeholder={ph} />
+    <div className="stage">
+      <div className="eyebrow">{t.intake_eyebrow}</div>
+      <h1>{t.intake_heading}</h1>
+      <p className="note">{t.intake_note}</p>
+      <div className="grid2">
+        <div className="field">
+          <label>{t.intake_age}</label>
+          <input type="number" min={16} max={99} inputMode="numeric" placeholder={t.intake_age_ph} value={age} onChange={e => setAge(e.target.value)} />
+        </div>
+        {sel(t.intake_sex, sex, setSex, SEX_OPTIONS[lang])}
+        {sel(t.intake_country, country, setCountry, COUNTRIES)}
+        {sel(t.intake_native_language, nativeLanguage, setNativeLanguage, NATIVE_LANGUAGES)}
+        {sel(t.intake_education, education, setEducation, EDUCATION_OPTIONS[lang])}
+        {sel(t.intake_employment, employment, setEmployment, EMPLOYMENT_OPTIONS[lang])}
+        <div className="field full">
+          <label>{t.intake_occupation}</label>
+          <input placeholder={t.intake_occupation_ph} value={occupation} onChange={e => setOccupation(e.target.value)} />
+        </div>
+        {sel(t.intake_relationship, relationship, setRelationship, RELATIONSHIP_OPTIONS[lang])}
       </div>
-
-      <div style={{ marginTop: 10 }}>
-        <PrimaryBtn onClick={() => save()} loading={loading} fullWidth>
-          {loading ? '…' : t.btn_continue}
-        </PrimaryBtn>
-        <button
-          onClick={() => save(true)}
-          style={{
-            display: 'block', margin: '14px auto 0', background: 'none', border: 'none',
-            color: 'var(--ink-3)', fontSize: 14, cursor: 'pointer', padding: '4px 8px',
-            textDecoration: 'underline',
-          }}
-        >
-          {t.intake_skip}
-        </button>
+      <div className="btnrow">
+        <button className="btn grad" onClick={() => save()} disabled={loading}>{loading ? '…' : t.intake_begin}</button>
+        <button className="btn ghost" onClick={() => save(true)} disabled={loading}>{t.intake_skip}</button>
       </div>
     </div>
   );
 }
 
-/* ─── Answer components ─── */
-function YesNoAnswer({
-  t, selected, locked, onSelect,
-}: {
-  t: (typeof T)[Lang];
-  selected: string | null;
-  locked: boolean;
-  onSelect: (v: string) => void;
-}) {
-  const [hovered, setHovered] = useState<'yes' | 'no' | null>(null);
-
-  return (
-    <div style={{ display: 'flex', gap: 14 }}>
-      {(['yes', 'no'] as const).map(v => {
-        const active = selected === v;
-        const isHov = hovered === v && !locked;
-        return (
-          <button
-            key={v}
-            onClick={() => !locked && onSelect(v)}
-            onMouseEnter={() => !locked && setHovered(v)}
-            onMouseLeave={() => setHovered(null)}
-            aria-pressed={active}
-            style={{
-              flex: 1,
-              padding: '26px 16px',
-              borderRadius: 18,
-              border: `2px solid ${active ? 'var(--violet)' : isHov ? 'var(--violet)' : 'var(--line)'}`,
-              background: active ? 'var(--violet)' : isHov ? 'var(--bg-2)' : 'white',
-              color: active ? 'white' : 'var(--ink)',
-              fontSize: 18,
-              fontWeight: 700,
-              cursor: locked ? 'default' : 'pointer',
-              transition: 'all 0.18s',
-              transform: active ? 'translateY(-3px)' : isHov ? 'translateY(-1px)' : 'none',
-              boxShadow: active
-                ? '0 8px 20px rgba(75,30,142,0.28)'
-                : isHov ? '0 4px 12px rgba(75,30,142,0.10)' : 'none',
-            }}
-          >
-            {v === 'yes' ? t.test_yes : t.test_no}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function WordSelectAnswer({
-  options, selected, locked, onSelect,
-}: {
-  options: { id: string; label: string }[];
-  selected: string | null;
-  locked: boolean;
-  onSelect: (v: string) => void;
-}) {
-  const [hovered, setHovered] = useState<string | null>(null);
-
-  return (
-    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-      {options.map(opt => {
-        const active = selected === opt.id;
-        const isHov = hovered === opt.id && !locked;
-        return (
-          <button
-            key={opt.id}
-            onClick={() => !locked && onSelect(opt.id)}
-            onMouseEnter={() => !locked && setHovered(opt.id)}
-            onMouseLeave={() => setHovered(null)}
-            aria-pressed={active}
-            style={{
-              padding: '12px 24px',
-              borderRadius: 100,
-              border: `2px solid ${active ? 'var(--violet)' : isHov ? 'var(--violet)' : 'var(--line)'}`,
-              background: active ? 'var(--violet)' : isHov ? 'var(--bg-2)' : 'white',
-              color: active ? 'white' : 'var(--ink)',
-              fontSize: 15,
-              fontWeight: 600,
-              cursor: locked ? 'default' : 'pointer',
-              transition: 'all 0.18s',
-              transform: active ? 'translateY(-2px)' : isHov ? 'translateY(-1px)' : 'none',
-              boxShadow: active
-                ? '0 6px 14px rgba(75,30,142,0.22)'
-                : isHov ? '0 3px 8px rgba(75,30,142,0.08)' : 'none',
-            }}
-          >
-            {opt.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ─── Stage 5: Test engine ─── */
-function TestStage({
-  t, sessionId, lang, onComplete,
-}: {
-  t: (typeof T)[Lang];
+/* ─── Stage 5: Test engine (Likert) ─── */
+function TestStage({ t, sessionId, lang, onProgress, onComplete }: {
+  t: Copy;
   sessionId: string;
   lang: Lang;
+  onProgress: (answered: number, total: number) => void;
   onComplete: () => void;
 }) {
-  const [questions, setQuestions]              = useState<Question[]>([]);
-  const [questionsReady, setQuestionsReady]    = useState(false);
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const [selectedAnswer, setSelectedAnswer]   = useState<string | null>(null);
-  const [locked, setLocked]                   = useState(false);
-  const [questionFading, setQuestionFading]   = useState(false);
-  const [offline, setOffline]                 = useState(false);
-  const questionShownAt = useRef<number>(Date.now());
+  const [order, setOrder] = useState<RenoQuestion[]>([]);
+  const [ready, setReady] = useState(false);
+  const [index, setIndex] = useState<number | null>(null);
+  const [responses, setResponses] = useState<Record<string, number>>({});
+  const [locked, setLocked] = useState(false);
+  const [fading, setFading] = useState(false);
+  const [offline, setOffline] = useState(false);
+  const shownAt = useRef<number>(Date.now());
 
-  // Fetch live questions from Redis (falls back to bundled JSON on server)
+  // Fetch the live v1.1 bank, interleave deterministically.
   useEffect(() => {
     fetch('/api/reno/questions')
       .then(r => r.json())
-      .then((d: { questions: Question[] }) => {
-        setQuestions(d.questions);
-        setQuestionsReady(true);
+      .then((d: { questions: RenoQuestion[] }) => {
+        setOrder(interleave(d.questions ?? []));
+        setReady(true);
       })
-      .catch(() => setQuestionsReady(true)); // if fetch fails, questionsReady stays false → loading shown
+      .catch(() => setReady(true));
   }, []);
 
-  useEffect(() => { questionShownAt.current = Date.now(); }, [currentIndex]);
+  useEffect(() => { shownAt.current = Date.now(); }, [index]);
 
-  // Load progress once questions are ready
+  // Resume: place the user at the first unanswered question.
   useEffect(() => {
-    if (!questionsReady || questions.length === 0) return;
+    if (!ready || order.length === 0) return;
     fetch(`/api/reno/sessions/${sessionId}/progress`)
       .then(r => r.json())
       .then((data: { answers?: { questionId: string; answerId: string }[] }) => {
+        const map: Record<string, number> = {};
+        (data.answers ?? []).forEach(a => { const v = Number(a.answerId); if (v >= 1 && v <= 5) map[a.questionId] = v; });
+        setResponses(map);
         const answered = data.answers?.length ?? 0;
-        setCurrentIndex(Math.min(answered, questions.length - 1));
+        setIndex(Math.min(answered, order.length - 1));
       })
-      .catch(() => setCurrentIndex(0));
-  }, [sessionId, questionsReady, questions.length]);
+      .catch(() => setIndex(0));
+  }, [sessionId, ready, order.length]);
 
-  async function saveAnswer(questionId: string, answerId: string, index: number, responseTimeMs: number): Promise<boolean> {
+  useEffect(() => {
+    if (order.length) onProgress(Object.keys(responses).length, order.length);
+  }, [responses, order.length, onProgress]);
+
+  async function saveAnswer(questionId: string, answerId: string, idx: number, responseTimeMs: number): Promise<boolean> {
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         const res = await fetch(`/api/reno/sessions/${sessionId}/answers`, {
@@ -952,7 +577,7 @@ function TestStage({
             questionId,
             answerId,
             answeredAt: new Date().toISOString(),
-            questionIndex: index,
+            questionIndex: idx,
             responseTimeMs,
           }),
         });
@@ -963,310 +588,170 @@ function TestStage({
     return false;
   }
 
-  async function handleAnswer(answerId: string) {
-    if (locked || currentIndex === null) return;
-    const question = questions[currentIndex];
-    const responseTimeMs = Date.now() - questionShownAt.current;
-
-    setSelectedAnswer(answerId);
+  async function choose(value: number) {
+    if (locked || index === null) return;
+    const q = order[index];
+    const responseTimeMs = Date.now() - shownAt.current;
     setLocked(true);
     setOffline(false);
+    setResponses(prev => ({ ...prev, [q.id]: value }));
 
-    const saved = await saveAnswer(question.id, answerId, currentIndex, responseTimeMs);
+    const saved = await saveAnswer(q.id, String(value), index, responseTimeMs);
     if (!saved) {
-      // All 3 retries failed — show error, let user try again
       setOffline(true);
-      setSelectedAnswer(null);
+      setResponses(prev => { const n = { ...prev }; delete n[q.id]; return n; });
       setLocked(false);
       return;
     }
 
-    // 380ms confirmation flash, then advance or complete
-    await new Promise(r => setTimeout(r, 380));
-
-    if (currentIndex >= questions.length - 1) {
+    await new Promise(r => setTimeout(r, 320));
+    if (index >= order.length - 1) {
       onComplete();
-    } else {
-      setQuestionFading(true);
-      await new Promise(r => setTimeout(r, 250));
-      setCurrentIndex(i => (i ?? 0) + 1);
-      setSelectedAnswer(null);
-      setLocked(false);
-      setQuestionFading(false);
+      return;
     }
+    setFading(true);
+    await new Promise(r => setTimeout(r, 220));
+    setIndex(i => (i ?? 0) + 1);
+    setLocked(false);
+    setFading(false);
   }
 
-  if (!questionsReady || questions.length === 0 || currentIndex === null) {
-    return (
-      <div style={{ padding: 60, textAlign: 'center' }}>
-        <p style={{ color: 'var(--ink-3)', fontSize: 14 }}>…</p>
-      </div>
-    );
+  function nav(delta: number) {
+    if (index === null) return;
+    setIndex(i => Math.min(order.length - 1, Math.max(0, (i ?? 0) + delta)));
   }
 
-  const question = questions[currentIndex];
-  const progress  = (currentIndex / questions.length) * 100;
-  const label     = t.test_question.replace('{n}', String(currentIndex + 1));
+  if (!ready || order.length === 0 || index === null) {
+    return <div className="stage" style={{ textAlign: 'center', color: 'var(--ink-mute)' }}>…</div>;
+  }
+
+  const q = order[index];
+  const axis = AXIS_BY_CODE[q.axis];
+  const cur = responses[q.id];
+  const isLast = index === order.length - 1;
 
   return (
-    <div style={{ width: '100%' }}>
-      {/* Progress bar */}
-      <div style={{ marginBottom: 24 }}>
-        <div style={{
-          display: 'flex', justifyContent: 'space-between',
-          marginBottom: 8, fontSize: 13, color: 'var(--ink-3)',
-        }}>
-          <span className="mono">{label}</span>
-          <span className="mono">{Math.round(progress)}%</span>
-        </div>
-        <div style={{ height: 5, background: 'var(--bg-3)', borderRadius: 100, overflow: 'hidden' }}>
-          <div style={{
-            height: '100%',
-            width: `${progress}%`,
-            background: 'var(--grad)',
-            transition: 'width 0.5s cubic-bezier(0.22,1,0.36,1)',
-            borderRadius: 100,
-          }} />
+    <div className="stage">
+      {offline && <div className="offline">{t.test_offline}</div>}
+      <div className="qcount">{index + 1} {t.test_of} {order.length}</div>
+      <div className="qaxis"><span className="dot" style={{ background: axis.color }} />{axis.name[lang]}</div>
+      <div className="fadewrap" style={{ opacity: fading ? 0 : 1, transform: fading ? 'translateX(16px)' : 'none' }}>
+        <div className="qtext">{q.text[lang]}</div>
+        <div className="likert">
+          {[1, 2, 3, 4, 5].map(r => (
+            <button key={r} className={`lk${cur === r ? ' sel' : ''}`} disabled={locked} onClick={() => choose(r)}>
+              <span className="dotnum">{r}</span>
+              <span className="lktext">{t.scale[r - 1]}</span>
+            </button>
+          ))}
         </div>
       </div>
-
-      {/* Offline / retry error */}
-      {offline && (
-        <div style={{
-          background: '#FFF0F3', border: '1px solid var(--magenta)',
-          borderRadius: 10, padding: '10px 16px', marginBottom: 14,
-        }}>
-          <p style={{ color: 'var(--magenta)', fontSize: 13, margin: 0 }}>{t.test_offline}</p>
-        </div>
-      )}
-
-      {/* Question card with slide-fade transition */}
-      <div style={{
-        opacity: questionFading ? 0 : 1,
-        transform: questionFading ? 'translateX(20px)' : 'translateX(0)',
-        transition: 'opacity 250ms ease, transform 250ms ease',
-      }}>
-        <div className="card" style={{ padding: '40px 36px 44px' }}>
-          <p style={{
-            fontSize: 18, lineHeight: 1.7, fontWeight: 500,
-            color: 'var(--ink)', marginBottom: 36,
-            fontFamily: 'Onest, sans-serif',
-          }}>
-            {question.text[lang]}
-          </p>
-
-          <WordSelectAnswer
-            options={question.options.map(o => ({ id: o.id, label: o.text[lang] }))}
-            selected={selectedAnswer}
-            locked={locked}
-            onSelect={handleAnswer}
-          />
-        </div>
+      <div className="testnav">
+        <button className="linkbtn" onClick={() => nav(-1)} disabled={index === 0 || locked}>{t.test_back}</button>
+        {isLast
+          ? <button className="btn grad" onClick={() => cur != null && choose(cur)} disabled={cur == null || locked}>{t.test_finish}</button>
+          : <button className="linkbtn" onClick={() => nav(1)} disabled={cur == null || locked}>{t.test_next}</button>}
       </div>
     </div>
   );
 }
 
 /* ─── Stage 6: Complete ─── */
-function CompleteStage({ t, sessionId }: { t: (typeof T)[Lang]; sessionId: string | null }) {
-  const [redirectUrl, setRedirectUrl] = useState('https://psyid.me');
-  const [isPortal, setIsPortal]       = useState(false);
-  const [apiErr, setApiErr]           = useState(false);
-  const [retrying, setRetrying]       = useState(false);
+function CompleteStage({ t, sessionId }: { t: Copy; sessionId: string | null }) {
+  const [apiErr, setApiErr] = useState(false);
+  const [retrying, setRetrying] = useState(false);
 
-  useEffect(() => {
+  const complete = useCallback(async () => {
     if (!sessionId) return;
-    callComplete();
-
-    async function callComplete() {
-      try {
-        const res = await fetch(`/api/reno/sessions/${sessionId}/complete`, { method: 'POST' });
-        if (res.ok) {
-          const data = (await res.json()) as { redirectUrl?: string; isPortal?: boolean };
-          if (data.redirectUrl) setRedirectUrl(data.redirectUrl);
-          setIsPortal(!!data.isPortal);
-        } else {
-          setApiErr(true);
-        }
-      } catch {
-        setApiErr(true);
-      }
-    }
-  }, [sessionId]);
-
-  async function handleRetry() {
     setRetrying(true);
-    setApiErr(false);
     try {
       const res = await fetch(`/api/reno/sessions/${sessionId}/complete`, { method: 'POST' });
-      if (res.ok) {
-        const data = (await res.json()) as { redirectUrl?: string; isPortal?: boolean };
-        if (data.redirectUrl) setRedirectUrl(data.redirectUrl);
-        setIsPortal(!!data.isPortal);
-      } else {
-        setApiErr(true);
-      }
+      setApiErr(!res.ok);
     } catch {
       setApiErr(true);
     } finally {
       setRetrying(false);
     }
-  }
+  }, [sessionId]);
 
-  // Clear stage from sessionStorage so a revisit starts fresh
+  useEffect(() => { complete(); }, [complete]);
+
+  // Revisits should start fresh.
   useEffect(() => {
     sessionStorage.removeItem('reno_stage');
     sessionStorage.removeItem('reno_session_id');
   }, []);
 
   return (
-    <div className="card" style={{ padding: '48px 40px', textAlign: 'center' }}>
-      {/* Check icon */}
-      <div style={{
-        width: 72, height: 72, borderRadius: '50%',
-        background: 'var(--grad)',
-        boxShadow: '0 12px 28px rgba(75,30,142,0.30)',
-        margin: '0 auto 28px',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
+    <div className="card" style={{ textAlign: 'center', padding: '48px 40px' }}>
+      <div className="done-icon">
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <path d="M7 15l6 6 10-12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M7 15l6 6 10-12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-
-      <h2 className="serif" style={{ fontSize: 28, letterSpacing: '-0.02em', marginBottom: 14 }}>
-        {t.complete_heading}
-      </h2>
-      <p style={{ color: 'var(--ink-3)', fontSize: 15, lineHeight: 1.7, marginBottom: 32, maxWidth: 360, margin: '0 auto 32px' }}>
-        {isPortal ? t.complete_portal_body : t.complete_body}
-      </p>
-
-      {apiErr && (
-        <div style={{ marginBottom: 20 }}>
-          <PrimaryBtn onClick={handleRetry} loading={retrying}>
-            {t.complete_btn}
-          </PrimaryBtn>
-        </div>
-      )}
-
-      {!apiErr && (
-        <a
-          href={redirectUrl}
-          className="btn-primary"
-          style={{ padding: '14px 32px', fontSize: 15, display: 'inline-block', textDecoration: 'none' }}
-        >
-          {isPortal ? t.complete_portal_btn : t.complete_btn}
-        </a>
-      )}
+      <h2>{t.complete_heading}</h2>
+      <p className="lede" style={{ margin: '14px auto 30px', fontSize: 15 }}>{t.complete_body}</p>
+      {apiErr
+        ? <button className="btn grad" onClick={complete} disabled={retrying}>{retrying ? '…' : t.complete_results_btn}</button>
+        : <a href="/results" className="btn grad" style={{ textDecoration: 'none' }}>{t.complete_results_btn}</a>}
     </div>
   );
 }
 
-/* ═══ Main Page ═══ */
+/* ═══ Main page ═══ */
 export default function RenoPage() {
   const [lang, setLang] = useState<Lang>('en');
   const [stage, setStage] = useState<Stage>('code');
   const [fading, setFading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [resumeNote, setResumeNote] = useState('');
+  const [resume, setResume] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const t = T[lang];
-  const isRtl = lang === 'ar';
 
-  // Restore in-progress session from sessionStorage (same-tab navigation)
+  // Restore an in-progress session (same-tab navigation / refresh).
   useEffect(() => {
     const sid = sessionStorage.getItem('reno_session_id');
-    const savedStage = sessionStorage.getItem('reno_stage') as Stage | null;
-    if (sid && savedStage && savedStage !== 'code') {
-      setSessionId(sid);
-      setStage(savedStage);
-    }
+    const saved = sessionStorage.getItem('reno_stage') as Stage | null;
+    if (sid && saved && saved !== 'code') { setSessionId(sid); setStage(saved); }
   }, []);
 
-  // Persist stage so same-tab refreshes don't reset to code entry
   useEffect(() => {
     if (stage !== 'code') sessionStorage.setItem('reno_stage', stage);
   }, [stage]);
 
+  useEffect(() => { document.documentElement.lang = t.lang_html; }, [t.lang_html]);
+
   function goToStage(next: Stage) {
     setFading(true);
-    setTimeout(() => {
-      setStage(next);
-      setFading(false);
-    }, 250);
+    setTimeout(() => { setStage(next); setFading(false); }, 250);
   }
+
+  const handleProgress = useCallback((answered: number, total: number) => {
+    setProgress(total ? Math.round((answered / total) * 100) : 0);
+  }, []);
 
   function handleCodeSuccess(sid: string, resumable: boolean) {
     setSessionId(sid);
-    if (resumable) {
-      setResumeNote(t.resume_note);
-      goToStage('test');
-    } else {
-      goToStage('disclaimer');
-    }
+    if (resumable) { setResume(t.resume_note); goToStage('test'); }
+    else goToStage('disclaimer');
   }
 
   return (
-    <div dir={isRtl ? 'rtl' : 'ltr'} style={{
-      minHeight: '100vh',
-      background: `
-        radial-gradient(ellipse 65% 55% at 88% 88%, rgba(255,165,72,.55) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 20% 30%, rgba(58,98,232,.65) 0%, transparent 60%),
-        linear-gradient(135deg, #050B36 0%, #0E1F6E 40%, #4B266A 70%, #B23A4C 100%)
-      `,
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      {/* Top bar */}
-      <div style={{
-        padding: '16px 28px',
-        background: 'rgba(5,11,54,0.60)',
-        backdropFilter: 'blur(18px)',
-        WebkitBackdropFilter: 'blur(18px)',
-        borderBottom: '1px solid rgba(255,255,255,0.10)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-      }}>
-        <Logo light />
-        <LangPicker lang={lang} onChange={setLang} />
-      </div>
-
-      {/* Resume banner */}
-      {resumeNote && (
-        <div style={{
-          background: 'var(--violet)', color: 'white',
-          padding: '10px 28px', fontSize: 13, fontWeight: 500,
-          textAlign: 'center',
-        }}>
-          {resumeNote}
-        </div>
-      )}
-
-      {/* Centered content with fade transition */}
-      <div style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '32px 16px',
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: stage === 'test' ? 560 : 480,
-          opacity: fading ? 0 : 1,
-          transform: fading ? 'translateY(10px)' : 'translateY(0)',
-          transition: 'opacity 250ms ease, transform 250ms ease, max-width 300ms ease',
-        }}>
-          {stage === 'code'       && <CodeStage t={t} onSuccess={handleCodeSuccess} />}
+    <div className="reno-v11">
+      <style>{CSS}</style>
+      <TopBar lang={lang} onLang={setLang} progress={stage === 'test' ? progress : null} />
+      {resume && <div className="resume">{resume}</div>}
+      <div className="wrap" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div className="fadewrap" style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fading ? 0 : 1, transform: fading ? 'translateY(8px)' : 'none' }}>
+          {stage === 'code' && (
+            <div className="stage"><CodeStage t={t} onSuccess={handleCodeSuccess} /></div>
+          )}
           {stage === 'disclaimer' && <DisclaimerStage t={t} onContinue={() => goToStage('consent')} />}
-          {stage === 'consent'    && <ConsentStage t={t} onContinue={() => goToStage('intake')} />}
-          {stage === 'intake'     && <IntakeStage t={t} sessionId={sessionId!} lang={lang} onContinue={() => goToStage('test')} />}
-          {stage === 'test'       && <TestStage t={t} sessionId={sessionId!} lang={lang} onComplete={() => goToStage('complete')} />}
-          {stage === 'complete'   && <CompleteStage t={t} sessionId={sessionId} />}
+          {stage === 'consent' && <ConsentStage t={t} onContinue={() => goToStage('intake')} />}
+          {stage === 'intake' && <IntakeStage t={t} sessionId={sessionId!} lang={lang} onContinue={() => goToStage('test')} />}
+          {stage === 'test' && <TestStage t={t} sessionId={sessionId!} lang={lang} onProgress={handleProgress} onComplete={() => goToStage('complete')} />}
+          {stage === 'complete' && <div className="stage"><CompleteStage t={t} sessionId={sessionId} /></div>}
         </div>
       </div>
     </div>
