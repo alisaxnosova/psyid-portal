@@ -135,9 +135,15 @@ const T = {
     consent_check: 'I consent to the processing of my personal data.',
     consent_err: 'Please give your consent to continue.',
 
-    intake_eyebrow: 'Step 3 of 3 · Optional',
+    research_eyebrow: 'Step 3 of 3',
+    research_heading: 'Research participation',
+    research_body: 'Beyond your own results, we study how temperament varies across people. To do that we collect a few background details — age, education, occupation, and so on. This is used only for research, always in aggregate, and is never linked to your identity. Sharing it is entirely your choice, and either way your results are unaffected.',
+    research_consent_btn: 'I consent — use my details for research',
+    research_decline_btn: 'No thanks — continue to the test',
+
+    intake_eyebrow: 'Research demographics · Optional',
     intake_heading: 'A few details',
-    intake_note: 'This information is used for research purposes only. All fields are optional — feel free to skip.',
+    intake_note: 'Thank you for taking part. These details are used only for anonymous research. Any field you prefer to leave blank, just skip.',
     intake_age: 'Age',
     intake_age_ph: '16+',
     intake_sex: 'Sex / gender identity',
@@ -193,9 +199,15 @@ const T = {
     consent_check: 'Я согласен(на) с обработкой моих персональных данных.',
     consent_err: 'Необходимо согласие для продолжения.',
 
-    intake_eyebrow: 'Шаг 3 из 3 · Опционально',
+    research_eyebrow: 'Шаг 3 из 3',
+    research_heading: 'Участие в исследовании',
+    research_body: 'Помимо ваших результатов, мы изучаем, как темперамент различается у разных людей. Для этого мы собираем несколько данных о вас — возраст, образование, род занятий и т. д. Они используются только в исследовании, всегда обезличенно, и никогда не связываются с вашей личностью. Делиться ими — полностью ваш выбор, и на ваши результаты это не влияет.',
+    research_consent_btn: 'Согласен(на) — использовать мои данные для исследования',
+    research_decline_btn: 'Нет, спасибо — перейти к тесту',
+
+    intake_eyebrow: 'Демографические данные · Опционально',
     intake_heading: 'Немного о вас',
-    intake_note: 'Эта информация используется только в исследовательских целях. Все поля необязательны.',
+    intake_note: 'Спасибо за участие. Эти данные используются только для обезличенного исследования. Любое поле можно пропустить.',
     intake_age: 'Возраст',
     intake_age_ph: '16+',
     intake_sex: 'Пол / гендерная идентичность',
@@ -288,7 +300,7 @@ function interleave(qs: RenoQuestion[]): RenoQuestion[] {
   return order;
 }
 
-type Stage = 'code' | 'disclaimer' | 'consent' | 'intake' | 'test' | 'complete';
+type Stage = 'code' | 'disclaimer' | 'consent' | 'research' | 'intake' | 'test' | 'complete';
 type Copy = (typeof T)[Lang];
 
 /* ─── Constellation brand mark ─── */
@@ -445,7 +457,45 @@ function ConsentStage({ t, onContinue }: { t: Copy; onContinue: () => void }) {
   );
 }
 
-/* ─── Stage 4: Intake ─── */
+/* ─── Stage 3b: Research participation ─── */
+function ResearchStage({ t, sessionId, onConsent, onDecline }: {
+  t: Copy;
+  sessionId: string;
+  onConsent: () => void;
+  onDecline: () => void;
+}) {
+  const [loading, setLoading] = useState(false);
+
+  async function decline() {
+    // Record the mandatory consent + the research decline, then skip demographics.
+    setLoading(true);
+    try {
+      await fetch(`/api/reno/sessions/${sessionId}/intake`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ consent: true, researchConsent: false }),
+      });
+    } catch {
+      // proceed regardless — the test does not depend on this
+    }
+    setLoading(false);
+    onDecline();
+  }
+
+  return (
+    <div className="stage">
+      <div className="eyebrow">{t.research_eyebrow}</div>
+      <h1>{t.research_heading}</h1>
+      <p className="lede">{t.research_body}</p>
+      <div className="btnrow" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+        <button className="btn grad full" onClick={onConsent} disabled={loading}>{t.research_consent_btn}</button>
+        <button className="btn ghost full" onClick={decline} disabled={loading}>{loading ? '…' : t.research_decline_btn}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Stage 4: Intake (research demographics — only shown to consenters) ─── */
 function IntakeStage({ t, sessionId, lang, onContinue }: { t: Copy; sessionId: string; lang: Lang; onContinue: () => void }) {
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('');
@@ -465,6 +515,7 @@ function IntakeStage({ t, sessionId, lang, onContinue }: { t: Copy; sessionId: s
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           consent: true,
+          researchConsent: true,
           ...(!skip && age && !isNaN(parseInt(age, 10)) ? { age: parseInt(age, 10) } : {}),
           ...(!skip && sex ? { sex } : {}),
           ...(!skip && country ? { country } : {}),
@@ -768,7 +819,8 @@ export default function RenoPage() {
             <div className="stage"><CodeStage t={t} onSuccess={handleCodeSuccess} /></div>
           )}
           {stage === 'disclaimer' && <DisclaimerStage t={t} onContinue={() => goToStage('consent')} />}
-          {stage === 'consent' && <ConsentStage t={t} onContinue={() => goToStage('intake')} />}
+          {stage === 'consent' && <ConsentStage t={t} onContinue={() => goToStage('research')} />}
+          {stage === 'research' && <ResearchStage t={t} sessionId={sessionId!} onConsent={() => goToStage('intake')} onDecline={() => goToStage('test')} />}
           {stage === 'intake' && <IntakeStage t={t} sessionId={sessionId!} lang={lang} onContinue={() => goToStage('test')} />}
           {stage === 'test' && <TestStage t={t} sessionId={sessionId!} lang={lang} onProgress={handleProgress} onComplete={() => goToStage('complete')} />}
           {stage === 'complete' && <div className="stage"><CompleteStage t={t} sessionId={sessionId} /></div>}

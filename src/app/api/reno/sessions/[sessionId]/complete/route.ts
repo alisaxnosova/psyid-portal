@@ -10,7 +10,7 @@ const CODES_KEY = 'psyid:codes';
 // Non-consenting or demographics-skipping takers still get their result — just no number.
 function isResearchSubject(s: RenoSession): boolean {
   const k = s.intake;
-  if (!k || k.consent !== true) return false;
+  if (!k || k.researchConsent !== true) return false;
   return Boolean(
     k.age || k.sex || k.country || k.nativeLanguage || k.education ||
     k.occupation || k.employmentStatus || k.relationshipStatus,

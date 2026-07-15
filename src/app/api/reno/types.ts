@@ -10,7 +10,8 @@ export interface RenoSession {
    *  Assigned once, on completion, only to consenting subjects who gave demographics. */
   participantId?: string;
   intake?: {
-    consent: boolean;
+    consent: boolean;           // mandatory: process results (deliver to specialist)
+    researchConsent?: boolean;  // optional: use anonymized demographics for research
     age?: number;
     sex?: string;
     country?: string;
