@@ -6,6 +6,9 @@ export interface RenoSession {
   status: 'started' | 'intake_done' | 'in_progress' | 'completed';
   device?: 'mobile' | 'desktop' | 'unknown';
   isRetake?: boolean;
+  /** Sequential research participant ID, e.g. "P-00001" (portal) / "E-00001" (external).
+   *  Assigned once, on completion, only to consenting subjects who gave demographics. */
+  participantId?: string;
   intake?: {
     consent: boolean;
     age?: number;

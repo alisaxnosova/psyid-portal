@@ -42,6 +42,18 @@ export async function kvSet(key: string, value: unknown, ttlSeconds?: number): P
   }
 }
 
+// Atomic increment — used for gapless sequential participant IDs. Returns 0 when
+// Redis is unavailable so callers can detect failure and skip assignment.
+export async function kvIncr(key: string): Promise<number> {
+  const redis = getClient();
+  if (!redis) return 0;
+  try {
+    return await redis.incr(key);
+  } catch {
+    return 0;
+  }
+}
+
 export async function kvDel(key: string): Promise<void> {
   const redis = getClient();
   if (!redis) return;

@@ -1,9 +1,21 @@
 import { NextResponse } from 'next/server';
-import { kvConfigured, kvGet, kvSet } from '@/lib/upstash';
+import { kvConfigured, kvGet, kvSet, kvIncr } from '@/lib/upstash';
 import type { RenoSession } from '@/app/api/reno/types';
 import type { AccessCode } from '@/app/api/codes/route';
 
 const CODES_KEY = 'psyid:codes';
+
+// A research participant ID is only assigned to valid subjects: those who consented
+// to research use AND actually provided demographic data (i.e. did not skip intake).
+// Non-consenting or demographics-skipping takers still get their result — just no number.
+function isResearchSubject(s: RenoSession): boolean {
+  const k = s.intake;
+  if (!k || k.consent !== true) return false;
+  return Boolean(
+    k.age || k.sex || k.country || k.nativeLanguage || k.education ||
+    k.occupation || k.employmentStatus || k.relationshipStatus,
+  );
+}
 
 export async function POST(
   _req: Request,
@@ -22,8 +34,22 @@ export async function POST(
   const idx = codes.findIndex(c => c.id === session.codeId);
   if (idx !== -1) codes[idx] = { ...codes[idx], status: 'USED', used_at: completedAt };
 
+  // Assign a gapless sequential participant ID, once, to valid research subjects.
+  // Portal users draw from the 'P' sequence; external/Etsy takers from 'E'.
+  let participantId = session.participantId;
+  if (!participantId && isResearchSubject(session)) {
+    const prefix = session.userType === 'portal' ? 'P' : 'E';
+    const n = await kvIncr(`psyid:participant-seq:${prefix}`);
+    if (n > 0) participantId = `${prefix}-${String(n).padStart(5, '0')}`;
+  }
+
   await Promise.all([
-    kvSet(`psyid:reno-session:${sessionId}`, { ...session, status: 'completed', completedAt }),
+    kvSet(`psyid:reno-session:${sessionId}`, {
+      ...session,
+      status: 'completed',
+      completedAt,
+      ...(participantId ? { participantId } : {}),
+    }),
     kvSet(CODES_KEY, codes),
   ]);
 
