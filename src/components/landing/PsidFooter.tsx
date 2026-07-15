@@ -8,7 +8,7 @@ export function PsidFooter() {
         <div className="fg">
           <div>
             <Link href="/" aria-label="PsyID home"><PsidLogo /></Link>
-            <p className="fdesc">A personality passport for adults. Five axes, grounded in the ReNo v1.1 methodology.</p>
+            <p className="fdesc">A personality passport for adults. Five axes, grounded in the ReNo v1.2 methodology.</p>
           </div>
           <div className="fcol">
             <h4>Explore</h4>

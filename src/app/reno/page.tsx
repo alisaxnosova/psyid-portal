@@ -5,8 +5,8 @@ import { AXES } from '@/data/reno-axes';
 import type { RenoQuestion } from '@/data/reno-axes';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ReNo v1.1 — live assessment. Ported from the approved preview
-   (docs/reno/preview/reno-v1.1-preview.html): Element Vault paper aesthetic,
+   ReNo v1.2 — live assessment. Ported from the approved preview
+   (docs/reno/preview/reno-v1.2-preview.html): Element Vault paper aesthetic,
    five-axis Likert bank, EN/RU. All backend plumbing (validate → session →
    answers-with-retries → progress → intake → complete) is preserved.
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -15,9 +15,9 @@ type Lang = 'en' | 'ru';
 
 const LANG_NAMES: Record<Lang, string> = { en: 'EN', ru: 'RU' };
 
-/* ─── Scoped styles (from the preview, prefixed under .reno-v11) ─── */
+/* ─── Scoped styles (from the preview, prefixed under .reno-v12) ─── */
 const CSS = `
-.reno-v11{
+.reno-v12{
   --navy:#050C2E; --blue:#2244E0; --blue-soft:#6A85F0; --blue-tint:#DCE2FF;
   --violet:#8A5CD6; --coral:#FF5A5A; --orange:#FF7A3D;
   --ax1:#2244E0; --ax2:#6A85F0; --ax3:#8A5CD6; --ax4:#FF7A3D; --ax5:#FF5A5A;
@@ -40,77 +40,77 @@ const CSS = `
     #FBF8F3;
   background-attachment:fixed;
 }
-.reno-v11 *{box-sizing:border-box}
-.reno-v11 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-.reno-v11 input,.reno-v11 select{font-family:inherit}
-.reno-v11 .wrap{max-width:760px;margin:0 auto;padding:0 22px;width:100%}
-.reno-v11 .topbar{position:sticky;top:0;z-index:20;background:rgba(251,248,243,.72);
+.reno-v12 *{box-sizing:border-box}
+.reno-v12 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.reno-v12 input,.reno-v12 select{font-family:inherit}
+.reno-v12 .wrap{max-width:760px;margin:0 auto;padding:0 22px;width:100%}
+.reno-v12 .topbar{position:sticky;top:0;z-index:20;background:rgba(251,248,243,.72);
   backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);
   border-bottom:1px solid rgba(224,217,206,.6)}
-.reno-v11 .topbar .row{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px}
-.reno-v11 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:18px;color:var(--ink)}
-.reno-v11 .brand .mk{width:26px;height:26px;flex:none}
-.reno-v11 .brand i{font-style:normal;color:var(--orange)}
-.reno-v11 .spacer{flex:1}
-.reno-v11 .langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-full);overflow:hidden;background:#fff}
-.reno-v11 .langtoggle button{padding:6px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
-.reno-v11 .langtoggle button.on{background:var(--ink);color:#fff}
-.reno-v11 .progressbar{height:4px;background:rgba(224,217,206,.7)}
-.reno-v11 .progressbar .fill{height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-hot,#FF9540) 40%,var(--blue-soft) 72%,var(--blue) 100%);transition:width .4s cubic-bezier(.4,0,.2,1);border-radius:0 4px 4px 0;box-shadow:0 0 10px rgba(255,122,61,.35)}
-.reno-v11 .resume{background:var(--blue-tint);color:var(--navy);padding:10px 22px;font-size:13px;font-weight:600;text-align:center}
-.reno-v11 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0}
-.reno-v11 .fadewrap{transition:opacity .25s ease,transform .25s ease}
-.reno-v11 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px}
-.reno-v11 h1{font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0}
-.reno-v11 h2{font-weight:750;letter-spacing:-.03em;font-size:26px;line-height:1.12;margin:0}
-.reno-v11 .lede{color:var(--ink-soft);font-size:17px;margin-top:16px;max-width:56ch}
-.reno-v11 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px}
-.reno-v11 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:var(--r-full);background:var(--ink);color:#fff;font-weight:650;font-size:15px;letter-spacing:.01em;transition:transform .12s,opacity .12s}
-.reno-v11 .btn:hover{transform:translateY(-1px)}
-.reno-v11 .btn:active{transform:translateY(0)}
-.reno-v11 .btn.grad{background:var(--grad-coral)}
-.reno-v11 .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
-.reno-v11 .btn.full{width:100%}
-.reno-v11 .btn[disabled]{opacity:.4;pointer-events:none}
-.reno-v11 .btnrow{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
-.reno-v11 .codebox{font-family:var(--mono);font-size:28px;letter-spacing:.25em;text-align:center;padding:14px 18px;
+.reno-v12 .topbar .row{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px}
+.reno-v12 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:18px;color:var(--ink)}
+.reno-v12 .brand .mk{width:26px;height:26px;flex:none}
+.reno-v12 .brand i{font-style:normal;color:var(--orange)}
+.reno-v12 .spacer{flex:1}
+.reno-v12 .langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-full);overflow:hidden;background:#fff}
+.reno-v12 .langtoggle button{padding:6px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+.reno-v12 .langtoggle button.on{background:var(--ink);color:#fff}
+.reno-v12 .progressbar{height:4px;background:rgba(224,217,206,.7)}
+.reno-v12 .progressbar .fill{height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-hot,#FF9540) 40%,var(--blue-soft) 72%,var(--blue) 100%);transition:width .4s cubic-bezier(.4,0,.2,1);border-radius:0 4px 4px 0;box-shadow:0 0 10px rgba(255,122,61,.35)}
+.reno-v12 .resume{background:var(--blue-tint);color:var(--navy);padding:10px 22px;font-size:13px;font-weight:600;text-align:center}
+.reno-v12 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0}
+.reno-v12 .fadewrap{transition:opacity .25s ease,transform .25s ease}
+.reno-v12 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px}
+.reno-v12 h1{font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0}
+.reno-v12 h2{font-weight:750;letter-spacing:-.03em;font-size:26px;line-height:1.12;margin:0}
+.reno-v12 .lede{color:var(--ink-soft);font-size:17px;margin-top:16px;max-width:56ch}
+.reno-v12 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px}
+.reno-v12 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:var(--r-full);background:var(--ink);color:#fff;font-weight:650;font-size:15px;letter-spacing:.01em;transition:transform .12s,opacity .12s}
+.reno-v12 .btn:hover{transform:translateY(-1px)}
+.reno-v12 .btn:active{transform:translateY(0)}
+.reno-v12 .btn.grad{background:var(--grad-coral)}
+.reno-v12 .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+.reno-v12 .btn.full{width:100%}
+.reno-v12 .btn[disabled]{opacity:.4;pointer-events:none}
+.reno-v12 .btnrow{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
+.reno-v12 .codebox{font-family:var(--mono);font-size:28px;letter-spacing:.25em;text-align:center;padding:14px 18px;
   border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;color:var(--ink);width:100%;outline:none}
-.reno-v11 .codebox:focus{border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
-.reno-v11 .flabel{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em;display:block;margin-bottom:8px}
-.reno-v11 .err{color:var(--coral);font-size:14px;margin-top:12px;font-weight:600}
-.reno-v11 .footer{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-mute)}
-.reno-v11 .check{display:flex;gap:13px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper);cursor:pointer;margin-top:24px}
-.reno-v11 .check input{margin-top:2px;width:20px;height:20px;accent-color:var(--orange);flex:none;cursor:pointer}
-.reno-v11 .check span{font-size:15px;color:var(--ink)}
-.reno-v11 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:26px}
-.reno-v11 .field{display:flex;flex-direction:column;gap:7px}
-.reno-v11 .field.full{grid-column:1/-1}
-.reno-v11 .field label{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em}
-.reno-v11 .field input,.reno-v11 .field select{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:15px;color:var(--ink);width:100%}
-.reno-v11 .field input:focus,.reno-v11 .field select:focus{outline:none;border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
-.reno-v11 .note{color:var(--ink-mute);font-size:13.5px;margin-top:14px}
-.reno-v11 .qcount{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--ink-mute);text-transform:uppercase}
-.reno-v11 .qaxis{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
-.reno-v11 .qaxis .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
-.reno-v11 .qtext{font-weight:700;letter-spacing:-.025em;font-size:clamp(22px,3.6vw,30px);line-height:1.2;margin:14px 0 34px}
-.reno-v11 .likert{display:flex;flex-direction:column;gap:10px}
-.reno-v11 .lk{display:flex;align-items:center;gap:16px;width:100%;padding:16px 20px;border:1.5px solid var(--line);border-radius:var(--r-md);background:#fff;text-align:left;transition:border-color .12s,background .12s,transform .1s}
-.reno-v11 .lk:hover{border-color:var(--blue-soft);transform:translateX(2px)}
-.reno-v11 .lk.sel{border-color:transparent;background:var(--ink);color:#fff}
-.reno-v11 .lk .dotnum{width:30px;height:30px;flex:none;border-radius:50%;border:2px solid var(--line-dark);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-mute)}
-.reno-v11 .lk.sel .dotnum{border-color:rgba(255,255,255,.5);color:#fff}
-.reno-v11 .lk .lktext{font-size:16px;font-weight:600}
-.reno-v11 .lk[disabled]{opacity:.55;pointer-events:none}
-.reno-v11 .testnav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
-.reno-v11 .linkbtn{font-size:14px;font-weight:600;color:var(--ink-soft)}
-.reno-v11 .linkbtn[disabled]{opacity:.3;pointer-events:none}
-.reno-v11 .offline{background:#FFF0EF;border:1px solid var(--coral);border-radius:var(--r-sm);padding:10px 16px;margin-bottom:16px;color:var(--coral);font-size:13px;font-weight:600}
-.reno-v11 .done-icon{width:72px;height:72px;border-radius:50%;background:var(--grad-coral);margin:0 auto 26px;display:grid;place-items:center}
-.reno-v11 .disc{font-size:12.5px;color:var(--ink-mute);margin-top:28px;line-height:1.6}
+.reno-v12 .codebox:focus{border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
+.reno-v12 .flabel{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em;display:block;margin-bottom:8px}
+.reno-v12 .err{color:var(--coral);font-size:14px;margin-top:12px;font-weight:600}
+.reno-v12 .footer{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-mute)}
+.reno-v12 .check{display:flex;gap:13px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper);cursor:pointer;margin-top:24px}
+.reno-v12 .check input{margin-top:2px;width:20px;height:20px;accent-color:var(--orange);flex:none;cursor:pointer}
+.reno-v12 .check span{font-size:15px;color:var(--ink)}
+.reno-v12 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:26px}
+.reno-v12 .field{display:flex;flex-direction:column;gap:7px}
+.reno-v12 .field.full{grid-column:1/-1}
+.reno-v12 .field label{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em}
+.reno-v12 .field input,.reno-v12 .field select{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:15px;color:var(--ink);width:100%}
+.reno-v12 .field input:focus,.reno-v12 .field select:focus{outline:none;border-color:var(--blue-soft);box-shadow:0 0 0 3px var(--blue-tint)}
+.reno-v12 .note{color:var(--ink-mute);font-size:13.5px;margin-top:14px}
+.reno-v12 .qcount{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--ink-mute);text-transform:uppercase}
+.reno-v12 .qaxis{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.reno-v12 .qaxis .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.reno-v12 .qtext{font-weight:700;letter-spacing:-.025em;font-size:clamp(22px,3.6vw,30px);line-height:1.2;margin:14px 0 34px}
+.reno-v12 .likert{display:flex;flex-direction:column;gap:10px}
+.reno-v12 .lk{display:flex;align-items:center;gap:16px;width:100%;padding:16px 20px;border:1.5px solid var(--line);border-radius:var(--r-md);background:#fff;text-align:left;transition:border-color .12s,background .12s,transform .1s}
+.reno-v12 .lk:hover{border-color:var(--blue-soft);transform:translateX(2px)}
+.reno-v12 .lk.sel{border-color:transparent;background:var(--ink);color:#fff}
+.reno-v12 .lk .dotnum{width:30px;height:30px;flex:none;border-radius:50%;border:2px solid var(--line-dark);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-mute)}
+.reno-v12 .lk.sel .dotnum{border-color:rgba(255,255,255,.5);color:#fff}
+.reno-v12 .lk .lktext{font-size:16px;font-weight:600}
+.reno-v12 .lk[disabled]{opacity:.55;pointer-events:none}
+.reno-v12 .testnav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.reno-v12 .linkbtn{font-size:14px;font-weight:600;color:var(--ink-soft)}
+.reno-v12 .linkbtn[disabled]{opacity:.3;pointer-events:none}
+.reno-v12 .offline{background:#FFF0EF;border:1px solid var(--coral);border-radius:var(--r-sm);padding:10px 16px;margin-bottom:16px;color:var(--coral);font-size:13px;font-weight:600}
+.reno-v12 .done-icon{width:72px;height:72px;border-radius:50%;background:var(--grad-coral);margin:0 auto 26px;display:grid;place-items:center}
+.reno-v12 .disc{font-size:12.5px;color:var(--ink-mute);margin-top:28px;line-height:1.6}
 @media(max-width:560px){
-  .reno-v11 .grid2{grid-template-columns:1fr}
-  .reno-v11 .stage{padding:36px 0}
-  .reno-v11 .card{padding:22px}
+  .reno-v12 .grid2{grid-template-columns:1fr}
+  .reno-v12 .stage{padding:36px 0}
+  .reno-v12 .card{padding:22px}
 }
 `;
 
@@ -597,7 +597,7 @@ function TestStage({ t, sessionId, lang, onProgress, onComplete }: {
   const [offline, setOffline] = useState(false);
   const shownAt = useRef<number>(Date.now());
 
-  // Fetch the live v1.1 bank, interleave deterministically.
+  // Fetch the live v1.2 bank, interleave deterministically.
   useEffect(() => {
     fetch('/api/reno/questions')
       .then(r => r.json())
@@ -814,7 +814,7 @@ export default function RenoPage() {
   }
 
   return (
-    <div className="reno-v11">
+    <div className="reno-v12">
       <style>{CSS}</style>
       <TopBar lang={lang} onLang={setLang} progress={stage === 'test' ? progress : null} />
       {resume && <div className="resume">{resume}</div>}

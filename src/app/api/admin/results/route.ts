@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { scoreSession } from '@/lib/renoScore';
-import { scoreSessionV11 } from '@/lib/renoScoreV11';
+import { scoreSessionV12 } from '@/lib/renoScoreV12';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
 
-// ReNo v1.1 sessions store Likert answers ('1'..'5'); legacy sessions store
+// ReNo v1.2 sessions store Likert answers ('1'..'5'); legacy sessions store
 // forced-choice option ids ('a'/'b'). Detect by answer shape so each session is
 // scored with the matching engine — never the old MBTI scorer on new data.
-function isV11Session(s: RenoSession): boolean {
+function isV12Session(s: RenoSession): boolean {
   return s.answers.length > 0 && s.answers.every(a => /^[1-5]$/.test(a.answerId));
 }
 
@@ -64,14 +64,14 @@ export async function GET(req: Request) {
         completedAt: s.completedAt ?? null,
       };
 
-      if (isV11Session(s)) {
-        const v11 = scoreSessionV11(s.answers);
+      if (isV12Session(s)) {
+        const v12 = scoreSessionV12(s.answers);
         return {
           ...common,
-          schema: 'v1.1' as const,
-          type: v11.type,                 // 4-letter headline, e.g. OCLD (excludes ER)
-          signature: v11.signature,       // e.g. "W2 · A4 · V3 · F4 · S2"
-          axesV11: v11.axes.map(a => ({
+          schema: 'v1.2' as const,
+          type: v12.type,                 // 4-letter headline, e.g. OCLD (excludes ER)
+          signature: v12.signature,       // e.g. "W2 · A4 · V3 · F4 · S2"
+          axesV12: v12.axes.map(a => ({
             code: a.code,
             position: Math.round(a.position),
             band: a.band,
@@ -91,7 +91,7 @@ export async function GET(req: Request) {
         schema: 'v1.0' as const,
         type: score.type,
         signature: undefined,
-        axesV11: undefined,
+        axesV12: undefined,
         nearBoundary: score.nearBoundary,
         pct: score.pct,
         scores: score.scores,

@@ -59,7 +59,7 @@ export default function QuestionsPage() {
   }, [router, load]);
 
   const reset = async () => {
-    if (!confirm('Reset the question bank to the bundled ReNo v1.1 default? This clears admin edits.')) return;
+    if (!confirm('Reset the question bank to the bundled ReNo v1.2 default? This clears admin edits.')) return;
     await fetch('/api/admin/questions', { method: 'DELETE', headers: authHeader() });
     load();
   };
@@ -102,7 +102,7 @@ export default function QuestionsPage() {
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Question bank</h1>
           <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-            {loading ? '…' : `ReNo v1.1 · ${questions.length} items · ${source === 'redis' ? 'edited' : 'bundled default'}`}
+            {loading ? '…' : `ReNo v1.2 · ${questions.length} items · ${source === 'redis' ? 'edited' : 'bundled default'}`}
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>

@@ -1,4 +1,4 @@
-// ReNo v1.1 — the five axes. Single source of truth for admin + scoring + display.
+// ReNo v1.2 — the five axes. Single source of truth for admin + scoring + display.
 // Codes/poles/colours match the Element Vault and the Interpretive Answer Key v1.2.
 
 export type Lang = 'en' | 'ru';
@@ -44,7 +44,7 @@ export const AXES: Axis[] = [
     excludeFromType: true },
 ];
 
-/** A ReNo v1.1 question: one normative Likert statement mapped to an axis + pole. */
+/** A ReNo v1.2 question: one normative Likert statement mapped to an axis + pole. */
 export interface RenoQuestion {
   id: string;
   axis: AxisCode;

@@ -1,4 +1,4 @@
-// ReNo v1.1 — Likert scoring (Phase 5 cutover). Pure, server- and client-safe.
+// ReNo v1.2 — Likert scoring (Phase 5 cutover). Pure, server- and client-safe.
 //
 // Input: raw answers { questionId, answerId } where answerId is the Likert value
 // "1".."5" (1 = strongly disagree … 5 = strongly agree). Reverse-keyed items are
@@ -16,7 +16,7 @@ import type { RenoQuestion } from '@/data/reno-axes';
 
 const QUESTIONS = questionsData as unknown as RenoQuestion[];
 
-export interface AxisScoreV11 {
+export interface AxisScoreV12 {
   code: AxisCode;
   position: number;   // 0..100 (100 = plus pole)
   intensity: number;  // 0..100 (distance from balanced, ×2)
@@ -28,14 +28,14 @@ export interface AxisScoreV11 {
   total: number;
 }
 
-export interface RenoScoreV11 {
-  axes: AxisScoreV11[];
-  byCode: Record<AxisCode, AxisScoreV11>;
+export interface RenoScoreV12 {
+  axes: AxisScoreV12[];
+  byCode: Record<AxisCode, AxisScoreV12>;
   type: string;      // 4-letter headline (excludes ER)
   signature: string; // full 5-axis signature, e.g. "W2 · A4 · V3 · F4 · S2"
 }
 
-export interface RawAnswerV11 {
+export interface RawAnswerV12 {
   questionId: string;
   answerId: string;
 }
@@ -51,7 +51,7 @@ function cellFor(code: AxisCode, position: number): AnswerKeyCell | null {
   return cells.find(c => position >= (c.posMin ?? 0)) ?? cells[cells.length - 1] ?? null;
 }
 
-function scoreAxis(axis: Axis, byId: Map<string, string>): AxisScoreV11 {
+function scoreAxis(axis: Axis, byId: Map<string, string>): AxisScoreV12 {
   const items = itemsFor(axis.code);
   let sum = 0;
   let n = 0;
@@ -82,10 +82,10 @@ function scoreAxis(axis: Axis, byId: Map<string, string>): AxisScoreV11 {
   };
 }
 
-export function scoreSessionV11(answers: RawAnswerV11[]): RenoScoreV11 {
+export function scoreSessionV12(answers: RawAnswerV12[]): RenoScoreV12 {
   const byId = new Map(answers.map(a => [a.questionId, a.answerId]));
   const axes = AXES.map(a => scoreAxis(a, byId));
-  const byCode = Object.fromEntries(axes.map(s => [s.code, s])) as Record<AxisCode, AxisScoreV11>;
+  const byCode = Object.fromEntries(axes.map(s => [s.code, s])) as Record<AxisCode, AxisScoreV12>;
 
   const type = AXES.filter(a => !a.excludeFromType)
     .map(a => {

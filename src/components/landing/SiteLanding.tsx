@@ -95,7 +95,7 @@ const STEPS = [
 
 const FAQS = [
   ['Is this just a personality quiz?', 'No. The quizzes online hand you a label and a horoscope. PsyID gives you a document where every line ties back to what you actually chose — and carries a confidence score, so you know how sure we are.'],
-  ['What are the five axes?', 'Energy, Information, Decision, Structure and Emotional Response. The first four are the classic MBTI dimensions; the fifth — how you meet pressure — is new in ReNo v1.1, and it keeps the other four cleaner.'],
+  ['What are the five axes?', 'Energy, Information, Decision, Structure and Emotional Response. The first four build on Jung’s typology of psychological types; the fifth — how you meet pressure — is new in ReNo v1.2, and it keeps the other four cleaner.'],
   ['Will it box me in?', 'Your passport is a starting line, not a sentence. It reports each axis as a band, 0–5, and shows its confidence — nothing gets flattened into a single label. People change, and it says so.'],
   ['How long does it take?', 'About 20 minutes, on any screen. Your passport arrives digitally within a day; the printed copy ships within five.'],
   ['Who sees my results?', 'You do. Results are private by default. You decide whether to share your card — nothing is published or sold, ever.'],
@@ -136,7 +136,7 @@ export default function SiteLanding() {
 
         <div className="wrap">
           <div>
-            <span className="hero-badge"><span className="badge-dot" />ReNo v1.1 · Five axes</span>
+            <span className="hero-badge"><span className="badge-dot" />ReNo v1.2 · Five axes</span>
             <h1>Know who you <span className="g">actually</span> are.</h1>
             <p className="lede">PsyID reads you across five axes and hands back a passport you keep — a clear, honest map of how you think, decide and recharge. Not a label. A language for who you already are.</p>
             <div className="cta">

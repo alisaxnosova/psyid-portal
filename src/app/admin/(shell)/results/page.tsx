@@ -29,7 +29,7 @@ interface Intake {
   relationshipStatus?: string;
 }
 
-interface AxisV11 {
+interface AxisV12 {
   code: string;      // EO | IF | DB | SP | ER
   position: number;  // 0..100 (100 = plus pole)
   band: number;      // 0..5
@@ -46,10 +46,10 @@ interface ResultRow {
   invoiceRef: string | null;
   status: string;
   device: 'mobile' | 'desktop' | 'unknown';
-  schema: 'v1.0' | 'v1.1';
+  schema: 'v1.0' | 'v1.2';
   type: string;
   signature?: string;
-  axesV11?: AxisV11[];
+  axesV12?: AxisV12[];
   nearBoundary: string[];
   pct: { E: number; I: number; S: number; N: number; F: number; T: number; J: number; P: number };
   scores: Record<string, number>;
@@ -74,7 +74,7 @@ function ParticipantBadge({ id }: { id: string | null }) {
   return <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 12, fontWeight: 800, color }}>{id}</span>;
 }
 
-function SignatureCells({ axes }: { axes: AxisV11[] }) {
+function SignatureCells({ axes }: { axes: AxisV12[] }) {
   return (
     <span style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
       {axes.map(a => {
@@ -546,7 +546,7 @@ const SECTION_LABEL: React.CSSProperties = {
   textTransform: 'uppercase', fontFamily: "'Geist Mono',monospace", marginBottom: 10,
 };
 
-function AxisPositionBar({ ax }: { ax: AxisV11 }) {
+function AxisPositionBar({ ax }: { ax: AxisV12 }) {
   const meta = AX_META[ax.code];
   const balanced = ax.signature === '—';
   const half = Math.abs(ax.position - 50);
@@ -566,14 +566,14 @@ function AxisPositionBar({ ax }: { ax: AxisV11 }) {
   );
 }
 
-function ExpandedRowV11({ r }: { r: ResultRow }) {
+function ExpandedRowV12({ r }: { r: ResultRow }) {
   return (
     <tr>
       <td colSpan={8} style={{ background: '#FAFAF9', borderBottom: `1px solid ${C.line}`, padding: '16px 20px' }}>
         <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
           <div style={{ flex: '1 1 300px', maxWidth: 440 }}>
             <div style={SECTION_LABEL}>Five axes · continuous position</div>
-            {(r.axesV11 ?? []).map(ax => <AxisPositionBar key={ax.code} ax={ax} />)}
+            {(r.axesV12 ?? []).map(ax => <AxisPositionBar key={ax.code} ax={ax} />)}
           </div>
 
           {r.intake && (
@@ -607,7 +607,7 @@ function ExpandedRowV11({ r }: { r: ResultRow }) {
 }
 
 export default function AdminResultsPage() {
-  const [version, setVersion]   = useState<'v11' | 'v10'>('v11');
+  const [version, setVersion]   = useState<'v12' | 'v10'>('v12');
   const [tab, setTab]           = useState<Tab>('results');
   const [results, setResults]   = useState<ResultRow[]>([]);
   const [loading, setLoading]   = useState(true);
@@ -659,9 +659,9 @@ export default function AdminResultsPage() {
     { key: 'research', label: 'Table C', table: 'Research Dataset'   },
   ];
 
-  const v11Rows = results.filter(r => r.schema === 'v1.1');
-  const v10Rows = results.filter(r => r.schema !== 'v1.1');
-  const v11Research = v11Rows.filter(r => r.intake);
+  const v12Rows = results.filter(r => r.schema === 'v1.2');
+  const v10Rows = results.filter(r => r.schema !== 'v1.2');
+  const v12Research = v12Rows.filter(r => r.intake);
   const researchRows = v10Rows.filter(r => r.intake);
 
   return (
@@ -683,9 +683,9 @@ export default function AdminResultsPage() {
         </button>
       </div>
 
-      {/* Version switcher — new v1.1 results vs archived v1.0 */}
+      {/* Version switcher — new v1.2 results vs archived v1.0 */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 18, flexWrap: 'wrap' }}>
-        {([['v11', 'ReNo v1.1', 'five-axis · live'], ['v10', 'v1.0 archive', 'legacy MBTI']] as const).map(([key, label, sub]) => {
+        {([['v12', 'ReNo v1.2', 'five-axis · live'], ['v10', 'v1.0 archive', 'legacy MBTI']] as const).map(([key, label, sub]) => {
           const active = version === key;
           return (
             <button key={key} onClick={() => setVersion(key)} style={{
@@ -700,7 +700,7 @@ export default function AdminResultsPage() {
         })}
       </div>
 
-      {version === 'v11' && (<>
+      {version === 'v12' && (<>
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
         {tabs.map(tb => {
@@ -727,7 +727,7 @@ export default function AdminResultsPage() {
       <div style={{ background: 'white', borderRadius: 20, border: `1px solid ${C.line}`, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
 
-          {/* ── TABLE B (v1.1): Assessment Results ── */}
+          {/* ── TABLE B (v1.2): Assessment Results ── */}
           {tab === 'results' && (
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 860 }}>
               <thead>
@@ -744,13 +744,13 @@ export default function AdminResultsPage() {
               </thead>
               <tbody>
                 {loading && (<tr><td colSpan={8} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>)}
-                {!loading && v11Rows.length === 0 && (
+                {!loading && v12Rows.length === 0 && (
                   <tr><td colSpan={8} style={{ padding: '72px 32px', textAlign: 'center' }}>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No ReNo v1.1 results yet</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No ReNo v1.2 results yet</div>
                     <div style={{ fontSize: 13, color: C.inkMute }}>New five-axis completions will appear here.</div>
                   </td></tr>
                 )}
-                {v11Rows.map(r => {
+                {v12Rows.map(r => {
                   const isOpen = expanded === r.sessionId;
                   return (
                     <>
@@ -763,7 +763,7 @@ export default function AdminResultsPage() {
                         <TD><TakerCell r={r} /></TD>
                         <TD><ParticipantBadge id={r.participantId} /></TD>
                         <TD><span style={{ display: 'inline-block', padding: '4px 10px', borderRadius: 8, background: C.ink, color: 'white', fontFamily: "'Geist Mono',monospace", fontSize: 13, fontWeight: 800, letterSpacing: '0.06em' }}>{r.type}</span></TD>
-                        <TD>{r.axesV11 ? <SignatureCells axes={r.axesV11} /> : '—'}</TD>
+                        <TD>{r.axesV12 ? <SignatureCells axes={r.axesV12} /> : '—'}</TD>
                         <TD><DeviceBadge device={r.device} /></TD>
                         <TD mono muted>{r.completedAt ? fmt(r.completedAt) : '—'}</TD>
                         <TD><span style={{ color: C.inkMute, fontSize: 16, display: 'block', textAlign: 'center', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span></TD>
@@ -777,7 +777,7 @@ export default function AdminResultsPage() {
                           </button>
                         </TD>
                       </tr>
-                      {isOpen && <ExpandedRowV11 key={`${r.sessionId}-exp`} r={r} />}
+                      {isOpen && <ExpandedRowV12 key={`${r.sessionId}-exp`} r={r} />}
                     </>
                   );
                 })}
@@ -785,7 +785,7 @@ export default function AdminResultsPage() {
             </table>
           )}
 
-          {/* ── TABLE C (v1.1): Research Dataset ── */}
+          {/* ── TABLE C (v1.2): Research Dataset ── */}
           {tab === 'research' && (
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 1160 }}>
               <thead>
@@ -799,14 +799,14 @@ export default function AdminResultsPage() {
               </thead>
               <tbody>
                 {loading && (<tr><td colSpan={16} style={{ padding: '64px 32px', textAlign: 'center', color: C.inkMute, fontSize: 13 }}>Loading…</td></tr>)}
-                {!loading && v11Research.length === 0 && (
+                {!loading && v12Research.length === 0 && (
                   <tr><td colSpan={16} style={{ padding: '72px 32px', textAlign: 'center' }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No research participants yet</div>
                     <div style={{ fontSize: 13, color: C.inkMute }}>Consenting takers who provide demographics appear here with a P-/E- number.</div>
                   </td></tr>
                 )}
-                {v11Research.map(r => {
-                  const byCode = (c: string) => r.axesV11?.find(a => a.code === c);
+                {v12Research.map(r => {
+                  const byCode = (c: string) => r.axesV12?.find(a => a.code === c);
                   return (
                     <tr key={r.sessionId}
                       onMouseEnter={e => (e.currentTarget.style.background = C.bone)}
@@ -838,8 +838,8 @@ export default function AdminResultsPage() {
 
         <div style={{ padding: '10px 20px', borderTop: `1px solid ${C.line}`, display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'Geist Mono', monospace", fontSize: 11, color: C.inkMute }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, display: 'inline-block', flexShrink: 0 }} />
-          {tab === 'results'  && `${v11Rows.length} five-axis result${v11Rows.length !== 1 ? 's' : ''} · scored live with ReNo v1.1`}
-          {tab === 'research' && `${v11Research.length} participant${v11Research.length !== 1 ? 's' : ''} with research consent + demographics`}
+          {tab === 'results'  && `${v12Rows.length} five-axis result${v12Rows.length !== 1 ? 's' : ''} · scored live with ReNo v1.2`}
+          {tab === 'research' && `${v12Research.length} participant${v12Research.length !== 1 ? 's' : ''} with research consent + demographics`}
         </div>
       </div>
       </>)}
@@ -902,7 +902,7 @@ export default function AdminResultsPage() {
                   <tr>
                     <td colSpan={11} style={{ padding: '72px 32px', textAlign: 'center' }}>
                       <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 8 }}>No legacy (v1.0) results</div>
-                      <div style={{ fontSize: 13, color: C.inkMute }}>Old MBTI-format results live here. New five-axis results are under ReNo v1.1.</div>
+                      <div style={{ fontSize: 13, color: C.inkMute }}>Old MBTI-format results live here. New five-axis results are under ReNo v1.2.</div>
                     </td>
                   </tr>
                 )}

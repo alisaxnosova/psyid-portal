@@ -13,7 +13,7 @@ const AXES = [
   ['C', 'Information Focus', 'What you trust as real — the concrete and present, or the pattern and possibility behind it.', '#6A85F0'],
   ['L', 'Decision Basis', 'How you weigh a call — through impersonal logic, or through values and human impact.', '#8A5CD6'],
   ['D', 'Structure Preference', 'How you meet the day — with a settled plan, or by keeping your options open.', '#FF7A3D'],
-  ['S', 'Emotional Response', 'How you meet pressure — steady and even, or reactive and intense. New in ReNo v1.1.', '#FF5A5A'],
+  ['S', 'Emotional Response', 'How you meet pressure — steady and even, or reactive and intense. New in ReNo v1.2.', '#FF5A5A'],
 ];
 
 const BANDS = [

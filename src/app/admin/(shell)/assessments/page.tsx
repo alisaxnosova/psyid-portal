@@ -36,7 +36,7 @@ export default function AssessmentsPage() {
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', margin: 0 }}>Cognitive profiles</h1>
           <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
-            ReNo v1.1 · drag each axis to read the interpretive key
+            ReNo v1.2 · drag each axis to read the interpretive key
           </p>
         </div>
         <div style={{ display: 'flex', gap: 4 }}>

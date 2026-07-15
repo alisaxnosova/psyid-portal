@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { kvGet } from '@/lib/upstash';
-// ReNo v1.1 (Phase 5): the live test serves the 5-axis Likert bank. Admin manages it
+// ReNo v1.2 (Phase 5): the live test serves the 5-axis Likert bank. Admin manages it
 // under `psyid:questions:v2`; the bundled JSON is the fallback / default.
 import questionsJson from '@/app/reno/data/questions.json';
 

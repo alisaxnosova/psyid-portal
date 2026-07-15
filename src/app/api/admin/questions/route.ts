@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { kvGet, kvSet, kvDel } from '@/lib/upstash';
-// New ReNo v1.1 5-axis Likert bank. Managed under its own Redis key so it stays
+// New ReNo v1.2 5-axis Likert bank. Managed under its own Redis key so it stays
 // independent of the live 4-axis test (`psyid:questions`) until Phase 5 flips it.
 import questionsJson from '@/app/reno/data/questions.json';
 
@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
-// Reset to the bundled v1.1 bank (clears admin edits).
+// Reset to the bundled v1.2 bank (clears admin edits).
 export async function DELETE(req: NextRequest) {
   if (!verifyAdmin(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
