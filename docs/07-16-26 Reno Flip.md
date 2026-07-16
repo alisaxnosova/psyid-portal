@@ -79,7 +79,8 @@ Vault progress gradient, brighter aura background.
 | Doc | Status |
 |---|---|
 | `2026-07-16-reno-glossary-ru-filled` | ✅ **APPROVED** — applied to code |
-| `2026-07-16-reno-ru-style-guide` | ❌ **Tone REJECTED** ("babies the user"). Grammar rules (Вы+plural) unaffected |
+| `2026-07-16-reno-style-guide-v2` | ✅ **APPROVED** — tone rewritten around Black Holes. **This is the one to use** |
+| `2026-07-16-reno-ru-style-guide` (v1) | ❌ Superseded — tone rejected as babying the user |
 | `2026-07-15-reno-report-content-library` | 375 keys, 4 layers. Titles + level words prefilled |
 | `2026-07-15-reno-descriptors-all-axes` | 55 level words + 32 five-axis combos |
 | `2026-07-15-reno-type-descriptors` | 16 four-axis combos (superseded by the above) |
@@ -113,11 +114,20 @@ EN+RU)**: ~10 fields per axis cell (55 × 10 = 550) + the **entire missing Level
 SDT motivation, career). Plan: author **per-axis batches** (~220 strings each) so batch 1 can be
 reviewed before the rest.
 
-### 5. Style guide tone needs a rewrite
-Rejected as too soft. New direction: **Black Holes** — frank, named failure modes for adults; kinder
-language for Youth only. Spec written (`docs/2026-07-16-black-holes-shadow-traps.md`), **not yet in
-the methodology**. ⚠️ **§13 must be EDITED, not just extended** — it currently says the shadow is
-"never a deficit", which contradicts adult black holes.
+### 5. Black Holes are NOT yet in the methodology (style guide itself is approved)
+**Style guide v2 is APPROVED** — authoring can proceed against it. But the underlying concept is
+still only a spec (`docs/2026-07-16-black-holes-shadow-traps.md` / Drive: *"2026-07-16 Black Holes —
+spec for ReNo Methodology v1.3"*).
+
+⚠️ **§13 must be EDITED, not just extended** — it currently says the shadow is "never a deficit",
+which directly contradicts adult black holes. Left unedited, the whitepaper contradicts itself.
+
+**Four open calls before authoring ~2,000 strings** (parked at the bottom of the style guide):
+- **Metaphor** — "black hole" implies *inescapable*; these are traps you can learn to see. Also needs
+  an approved **RU term**.
+- **Cap per profile** — one per over-extended axis could yield four. Recommend 2–3, else it is a pile-on.
+- **Tier** — Basic or Full only? Likely the most valuable page in the report.
+- **Placement** — straight after strengths reads as a rug-pull; a dedicated later section reads as honest.
 
 ### 6. Russian register is inconsistent (root cause of "bad translation")
 Three incompatible registers ship at once:
