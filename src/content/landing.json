@@ -29,7 +29,7 @@
   "grow2_t":         { "ru": "Линзы", "en": "Lenses" },
   "grow2_d":         { "ru": "Включи линзу — и увидишь, как твоя вселенная сдвигается: дома, на работе, под нагрузкой. Та же личность — в разных сферах жизни.", "en": "Turn a lens and watch your universe shift — at home, at work, under load. The same personality across different parts of life." },
   "grow3_t":         { "ru": "Свет во времени", "en": "Light over time" },
-  "grow3_d":         { "ru": "Раз в год — новый слой света. Видно, что изменилось, а что осталось ядром. Люди меняются — теперь это заметно.", "en": "Once a year, a new layer of light. You see what changed and what stayed the core. People change — now it shows." },
+  "grow3_d":         { "ru": "Раз в полгода — новый слой света. Видно, что изменилось, а что осталось ядром. Люди меняются — теперь это заметно.", "en": "Every six months, a new layer of light. You see what changed and what stayed the core. People change — now it shows." },
 
   "rigor_1":         { "ru": "Нормативная методика Ликерта", "en": "A normed Likert method" },
   "rigor_2":         { "ru": "94 пункта", "en": "94 items" },
@@ -44,7 +44,7 @@
   "testi1_by":       { "ru": "по коду W2·A4·V3·F4·S2", "en": "code W2·A4·V3·F4·S2" },
   "testi2_q":        { "ru": "Не ярлык, а место. Впервые тест не сузил меня, а показал масштаб.", "en": "Not a label — a place. For once a test didn't shrink me, it showed the scale." },
   "testi2_by":       { "ru": "по коду O3·C4·L3·D4·R2", "en": "code O3·C4·L3·D4·R2" },
-  "testi3_q":        { "ru": "Через год вернулся — и увидел, что именно во мне сдвинулось.", "en": "I came back a year later and saw exactly what had shifted in me." },
+  "testi3_q":        { "ru": "Через полгода вернулся — и увидел, что именно во мне сдвинулось.", "en": "I came back six months later and saw exactly what had shifted in me." },
   "testi3_by":       { "ru": "по коду W3·A3·V4·F2·S3", "en": "code W3·A3·V4·F2·S3" },
 
   "price_eyebrow":   { "ru": "Цены", "en": "Pricing" },
@@ -69,12 +69,12 @@
   "tier2_f4":        { "ru": "Журнал изменений и планировщик", "en": "Changelog and planner" },
   "tier2_cta":       { "ru": "Начать", "en": "Begin" },
 
-  "tier3_name":      { "ru": "Годовой ритуал", "en": "Annual ritual" },
+  "tier3_name":      { "ru": "Ритуал роста", "en": "Growth ritual" },
   "tier3_price":     { "ru": "$49", "en": "$49" },
   "tier3_period":    { "ru": "в год", "en": "per year" },
   "tier3_f1":        { "ru": "Всё из «Вселенной+»", "en": "Everything in Universe+" },
-  "tier3_f2":        { "ru": "Ежегодный ретест — новый слой света", "en": "A yearly retest — a new layer of light" },
-  "tier3_f3":        { "ru": "Отчёт «Что изменилось» за год", "en": "A \"what changed\" report each year" },
+  "tier3_f2":        { "ru": "Ретест каждые полгода — новый слой света", "en": "A retest every 6 months — a new layer of light" },
+  "tier3_f3":        { "ru": "Отчёт «Что изменилось» после каждого ретеста", "en": "A \"what changed\" report after each retest" },
   "tier3_cta":       { "ru": "Начать", "en": "Begin" },
 
   "final_eyebrow":   { "ru": "Осталось её построить", "en": "All that's left is to build it" },
