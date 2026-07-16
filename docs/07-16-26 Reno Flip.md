@@ -2,8 +2,18 @@
 
 Session handoff. Everything below is **live on psyid.me** unless marked otherwise.
 
+**Repo:** `github.com/alisaxnosova/psyid-portal` · local `~/Projects/psyid-portal`
 **Deploy pipeline:** `npm run build` → `git push alisa master` → `vercel deploy --prod --yes`
 (master auto-deploys; explicit deploy used throughout). Authorized to ship without asking.
+
+## ⚡ Start here (new session)
+
+1. **Read the two APPROVED language docs before writing any content** — Drive:
+   `2026-07-16-reno-glossary-ru-filled` + `2026-07-16-reno-style-guide-v2`. Use them; don't invent
+   terms or tone. (Also saved to memory as `reno-language-standards`.)
+2. **Top open item: the reporting cutover (#1)** — portal retakes were enabled this session but the
+   passport still runs the legacy scorer, so retakers see a rough passport.
+3. **Don't re-litigate the decisions at the bottom** of this doc.
 
 ---
 
@@ -135,9 +145,11 @@ Three incompatible registers ship at once:
 - `answer-key.json` — 3rd person, gender-neutral
 - `descriptions.json` — **68 strings in 3rd-person MASCULINE (`его`)** — the report describes a *man*
 
-Proposed fix (unapproved): address the reader as **Вы** → agreement becomes **plural** → **plural
-doesn't mark gender** → `пришёл(а)`→`пришли`, `Вы решительный`→`Вы решительны`. Fixes gender by
-construction rather than word-by-word.
+**Fix is APPROVED** (style guide v2), but **not yet applied** — the 68 masculine strings are still
+shipping. The rule: address the reader as **Вы** → agreement becomes **plural** → **plural doesn't
+mark gender** → `пришёл(а)`→`пришли`, `Вы решительный`→`Вы решительны`. Fixes gender by
+construction rather than word-by-word. These 68 strings die with the reporting cutover (#1) if
+`descriptions.json` is retired — sequence the two together rather than rewriting them twice.
 
 ### 7. Blocked on assets from Alisa
 - **New client portal HTML** (she was going to send it)
