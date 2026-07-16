@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { adminLogout } from '@/lib/adminApi';
 import { useAdminLang, TKey, AdminLang } from '@/lib/adminLang';
+import { Mark } from '@/components/shared/Mark';
 
 const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean; newTab?: boolean }[] = [
   { href: '/admin',                      key: 'nav_dashboard',    icon: 'dashboard', exact: true, built: true  },
@@ -142,17 +143,7 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
         {/* Brand */}
         <div style={{ padding: '24px 20px 20px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <svg viewBox="0 0 100 100" width="30" height="30" style={{ flexShrink: 0 }}>
-              <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(210,218,255,0.22)" strokeWidth="1.5"/>
-              <circle cx="50" cy="16" r="7" fill="#2244E0"/>
-              <circle cx="84" cy="40" r="7" fill="#6A85F0"/>
-              <circle cx="71" cy="79" r="7" fill="#8A5CD6"/>
-              <circle cx="29" cy="79" r="7" fill="#FF7A3D"/>
-              <circle cx="16" cy="40" r="7" fill="#FF5A5A"/>
-            </svg>
-            <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.03em', color: '#fff' }}>
-              Psy<span style={{ color: '#FF7A3D' }}>ID</span>
-            </span>
+            <Mark tone="dark" size={30} />
           </Link>
           <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
             Admin Panel

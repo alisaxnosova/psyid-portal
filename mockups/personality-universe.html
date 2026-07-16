@@ -84,7 +84,7 @@ canvas{ display:block; position:relative; }
 .stage.dimmed .caption, .stage.dimmed .legend{ opacity:.12; }
 
 /* detail card */
-.detail-scrim{ position:absolute; inset:0; z-index:20; background:rgba(4,6,16,.001); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); opacity:0; transition:opacity .35s; pointer-events:none; }
+.detail-scrim{ position:absolute; inset:0; z-index:20; background:transparent; opacity:0; transition:opacity .35s; pointer-events:none; }
 .detail-scrim.show{ opacity:1; pointer-events:auto; }
 .detail-card{ position:absolute; z-index:21; right:max(26px,4vw); top:50%; width:min(392px,92vw); max-height:84vh; overflow-y:auto;
   border-radius:22px; padding:28px 28px 24px; background:var(--panel); border:1px solid var(--brd);
@@ -229,10 +229,6 @@ var AXES=[
 ];
 var HUES=AXES.map(function(a){return a.hue;});
 var MODULES=[
-  {key:"riasec", name:"Интересы", sub:"RIASEC", axis:1, done:true, mins:5, top:["Артистический","Исследоват.","Социальный"],
-    desc:"Твои интересы тяготеют к творческому и исследовательскому полю: создавать, изучать, помогать людям расти."},
-  {key:"values", name:"Ценности", sub:"в работе", axis:2, done:true, mins:5, top:["Автономия","Смысл","Мастерство"],
-    desc:"Важнее всего — свобода выбирать как работать, ощущение смысла и рост в мастерстве. Деньги и статус вторичны."},
   {key:"burnout", name:"Энергия", sub:"и выгорание", axis:4, done:false, mins:5,
     desc:"Как ты тратишь и восстанавливаешь силы, где твои ранние сигналы выгорания и что по-настоящему перезаряжает."},
   {key:"team", name:"Стиль", sub:"в команде", axis:3, done:false, mins:7,
@@ -312,7 +308,7 @@ function project(p){ var cY=Math.cos(s.rotY), sY=Math.sin(s.rotY);
 
 /* ── navigation state ─────────────────────────────────────────────── */
 var stack=[{level:0}], nodes=universeNodes(), nextNodes=null, trans=-1;
-var focusNode=null, AMB="#6A85F0";
+var focusNode=null, AMB="#6A85F0", transAnchor=null, transDir=1;
 var pulses={};   // pk -> pulse value (light-up after unlock)
 function cur(){ return stack[stack.length-1]; }
 function build(fr){ return fr.level===0?universeNodes(): fr.level===1?systemNodes(fr.axis): facetNodes(fr.axis,fr.facet); }
@@ -378,9 +374,9 @@ function ambient(){ var cx=W/2,cy=H*0.46,R=Math.min(W,H)*0.55; ctx.globalComposi
   var g=ctx.createRadialGradient(cx,cy,0,cx,cy,R); g.addColorStop(0,hexA(AMB,0.10)); g.addColorStop(0.5,hexA(AMB,0.03)); g.addColorStop(1,"rgba(0,0,0,0)");
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H); ctx.globalCompositeOperation="source-over"; }
 
-function renderSet(ns,gA,zb,interactive){
-  var cx=W/2, cy=H*0.46;
-  function T(pr){ return {sx:cx+(pr.sx-cx)*zb, sy:cy+(pr.sy-cy)*zb, z:pr.z, scale:pr.scale*zb}; }
+function renderSet(ns,gA,zb,interactive,anchor){
+  var cx=W/2, cy=H*0.46, ax=anchor?anchor.sx:cx, ay=anchor?anchor.sy:cy;
+  function T(pr){ return {sx:ax+(pr.sx-ax)*zb, sy:ay+(pr.sy-ay)*zb, z:pr.z, scale:pr.scale*zb}; }
   var P={}; ns.forEach(function(n){ P[n.id]=T(project(n)); });
   if(interactive) s.projected=[];
   // edges
@@ -398,10 +394,10 @@ function renderSet(ns,gA,zb,interactive){
   var order=ns.map(function(n){return {n:n,pr:P[n.id]};}).sort(function(u,v){return u.pr.z-v.pr.z;});
   order.forEach(function(o){ var n=o.n,pr=o.pr, depth=(pr.z+300)/600, r=n.r*pr.scale*(0.72+depth*0.5);
     if(!isFinite(pr.sx)||!isFinite(pr.sy)||!isFinite(r)||r<=0) return; // safety: never let a stray value blank the galaxy
-    var a=gA*(0.5+depth*0.5); if(focusNode) a*=(n===focusNode?1:0.16);
+    var a=gA*(0.5+depth*0.5); if(focusNode) a*=(n===focusNode?1:0.72);
     var pulse=(n.pk&&pulses[n.pk])||0;
     if(n.type==="dust"){ ctx.globalAlpha=(0.12+depth*0.4)*gA*(focusNode?0.4:1); ctx.fillStyle=n.color; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,Math.max(0.5,r),0,TAU); ctx.fill(); ctx.globalAlpha=1; return; }
-    if(n.type==="hole"){ ctx.globalAlpha=Math.min(1,gA*(focusNode&&n!==focusNode?0.4:1)); drawHole(pr.sx,pr.sy,r,s.t); ctx.globalAlpha=1;
+    if(n.type==="hole"){ ctx.globalAlpha=Math.min(1,gA*(focusNode&&n!==focusNode?0.85:1)); drawHole(pr.sx,pr.sy,r,s.t); ctx.globalAlpha=1;
       if(gA>0.6 && (!focusNode||n===focusNode)) label(pr.sx,pr.sy+r*2+4,"тень",hexA("#FF9166",gA),9);
       if(interactive) s.projected.push({node:n,pr:pr,r:r}); return; }
     var isCore=n.type==="core"||n.type==="axis"||(n.type==="facet"&&n.hub);
@@ -425,7 +421,7 @@ function renderSet(ns,gA,zb,interactive){
     if(n.type==="core"&&n.shadow&&!focusNode){ ctx.globalAlpha=gA; ctx.strokeStyle=hexA("#FF7A3D",0.6); ctx.setLineDash([2,3]); ctx.lineWidth=1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,r+7,0,TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
     var hov=interactive && s.hoverId===n;
     if(hov||n===focusNode){ ctx.globalAlpha=1; ctx.strokeStyle=hexA(isMoon?"#cdd8ff":n.color,0.9); ctx.lineWidth=1.6; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,r+6,0,TAU); ctx.stroke(); ctx.globalAlpha=1; }
-    if(gA>0.4 && (!focusNode||n===focusNode)){
+    if(gA>0.4){
       if(isCore){ label(pr.sx,pr.sy+r+6,n.label,hexA("#EAEEFF",0.92*gA),12,700); if(n.sub) label(pr.sx,pr.sy+r+20,n.sub,hexA("#c7d0ee",0.55*gA),9,500); }
       else if(isMod){ label(pr.sx,pr.sy+r+5,n.label,hexA(n.locked?"#c7d0ee":"#dfe6ff",(n.locked?0.5:0.75)*gA),9.5,600); }
       else if(isFacet){ label(pr.sx,pr.sy+r+5,n.label,hexA("#dfe6ff",(n.measured?0.82:0.5)*gA),10.5,600); }
@@ -435,21 +431,24 @@ function renderSet(ns,gA,zb,interactive){
   });
 }
 
+function ease(t){ return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
 function frame(){ requestAnimationFrame(frame); s.t++;
   ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
-  // motion
-  if(s.autoRot&&!s.dragging) s.rotY+=s.velY; else if(!s.dragging){ s.rotY+=s.velY; s.rotX+=s.velX; s.velY*=0.94; s.velX*=0.94; }
-  s.rotX=Math.max(-1.15,Math.min(1.15,s.rotX));
-  // hover
-  if(s.pointer.inside&&!s.dragging){ s.hoverId=hit(s.pointer.x,s.pointer.y); wrap.style.cursor=s.hoverId?"pointer":"grab"; }
-  // pulses decay
+  var animating=trans>=0;
+  if(!animating){ // camera only moves when idle → the dive stays stable, nothing jumps
+    if(s.autoRot&&!s.dragging) s.rotY+=s.velY; else if(!s.dragging){ s.rotY+=s.velY; s.rotX+=s.velX; s.velY*=0.94; s.velX*=0.94; }
+    s.rotX=Math.max(-1.15,Math.min(1.15,s.rotX));
+    if(s.pointer.inside&&!s.dragging){ s.hoverId=hit(s.pointer.x,s.pointer.y); wrap.style.cursor=s.hoverId?"pointer":"grab"; }
+  }
   for(var k in pulses){ pulses[k]*=0.94; if(pulses[k]<0.02) delete pulses[k]; }
   ambient();
-  if(trans>=0){ trans+=0.035;
-    if(trans<0.5) renderSet(nodes,(1-trans*2),1+trans*0.7,false);
-    else { if(nextNodes){ nodes=nextNodes; nextNodes=null; } renderSet(nodes,(trans-0.5)*2,1.5-(trans-0.5),false); }
-    if(trans>=1) trans=-1;
-  } else renderSet(nodes,1,1,true);
+  if(animating){ trans+=0.028; var e=ease(Math.min(1,trans)), oz, nz;
+    if(transDir>=0){ oz=1+e*1.7; nz=1.18-e*0.18; }   // descend: dive into the tapped star, new eases open from it
+    else { oz=1-e*0.34; nz=0.84+e*0.16; }             // ascend: pull back out
+    renderSet(nodes, 1-e, oz, false, transDir>=0?transAnchor:null);              // old dissolves as it flies into the anchor
+    if(nextNodes) renderSet(nextNodes, e, nz, false, transDir>=0?null:transAnchor); // new fades up simultaneously — no black frame
+    if(trans>=1){ if(nextNodes){ nodes=nextNodes; nextNodes=null; } trans=-1; }
+  } else renderSet(nodes,1,1,true,null);
 }
 
 /* ── interaction ──────────────────────────────────────────────────── */
@@ -468,9 +467,9 @@ document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ if(focusN
 function onPick(node){ if(!node){ closeCard(); return; } openCard(node); }
 
 /* ── drill ────────────────────────────────────────────────────────── */
-function resetCam(){ s.rotX=-0.16; s.rotY=0.5; s.zoom=1; }
-function pushFrame(fr){ closeCard(); nextNodes=build(fr); stack.push(fr); trans=0; resetCam(); updateChrome(); }
-function goTo(idx){ closeCard(); stack=stack.slice(0,idx+1); nextNodes=build(cur()); trans=0; resetCam(); updateChrome(); }
+function screenOf(n){ var p=project(n); return {sx:p.sx, sy:p.sy}; }
+function pushFrame(fr, anchorNode){ closeCard(); transAnchor=anchorNode?screenOf(anchorNode):null; transDir=1; nextNodes=build(fr); stack.push(fr); trans=0; updateChrome(); }
+function goTo(idx){ closeCard(); transAnchor=null; transDir=-1; stack=stack.slice(0,idx+1); nextNodes=build(cur()); trans=0; updateChrome(); }
 function updateChrome(){ var fr=cur();
   // breadcrumb
   if(fr.level===0){ bread.style.opacity=0; bread.innerHTML=""; }

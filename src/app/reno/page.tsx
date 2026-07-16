@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { AXES } from '@/data/reno-axes';
 import type { RenoQuestion } from '@/data/reno-axes';
+import { Mark } from '@/components/shared/Mark';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ReNo v1.2 — live assessment. Ported from the approved preview
@@ -311,26 +312,13 @@ function interleave(qs: RenoQuestion[]): RenoQuestion[] {
 type Stage = 'code' | 'disclaimer' | 'consent' | 'research' | 'intake' | 'test' | 'complete';
 type Copy = (typeof T)[Lang];
 
-/* ─── Constellation brand mark (official logo geometry) ─── */
-function BrandMark() {
-  const pts: [number, number][] = [[50, 16], [84, 40], [71, 79], [29, 79], [16, 40]];
-  const poly = pts.map(p => p.join(',')).join(' ');
-  return (
-    <svg viewBox="0 0 100 100" className="mk" aria-hidden="true" style={{ overflow: 'visible' }}>
-      <polygon points={poly} fill="none" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1.5" />
-      {pts.map((p, k) => (
-        <circle key={k} cx={p[0]} cy={p[1]} r="7" fill={`var(--ax${k + 1})`} />
-      ))}
-    </svg>
-  );
-}
 
 /* ─── Top bar ─── */
 function TopBar({ lang, onLang, progress }: { lang: Lang; onLang: (l: Lang) => void; progress: number | null }) {
   return (
     <div className="topbar">
       <div className="row">
-        <span className="brand"><BrandMark />Psy<i>ID</i></span>
+        <span className="brand"><Mark tone="light" size={30} /></span>
         <span className="spacer" />
         <span className="langtoggle">
           {(['en', 'ru'] as Lang[]).map(l => (
