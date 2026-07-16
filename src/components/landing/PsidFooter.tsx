@@ -35,6 +35,13 @@ export function PsidFooter() {
               { href: 'mailto:hello@psyid.me', label: t('foot_link_email') },
               { href: '/admin/login', label: t('foot_admin') },
             ]} />
+            <div style={{ minWidth: 120 }}>
+              <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--space-fg-m)', margin: '0 0 14px' }}>{t('foot_col_youth')}</h4>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--space-fg-s)' }}>
+                {t('foot_youth_line')}
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--space-fg-m)', border: '1px solid var(--space-brd)', borderRadius: 999, padding: '2px 7px' }}>{t('foot_soon')}</span>
+              </span>
+            </div>
           </div>
         </div>
 
