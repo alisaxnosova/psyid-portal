@@ -311,19 +311,15 @@ function interleave(qs: RenoQuestion[]): RenoQuestion[] {
 type Stage = 'code' | 'disclaimer' | 'consent' | 'research' | 'intake' | 'test' | 'complete';
 type Copy = (typeof T)[Lang];
 
-/* ─── Constellation brand mark ─── */
+/* ─── Constellation brand mark (official logo geometry) ─── */
 function BrandMark() {
-  const pts: [number, number][] = [];
-  for (let k = 0; k < 5; k++) {
-    const ang = (-90 + k * 72) * Math.PI / 180;
-    pts.push([50 + 40 * Math.cos(ang), 50 + 40 * Math.sin(ang)]);
-  }
+  const pts: [number, number][] = [[50, 16], [84, 40], [71, 79], [29, 79], [16, 40]];
   const poly = pts.map(p => p.join(',')).join(' ');
   return (
-    <svg viewBox="0 0 100 100" className="mk" aria-hidden="true">
-      <polygon points={poly} fill="none" stroke="currentColor" strokeOpacity="0.28" strokeWidth="2" />
+    <svg viewBox="0 0 100 100" className="mk" aria-hidden="true" style={{ overflow: 'visible' }}>
+      <polygon points={poly} fill="none" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1.5" />
       {pts.map((p, k) => (
-        <circle key={k} cx={p[0].toFixed(1)} cy={p[1].toFixed(1)} r="7" fill={`var(--ax${k + 1})`} />
+        <circle key={k} cx={p[0]} cy={p[1]} r="7" fill={`var(--ax${k + 1})`} />
       ))}
     </svg>
   );

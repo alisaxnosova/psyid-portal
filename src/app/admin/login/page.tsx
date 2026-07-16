@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { adminAuth, saveAdminToken } from '@/lib/adminApi';
-import { PsidLogo } from '@/components/landing/PsidLogo';
+import { Mark } from '@/components/shared/Mark';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
   return (
     <div className="psid-site">
       <div className="auth-wrap grad-ground">
-        <Link href="/" className="auth-logo" aria-label="PsyID home"><PsidLogo white /></Link>
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" /></Link>
         <div className="auth-card">
           <div className="auth-head">
             <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · Admin panel</div>

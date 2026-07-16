@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { saveTokens } from '@/lib/renoApi';
-import { PsidLogo } from '@/components/landing/PsidLogo';
+import { Mark } from '@/components/shared/Mark';
 
 function PageWrap({ children }: { children: React.ReactNode }) {
   return (
     <div className="psid-site">
       <div className="auth-wrap grad-ground">
-        <Link href="/" className="auth-logo" aria-label="PsyID home"><PsidLogo white /></Link>
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" /></Link>
         <div className="auth-card">{children}</div>
       </div>
     </div>
@@ -50,9 +50,9 @@ function StepForm({ onSent }: { onSent: (email: string) => void }) {
   return (
     <>
       <div className="auth-head">
-        <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · Personality Passport</div>
+        <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · ReNo 2.0</div>
         <h1>Create your account</h1>
-        <p className="auth-sub">Free to start · a 20-minute assessment · your five-axis passport.</p>
+        <p className="auth-sub">Free to start · a 15-minute assessment · your five-axis universe.</p>
       </div>
 
       <form onSubmit={submit} className="auth-form">

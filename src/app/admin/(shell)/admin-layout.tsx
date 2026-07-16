@@ -143,12 +143,12 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
         <div style={{ padding: '24px 20px 20px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <svg viewBox="0 0 100 100" width="30" height="30" style={{ flexShrink: 0 }}>
-              <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="#fff" strokeOpacity="0.62" strokeWidth="3.5"/>
-              <circle cx="50" cy="16" r="8.5" fill="#2244E0"/>
-              <circle cx="84" cy="40" r="8.5" fill="#6A85F0"/>
-              <circle cx="71" cy="79" r="8.5" fill="#8A5CD6"/>
-              <circle cx="29" cy="79" r="8.5" fill="#FF7A3D"/>
-              <circle cx="16" cy="40" r="8.5" fill="#FF5A5A"/>
+              <polygon points="50,16 84,40 71,79 29,79 16,40" fill="none" stroke="rgba(210,218,255,0.22)" strokeWidth="1.5"/>
+              <circle cx="50" cy="16" r="7" fill="#2244E0"/>
+              <circle cx="84" cy="40" r="7" fill="#6A85F0"/>
+              <circle cx="71" cy="79" r="7" fill="#8A5CD6"/>
+              <circle cx="29" cy="79" r="7" fill="#FF7A3D"/>
+              <circle cx="16" cy="40" r="7" fill="#FF5A5A"/>
             </svg>
             <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.03em', color: '#fff' }}>
               Psy<span style={{ color: '#FF7A3D' }}>ID</span>

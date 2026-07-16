@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import { auth, saveTokens } from '@/lib/renoApi';
-import { PsidLogo } from '@/components/landing/PsidLogo';
+import { Mark } from '@/components/shared/Mark';
 
 function LoginForm() {
   const router = useRouter();
@@ -33,12 +33,12 @@ function LoginForm() {
   return (
     <div className="psid-site">
       <div className="auth-wrap grad-ground">
-        <Link href="/" className="auth-logo" aria-label="PsyID home"><PsidLogo white /></Link>
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" /></Link>
         <div className="auth-card">
           <div className="auth-head">
-            <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · Personality Passport</div>
+            <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · ReNo 2.0</div>
             <h1>Welcome back</h1>
-            <p className="auth-sub">Sign in to access your passport and results.</p>
+            <p className="auth-sub">Sign in to enter your universe and results.</p>
           </div>
 
           {accountExists && (

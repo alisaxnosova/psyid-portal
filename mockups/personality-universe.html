@@ -249,6 +249,7 @@ var BW=["в балансе","лёгкий наклон","заметный нак
 function bandOf(s){ return s<8?0:s<=20?1:s<=40?2:s<=60?3:s<=80?4:5; }
 function reach(s){ return 0.20+0.80*(s/100); }
 function sizeOf(s){ return 6.5+(s/100)*8.5; }
+var CR=200;
 var CODE=AXES.map(function(a){return a.t+bandOf(a.s);}).join("·");
 document.getElementById("capCode").textContent=CODE;
 
@@ -318,7 +319,6 @@ function build(fr){ return fr.level===0?universeNodes(): fr.level===1?systemNode
 function rebuild(){ nodes=build(cur()); }
 
 /* ── node builders ────────────────────────────────────────────────── */
-var CR=200;
 function universeNodes(){
   var N=[{id:"me",type:"center",x:0,y:0,z:0,r:7.5,color:"#fff",pk:"me"}];
   AXES.forEach(function(a,i){ var ang=-Math.PI/2+i*(TAU/5), d=CR*reach(a.s);
@@ -397,6 +397,7 @@ function renderSet(ns,gA,zb,interactive){
   // nodes back→front
   var order=ns.map(function(n){return {n:n,pr:P[n.id]};}).sort(function(u,v){return u.pr.z-v.pr.z;});
   order.forEach(function(o){ var n=o.n,pr=o.pr, depth=(pr.z+300)/600, r=n.r*pr.scale*(0.72+depth*0.5);
+    if(!isFinite(pr.sx)||!isFinite(pr.sy)||!isFinite(r)||r<=0) return; // safety: never let a stray value blank the galaxy
     var a=gA*(0.5+depth*0.5); if(focusNode) a*=(n===focusNode?1:0.16);
     var pulse=(n.pk&&pulses[n.pk])||0;
     if(n.type==="dust"){ ctx.globalAlpha=(0.12+depth*0.4)*gA*(focusNode?0.4:1); ctx.fillStyle=n.color; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,Math.max(0.5,r),0,TAU); ctx.fill(); ctx.globalAlpha=1; return; }
