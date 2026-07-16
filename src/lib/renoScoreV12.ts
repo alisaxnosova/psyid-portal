@@ -9,8 +9,8 @@
 //
 // The legacy 4-axis scorer (renoScore.ts) is intentionally left in place for the
 // admin v1.0 archive; new sessions run through this module.
-import { AXES, type Axis, type AxisCode } from '@/data/reno-axes';
-import { answerKey, type AnswerKeyCell } from '@/app/reno/data/answer-key';
+import { AXES, classify, type Axis, type AxisCode } from '@/data/reno-axes';
+import { cellForPosition, type AnswerKeyCell } from '@/app/reno/data/answer-key';
 import questionsData from '@/app/reno/data/questions.json';
 import type { RenoQuestion } from '@/data/reno-axes';
 
@@ -44,13 +44,6 @@ function itemsFor(code: AxisCode): RenoQuestion[] {
   return QUESTIONS.filter(q => q.axis === code);
 }
 
-function cellFor(code: AxisCode, position: number): AnswerKeyCell | null {
-  const cells = [...(answerKey[code] ?? [])].sort(
-    (a, b) => (b.posMin ?? 0) - (a.posMin ?? 0),
-  );
-  return cells.find(c => position >= (c.posMin ?? 0)) ?? cells[cells.length - 1] ?? null;
-}
-
 function scoreAxis(axis: Axis, byId: Map<string, string>): AxisScoreV12 {
   const items = itemsFor(axis.code);
   let sum = 0;
@@ -65,18 +58,15 @@ function scoreAxis(axis: Axis, byId: Map<string, string>): AxisScoreV12 {
     n += 1;
   }
   const position = n ? (sum / n) * 100 : 50;
-  const intensity = Math.abs(position - 50) * 2;
-  const cell = cellFor(axis.code, position);
-  const balanced = !cell || cell.pole === '0';
-  const poleLetter = balanced ? '—' : position >= 50 ? axis.plus.letter : axis.minus.letter;
+  const { intensity, band, poleLetter, code } = classify(axis, position);
   return {
     code: axis.code,
     position,
     intensity,
-    band: cell?.band ?? 0,
+    band,
     poleLetter,
-    signature: cell?.code ?? '—',
-    cell,
+    signature: code,             // pole+band per §6, e.g. "O4" ("—" when balanced)
+    cell: cellForPosition(axis.code, position),
     answered: n,
     total: items.length,
   };

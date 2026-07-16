@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAdminLoggedIn } from '@/lib/adminApi';
 import { AXES, toCode, type AxisCode, type Lang } from '@/data/reno-axes';
-import { answerKey, type AnswerKeyCell } from '@/app/reno/data/answer-key';
+import { cellForPosition, type AnswerKeyCell } from '@/app/reno/data/answer-key';
 
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
@@ -13,10 +13,9 @@ const C = {
 
 const LANGS: Lang[] = ['en', 'ru'];
 
+// Delegates to the shared §6 classifier so the explorer, the scorer, and toCode() agree.
 function cellFor(axis: AxisCode, pos: number): AnswerKeyCell | undefined {
-  const cells = answerKey[axis] ?? [];
-  return cells.find(c => c.posMin != null && c.posMax != null && pos >= c.posMin && pos <= c.posMax)
-    ?? cells.find(c => c.band === 0);
+  return cellForPosition(axis, pos) ?? undefined;
 }
 
 export default function AssessmentsPage() {

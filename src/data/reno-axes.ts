@@ -75,15 +75,46 @@ export const BANDS: Band[] = [
   { band: 4, label: { en: 'Strong', ru: 'Сильный' }, intensityMin: 61, intensityMax: 80 },
   { band: 3, label: { en: 'Pronounced', ru: 'Выраженный' }, intensityMin: 41, intensityMax: 60 },
   { band: 2, label: { en: 'Moderate', ru: 'Умеренный' }, intensityMin: 21, intensityMax: 40 },
-  { band: 1, label: { en: 'Slight', ru: 'Лёгкий' }, intensityMin: 6, intensityMax: 20 },
-  { band: 0, label: { en: 'Balanced', ru: 'Сбалансированный' }, intensityMin: 0, intensityMax: 5 },
+  { band: 1, label: { en: 'Slight', ru: 'Лёгкий' }, intensityMin: 8, intensityMax: 20 },
+  { band: 0, label: { en: 'Balanced', ru: 'Сбалансированный' }, intensityMin: 0, intensityMax: 7 },
 ];
+
+/**
+ * Strength/intensity → band, per methodology §6:
+ *   0 balanced (s < 8) · 1 slight (≤20) · 2 noticeable (≤40) ·
+ *   3 pronounced (≤60) · 4 strong (≤80) · 5 very strong (>80).
+ * Single source of truth: scoring, toCode(), and the admin explorer all route band
+ * computation through here, so they can never disagree at a boundary. Gap-free and
+ * fraction-safe (an intensity of 7.5 or 20.5 lands in exactly one band).
+ */
+export function bandForIntensity(intensity: number): number {
+  const i = Math.abs(intensity);
+  if (i < 8) return 0;
+  if (i <= 20) return 1;
+  if (i <= 40) return 2;
+  if (i <= 60) return 3;
+  if (i <= 80) return 4;
+  return 5;
+}
+
+export interface AxisClassification {
+  position: number;   // 0..100 (100 = plus pole)
+  intensity: number;  // |position−50|×2
+  band: number;       // 0..5 (display only), from bandForIntensity
+  poleLetter: string; // dominant pole letter, or '—' when balanced (band 0)
+  code: string;       // e.g. "O4", or "—" when balanced
+}
+
+/** Continuous position → full §6 classification (position, intensity, band, pole, code). */
+export function classify(axis: Axis, position: number): AxisClassification {
+  const intensity = Math.abs(position - 50) * 2;
+  const band = bandForIntensity(intensity);
+  const poleLetter = band === 0 ? '—' : position >= 50 ? axis.plus.letter : axis.minus.letter;
+  const code = band === 0 ? '—' : `${poleLetter}${band}`;
+  return { position, intensity, band, poleLetter, code };
+}
 
 /** Continuous position (0–100, 100 = reference/plus pole) → pole letter + band digit, e.g. "O4". */
 export function toCode(axis: Axis, position: number): string {
-  const intensity = Math.abs(position - 50) * 2;
-  const band = BANDS.find((b) => intensity >= b.intensityMin && intensity <= b.intensityMax)?.band ?? 0;
-  if (band === 0) return '—';
-  const pole = position >= 50 ? axis.plus.letter : axis.minus.letter;
-  return `${pole}${band}`;
+  return classify(axis, position).code;
 }

@@ -1,727 +1,727 @@
 {
- "EO": [
-  {
-   "code": "O5",
-   "band": 5,
-   "pole": "O",
-   "posMin": 90.0,
-   "posMax": 100.0,
-   "en": "Almost always energized by people and expression; forms thoughts out loud, in real time; arranges life around interaction and can feel flat in prolonged quiet.",
-   "ru": "Почти всегда заряжается от общения и активности, обдумывает вслух по ходу разговора, выстраивает жизнь вокруг взаимодействия; в долгой тишине теряет тонус.",
-   "framing": {
-    "en": "Frame as energy, not attention-seeking — can still be a thoughtful listener.",
-    "ru": "Подавать как источник энергии, а не желание быть в центре — может быть и внимательным слушателем."
-   }
-  },
-  {
-   "code": "O4",
-   "band": 4,
-   "pole": "O",
-   "posMin": 80.0,
-   "posMax": 90.0,
-   "en": "Thinks best in dialogue, seeks group settings, moves quickly from thought to speech, initiates easily; uses solitude briefly and functionally.",
-   "ru": "Лучше всего думает в диалоге, тянется к компаниям, быстро переходит от мысли к слову, легко проявляет инициативу; уединение использует коротко и по делу.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "O3",
-   "band": 3,
-   "pole": "O",
-   "posMin": 70.0,
-   "posMax": 80.0,
-   "en": "Speaks early in discussions, shares reactions readily, recharges through contact; long stretches alone can drain.",
-   "ru": "Высказывается одним из первых, охотно делится реакциями, восстанавливается через общение; долгое одиночество утомляет.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "O2",
-   "band": 2,
-   "pole": "O",
-   "posMin": 60.0,
-   "posMax": 70.0,
-   "en": "Often works out ideas by talking, gravitates to livelier settings, reaches out when the day has been too quiet; still values downtime.",
-   "ru": "Часто продумывает идеи вслух, выбирает более оживлённые места, ищет общения, если день был слишком тихим; при этом ценит и паузы.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "O1",
-   "band": 1,
-   "pole": "O",
-   "posMin": 52.5,
-   "posMax": 60.0,
-   "en": "Enjoys company and thinks a little better talking things through, but is equally at home alone; speaks up without a strong pull to be first.",
-   "ru": "Любит компанию и чуть лучше думает, проговаривая, но не менее комфортно и один; высказывается без сильного стремления быть первым.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "—",
-   "band": 0,
-   "pole": "0",
-   "posMin": 47.5,
-   "posMax": 52.5,
-   "en": "Draws energy from both people and solitude, shifting by context; can lead a discussion or work quietly alone without either draining them.",
-   "ru": "Черпает энергию и из общения, и из уединения, переключаясь по ситуации; может и вести обсуждение, и спокойно работать в одиночку.",
-   "framing": {
-    "en": "A real result — name the flexibility as a strength.",
-    "ru": "Полноценный результат — подавать гибкость как сильную сторону."
-   }
-  },
-  {
-   "code": "W1",
-   "band": 1,
-   "pole": "W",
-   "posMin": 40.0,
-   "posMax": 47.5,
-   "en": "Comfortable in company but recovers best with a little solitude, and tends to form a thought before voicing it; participates readily.",
-   "ru": "В компании комфортно, но лучше восстанавливается в тишине и обычно сначала формулирует мысль, потом говорит; участвует охотно.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "W2",
-   "band": 2,
-   "pole": "W",
-   "posMin": 30.0,
-   "posMax": 40.0,
-   "en": "Prefers to think before speaking, keeps a reaction private until formed, needs some alone time to reset; engages selectively — depth over breadth.",
-   "ru": "Предпочитает подумать перед ответом, держит реакцию при себе до готовности, берёт паузу на восстановление; общается избирательно — глубина важнее охвата.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "W3",
-   "band": 3,
-   "pole": "W",
-   "posMin": 20.0,
-   "posMax": 30.0,
-   "en": "Rehearses thoughts internally, speaks after others, solves problems alone before sharing; large gatherings are manageable but costly.",
-   "ru": "Обдумывает про себя, высказывается после других, решает задачи в одиночку, а затем выносит на обсуждение; большие собрания посильны, но затратны.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "W4",
-   "band": 4,
-   "pole": "W",
-   "posMin": 10.0,
-   "posMax": 20.0,
-   "en": "Processes almost entirely internally, guards new ideas until ready, protects solitary focus; at events gravitates to one quiet conversation.",
-   "ru": "Обрабатывает почти всё внутри, придерживает идеи до готовности, оберегает время для сосредоточенной работы; на мероприятиях выбирает один спокойный разговор.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "W5",
-   "band": 5,
-   "pole": "W",
-   "posMin": 0.0,
-   "posMax": 10.0,
-   "en": "Energy comes almost entirely from solitude and reflection; extended contact depletes and needs recovery; shares sparingly, only when fully formed.",
-   "ru": "Энергия почти целиком из уединения и размышлений; долгое общение истощает и требует восстановления; делится скупо и только тем, что созрело.",
-   "framing": {
-    "en": "Separate from shyness — can be warm and capable, and simply runs on quiet.",
-    "ru": "Отделять от застенчивости — может быть тёплым и умелым, просто набирает силы в тишине."
-   }
-  }
- ],
- "IF": [
-  {
-   "code": "C5",
-   "band": 5,
-   "pole": "C",
-   "posMin": 90.0,
-   "posMax": 100.0,
-   "en": "Attention goes to facts, specifics, and direct experience; starts a task without long deliberation; prefers proven step-by-step methods and takes things literally; drawn to traditional, established ways.",
-   "ru": "Внимание — к фактам, деталям и прямому опыту; берётся за дело без долгих раздумий; предпочитает проверенные пошаговые методы, понимает буквально; тяготеет к традиционным, устоявшимся подходам.",
-   "framing": {
-    "en": "Not a ceiling on ability — this is where practical mastery and reliability come from.",
-    "ru": "Не потолок способностей — отсюда практическое мастерство и надёжность."
-   }
-  },
-  {
-   "code": "C4",
-   "band": 4,
-   "pole": "C",
-   "posMin": 80.0,
-   "posMax": 90.0,
-   "en": "Works from facts and clear detail, likes tactical tasks with a tangible result, wants precise instructions; reads things literally and trusts what has already worked.",
-   "ru": "Опирается на факты и точные детали, любит тактические задачи с ощутимым результатом, просит чёткие инструкции; понимает буквально и доверяет тому, что уже сработало.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "C3",
-   "band": 3,
-   "pole": "C",
-   "posMin": 70.0,
-   "posMax": 80.0,
-   "en": "Prefers precise questions and answers, focuses on doing over pondering, likes short concrete tasks; values facts over theories.",
-   "ru": "Предпочитает точные вопросы и ответы, склонен делать, а не рассуждать, любит короткие конкретные задачи; факты важнее теорий.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "C2",
-   "band": 2,
-   "pole": "C",
-   "posMin": 60.0,
-   "posMax": 70.0,
-   "en": "Leans practical and factual; comfortable with detail and proven methods, but will engage a new idea if its use is clear.",
-   "ru": "Склонен к практике и фактам; уверенно работает с деталями и проверенными методами, но откликнется на новую идею, если ясна её польза.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "C1",
-   "band": 1,
-   "pole": "C",
-   "posMin": 52.5,
-   "posMax": 60.0,
-   "en": "Trusts facts and direct experience a little more than theory, but moves comfortably between detail and the bigger picture.",
-   "ru": "Чуть больше доверяет фактам и прямому опыту, чем теории, но свободно переключается между деталями и общей картиной.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "—",
-   "band": 0,
-   "pole": "0",
-   "posMin": 47.5,
-   "posMax": 52.5,
-   "en": "Moves fluidly between concrete fact and abstract pattern, using whichever the situation calls for; can ground an idea in specifics and step back to see its meaning.",
-   "ru": "Свободно переходит от конкретных фактов к общим закономерностям, выбирая нужное по ситуации; может и опереться на детали, и увидеть общий смысл.",
-   "framing": {
-    "en": "A real result — name the range as an asset.",
-    "ru": "Полноценный результат — подавать широту как достоинство."
-   }
-  },
-  {
-   "code": "A1",
-   "band": 1,
-   "pole": "A",
-   "posMin": 40.0,
-   "posMax": 47.5,
-   "en": "Drawn slightly more to patterns and meaning than to raw detail, but keeps a practical footing and notices connections.",
-   "ru": "Чуть больше тянется к закономерностям и смыслу, чем к деталям, но сохраняет практичность и замечает связи.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "A2",
-   "band": 2,
-   "pole": "A",
-   "posMin": 30.0,
-   "posMax": 40.0,
-   "en": "Fits new facts into a bigger idea, enjoys imagining how things could be, drawn to novel approaches — while still able to attend to detail.",
-   "ru": "Встраивает новые факты в общую идею, любит представлять, как могло бы быть, тянется к новым подходам — но при необходимости внимателен к деталям.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "A3",
-   "band": 3,
-   "pole": "A",
-   "posMin": 20.0,
-   "posMax": 30.0,
-   "en": "Thinks in patterns and meaning, prefers strategic tasks and the big picture, works comfortably amid uncertainty; looks for a deeper sense in things.",
-   "ru": "Мыслит закономерностями и смыслами, предпочитает стратегические задачи и общую картину, спокойно работает в неопределённости; ищет глубинный смысл.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "A4",
-   "band": 4,
-   "pole": "A",
-   "posMin": 10.0,
-   "posMax": 20.0,
-   "en": "Trusts ideas over particulars, prefers strategic work and keeps a clear vision of the whole, often bends given instructions toward a better way; drawn to the untested and new.",
-   "ru": "Доверяет идеям больше, чем частностям, предпочитает стратегическую работу и удерживает видение целого, нередко отступает от инструкций ради лучшего пути; тянется к новому и непроверенному.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "A5",
-   "band": 5,
-   "pole": "A",
-   "posMin": 0.0,
-   "posMax": 10.0,
-   "en": "Lives in patterns, meanings, and what-could-be; explores ideas at length, wants freedom from fixed rules, and looks for deeper meaning everywhere; an inventor and reformer.",
-   "ru": "Живёт закономерностями, смыслами и возможностями; подолгу исследует идеи, стремится к свободе от жёстких правил, во всём ищет глубокий смысл; новатор и изобретатель.",
-   "framing": {
-    "en": "Not impracticality as a flaw — this is where innovation and foresight come from; pairs well with concrete collaborators.",
-    "ru": "Не «непрактичность», а источник новаторства и дальновидности; хорошо дополняется людьми практического склада."
-   }
-  }
- ],
- "DB": [
-  {
-   "code": "L5",
-   "band": 5,
-   "pole": "L",
-   "posMin": 90.0,
-   "posMax": 100.0,
-   "en": "Decides through argument, facts, and objective analysis, and follows the conclusion even at emotional cost; keeps a given word, takes on hard decisions, and does not retract a considered position.",
-   "ru": "Решает через аргументы, факты и объективный анализ и следует выводу даже ценой чувств; держит слово, берёт на себя трудные решения и не отступает от взвешенной позиции.",
-   "framing": {
-    "en": "Not coldness — this is where clear, fair, defensible judgment comes from; the person can care deeply and still decide by logic.",
-    "ru": "Не «холодность» — отсюда ясные, справедливые, обоснованные решения; можно глубоко переживать и всё же решать логикой."
-   }
-  },
-  {
-   "code": "L4",
-   "band": 4,
-   "pole": "L",
-   "posMin": 80.0,
-   "posMax": 90.0,
-   "en": "Wins points with facts and reasoning rather than persuasion, keeps assessments objective, organizes work well, and prefers to rely on themselves.",
-   "ru": "Добивается своего фактами и доводами, а не уговорами, сохраняет объективность оценок, хорошо организует работу и предпочитает опираться на себя.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "L3",
-   "band": 3,
-   "pole": "L",
-   "posMin": 70.0,
-   "posMax": 80.0,
-   "en": "Argues from evidence, is proud of objective decisions, and will enter a useful disagreement when it serves the task.",
-   "ru": "Опирается на доказательства, гордится объективностью решений и готов на полезный спор, если это помогает делу.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "L2",
-   "band": 2,
-   "pole": "L",
-   "posMin": 60.0,
-   "posMax": 70.0,
-   "en": "Finds it easier to get results through arguments and facts than through emotions; assessments are mostly objective, with room for people's stakes.",
-   "ru": "Легче добивается результата доводами и фактами, чем эмоциями; оценки в основном объективны, но учитывает, что важно людям.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "L1",
-   "band": 1,
-   "pole": "L",
-   "posMin": 52.5,
-   "posMax": 60.0,
-   "en": "Reasons toward decisions and can achieve more with facts than appeals, but readily adjusts when something clearly matters to someone.",
-   "ru": "Идёт к решению через рассуждение и достигает большего фактами, чем эмоциями, но легко корректируется, если что-то явно важно человеку.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "—",
-   "band": 0,
-   "pole": "0",
-   "posMin": 47.5,
-   "posMax": 52.5,
-   "en": "Combines argument with feeling and weighs both the logic of a decision and its impact on people, choosing objectively or with care as the situation calls for.",
-   "ru": "Сочетает доводы с чувствами и взвешивает и логику решения, и его влияние на людей, решая объективно или бережно — по ситуации.",
-   "framing": {
-    "en": "A real result — name the dual sensitivity as a strength.",
-    "ru": "Полноценный результат — подавать двойную чуткость как силу."
-   }
-  },
-  {
-   "code": "V1",
-   "band": 1,
-   "pole": "V",
-   "posMin": 40.0,
-   "posMax": 47.5,
-   "en": "Considers impact on people a little before the cold calculation, but keeps the reasoning in view.",
-   "ru": "Чуть раньше думает о влиянии на людей, чем о холодном расчёте, но не упускает и логику.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "V2",
-   "band": 2,
-   "pole": "V",
-   "posMin": 30.0,
-   "posMax": 40.0,
-   "en": "Reaches goals more through rapport and persuasion than debate; decisions often weigh the feelings of those affected.",
-   "ru": "Добивается целей скорее через расположение и уговоры, чем спор; в решениях часто учитывает чувства затронутых людей.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "V3",
-   "band": 3,
-   "pole": "V",
-   "posMin": 20.0,
-   "posMax": 30.0,
-   "en": "Decisions are often values-based and considerate of others; strong at social communication and smoothing things over, and prefers agreement to conflict.",
-   "ru": "Решения нередко опираются на ценности и учитывают окружающих; силён в общении и сглаживании, предпочитает согласие спору.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "V4",
-   "band": 4,
-   "pole": "V",
-   "posMin": 10.0,
-   "posMax": 20.0,
-   "en": "Leads with empathy and relationships, senses who needs support, and works to resolve tension even if it slows the task; flexible with commitments to keep goodwill.",
-   "ru": "Опирается на чуткость и отношения, чувствует, кому нужна поддержка, и стремится снять напряжение, даже если это замедляет дело; гибок в обещаниях ради добрых отношений.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "V5",
-   "band": 5,
-   "pole": "V",
-   "posMin": 0.0,
-   "posMax": 10.0,
-   "en": "Decides above all by people and values, seeking to honour everyone's feelings and keep relationships whole; avoids conflict and quickly yields a point to spare someone's feelings.",
-   "ru": "Решает прежде всего по людям и ценностям, стремясь учесть чувства всех и сохранить отношения; избегает конфликтов и быстро уступает, чтобы кого-то не задеть.",
-   "framing": {
-    "en": "Not irrationality — this is where empathy, loyalty, and cohesion come from; pairs with logic-led input on high-stakes technical calls.",
-    "ru": "Не «нелогичность», а источник эмпатии, преданности и сплочённости; дополняется логикой в ответственных технических решениях."
-   }
-  }
- ],
- "SP": [
-  {
-   "code": "D5",
-   "band": 5,
-   "pole": "D",
-   "posMin": 90.0,
-   "posMax": 100.0,
-   "en": "Keeps order in things, papers, and plans; seems to schedule life to the minute and is thrown by a broken plan; finishes what is started and is strongly punctual.",
-   "ru": "Держит порядок в вещах, бумагах и делах; будто расписывает жизнь по минутам и сбивается, если план нарушен; доводит начатое до конца и подчёркнуто пунктуален.",
-   "framing": {
-    "en": "Not rigidity as a fault — this is where reliability and dependable delivery come from.",
-    "ru": "Не «жёсткость», а источник надёжности и предсказуемого результата."
-   }
-  },
-  {
-   "code": "D4",
-   "band": 4,
-   "pole": "D",
-   "posMin": 80.0,
-   "posMax": 90.0,
-   "en": "Plans work in advance and dislikes deviating from it, finishes the current task before starting the next, keeps a fixed routine, and is punctual.",
-   "ru": "Планирует работу заранее и не любит отклонений, сначала завершает текущее дело, потом берётся за новое, держит распорядок и пунктуален.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "D3",
-   "band": 3,
-   "pole": "D",
-   "posMin": 70.0,
-   "posMax": 80.0,
-   "en": "Keeps order in things and tasks, plans ahead, does things now rather than later, and finishes before beginning something new.",
-   "ru": "Поддерживает порядок в делах и вещах, планирует наперёд, делает сразу, а не потом, и завершает, прежде чем начать новое.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "D2",
-   "band": 2,
-   "pole": "D",
-   "posMin": 60.0,
-   "posMax": 70.0,
-   "en": "Likes working to a plan because it lifts productivity, dislikes putting tasks off, and prefers finishing to starting.",
-   "ru": "Любит работать по плану, это повышает продуктивность, не любит откладывать и предпочитает завершать, а не начинать.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "D1",
-   "band": 1,
-   "pole": "D",
-   "posMin": 52.5,
-   "posMax": 60.0,
-   "en": "Given the choice, leans toward order and planning over improvising, and prefers to arrive on time.",
-   "ru": "При выборе склоняется к порядку и плану, а не к импровизации, и предпочитает приходить вовремя.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "—",
-   "band": 0,
-   "pole": "0",
-   "posMin": 47.5,
-   "posMax": 52.5,
-   "en": "Comfortable with both order and spontaneity; can work to a plan or freely, likes starting and finishing about equally, and is usually on time.",
-   "ru": "Спокойно относится и к порядку, и к спонтанности; может работать по плану и свободно, начинать и завершать любит примерно поровну, обычно приходит вовремя.",
-   "framing": {
-    "en": "A real result — name the adaptability as a strength.",
-    "ru": "Полноценный результат — подавать адаптивность как силу."
-   }
-  },
-  {
-   "code": "F1",
-   "band": 1,
-   "pole": "F",
-   "posMin": 40.0,
-   "posMax": 47.5,
-   "en": "Given the choice, leans toward free work over a fixed plan and isn't troubled by arriving a little late.",
-   "ru": "При выборе предпочитает свободную работу заранее заданному плану и не переживает, если немного опоздает.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "F2",
-   "band": 2,
-   "pole": "F",
-   "posMin": 30.0,
-   "posMax": 40.0,
-   "en": "Dislikes working strictly to plan as it limits freedom, tends to postpone tasks, and prefers starting to finishing.",
-   "ru": "Не любит работать строго по плану — это ограничивает свободу, склонен откладывать и предпочитает начинать, а не завершать.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "F3",
-   "band": 3,
-   "pole": "F",
-   "posMin": 20.0,
-   "posMax": 30.0,
-   "en": "Doesn't plan far ahead, waiting to see what's really needed; often works at the last minute, and likes starting more than finishing.",
-   "ru": "Не планирует заранее, предпочитая посмотреть, что действительно понадобится; часто делает в последнюю минуту и любит начинать больше, чем завершать.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "F4",
-   "band": 4,
-   "pole": "F",
-   "posMin": 10.0,
-   "posMax": 20.0,
-   "en": "A creative disorder in things and tasks, prefers doing what feels right in the moment, may run past deadlines waiting for a second wind, and juggles many open tasks.",
-   "ru": "В делах и вещах — творческий беспорядок, предпочитает делать то, что нужно сейчас, может выходить за сроки в ожидании второго дыхания и держит много начатых дел.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "F5",
-   "band": 5,
-   "pole": "F",
-   "posMin": 0.0,
-   "posMax": 10.0,
-   "en": "Order gives way to spontaneity; lives in the moment and finds schedules confining, does things at the last minute, and often leaves tasks open as new ones appear.",
-   "ru": "Порядок уступает спонтанности; живёт моментом, расписания тяготят, делает в последнюю минуту и часто не доводит дела до конца, увлекаясь новыми.",
-   "framing": {
-    "en": "Not disorganization as a flaw — this is where improvisation and comfort with uncertainty come from; pairs with structure-minded support on long deadlines.",
-    "ru": "Не «неорганизованность», а источник импровизации и спокойствия в неопределённости; дополняется людьми организованного склада на длинных сроках."
-   }
-  }
- ],
- "ER": [
-  {
-   "code": "S5",
-   "band": 5,
-   "pole": "S",
-   "posMin": 90.0,
-   "posMax": 100.0,
-   "en": "Stays composed even in a crisis and keeps a level mood regardless of events; controls emotions and can work in almost any state — very hard to knock off balance.",
-   "ru": "Сохраняет спокойствие даже в кризис и держит ровное настроение независимо от событий; владеет эмоциями и работает почти в любом состоянии — вывести из равновесия крайне сложно.",
-   "framing": {
-    "en": "Not detachment or absence of feeling — this is where composure, resilience, and steadiness-for-others come from.",
-    "ru": "Не «бесчувственность», а источник хладнокровия, устойчивости и опоры для других."
-   }
-  },
-  {
-   "code": "S4",
-   "band": 4,
-   "pole": "S",
-   "posMin": 80.0,
-   "posMax": 90.0,
-   "en": "Makes decisions without being swept up by emotion, needs a real reason for a mood to shift, and can work through poor physical or emotional states.",
-   "ru": "Принимает решения, не поддаваясь эмоциям, для смены настроения нужна веская причина, может работать и в неважном состоянии.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "S3",
-   "band": 3,
-   "pole": "S",
-   "posMin": 70.0,
-   "posMax": 80.0,
-   "en": "Stays calm and contained where others lose composure, with an even working capacity across the day.",
-   "ru": "Остаётся спокойным и собранным там, где другие теряют самообладание, с ровной работоспособностью в течение дня.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "S2",
-   "band": 2,
-   "pole": "S",
-   "posMin": 60.0,
-   "posMax": 70.0,
-   "en": "Fairly calm in tense moments and generally emotionally steady, with occasional stronger reactions to what matters most.",
-   "ru": "Достаточно спокоен в напряжённые моменты и в целом эмоционально ровен, с редкими более сильными реакциями на самое важное.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "S1",
-   "band": 1,
-   "pole": "S",
-   "posMin": 52.5,
-   "posMax": 60.0,
-   "en": "Usually calm under pressure; mood doesn't swing much across the day and rarely drives performance.",
-   "ru": "Обычно спокоен под давлением; настроение за день меняется мало и почти не влияет на работоспособность.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "—",
-   "band": 0,
-   "pole": "0",
-   "posMin": 47.5,
-   "posMax": 52.5,
-   "en": "Feels events with normal intensity and recovers at a normal pace — no major mood swings through the day, responsive without being derailed.",
-   "ru": "Откликается на события с обычной силой и восстанавливается в обычном темпе — без резких перепадов за день, отзывчив, но не выбит из колеи.",
-   "framing": {
-    "en": "A healthy, common middle — describe as emotionally typical and adaptable.",
-    "ru": "Здоровая, распространённая середина — описывать как эмоционально типичного и гибкого."
-   }
-  },
-  {
-   "code": "R1",
-   "band": 1,
-   "pole": "R",
-   "posMin": 40.0,
-   "posMax": 47.5,
-   "en": "Feels events a little more keenly and takes a bit longer to settle, without being easily overwhelmed.",
-   "ru": "Чуть острее переживает события и дольше успокаивается, но не теряется легко.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "R2",
-   "band": 2,
-   "pole": "R",
-   "posMin": 30.0,
-   "posMax": 40.0,
-   "en": "Cannot stay entirely cool in tense moments; mood and working capacity shift somewhat through the day, and feelings run fairly deep.",
-   "ru": "Не может оставаться полностью хладнокровным в напряжённые моменты; настроение и работоспособность за день немного колеблются, а чувства довольно глубоки.",
-   "framing": {
-    "en": "",
-    "ru": ""
-   }
-  },
-  {
-   "code": "R3",
-   "band": 3,
-   "pole": "R",
-   "posMin": 20.0,
-   "posMax": 30.0,
-   "en": "Openly shows feeling under stress; mood can change several times a day, and works best on an emotional upswing.",
-   "ru": "Открыто проявляет чувства в напряжении; настроение может меняться несколько раз в день, лучше всего работает на эмоциональном подъёме.",
-   "framing": {
-    "en": "Describe as attunement and depth of feeling, not fragility.",
-    "ru": "Описывать как чуткость и глубину чувств, а не хрупкость."
-   }
-  },
-  {
-   "code": "R4",
-   "band": 4,
-   "pole": "R",
-   "posMin": 10.0,
-   "posMax": 20.0,
-   "en": "Visibly stirred in critical moments; mood shifts noticeably and carries working capacity with it, with strong peaks of inspiration.",
-   "ru": "Заметно волнуется в критические моменты; настроение ощутимо меняется и тянет за собой работоспособность, с яркими пиками вдохновения.",
-   "framing": {
-    "en": "This is where empathy and expressive depth come from; benefits from reassurance and supportive structure.",
-    "ru": "Отсюда эмпатия и выразительная глубина; помогает поддержка и мягкая опора."
-   }
-  },
-  {
-   "code": "R5",
-   "band": 5,
-   "pole": "R",
-   "posMin": 0.0,
-   "posMax": 10.0,
-   "en": "Responds to events with great intensity; mood can turn several times a day — highly effective on an upswing, drained in a dip — and feels things vividly and deeply.",
-   "ru": "Откликается на события очень сильно; настроение может меняться несколько раз в день — на подъёме очень продуктивен, в спаде тяжело — и переживает ярко и глубоко.",
-   "framing": {
-    "en": "MOST wording-sensitive cell. Describe as high sensitivity and depth of feeling — NEVER instability or disorder. For a child: 'feels deeply, benefits from gentle support and reassurance.'",
-    "ru": "Самая деликатная ячейка. Описывать как высокую чувствительность и глубину — НИКОГДА как нестабильность. Для ребёнка: «глубоко чувствует, важна мягкая поддержка и ободрение»."
-   }
-  }
- ]
+  "EO": [
+    {
+      "code": "O5",
+      "band": 5,
+      "pole": "O",
+      "posMin": 90.0,
+      "posMax": 100.0,
+      "en": "Almost always energized by people and expression; forms thoughts out loud, in real time; arranges life around interaction and can feel flat in prolonged quiet.",
+      "ru": "Почти всегда заряжается от общения и активности, обдумывает вслух по ходу разговора, выстраивает жизнь вокруг взаимодействия; в долгой тишине теряет тонус.",
+      "framing": {
+        "en": "Frame as energy, not attention-seeking — can still be a thoughtful listener.",
+        "ru": "Подавать как источник энергии, а не желание быть в центре — может быть и внимательным слушателем."
+      }
+    },
+    {
+      "code": "O4",
+      "band": 4,
+      "pole": "O",
+      "posMin": 80.0,
+      "posMax": 90.0,
+      "en": "Thinks best in dialogue, seeks group settings, moves quickly from thought to speech, initiates easily; uses solitude briefly and functionally.",
+      "ru": "Лучше всего думает в диалоге, тянется к компаниям, быстро переходит от мысли к слову, легко проявляет инициативу; уединение использует коротко и по делу.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "O3",
+      "band": 3,
+      "pole": "O",
+      "posMin": 70.0,
+      "posMax": 80.0,
+      "en": "Speaks early in discussions, shares reactions readily, recharges through contact; long stretches alone can drain.",
+      "ru": "Высказывается одним из первых, охотно делится реакциями, восстанавливается через общение; долгое одиночество утомляет.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "O2",
+      "band": 2,
+      "pole": "O",
+      "posMin": 60.0,
+      "posMax": 70.0,
+      "en": "Often works out ideas by talking, gravitates to livelier settings, reaches out when the day has been too quiet; still values downtime.",
+      "ru": "Часто продумывает идеи вслух, выбирает более оживлённые места, ищет общения, если день был слишком тихим; при этом ценит и паузы.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "O1",
+      "band": 1,
+      "pole": "O",
+      "posMin": 54.0,
+      "posMax": 60.0,
+      "en": "Enjoys company and thinks a little better talking things through, but is equally at home alone; speaks up without a strong pull to be first.",
+      "ru": "Любит компанию и чуть лучше думает, проговаривая, но не менее комфортно и в одиночестве; высказывается без сильного стремления быть первым.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "—",
+      "band": 0,
+      "pole": "0",
+      "posMin": 46.0,
+      "posMax": 54.0,
+      "en": "Draws energy from both people and solitude, shifting by context; can lead a discussion or work quietly alone without either draining them.",
+      "ru": "Черпает энергию и из общения, и из уединения, переключаясь по ситуации; может и вести обсуждение, и спокойно работать в одиночку.",
+      "framing": {
+        "en": "A real result — name the flexibility as a strength.",
+        "ru": "Полноценный результат — подавать гибкость как сильную сторону."
+      }
+    },
+    {
+      "code": "W1",
+      "band": 1,
+      "pole": "W",
+      "posMin": 40.0,
+      "posMax": 46.0,
+      "en": "Comfortable in company but recovers best with a little solitude, and tends to form a thought before voicing it; participates readily.",
+      "ru": "В компании комфортно, но лучше восстанавливается в тишине и обычно сначала формулирует мысль, потом говорит; участвует охотно.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "W2",
+      "band": 2,
+      "pole": "W",
+      "posMin": 30.0,
+      "posMax": 40.0,
+      "en": "Prefers to think before speaking, keeps a reaction private until formed, needs some alone time to reset; engages selectively — depth over breadth.",
+      "ru": "Предпочитает подумать перед ответом, держит реакцию при себе до готовности, берёт паузу на восстановление; общается избирательно — глубина важнее охвата.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "W3",
+      "band": 3,
+      "pole": "W",
+      "posMin": 20.0,
+      "posMax": 30.0,
+      "en": "Rehearses thoughts internally, speaks after others, solves problems alone before sharing; large gatherings are manageable but costly.",
+      "ru": "Обдумывает про себя, высказывается после других, решает задачи в одиночку, а затем выносит на обсуждение; большие собрания посильны, но затратны.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "W4",
+      "band": 4,
+      "pole": "W",
+      "posMin": 10.0,
+      "posMax": 20.0,
+      "en": "Processes almost entirely internally, guards new ideas until ready, protects solitary focus; at events gravitates to one quiet conversation.",
+      "ru": "Обрабатывает почти всё внутри, придерживает идеи до готовности, оберегает время для сосредоточенной работы; на мероприятиях выбирает один спокойный разговор.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "W5",
+      "band": 5,
+      "pole": "W",
+      "posMin": 0.0,
+      "posMax": 10.0,
+      "en": "Energy comes almost entirely from solitude and reflection; extended contact depletes and needs recovery; shares sparingly, only when fully formed.",
+      "ru": "Энергия почти целиком из уединения и размышлений; долгое общение истощает и требует восстановления; делится скупо и только тем, что созрело.",
+      "framing": {
+        "en": "Separate from shyness — can be warm and capable, and simply runs on quiet.",
+        "ru": "Отделять от застенчивости — может быть тёплым и умелым, просто набирает силы в тишине."
+      }
+    }
+  ],
+  "IF": [
+    {
+      "code": "C5",
+      "band": 5,
+      "pole": "C",
+      "posMin": 90.0,
+      "posMax": 100.0,
+      "en": "Attention goes to facts, specifics, and direct experience; starts a task without long deliberation; prefers proven step-by-step methods and takes things literally; drawn to traditional, established ways.",
+      "ru": "Внимание — к фактам, деталям и прямому опыту; берётся за дело без долгих раздумий; предпочитает проверенные пошаговые методы, понимает буквально; тяготеет к традиционным, устоявшимся подходам.",
+      "framing": {
+        "en": "Not a ceiling on ability — this is where practical mastery and reliability come from.",
+        "ru": "Не потолок способностей — отсюда практическое мастерство и надёжность."
+      }
+    },
+    {
+      "code": "C4",
+      "band": 4,
+      "pole": "C",
+      "posMin": 80.0,
+      "posMax": 90.0,
+      "en": "Works from facts and clear detail, likes tactical tasks with a tangible result, wants precise instructions; reads things literally and trusts what has already worked.",
+      "ru": "Опирается на факты и точные детали, любит тактические задачи с ощутимым результатом, просит чёткие инструкции; понимает буквально и доверяет тому, что уже сработало.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "C3",
+      "band": 3,
+      "pole": "C",
+      "posMin": 70.0,
+      "posMax": 80.0,
+      "en": "Prefers precise questions and answers, focuses on doing over pondering, likes short concrete tasks; values facts over theories.",
+      "ru": "Предпочитает точные вопросы и ответы, охотнее действует, чем рассуждает, любит короткие конкретные задачи; факты важнее теорий.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "C2",
+      "band": 2,
+      "pole": "C",
+      "posMin": 60.0,
+      "posMax": 70.0,
+      "en": "Leans practical and factual; comfortable with detail and proven methods, but will engage a new idea if its use is clear.",
+      "ru": "Тяготеет к практике и фактам; уверенно работает с деталями и проверенными методами, но откликнется на новую идею, если ясна её польза.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "C1",
+      "band": 1,
+      "pole": "C",
+      "posMin": 54.0,
+      "posMax": 60.0,
+      "en": "Trusts facts and direct experience a little more than theory, but moves comfortably between detail and the bigger picture.",
+      "ru": "Чуть больше доверяет фактам и прямому опыту, чем теории, но свободно переключается между деталями и общей картиной.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "—",
+      "band": 0,
+      "pole": "0",
+      "posMin": 46.0,
+      "posMax": 54.0,
+      "en": "Moves fluidly between concrete fact and abstract pattern, using whichever the situation calls for; can ground an idea in specifics and step back to see its meaning.",
+      "ru": "Свободно переходит от конкретных фактов к общим закономерностям, выбирая нужное по ситуации; может и опереться на детали, и увидеть общий смысл.",
+      "framing": {
+        "en": "A real result — name the range as an asset.",
+        "ru": "Полноценный результат — подавать широту как достоинство."
+      }
+    },
+    {
+      "code": "A1",
+      "band": 1,
+      "pole": "A",
+      "posMin": 40.0,
+      "posMax": 46.0,
+      "en": "Drawn slightly more to patterns and meaning than to raw detail, but keeps a practical footing and notices connections.",
+      "ru": "Чуть больше тянется к закономерностям и смыслу, чем к деталям, но сохраняет практичность и замечает связи.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "A2",
+      "band": 2,
+      "pole": "A",
+      "posMin": 30.0,
+      "posMax": 40.0,
+      "en": "Fits new facts into a bigger idea, enjoys imagining how things could be, drawn to novel approaches — while still able to attend to detail.",
+      "ru": "Встраивает новые факты в общую идею, любит представлять, как могло бы быть, тянется к новым подходам — но при необходимости не упускает детали.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "A3",
+      "band": 3,
+      "pole": "A",
+      "posMin": 20.0,
+      "posMax": 30.0,
+      "en": "Thinks in patterns and meaning, prefers strategic tasks and the big picture, works comfortably amid uncertainty; looks for a deeper sense in things.",
+      "ru": "Мыслит закономерностями и смыслами, предпочитает стратегические задачи и общую картину, спокойно работает в неопределённости; ищет глубинный смысл.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "A4",
+      "band": 4,
+      "pole": "A",
+      "posMin": 10.0,
+      "posMax": 20.0,
+      "en": "Trusts ideas over particulars, prefers strategic work and keeps a clear vision of the whole, often bends given instructions toward a better way; drawn to the untested and new.",
+      "ru": "Доверяет идеям больше, чем частностям, предпочитает стратегическую работу и удерживает видение целого, нередко отступает от инструкций ради лучшего пути; тянется к новому и непроверенному.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "A5",
+      "band": 5,
+      "pole": "A",
+      "posMin": 0.0,
+      "posMax": 10.0,
+      "en": "Lives in patterns, meanings, and what-could-be; explores ideas at length, wants freedom from fixed rules, and looks for deeper meaning everywhere; an inventor and reformer.",
+      "ru": "Живёт закономерностями, смыслами и возможностями; подолгу исследует идеи, стремится к свободе от жёстких правил, во всём ищет глубокий смысл; новатор и изобретатель.",
+      "framing": {
+        "en": "Not impracticality as a flaw — this is where innovation and foresight come from; pairs well with concrete collaborators.",
+        "ru": "Не «непрактичность», а источник новаторства и дальновидности; хорошо дополняется людьми практического склада."
+      }
+    }
+  ],
+  "DB": [
+    {
+      "code": "L5",
+      "band": 5,
+      "pole": "L",
+      "posMin": 90.0,
+      "posMax": 100.0,
+      "en": "Decides through argument, facts, and objective analysis, and follows the conclusion even at emotional cost; keeps a given word, takes on hard decisions, and does not retract a considered position.",
+      "ru": "Решает через аргументы, факты и объективный анализ и следует выводу даже ценой чувств; держит слово, берёт на себя трудные решения и не отступает от взвешенной позиции.",
+      "framing": {
+        "en": "Not coldness — this is where clear, fair, defensible judgment comes from; the person can care deeply and still decide by logic.",
+        "ru": "Не «холодность» — отсюда ясные, справедливые, обоснованные решения; можно глубоко переживать и всё же решать логикой."
+      }
+    },
+    {
+      "code": "L4",
+      "band": 4,
+      "pole": "L",
+      "posMin": 80.0,
+      "posMax": 90.0,
+      "en": "Wins points with facts and reasoning rather than persuasion, keeps assessments objective, organizes work well, and prefers to rely on themselves.",
+      "ru": "Добивается своего фактами и доводами, а не уговорами, сохраняет объективность оценок, хорошо организует работу и предпочитает опираться на себя.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "L3",
+      "band": 3,
+      "pole": "L",
+      "posMin": 70.0,
+      "posMax": 80.0,
+      "en": "Argues from evidence, is proud of objective decisions, and will enter a useful disagreement when it serves the task.",
+      "ru": "Опирается на доказательства, гордится объективностью решений и идёт на полезный спор, если это помогает делу.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "L2",
+      "band": 2,
+      "pole": "L",
+      "posMin": 60.0,
+      "posMax": 70.0,
+      "en": "Finds it easier to get results through arguments and facts than through emotions; assessments are mostly objective, with room for people's stakes.",
+      "ru": "Легче добивается результата доводами и фактами, чем эмоциями; оценки в основном объективны, но учитывает, что важно людям.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "L1",
+      "band": 1,
+      "pole": "L",
+      "posMin": 54.0,
+      "posMax": 60.0,
+      "en": "Reasons toward decisions and can achieve more with facts than appeals, but readily adjusts when something clearly matters to someone.",
+      "ru": "Идёт к решению через рассуждение и достигает большего фактами, чем эмоциями, но легко корректируется, если что-то явно важно человеку.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "—",
+      "band": 0,
+      "pole": "0",
+      "posMin": 46.0,
+      "posMax": 54.0,
+      "en": "Combines argument with feeling and weighs both the logic of a decision and its impact on people, choosing objectively or with care as the situation calls for.",
+      "ru": "Сочетает доводы с чувствами и взвешивает и логику решения, и его влияние на людей, решая объективно или бережно — по ситуации.",
+      "framing": {
+        "en": "A real result — name the dual sensitivity as a strength.",
+        "ru": "Полноценный результат — подавать двойную чуткость как силу."
+      }
+    },
+    {
+      "code": "V1",
+      "band": 1,
+      "pole": "V",
+      "posMin": 40.0,
+      "posMax": 46.0,
+      "en": "Considers impact on people a little before the cold calculation, but keeps the reasoning in view.",
+      "ru": "Чуть раньше думает о влиянии на людей, чем о холодном расчёте, но не упускает и логику.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "V2",
+      "band": 2,
+      "pole": "V",
+      "posMin": 30.0,
+      "posMax": 40.0,
+      "en": "Reaches goals more through rapport and persuasion than debate; decisions often weigh the feelings of those affected.",
+      "ru": "Добивается целей скорее через расположение и уговоры, чем спор; в решениях часто учитывает чувства затронутых людей.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "V3",
+      "band": 3,
+      "pole": "V",
+      "posMin": 20.0,
+      "posMax": 30.0,
+      "en": "Decisions are often values-based and considerate of others; strong at social communication and smoothing things over, and prefers agreement to conflict.",
+      "ru": "Решения нередко опираются на ценности и учитывают окружающих; уверенно общается и сглаживает острые углы, предпочитает согласие спору.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "V4",
+      "band": 4,
+      "pole": "V",
+      "posMin": 10.0,
+      "posMax": 20.0,
+      "en": "Leads with empathy and relationships, senses who needs support, and works to resolve tension even if it slows the task; flexible with commitments to keep goodwill.",
+      "ru": "Опирается на чуткость и отношения, чувствует, кому нужна поддержка, и стремится снять напряжение, даже если это замедляет дело; гибко относится к обещаниям ради добрых отношений.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "V5",
+      "band": 5,
+      "pole": "V",
+      "posMin": 0.0,
+      "posMax": 10.0,
+      "en": "Decides above all by people and values, seeking to honour everyone's feelings and keep relationships whole; avoids conflict and quickly yields a point to spare someone's feelings.",
+      "ru": "Решает прежде всего по людям и ценностям, стремясь учесть чувства всех и сохранить отношения; избегает конфликтов и быстро уступает, чтобы кого-то не задеть.",
+      "framing": {
+        "en": "Not irrationality — this is where empathy, loyalty, and cohesion come from; pairs with logic-led input on high-stakes technical calls.",
+        "ru": "Не «нелогичность», а источник эмпатии, преданности и сплочённости; дополняется логикой в ответственных технических решениях."
+      }
+    }
+  ],
+  "SP": [
+    {
+      "code": "D5",
+      "band": 5,
+      "pole": "D",
+      "posMin": 90.0,
+      "posMax": 100.0,
+      "en": "Keeps order in things, papers, and plans; seems to schedule life to the minute and is thrown by a broken plan; finishes what is started and is strongly punctual.",
+      "ru": "Держит порядок в вещах, бумагах и делах; будто расписывает жизнь по минутам и сбивается, если план нарушен; доводит начатое до конца и почти никогда не опаздывает.",
+      "framing": {
+        "en": "Not rigidity as a fault — this is where reliability and dependable delivery come from.",
+        "ru": "Не «жёсткость», а источник надёжности и предсказуемого результата."
+      }
+    },
+    {
+      "code": "D4",
+      "band": 4,
+      "pole": "D",
+      "posMin": 80.0,
+      "posMax": 90.0,
+      "en": "Plans work in advance and dislikes deviating from it, finishes the current task before starting the next, keeps a fixed routine, and is punctual.",
+      "ru": "Планирует работу заранее и не любит отклонений, сначала завершает текущее дело, потом берётся за новое, держит распорядок и приходит вовремя.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "D3",
+      "band": 3,
+      "pole": "D",
+      "posMin": 70.0,
+      "posMax": 80.0,
+      "en": "Keeps order in things and tasks, plans ahead, does things now rather than later, and finishes before beginning something new.",
+      "ru": "Поддерживает порядок в делах и вещах, планирует наперёд, делает сразу, а не потом, и завершает, прежде чем начать новое.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "D2",
+      "band": 2,
+      "pole": "D",
+      "posMin": 60.0,
+      "posMax": 70.0,
+      "en": "Likes working to a plan because it lifts productivity, dislikes putting tasks off, and prefers finishing to starting.",
+      "ru": "Любит работать по плану, это повышает продуктивность, не любит откладывать и предпочитает завершать, а не начинать.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "D1",
+      "band": 1,
+      "pole": "D",
+      "posMin": 54.0,
+      "posMax": 60.0,
+      "en": "Given the choice, leans toward order and planning over improvising, and prefers to arrive on time.",
+      "ru": "При выборе склоняется к порядку и плану, а не к импровизации, и предпочитает приходить вовремя.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "—",
+      "band": 0,
+      "pole": "0",
+      "posMin": 46.0,
+      "posMax": 54.0,
+      "en": "Comfortable with both order and spontaneity; can work to a plan or freely, likes starting and finishing about equally, and is usually on time.",
+      "ru": "Спокойно относится и к порядку, и к спонтанности; может работать по плану и свободно, начинать и завершать любит примерно поровну, обычно приходит вовремя.",
+      "framing": {
+        "en": "A real result — name the adaptability as a strength.",
+        "ru": "Полноценный результат — подавать адаптивность как силу."
+      }
+    },
+    {
+      "code": "F1",
+      "band": 1,
+      "pole": "F",
+      "posMin": 40.0,
+      "posMax": 46.0,
+      "en": "Given the choice, leans toward free work over a fixed plan and isn't troubled by arriving a little late.",
+      "ru": "При выборе предпочитает свободную работу заранее заданному плану и не переживает, если немного опоздает.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "F2",
+      "band": 2,
+      "pole": "F",
+      "posMin": 30.0,
+      "posMax": 40.0,
+      "en": "Dislikes working strictly to plan as it limits freedom, tends to postpone tasks, and prefers starting to finishing.",
+      "ru": "Не любит работать строго по плану — это ограничивает свободу, часто откладывает и предпочитает начинать, а не завершать.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "F3",
+      "band": 3,
+      "pole": "F",
+      "posMin": 20.0,
+      "posMax": 30.0,
+      "en": "Doesn't plan far ahead, waiting to see what's really needed; often works at the last minute, and likes starting more than finishing.",
+      "ru": "Не планирует заранее, предпочитая посмотреть, что действительно понадобится; часто делает в последнюю минуту и любит начинать больше, чем завершать.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "F4",
+      "band": 4,
+      "pole": "F",
+      "posMin": 10.0,
+      "posMax": 20.0,
+      "en": "A creative clutter in things and tasks, prefers doing what feels right in the moment, may run past deadlines waiting for a second wind, and juggles many open tasks.",
+      "ru": "В делах и вещах — творческий беспорядок, предпочитает делать то, что нужно сейчас, может выходить за сроки в ожидании второго дыхания и держит много начатых дел.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "F5",
+      "band": 5,
+      "pole": "F",
+      "posMin": 0.0,
+      "posMax": 10.0,
+      "en": "Order gives way to spontaneity; lives in the moment and finds schedules confining, does things at the last minute, and often leaves tasks open as new ones appear.",
+      "ru": "Порядок уступает спонтанности; живёт моментом, расписания тяготят, делает в последнюю минуту и часто не доводит дела до конца, увлекаясь новыми.",
+      "framing": {
+        "en": "Not disorganization as a flaw — this is where improvisation and comfort with uncertainty come from; pairs with structure-minded support on long deadlines.",
+        "ru": "Не «неорганизованность», а источник импровизации и спокойствия в неопределённости; дополняется людьми организованного склада на длинных сроках."
+      }
+    }
+  ],
+  "ER": [
+    {
+      "code": "S5",
+      "band": 5,
+      "pole": "S",
+      "posMin": 90.0,
+      "posMax": 100.0,
+      "en": "Stays composed even in a crisis and keeps a level mood regardless of events; controls emotions and can work in almost any state — very hard to knock off balance.",
+      "ru": "Сохраняет спокойствие даже в кризис и держит ровное настроение независимо от событий; владеет эмоциями и работает почти в любом состоянии — вывести из равновесия крайне сложно.",
+      "framing": {
+        "en": "Not detachment or absence of feeling — this is where composure, resilience, and steadiness-for-others come from.",
+        "ru": "Не «бесчувственность», а источник хладнокровия, устойчивости и опоры для других."
+      }
+    },
+    {
+      "code": "S4",
+      "band": 4,
+      "pole": "S",
+      "posMin": 80.0,
+      "posMax": 90.0,
+      "en": "Makes decisions without being swept up by emotion, needs a real reason for a mood to shift, and can work through poor physical or emotional states.",
+      "ru": "Принимает решения, не поддаваясь эмоциям, для смены настроения нужна веская причина, может работать и в неважном состоянии.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "S3",
+      "band": 3,
+      "pole": "S",
+      "posMin": 70.0,
+      "posMax": 80.0,
+      "en": "Stays calm and contained where others lose composure, with an even working capacity across the day.",
+      "ru": "Сохраняет спокойствие и собранность там, где другие теряют самообладание, с ровной работоспособностью в течение дня.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "S2",
+      "band": 2,
+      "pole": "S",
+      "posMin": 60.0,
+      "posMax": 70.0,
+      "en": "Fairly calm in tense moments and generally emotionally steady, with occasional stronger reactions to what matters most.",
+      "ru": "В напряжённые моменты держится достаточно спокойно и в целом эмоционально ровно, с редкими более сильными реакциями на самое важное.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "S1",
+      "band": 1,
+      "pole": "S",
+      "posMin": 54.0,
+      "posMax": 60.0,
+      "en": "Usually calm under pressure; mood doesn't swing much across the day and rarely drives performance.",
+      "ru": "Под давлением обычно сохраняет спокойствие; настроение за день меняется мало и почти не влияет на работоспособность.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "—",
+      "band": 0,
+      "pole": "0",
+      "posMin": 46.0,
+      "posMax": 54.0,
+      "en": "Feels events with normal intensity and recovers at a normal pace — no major mood swings through the day, responsive without being derailed.",
+      "ru": "Откликается на события с обычной силой и восстанавливается в обычном темпе — без резких перепадов за день: живо реагирует, но не теряет равновесия.",
+      "framing": {
+        "en": "A healthy, common middle — describe as emotionally typical and adaptable.",
+        "ru": "Здоровая, распространённая середина — описывать как эмоционально типичного и гибкого."
+      }
+    },
+    {
+      "code": "R1",
+      "band": 1,
+      "pole": "R",
+      "posMin": 40.0,
+      "posMax": 46.0,
+      "en": "Feels events a little more keenly and takes a bit longer to settle, without being easily overwhelmed.",
+      "ru": "Чуть острее переживает события и дольше успокаивается, но не теряется легко.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "R2",
+      "band": 2,
+      "pole": "R",
+      "posMin": 30.0,
+      "posMax": 40.0,
+      "en": "Cannot stay entirely cool in tense moments; mood and working capacity shift somewhat through the day, and feelings run fairly deep.",
+      "ru": "Не может сохранять полное хладнокровие в напряжённые моменты; настроение и работоспособность за день немного колеблются, а чувства довольно глубоки.",
+      "framing": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "code": "R3",
+      "band": 3,
+      "pole": "R",
+      "posMin": 20.0,
+      "posMax": 30.0,
+      "en": "Openly shows feeling under stress; mood can change several times a day, and works best on an emotional upswing.",
+      "ru": "Открыто проявляет чувства в напряжении; настроение может меняться несколько раз в день, лучше всего работает на эмоциональном подъёме.",
+      "framing": {
+        "en": "Describe as attunement and depth of feeling, not fragility.",
+        "ru": "Описывать как чуткость и глубину чувств, а не хрупкость."
+      }
+    },
+    {
+      "code": "R4",
+      "band": 4,
+      "pole": "R",
+      "posMin": 10.0,
+      "posMax": 20.0,
+      "en": "Visibly stirred in critical moments; mood shifts noticeably and carries working capacity with it, with strong peaks of inspiration.",
+      "ru": "Заметно волнуется в критические моменты; настроение ощутимо меняется и тянет за собой работоспособность, с яркими пиками вдохновения.",
+      "framing": {
+        "en": "This is where empathy and expressive depth come from; benefits from reassurance and supportive structure.",
+        "ru": "Отсюда эмпатия и выразительная глубина; помогает поддержка и мягкая опора."
+      }
+    },
+    {
+      "code": "R5",
+      "band": 5,
+      "pole": "R",
+      "posMin": 0.0,
+      "posMax": 10.0,
+      "en": "Responds to events with great intensity; mood can turn several times a day — highly effective on an upswing, drained in a dip — and feels things vividly and deeply.",
+      "ru": "Откликается на события очень сильно; настроение может меняться несколько раз в день — на подъёме работает очень продуктивно, в спаде тяжело — и переживает ярко и глубоко.",
+      "framing": {
+        "en": "MOST wording-sensitive cell. Describe as high sensitivity and depth of feeling — NEVER instability or disorder. For a child: 'feels deeply, benefits from gentle support and reassurance.'",
+        "ru": "Самая деликатная ячейка. Описывать как высокую чувствительность и глубину — НИКОГДА как нестабильность. Для ребёнка: «глубоко чувствует, важна мягкая поддержка и ободрение»."
+      }
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 import raw from './answer-key.json';
-import type { AxisCode, Lang } from '@/data/reno-axes';
+import { AXIS_BY_CODE, classify, type AxisCode, type Lang } from '@/data/reno-axes';
 
 /** One interpretive cell: a pole+band and its bilingual descriptor. */
 export interface AnswerKeyCell {
@@ -16,6 +16,18 @@ export interface AnswerKeyCell {
 export type AnswerKey = Record<AxisCode, AnswerKeyCell[]>;
 
 export const answerKey = raw as AnswerKey;
+
+/**
+ * Select the interpretive cell for a continuous position, via the §6 band classifier
+ * in reno-axes (the single source of truth). Selecting by pole+band code — rather than
+ * by the cell's posMin/posMax range — guarantees this matches toCode() and the v12
+ * scorer exactly, including at band edges. posMin/posMax on the cells are documentation.
+ */
+export function cellForPosition(axisCode: AxisCode, position: number): AnswerKeyCell | null {
+  const { code } = classify(AXIS_BY_CODE[axisCode], position);
+  const cells = answerKey[axisCode] ?? [];
+  return cells.find(c => c.code === code) ?? cells.find(c => c.band === 0) ?? null;
+}
 
 export function cellDescriptor(c: AnswerKeyCell, lang: Lang): string {
   return lang === 'ru' ? c.ru || c.en : c.en;
