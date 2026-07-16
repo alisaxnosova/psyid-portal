@@ -26,7 +26,7 @@ export interface Axis {
 }
 
 export const AXES: Axis[] = [
-  { code: 'EO', index: 1, name: { en: 'Energy Orientation', ru: 'Ориентация энергии' },
+  { code: 'EO', index: 1, name: { en: 'Energy Orientation', ru: 'Направленность энергии' },
     plus: { letter: 'O', label: { en: 'Outward', ru: 'Вовне' } },
     minus: { letter: 'W', label: { en: 'Inward', ru: 'Внутрь' } }, color: '#2244E0' },
   { code: 'IF', index: 2, name: { en: 'Information Focus', ru: 'Фокус восприятия' },
@@ -35,7 +35,7 @@ export const AXES: Axis[] = [
   { code: 'DB', index: 3, name: { en: 'Decision Basis', ru: 'Основа решений' },
     plus: { letter: 'L', label: { en: 'Logic', ru: 'Логика' } },
     minus: { letter: 'V', label: { en: 'Values', ru: 'Ценности' } }, color: '#8A5CD6' },
-  { code: 'SP', index: 4, name: { en: 'Structure Preference', ru: 'Организация' },
+  { code: 'SP', index: 4, name: { en: 'Structure Preference', ru: 'Организация жизни' },
     plus: { letter: 'D', label: { en: 'Ordered', ru: 'Упорядоченность' } },
     minus: { letter: 'F', label: { en: 'Flexible', ru: 'Гибкость' } }, color: '#FF7A3D' },
   { code: 'ER', index: 5, name: { en: 'Emotional Response', ru: 'Эмоциональный отклик' },
@@ -75,7 +75,7 @@ export const BANDS: Band[] = [
   { band: 4, label: { en: 'Strong', ru: 'Сильный' }, intensityMin: 61, intensityMax: 80 },
   { band: 3, label: { en: 'Pronounced', ru: 'Выраженный' }, intensityMin: 41, intensityMax: 60 },
   { band: 2, label: { en: 'Moderate', ru: 'Умеренный' }, intensityMin: 21, intensityMax: 40 },
-  { band: 1, label: { en: 'Slight', ru: 'Слабый' }, intensityMin: 6, intensityMax: 20 },
+  { band: 1, label: { en: 'Slight', ru: 'Лёгкий' }, intensityMin: 6, intensityMax: 20 },
   { band: 0, label: { en: 'Balanced', ru: 'Сбалансированный' }, intensityMin: 0, intensityMax: 5 },
 ];
 

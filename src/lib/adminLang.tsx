@@ -74,7 +74,7 @@ export const T = {
   res_created: { en: 'Created',      ru: 'Создан'           },
   // Assessments / Questions
   ass_title:   { en: 'Test Questions',            ru: 'Вопросы теста'             },
-  ass_sub:     { en: 'questions · TestPersonal v1', ru: 'вопросов · TestPersonal v1' },
+  ass_sub:     { en: 'questions · ReNo v1.2', ru: 'вопросов · ReNo v1.2' },
   ass_search:  { en: 'Search...',                 ru: 'Поиск...'                  },
   ass_save:    { en: 'Save',                      ru: 'Сохранить'                 },
   ass_saved:   { en: 'Saved',                     ru: 'Сохранено'                 },
