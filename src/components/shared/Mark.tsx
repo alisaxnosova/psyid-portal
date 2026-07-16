@@ -9,26 +9,25 @@
  */
 
 const AXIS_HUES = ['#2244E0', '#6A85F0', '#8A5CD6', '#FF7A3D', '#FF5A5A'];
-// Pentagon vertices on a 100×100 viewBox, axis order (top, clockwise).
-const PTS: [number, number][] = [[50, 15], [83.5, 39.3], [70.7, 78.8], [29.3, 78.8], [16.5, 39.3]];
+// Official mark geometry (from logo-export master): pentagon vertices on a 100×100
+// viewBox, axis order (top, clockwise). Thin faint outline, five dots, NO center dot.
+const PTS: [number, number][] = [[50, 16], [84, 40], [71, 79], [29, 79], [16, 40]];
 
 type Tone = 'dark' | 'light';
 
 export function ConstellationGlyph({ size = 32, mono = false, tone = 'dark' }: {
   size?: number; mono?: boolean; tone?: Tone;
 }) {
-  const stroke = mono ? 'currentColor' : '#8894c8';
-  const centerFill = mono ? 'currentColor' : (tone === 'dark' ? '#fff' : 'var(--ink)');
+  const stroke = mono ? 'currentColor' : (tone === 'dark' ? 'rgba(210,218,255,0.22)' : 'var(--line-dark)');
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ display: 'block', overflow: 'visible' }} aria-hidden="true">
       <polygon
         points={PTS.map((p) => p.join(',')).join(' ')}
-        fill="none" stroke={stroke} strokeOpacity={mono ? 0.5 : 0.32} strokeWidth={3}
+        fill="none" stroke={stroke} strokeOpacity={mono ? 0.4 : 1} strokeWidth={1.5}
       />
       {PTS.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={7.5} fill={mono ? 'currentColor' : AXIS_HUES[i]} />
+        <circle key={i} cx={x} cy={y} r={7} fill={mono ? 'currentColor' : AXIS_HUES[i]} />
       ))}
-      <circle cx={50} cy={50} r={4} fill={centerFill} />
     </svg>
   );
 }
