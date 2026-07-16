@@ -165,6 +165,50 @@ export default function SiteLanding() {
         </div>
       </section>
 
+      {/* ── § PRICING ── */}
+      <section className="section" style={{ paddingTop: 0 }} id="pricing">
+        <div className="wrap">
+          <div className="rv" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 52px' }}>
+            <div className="eyebrow dash blue" style={{ justifyContent: 'center', marginBottom: 16 }}>{t('price_eyebrow')}</div>
+            <h2 className="h-2">{t('price_h')}</h2>
+            <p className="lead" style={{ margin: '16px auto 0', textAlign: 'center' }}>{t('price_sub')}</p>
+          </div>
+          <div className="grid g-3" style={{ alignItems: 'stretch' }}>
+            {[
+              { name: t('tier1_name'), price: t('tier1_price'), period: t('tier1_period'), feats: [t('tier1_f1'), t('tier1_f2'), t('tier1_f3')], cta: t('tier1_cta'), highlight: false, badge: '' },
+              { name: t('tier2_name'), price: t('tier2_price'), period: t('tier2_period'), feats: [t('tier2_f1'), t('tier2_f2'), t('tier2_f3'), t('tier2_f4')], cta: t('tier2_cta'), highlight: true, badge: t('tier2_badge') },
+              { name: t('tier3_name'), price: t('tier3_price'), period: t('tier3_period'), feats: [t('tier3_f1'), t('tier3_f2'), t('tier3_f3')], cta: t('tier3_cta'), highlight: false, badge: '' },
+            ].map((tier) => (
+              <div key={tier.name} className="glass" style={{
+                padding: '34px 30px', display: 'flex', flexDirection: 'column', position: 'relative',
+                border: tier.highlight ? '1.5px solid var(--orange)' : '1px solid var(--space-brd)',
+                boxShadow: tier.highlight ? '0 26px 66px -30px var(--coral)' : undefined,
+                transform: tier.highlight ? 'translateY(-8px)' : undefined,
+              }}>
+                {tier.badge && (
+                  <span style={{ position: 'absolute', top: 20, right: 20, fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: '#fff', background: 'linear-gradient(135deg,var(--orange),var(--coral))', padding: '5px 11px', borderRadius: 'var(--r-full)' }}>{tier.badge}</span>
+                )}
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: tier.highlight ? 'var(--orange)' : 'var(--space-fg-m)' }}>{tier.name}</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: '14px 0 2px' }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 54, letterSpacing: '-.04em', lineHeight: 1 }}>{tier.price}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--space-fg-m)' }}>/ {tier.period}</span>
+                </div>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, margin: '26px 0 28px', padding: 0 }}>
+                  {tier.feats.map((f) => (
+                    <li key={f} style={{ display: 'flex', gap: 11, fontSize: 14.5, lineHeight: 1.45, color: 'var(--space-fg-s)' }}>
+                      <span style={{ color: 'var(--orange)', fontWeight: 700, flex: 'none' }}>✓</span>{f}
+                    </li>
+                  ))}
+                </ul>
+                <Link className={`btn ${tier.highlight ? 'btn-orange' : 'btn-ghost-white'}`} href="/reno" style={{ marginTop: 'auto', justifyContent: 'center' }}>
+                  {tier.cta} <span className="ar">→</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── § FINAL CTA ── */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">

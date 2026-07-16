@@ -12,6 +12,7 @@ const LINKS = [
   { href: '/', key: 'nav_home' },
   { href: '/methodology', key: 'nav_method' },
   { href: '/professions', key: 'nav_prof' },
+  { href: '/#pricing', key: 'nav_price' },
   { href: '/sources', key: 'nav_sources' },
 ];
 
