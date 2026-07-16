@@ -66,16 +66,16 @@ export default function SiteLanding() {
     <div className="usite" ref={rootRef}>
       {/* ── HERO ── */}
       <header className="surface-space" style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <Starfield count={120} />
+        <Starfield count={190} />
         <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-          <DecorativeGalaxy sizeK={1.05} centerY={0.52} />
+          <DecorativeGalaxy sizeK={1.75} centerY={0.5} glow={1.25} />
         </div>
         {/* radial scrim to keep hero text legible over the moving galaxy */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(ellipse 60% 55% at 50% 46%, rgba(6,10,32,.72) 0%, rgba(6,10,32,.28) 45%, transparent 72%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(ellipse 58% 50% at 50% 44%, rgba(6,10,32,.74) 0%, rgba(6,10,32,.30) 46%, transparent 74%)', pointerEvents: 'none' }} />
 
         <PsidNav />
 
-        <div className="wrap" style={{ position: 'relative', zIndex: 5, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', paddingTop: 100, paddingBottom: 80 }}>
+        <div className="wrap" style={{ position: 'relative', zIndex: 5, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', paddingTop: 96, paddingBottom: 72 }}>
           <div className="eyebrow dash" style={{ marginBottom: 22 }}>{t('hero_eyebrow')}</div>
           <h1 className="h-hero" style={{ maxWidth: '16ch' }}>
             {t('hero_h1a')} <span className="grad-o">{t('hero_h1b')}</span>

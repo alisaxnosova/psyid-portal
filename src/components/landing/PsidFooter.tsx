@@ -9,7 +9,7 @@ export function PsidFooter() {
   const { t } = useSiteLang();
   return (
     <footer style={{ position: 'relative', zIndex: 2, borderTop: '1px solid var(--space-brd)', color: 'var(--space-fg)' }}>
-      <div className="wrap" style={{ paddingTop: 64, paddingBottom: 44 }}>
+      <div style={{ padding: '64px clamp(24px,4vw,72px) 44px', maxWidth: 1720, margin: '0 auto' }}>
         {/* brand hugs the left edge, the link columns hug the right — fills the band edge-to-edge */}
         <div className="psid-foot-top" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '40px 64px' }}>
           <div style={{ maxWidth: 340, minWidth: 240 }}>

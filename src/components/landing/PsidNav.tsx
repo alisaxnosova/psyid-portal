@@ -23,55 +23,58 @@ export function PsidNav() {
 
   return (
     <nav style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30 }}>
-      <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 78 }}>
-        <Link href="/" aria-label="PsyID"><Mark tone="dark" size="md" /></Link>
+      {/* full-bleed bar; true 3-column grid keeps the tabs dead-center regardless of side widths */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 80, padding: '0 clamp(24px,4vw,72px)', gap: 24 }}>
+        <div style={{ justifySelf: 'start' }}>
+          <Link href="/" aria-label="PsyID"><Mark tone="dark" size={44} /></Link>
+        </div>
 
-        {/* desktop links */}
-        <div className="psid-nav-links" style={{ display: 'flex', gap: 6 }}>
+        <div className="psid-nav-links" style={{ justifySelf: 'center', display: 'flex', gap: 6 }}>
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (
               <Link key={l.href} href={l.href} style={{
-                fontSize: 14, fontWeight: 500, padding: '8px 13px', borderRadius: 'var(--r-full)',
+                fontSize: 15, fontWeight: 500, padding: '9px 16px', borderRadius: 'var(--r-full)',
                 color: active ? '#fff' : 'var(--space-fg-s)', transition: 'color .16s, background .16s',
               }}>{t(l.key)}</Link>
             );
           })}
         </div>
 
-        <div className="psid-nav-right" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <LocaleToggle tone="dark" />
-          <Link href={isLoggedIn ? '/portal' : '/login'} style={{ fontSize: 14, fontWeight: 500, color: 'var(--space-fg-s)' }}>
-            {isLoggedIn ? t('nav_portal') : t('nav_login')}
-          </Link>
-          <Link className="btn btn-orange sm" href="/reno">{t('nav_cta')} →</Link>
-        </div>
+        <div style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div className="psid-nav-right" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <LocaleToggle tone="dark" />
+            <Link href={isLoggedIn ? '/portal' : '/login'} style={{ fontSize: 15, fontWeight: 500, color: 'var(--space-fg-s)' }}>
+              {isLoggedIn ? t('nav_portal') : t('nav_login')}
+            </Link>
+            <Link className="btn btn-orange sm" href="/reno">{t('nav_cta')} →</Link>
+          </div>
 
-        {/* mobile toggle */}
-        <button
-          className="psid-nav-burger"
-          aria-label="Menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          style={{
-            display: 'none', width: 42, height: 42, borderRadius: 'var(--r-full)',
-            border: '1px solid var(--space-brd)', background: 'var(--space-panel)', color: '#fff',
-            alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            {open
-              ? <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              : <path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />}
-          </svg>
-        </button>
+          <button
+            className="psid-nav-burger"
+            aria-label="Menu"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            style={{
+              display: 'none', width: 42, height: 42, borderRadius: 'var(--r-full)',
+              border: '1px solid var(--space-brd)', background: 'var(--space-panel)', color: '#fff',
+              alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              {open
+                ? <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                : <path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* mobile drawer */}
       {open && (
         <div className="psid-nav-drawer" style={{
           margin: '0 20px', padding: 16, borderRadius: 'var(--r-lg)',
-          background: 'rgba(8,12,34,.92)', border: '1px solid var(--space-brd)', backdropFilter: 'blur(16px)',
+          background: 'rgba(8,12,34,.94)', border: '1px solid var(--space-brd)', backdropFilter: 'blur(16px)',
           display: 'flex', flexDirection: 'column', gap: 4,
         }}>
           {LINKS.map((l) => (

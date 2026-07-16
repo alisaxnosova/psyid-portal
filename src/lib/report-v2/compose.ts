@@ -96,10 +96,11 @@ function identitySection(
     title: holder?.name ?? '',
     blocks: [
       {
-        // The archetype word is the report title; its definition is the standfirst.
+        // The archetype word is the report title, rendered as the brand mark "Word."
+        // (with the trailing period). The clean word stays on `meta.word`/report.word.
         id: 'identity',
         layer: 'identity',
-        heading: tx(arch.word, lang),
+        heading: `${tx(arch.word, lang)}.`,
         body: [tx(arch.definition, lang)],
         meta,
       },
