@@ -1,598 +1,73 @@
 {
-  "nav_how": {
-    "en": "How it works",
-    "ru": "Как работает"
-  },
-  "nav_explore": {
-    "en": "Explore",
-    "ru": "Подобрать"
-  },
-  "nav_passport": {
-    "en": "Passport",
-    "ru": "Паспорт"
-  },
-  "nav_price": {
-    "en": "Pricing",
-    "ru": "Цены"
-  },
-  "nav_faq": {
-    "en": "FAQ",
-    "ru": "Вопросы"
-  },
-  "nav_cta": {
-    "en": "Take test →",
-    "ru": "Пройти тест →"
-  },
-  "nav_specialists": {
-    "en": "Admins",
-    "ru": "Admins"
-  },
-  "badge": {
-    "en": "PSYID · Your Psychological Passport",
-    "ru": "PSYID · Ваш психологический паспорт"
-  },
-  "hero_h1a": {
-    "en": "Discover who you are",
-    "ru": "Узнайте кто вы"
-  },
-  "hero_h1b": {
-    "en": "and what career fits you",
-    "ru": "и какая карьера вам подходит"
-  },
-  "hero_p": {
-    "en": "A 15-minute assessment maps your 4 character axes, surfaces your core strengths, and shows the careers where you'll naturally excel.",
-    "ru": "Тест за 15 минут строит психологический паспорт: 4 оси характера, ваши сильные стороны и карьерные направления, в которых вы будете по-настоящему эффективны."
-  },
-  "hero_cta": {
-    "en": "Take the free assessment",
-    "ru": "Пройти тест бесплатно"
-  },
-  "hero_sample": {
-    "en": "View sample",
-    "ru": "Смотреть пример"
-  },
-  "hero_free": {
-    "en": "Free",
-    "ru": "Бесплатно"
-  },
-  "hero_min": {
-    "en": "15 minutes",
-    "ru": "15 минут"
-  },
-  "hero_instant": {
-    "en": "instant results",
-    "ru": "результат сразу"
-  },
-  "radar_energy": {
-    "en": "Energy",
-    "ru": "Энергия"
-  },
-  "radar_attention": {
-    "en": "Attention",
-    "ru": "Внимание"
-  },
-  "radar_decisions": {
-    "en": "Decisions",
-    "ru": "Решения"
-  },
-  "radar_structure": {
-    "en": "Structure",
-    "ru": "Структура"
-  },
-  "profile_label": {
-    "en": "Profile ·",
-    "ru": "Профиль ·"
-  },
-  "profile_demo": {
-    "en": "Dreamer-Explorer",
-    "ru": "Мечтатель-исследователь"
-  },
-  "feat1_t": {
-    "en": "Psychological Passport",
-    "ru": "Психологический паспорт"
-  },
-  "feat1_d": {
-    "en": "24 pages — digital and print. Clear, honest language — no clinical jargon.",
-    "ru": "24 страницы — печатный и цифровой. Понятный язык без клинического жаргона."
-  },
-  "feat2_t": {
-    "en": "Strengths Map",
-    "ru": "Карта сильных сторон"
-  },
-  "feat2_d": {
-    "en": "What you genuinely do best, where to direct your energy, and where to stop forcing it.",
-    "ru": "Что вам на самом деле даётся лучше всего, куда направлять усилия, а где — отпустить."
-  },
-  "feat3_t": {
-    "en": "Career Directions",
-    "ru": "Карьерные направления"
-  },
-  "feat3_d": {
-    "en": "Roles, industries, and work styles where you'll actually be at your best.",
-    "ru": "Роли, сферы и стили работы, в которых вы будете действительно эффективны."
-  },
-  "how_tag": {
-    "en": "How it works",
-    "ru": "Как это работает"
-  },
-  "how_h2a": {
-    "en": "Three steps to a",
-    "ru": "Три шага — и у вас в руках"
-  },
-  "how_h2b": {
-    "en": "passport",
-    "ru": "паспорт"
-  },
-  "how_h2c": {
-    "en": ", not a label.",
-    "ru": ", а не ярлык."
-  },
-  "how_p": {
-    "en": "No clinical questionnaires or scary jargon. You work through a series of real-life scenarios.",
-    "ru": "Никаких клинических опросников и пугающей лексики. Вы проходите серию жизненных сценариев."
-  },
-  "step1_l": {
-    "en": "Step 01",
-    "ru": "Шаг 01"
-  },
-  "step1_t": {
-    "en": "You take the assessment",
-    "ru": "Вы проходите тест"
-  },
-  "step1_d": {
-    "en": "15 minutes on any device. Not a quiz — a series of real-life scenarios most people find surprisingly enjoyable.",
-    "ru": "15 минут на любом экране. Не опросник, а серия жизненных сценариев — большинству людей на удивление нравится."
-  },
-  "step2_l": {
-    "en": "Step 02",
-    "ru": "Шаг 02"
-  },
-  "step2_t": {
-    "en": "We build your passport",
-    "ru": "Мы строим паспорт"
-  },
-  "step2_d": {
-    "en": "Your answers map onto 4 character axes. Every statement is reviewed by a psychologist, with a confidence score for each insight.",
-    "ru": "Ответы ложатся в 4 оси характера. Каждое утверждение прошло экспертизу, у каждого вывода — оценка уверенности."
-  },
-  "step3_l": {
-    "en": "Step 03",
-    "ru": "Шаг 03"
-  },
-  "step3_t": {
-    "en": "You see your map",
-    "ru": "Вы видите карту"
-  },
-  "step3_d": {
-    "en": "Digital passport the same day. Print within a week. Inside: strengths, career directions, and 3 experiments to try this month.",
-    "ru": "Цифровой паспорт в тот же день. Печатный — через неделю. Внутри: сильные стороны, карьерные пути и 3 эксперимента на ближайший месяц."
-  },
-  "explore_tag": {
-    "en": "Try it · 20 seconds",
-    "ru": "Попробуйте · 20 секунд"
-  },
-  "explore_h2a": {
-    "en": "Build your profile across",
-    "ru": "Соберите профиль по"
-  },
-  "explore_h2b": {
-    "en": "4 axes",
-    "ru": "4 осям"
-  },
-  "explore_p": {
-    "en": "Move the dots on each axis — the shape shifts and a live description appears. That's how the passport works, just 24 pages deeper.",
-    "ru": "Двигайте точки на каждой оси — фигура меняется и появляется живое описание. Так и работает паспорт, только на 24 страницы глубже."
-  },
-  "axis_energy_title": {
-    "en": "Energy",
-    "ru": "Энергия"
-  },
-  "axis_energy_sub": {
-    "en": "how you recharge",
-    "ru": "как восстанавливаетесь"
-  },
-  "axis_energy_left": {
-    "en": "Alone",
-    "ru": "В одиночестве"
-  },
-  "axis_energy_right": {
-    "en": "With others",
-    "ru": "С другими"
-  },
-  "axis_attn_title": {
-    "en": "Attention",
-    "ru": "Внимание"
-  },
-  "axis_attn_sub": {
-    "en": "where it naturally goes",
-    "ru": "на что направлено"
-  },
-  "axis_attn_left": {
-    "en": "Facts",
-    "ru": "Факты"
-  },
-  "axis_attn_right": {
-    "en": "Ideas",
-    "ru": "Идеи"
-  },
-  "axis_decs_title": {
-    "en": "Decisions",
-    "ru": "Решения"
-  },
-  "axis_decs_sub": {
-    "en": "what they're based on",
-    "ru": "на чём основаны"
-  },
-  "axis_decs_left": {
-    "en": "Logic",
-    "ru": "Логика"
-  },
-  "axis_decs_right": {
-    "en": "Feelings",
-    "ru": "Чувства"
-  },
-  "axis_struct_title": {
-    "en": "Structure",
-    "ru": "Структура"
-  },
-  "axis_struct_sub": {
-    "en": "what feels natural",
-    "ru": "что комфортнее"
-  },
-  "axis_struct_left": {
-    "en": "Plan",
-    "ru": "План"
-  },
-  "axis_struct_right": {
-    "en": "Flow",
-    "ru": "Свобода"
-  },
-  "inside_tag": {
-    "en": "Inside the Passport",
-    "ru": "Внутри паспорта"
-  },
-  "inside_h2a": {
-    "en": "Six things you'll",
-    "ru": "Шесть вещей, которые вы"
-  },
-  "inside_h2b": {
-    "en": "discover",
-    "ru": "узнаете"
-  },
-  "inside_p": {
-    "en": "Each section answers a question people actually ask before taking the assessment.",
-    "ru": "Каждый раздел отвечает на вопрос, который нам задают до прохождения теста."
-  },
-  "chip1": {
-    "en": "How you connect with new people",
-    "ru": "Как вы знакомитесь с новыми людьми"
-  },
-  "chip2": {
-    "en": "How you make decisions under pressure",
-    "ru": "Как принимаете решения под давлением"
-  },
-  "chip3": {
-    "en": "What actually recharges you",
-    "ru": "Что на самом деле вас восстанавливает"
-  },
-  "chip4": {
-    "en": "Where to push yourself, where to let go",
-    "ru": "Где давить на себя, где отпустить"
-  },
-  "chip5": {
-    "en": "Careers you'd genuinely excel in",
-    "ru": "Карьеры, в которых вы будете эффективны"
-  },
-  "chip6": {
-    "en": "Three experiments to try this month",
-    "ru": "Три эксперимента на ближайший месяц"
-  },
-  "passport_page": {
-    "en": "Page 14 / 24",
-    "ru": "Страница 14 / 24"
-  },
-  "passport_section": {
-    "en": "Section · Decisions",
-    "ru": "Раздел · Решения"
-  },
-  "passport_quote": {
-    "en": "\"Lisa makes decisions after sitting with two good options. Rushed choices go poorly.",
-    "ru": "«Маша принимает решения, посидев с двумя хорошими вариантами. Поспешные выборы идут плохо."
-  },
-  "passport_bold": {
-    "en": "Give her a night",
-    "ru": "Дайте ей ночь"
-  },
-  "passport_footer1": {
-    "en": "PsyID · Psychological Passport",
-    "ru": "PsyID · Психологический паспорт"
-  },
-  "passport_conf": {
-    "en": "Confidence · 0.82",
-    "ru": "Уверенность · 0.82"
-  },
-  "stats_tag": {
-    "en": "Methodology",
-    "ru": "Методология"
-  },
-  "stats_h2": {
-    "en": "Rigorous where it matters.",
-    "ru": "Строго там, где это важно."
-  },
-  "stats_p": {
-    "en": "Every item went through two rounds of expert review and field testing. No labels — just patterns.",
-    "ru": "Каждый пункт прошёл два круга экспертизы и серию полевых проверок. Никаких ярлыков — только паттерны."
-  },
-  "stat1_l": {
-    "en": "character axes calibrated for adult life and careers",
-    "ru": "оси характера, адаптированные под взрослую жизнь и карьеру"
-  },
-  "stat2_l": {
-    "en": "psychologists review every statement",
-    "ru": "психолога рецензируют каждое утверждение"
-  },
-  "stat3_l": {
-    "en": "people in the pre-release sample",
-    "ru": "человек в выборке до релиза"
-  },
-  "stat4_l": {
-    "en": "average confidence score across passport statements",
-    "ru": "средняя уверенность утверждений в паспорте"
-  },
-  "testi_q": {
-    "en": "\"I expected another personality test. I got a document that finally explains how I think — and what I should be doing with my career.\"",
-    "ru": "«Я ждала очередного теста. И получила документ, который наконец объясняет, как я думаю — и куда мне идти в карьере»."
-  },
-  "testi_author": {
-    "en": "Masha K.",
-    "ru": "Маша К."
-  },
-  "testi_meta": {
-    "en": "designer · Tbilisi",
-    "ru": "дизайнер · Тбилиси"
-  },
-  "price_tag": {
-    "en": "Pricing",
-    "ru": "Цена"
-  },
-  "price_h2a": {
-    "en": "Two ways to",
-    "ru": "Два способа"
-  },
-  "price_h2b": {
-    "en": "start",
-    "ru": "начать"
-  },
-  "price_sub": {
-    "en": "No subscription. Free delivery in Russia and Georgia.",
-    "ru": "Без подписки. Бесплатная доставка в РФ и Грузии."
-  },
-  "plan1_name": {
-    "en": "Standard",
-    "ru": "Стандарт"
-  },
-  "plan1_price": {
-    "en": "₽4 900",
-    "ru": "₽4 900"
-  },
-  "plan1_sub": {
-    "en": "Complete passport — digital and print.",
-    "ru": "Полный паспорт — печатный и цифровой."
-  },
-  "plan1_f1": {
-    "en": "24-page psychological passport",
-    "ru": "24-страничный психологический паспорт"
-  },
-  "plan1_f2": {
-    "en": "Print version — delivery in 5 days",
-    "ru": "Печатная версия — доставка за 5 дней"
-  },
-  "plan1_f3": {
-    "en": "Digital version + shareable card",
-    "ru": "Цифровая версия + карточка для пересылки"
-  },
-  "plan1_f4": {
-    "en": "List of 3 experiments to try this month",
-    "ru": "Список из 3 экспериментов на месяц"
-  },
-  "plan1_cta": {
-    "en": "Start →",
-    "ru": "Начать →"
-  },
-  "plan2_name": {
-    "en": "Passport + Consultation",
-    "ru": "Паспорт + консультация"
-  },
-  "plan2_price": {
-    "en": "₽7 900",
-    "ru": "₽7 900"
-  },
-  "plan2_sub": {
-    "en": "Everything in Standard, plus a session with a psychology-trained career consultant.",
-    "ru": "Всё из Стандарта, плюс сессия с карьерным психологом."
-  },
-  "plan2_badge": {
-    "en": "Recommended",
-    "ru": "Рекомендуем"
-  },
-  "plan2_f1": {
-    "en": "Everything in Standard",
-    "ru": "Всё из «Стандарта»"
-  },
-  "plan2_f2": {
-    "en": "45-minute consultation with a psychologist",
-    "ru": "45-минутная консультация с психологом"
-  },
-  "plan2_f3": {
-    "en": "Career next-steps plan",
-    "ru": "План карьерных следующих шагов"
-  },
-  "plan2_f4": {
-    "en": "30 days of email support",
-    "ru": "Поддержка по почте в течение 30 дней"
-  },
-  "plan2_cta": {
-    "en": "Start →",
-    "ru": "Начать →"
-  },
-  "faq_tag": {
-    "en": "FAQ",
-    "ru": "Вопросы"
-  },
-  "faq_h2a": {
-    "en": "Questions people",
-    "ru": "То, что нас"
-  },
-  "faq_h2b": {
-    "en": "ask",
-    "ru": "спрашивают"
-  },
-  "faq_h2c": {
-    "en": "most often.",
-    "ru": "чаще всего."
-  },
-  "faq_p": {
-    "en": "The things people write to us before taking the assessment.",
-    "ru": "То, о чём пишут до того, как пройти тест."
-  },
-  "faq_q1": {
-    "en": "Isn't this just another MBTI test?",
-    "ru": "Это не очередной тест MBTI?"
-  },
-  "faq_a1": {
-    "en": "No. MBTI gives you a label. PsyID is a 24-page document reviewed by psychologists. Every statement is grounded in your specific answers and comes with a confidence score — so you always know how certain we are.",
-    "ru": "Нет. MBTI даёт ярлык. PsyID — это 24-страничный документ, прошедший экспертизу психологов. Каждое утверждение опирается на ваши конкретные ответы и сопровождается оценкой уверенности — вы всегда знаете, насколько мы в этом уверены."
-  },
-  "faq_q2": {
-    "en": "Won't this box me in?",
-    "ru": "Не загонит ли это меня в рамки?"
-  },
-  "faq_a2": {
-    "en": "That's our concern too. The passport is a starting point, not a verdict. It opens a conversation: \"here's what we noticed, here's what to try.\" You change and grow — it says so on the first page.",
-    "ru": "Это наш страх тоже. Паспорт — стартовая точка, а не приговор. Он открывает разговор: «вот что мы заметили, вот что можно попробовать». Вы меняетесь — об этом написано на первой странице."
-  },
-  "faq_q3": {
-    "en": "Is this for career changers or people just starting out?",
-    "ru": "Это для смены карьеры или тех, кто только начинает?"
-  },
-  "faq_a3": {
-    "en": "Both — and everyone in between. Whether you're switching careers, choosing your first path, or just wanting more clarity about yourself, the passport meets you where you are.",
-    "ru": "Для всех — и для тех, кто посередине. Смена карьеры, первый выбор направления или просто желание лучше понять себя — паспорт встречает вас там, где вы сейчас."
-  },
-  "faq_q4": {
-    "en": "How long does it take?",
-    "ru": "Сколько занимает тест?"
-  },
-  "faq_a4": {
-    "en": "About 15 minutes on any screen. Digital passport arrives the same day; the printed version within five days.",
-    "ru": "Около 15 минут на любом экране. Цифровой паспорт — в тот же день, печатный — в течение пяти дней."
-  },
-  "faq_q5": {
-    "en": "Who can see my results?",
-    "ru": "Кто увидит результаты?"
-  },
-  "faq_a5": {
-    "en": "Only you. Your data is private by default. You decide whether to share your card with anyone — we never publish or sell anything, ever.",
-    "ru": "Только вы. По умолчанию данные приватны. Вы сами решаете, делиться ли с кем-то — мы не публикуем и не продаём ничего никогда."
-  },
-  "cta_h2a": {
-    "en": "Give yourself a chance to",
-    "ru": "Дайте себе шанс"
-  },
-  "cta_h2b": {
-    "en": "know yourself",
-    "ru": "понять себя"
-  },
-  "cta_p": {
-    "en": "15 minutes today — a map you'll use for years. The assessment is free.",
-    "ru": "15 минут сегодня — карта, которой можно пользоваться годами. Тест бесплатный."
-  },
-  "cta_btn": {
-    "en": "Take the free assessment ↗",
-    "ru": "Пройти тест бесплатно ↗"
-  },
-  "cta_sample": {
-    "en": "View sample",
-    "ru": "Смотреть пример"
-  },
-  "foot_tagline": {
-    "en": "Your psychological passport. Built with psychologists.",
-    "ru": "Ваш психологический паспорт. Разработан вместе с психологами."
-  },
-  "foot_prod": {
-    "en": "Product",
-    "ru": "Продукт"
-  },
-  "foot_comp": {
-    "en": "Company",
-    "ru": "Компания"
-  },
-  "foot_contact": {
-    "en": "Contact",
-    "ru": "Связаться"
-  },
-  "foot_link_how": {
-    "en": "How it works",
-    "ru": "Как это работает"
-  },
-  "foot_link_explore": {
-    "en": "Explore",
-    "ru": "Попробовать"
-  },
-  "foot_link_passport": {
-    "en": "Passport",
-    "ru": "Паспорт"
-  },
-  "foot_link_price": {
-    "en": "Pricing",
-    "ru": "Цены"
-  },
-  "foot_link_about": {
-    "en": "About us",
-    "ru": "О нас"
-  },
-  "foot_link_method": {
-    "en": "Methodology",
-    "ru": "Методология"
-  },
-  "foot_link_schools": {
-    "en": "For Organizations",
-    "ru": "Для организаций"
-  },
-  "foot_link_journal": {
-    "en": "Blog",
-    "ru": "Журнал"
-  },
-  "foot_link_email": {
-    "en": "support@psyid.me",
-    "ru": "support@psyid.me"
-  },
-  "foot_link_tg": {
-    "en": "Telegram",
-    "ru": "Telegram"
-  },
-  "foot_link_ig": {
-    "en": "Instagram",
-    "ru": "Instagram"
-  },
-  "foot_link_press": {
-    "en": "Press Kit",
-    "ru": "Пресс-кит"
-  },
-  "foot_copy": {
-    "en": "© 2026 PsyID · psyid.me",
-    "ru": "© 2026 PsyID · psyid.me"
-  },
-  "foot_legal": {
-    "en": "Privacy · Terms",
-    "ru": "Приватность · Условия"
-  },
-  "foot_admin": {
-    "en": "Admin Portal",
-    "ru": "Портал администратора"
-  },
-  "lang_toggle": {
-    "en": "RU",
-    "ru": "EN"
-  }
+  "nav_home":        { "ru": "Главная",     "en": "Home" },
+  "nav_method":      { "ru": "Методология", "en": "Methodology" },
+  "nav_prof":        { "ru": "Профессии",   "en": "Professions" },
+  "nav_sources":     { "ru": "Источники",   "en": "Sources" },
+  "nav_cta":         { "ru": "Пройти тест",  "en": "Take the test" },
+  "nav_login":       { "ru": "Войти",       "en": "Log in" },
+  "nav_portal":      { "ru": "Портал",      "en": "Portal" },
+
+  "hero_eyebrow":    { "ru": "PsyID · ReNo", "en": "PsyID · ReNo" },
+  "hero_h1a":        { "ru": "Ты — целая",   "en": "You are a whole" },
+  "hero_h1b":        { "ru": "вселенная.",   "en": "universe." },
+  "hero_p":          { "ru": "Пять осей характера в ядре. Планеты, спутники и созвездия — вокруг. Всё построено из твоих ответов, и всё — измерено.", "en": "Five axes of character at the core. Planets, moons and constellations around them. All of it built from your answers, and all of it measured." },
+  "hero_cta":        { "ru": "Исследовать свою галактику", "en": "Explore your galaxy" },
+  "hero_cta2":       { "ru": "Пройти тест",  "en": "Take the test" },
+  "hero_micro":      { "ru": "94 вопроса · 15 минут · научная методика", "en": "94 questions · 15 minutes · a real method" },
+  "hero_grabhint":   { "ru": "потяни, чтобы вращать", "en": "drag to spin" },
+
+  "code_eyebrow":    { "ru": "Твой код", "en": "Your code" },
+  "code_h":          { "ru": "У твоей личности есть координаты.", "en": "Your personality has coordinates." },
+  "code_p":          { "ru": "Каждая ось — непрерывная шкала от 0 до 100, а не ярлык. Твой код — это позиция сразу на пяти шкалах. Двух одинаковых практически не бывает.", "en": "Each axis is a continuous 0–100 scale, not a label. Your code is your position on all five at once. Two the same almost never happen." },
+
+  "grow_eyebrow":    { "ru": "Как она растёт", "en": "How it grows" },
+  "grow_ha":         { "ru": "Вселенная, которая", "en": "A universe that" },
+  "grow_hb":         { "ru": "не заканчивается",   "en": "never finishes" },
+  "grow1_t":         { "ru": "Звёзды и планеты", "en": "Stars and planets" },
+  "grow1_d":         { "ru": "Ядро — пять осей характера. Вокруг каждой вращаются планеты: из чего именно у тебя состоит эта черта.", "en": "The core is five axes of character. Planets orbit each one — what that trait is actually made of in you." },
+  "grow2_t":         { "ru": "Линзы", "en": "Lenses" },
+  "grow2_d":         { "ru": "Включи линзу — и увидишь, как твоя вселенная сдвигается: дома, на работе, под нагрузкой. Та же личность — в разных сферах жизни.", "en": "Turn a lens and watch your universe shift — at home, at work, under load. The same personality across different parts of life." },
+  "grow3_t":         { "ru": "Свет во времени", "en": "Light over time" },
+  "grow3_d":         { "ru": "Раз в год — новый слой света. Видно, что изменилось, а что осталось ядром. Люди меняются — теперь это заметно.", "en": "Once a year, a new layer of light. You see what changed and what stayed the core. People change — now it shows." },
+
+  "rigor_1":         { "ru": "Нормативная методика Ликерта", "en": "A normed Likert method" },
+  "rigor_2":         { "ru": "94 пункта", "en": "94 items" },
+  "rigor_3":         { "ru": "Непрерывные шкалы, а не типы", "en": "Continuous scales, not types" },
+  "rigor_4":         { "ru": "Открытый журнал изменений", "en": "An open changelog" },
+  "rigor_cta":       { "ru": "Как это устроено", "en": "How it works" },
+
+  "social_eyebrow":  { "ru": "Живые вселенные", "en": "Living universes" },
+  "social_count":    { "ru": "", "en": "" },
+  "social_label":    { "ru": "вселенных уже построено", "en": "universes built so far" },
+  "testi1_q":        { "ru": "Наконец стало понятно, почему на работе я совсем другой человек.", "en": "It finally made sense why I'm a completely different person at work." },
+  "testi1_by":       { "ru": "по коду W2·A4·V3·F4·S2", "en": "code W2·A4·V3·F4·S2" },
+  "testi2_q":        { "ru": "Не ярлык, а место. Впервые тест не сузил меня, а показал масштаб.", "en": "Not a label — a place. For once a test didn't shrink me, it showed the scale." },
+  "testi2_by":       { "ru": "по коду O3·C4·L3·D4·R2", "en": "code O3·C4·L3·D4·R2" },
+  "testi3_q":        { "ru": "Через год вернулся — и увидел, что именно во мне сдвинулось.", "en": "I came back a year later and saw exactly what had shifted in me." },
+  "testi3_by":       { "ru": "по коду W3·A3·V4·F2·S3", "en": "code W3·A3·V4·F2·S3" },
+
+  "final_eyebrow":   { "ru": "Осталось её построить", "en": "All that's left is to build it" },
+  "final_h":         { "ru": "Твоя вселенная уже существует.", "en": "Your universe already exists." },
+  "final_p":         { "ru": "Осталось её увидеть. Пять осей, один код, живая карта, которой ты правда пользуешься.", "en": "You just have to see it. Five axes, one code, a living map you'll actually use." },
+  "final_cta":       { "ru": "Начать · 15 минут", "en": "Begin · 15 minutes" },
+
+  "foot_promise":    { "ru": "Всё, что светится в твоей вселенной, — измерено. Ничего не выдумано.", "en": "Everything that shines in your universe was measured. Nothing was invented." },
+  "foot_col_product": { "ru": "Продукт", "en": "Product" },
+  "foot_col_science": { "ru": "Наука",   "en": "Science" },
+  "foot_col_contact": { "ru": "Контакт", "en": "Contact" },
+  "foot_link_galaxy":  { "ru": "Твоя галактика", "en": "Your galaxy" },
+  "foot_link_directions": { "ru": "Направления", "en": "Directions" },
+  "foot_link_method":  { "ru": "Методология", "en": "Methodology" },
+  "foot_link_match":   { "ru": "Как считается совпадение", "en": "How matching works" },
+  "foot_link_sources": { "ru": "Источники и литература", "en": "Sources & literature" },
+  "foot_link_changelog": { "ru": "Журнал изменений", "en": "Changelog" },
+  "foot_link_email":   { "ru": "Написать нам", "en": "Email us" },
+  "foot_copy":         { "ru": "© 2026 PsyID · ReNo 2.0", "en": "© 2026 PsyID · ReNo 2.0" },
+  "foot_admin":        { "ru": "Админ", "en": "Admin" },
+
+  "axis_energy":     { "ru": "Энергия",     "en": "Energy" },
+  "axis_info":       { "ru": "Информация",  "en": "Information" },
+  "axis_decision":   { "ru": "Решения",     "en": "Decision" },
+  "axis_structure":  { "ru": "Структура",   "en": "Structure" },
+  "axis_emotion":    { "ru": "Реакция",     "en": "Emotion" }
 }

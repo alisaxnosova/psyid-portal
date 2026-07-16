@@ -4,190 +4,93 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth, logout } from '@/lib/useAuth';
-import PassportView, { type Holder, type ApiAssessment } from './PassportView';
+import { useSiteLang } from '@/lib/siteLang';
+import { Mark } from '@/components/shared/Mark';
+import { LocaleToggle } from '@/components/shared/LocaleToggle';
+import { Starfield } from '@/components/galaxy';
+import PortalUniverse from './PortalUniverse';
+import type { Profile } from '@/components/galaxy/model';
 
-interface ResultsResponse { hasResult: boolean; holder: Holder; assessments: ApiAssessment[] }
-
-const C = {
-  blue: '#2244E0', blueSoft: '#6A85F0', orangeHot: '#FF9540', coral: '#FF5A5A',
-  ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
-  line: '#E5DED2', paper: '#FBF7F1', bone: '#F6F1EA',
-};
+interface UniSession { id: string; no: number; date: string; dateISO: string; code: string; profile: Profile; legacy: boolean; latest: boolean }
+interface UniverseData { hasResult: boolean; name: string; accessCode: string; code: string | null; profile: Profile | null; sessions: UniSession[] }
 
 export default function PortalPage() {
   const { user, loading, isLoggedIn } = useAuth();
+  const { lang, t } = useSiteLang();
+  const L = (b: { ru: string; en: string }) => b[lang];
   const router = useRouter();
-  const [codeCopied, setCodeCopied] = useState(false);
-  const [results, setResults] = useState<ResultsResponse | null>(null);
+  const [data, setData] = useState<UniverseData | null>(null);
   const [resLoading, setResLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !isLoggedIn) router.push('/login');
-  }, [loading, isLoggedIn, router]);
+  useEffect(() => { if (!loading && !isLoggedIn) router.push('/login'); }, [loading, isLoggedIn, router]);
 
-  // Once authenticated, check whether the user has a completed assessment.
-  // If so, the portal becomes the personality passport.
   useEffect(() => {
     if (!isLoggedIn) return;
     const token = typeof window !== 'undefined' ? localStorage.getItem('reno_access_token') : null;
-    fetch('/api/client/results', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
-      .then(r => (r.ok ? r.json() : null))
-      .then((d: ResultsResponse | null) => setResults(d))
+    fetch('/api/client/universe', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: UniverseData | null) => setData(d))
       .catch(() => {})
       .finally(() => setResLoading(false));
   }, [isLoggedIn]);
 
-  function copyCode() {
-    if (!user?.accessCode) return;
-    navigator.clipboard.writeText(user.accessCode).catch(() => {});
-    setCodeCopied(true);
-    setTimeout(() => setCodeCopied(false), 2000);
-  }
-
   if (loading || (isLoggedIn && resLoading)) {
     return (
-      <div style={{ minHeight: '100vh', background: C.paper, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, color: C.inkMute, letterSpacing: '0.1em' }}>Loading…</div>
+      <div style={{ minHeight: '100vh', background: 'var(--portal-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--space-fg-m)', letterSpacing: '.1em' }}>{L({ ru: 'Загрузка…', en: 'Loading…' })}</div>
       </div>
     );
   }
-
   if (!isLoggedIn) return null;
 
-  // Completed at least one assessment → show the personality passport.
-  if (results?.hasResult) {
-    return <PassportView holder={results.holder} assessments={results.assessments} />;
+  // Completed at least one assessment → the interactive universe.
+  if (data?.hasResult && data.profile) return <PortalUniverse data={data} />;
+
+  // No assessment yet → pre-assessment welcome (cosmic).
+  const name = user?.fullName ?? user?.firstName ?? user?.email ?? '';
+  function copyCode() {
+    if (!user?.accessCode) return;
+    navigator.clipboard.writeText(user.accessCode).catch(() => {});
+    setCopied(true); setTimeout(() => setCopied(false), 2000);
   }
 
-  const displayName = user?.fullName ?? user?.firstName ?? user?.email ?? 'there';
-
   return (
-    <div style={{ minHeight: '100vh', background: C.paper, fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
-
-      {/* ── Top nav ── */}
-      <header style={{ borderBottom: `1px solid ${C.line}`, background: '#fff', position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 28px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 800, fontSize: 18, letterSpacing: '-0.03em', color: C.ink }}>
-            <span style={{ width: 28, height: 28, borderRadius: 8, background: C.ink, position: 'relative', overflow: 'hidden', display: 'inline-block', flexShrink: 0 }}>
-              <span style={{ position: 'absolute', left: 5, top: 5, width: 8, height: 8, borderRadius: '50%', background: C.blue }}/>
-              <span style={{ position: 'absolute', right: 5, bottom: 5, width: 8, height: 8, borderRadius: 2, background: C.orangeHot }}/>
-            </span>
-            Psy<span style={{ color: C.orangeHot }}>ID</span>
-          </Link>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <span style={{ fontSize: 14, color: C.inkSoft }}>{user?.email}</span>
-            {user?.accessCode && (
-              <span style={{
-                fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800,
-                letterSpacing: '0.12em', color: C.ink,
-                background: C.bone, border: `1px solid ${C.line}`,
-                borderRadius: 8, padding: '4px 10px',
-              }}>
-                {user.accessCode}
-              </span>
-            )}
-            <button onClick={logout} style={{
-              fontSize: 13, fontWeight: 600, color: C.inkSoft, background: 'none',
-              border: `1px solid ${C.line}`, borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit',
-            }}>
-              Sign out
-            </button>
-          </div>
+    <div style={{ minHeight: '100vh', background: 'var(--portal-bg)', color: 'var(--space-fg)', position: 'relative', overflow: 'hidden' }}>
+      <Starfield count={90} />
+      <header style={{ position: 'relative', zIndex: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', borderBottom: '1px solid var(--space-brd)' }}>
+        <Link href="/"><Mark tone="dark" size="sm" /></Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <LocaleToggle tone="dark" />
+          <span style={{ fontSize: 14, color: 'var(--space-fg-s)' }}>{user?.email}</span>
+          <button onClick={logout} style={{ fontSize: 13, fontWeight: 600, color: 'var(--space-fg-s)', background: 'none', border: '1px solid var(--space-brd)', borderRadius: 999, padding: '6px 14px', cursor: 'pointer' }}>{L({ ru: 'Выйти', en: 'Sign out' })}</button>
         </div>
       </header>
 
-      {/* ── Main content ── */}
-      <main style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 28px' }}>
+      <main style={{ position: 'relative', zIndex: 5, maxWidth: 900, margin: '0 auto', padding: '56px 28px' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--orange)', marginBottom: 12 }}>— {L({ ru: 'Твоя вселенная ждёт', en: 'Your universe awaits' })} —</div>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(30px,4vw,52px)', letterSpacing: '-.035em', marginBottom: 12 }}>
+          {L({ ru: 'Привет', en: 'Hello' })}{name ? `, ${name}` : ''}
+        </h1>
+        <p style={{ fontSize: 17, color: 'var(--space-fg-s)', maxWidth: '54ch', marginBottom: 36 }}>
+          {L({ ru: 'Пройди тест — и мы соберём твою личность в живой объект: пять осей в ядре, а вокруг — планеты, спутники и созвездия. Пока твоя вселенная не построена.', en: "Take the test and we'll gather your personality into a living object: five axes at the core, with planets, moons and constellations around them. Your universe isn't built yet." })}
+        </p>
 
-        {/* Welcome */}
-        <div style={{ marginBottom: 48 }}>
-          <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.blue, fontWeight: 700, marginBottom: 10 }}>
-            Your Portal
-          </div>
-          <h1 style={{ fontSize: 'clamp(28px, 3.5vw, 48px)', fontWeight: 800, letterSpacing: '-0.03em', color: C.ink, margin: '0 0 8px' }}>
-            Hello, {displayName} 👋
-          </h1>
-          <p style={{ fontSize: 16, color: C.inkSoft, margin: 0 }}>
-            This is your PsyID portal — your assessment, results, and passport live here.
-          </p>
-        </div>
-
-        {/* Take assessment banner */}
-        <div style={{
-          borderRadius: 24, padding: '40px 44px', marginBottom: 28, position: 'relative', overflow: 'hidden', isolation: 'isolate', color: '#fff',
-          background: 'linear-gradient(125deg, #050B36 0%, #0E1F6E 35%, #4B266A 65%, #FF823F 100%)',
-        }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: 'radial-gradient(ellipse 55% 55% at 80% 50%, rgba(255,128,72,0.55) 0%, transparent 60%)' }}/>
-          <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)', marginBottom: 12 }}>
-            Assessment · 15 minutes
-          </div>
-          <h2 style={{ fontSize: 'clamp(22px, 2.5vw, 34px)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 10px' }}>
-            Ready to discover who you are?
-          </h2>
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.78)', margin: '0 0 24px', maxWidth: '52ch', lineHeight: 1.55 }}>
-            A 15-minute scenario-based assessment that maps your 4 character axes and shows the careers where you&apos;ll naturally excel.
-          </p>
-
+        <div style={{ borderRadius: 24, padding: 'clamp(28px,4vw,44px)', border: '1px solid var(--space-brd)', background: 'var(--space-panel)', backdropFilter: 'blur(14px)', marginBottom: 28 }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--space-fg-m)', marginBottom: 12 }}>{L({ ru: 'Тест · 15 минут', en: 'Assessment · 15 minutes' })}</div>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(22px,2.5vw,32px)', letterSpacing: '-.03em', marginBottom: 20 }}>{L({ ru: 'Построить свою вселенную', en: 'Build your universe' })}</h2>
           {user?.accessCode && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-              <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '12px 20px', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.18)' }}>
-                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>
-                  Your Access Code
-                </div>
-                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 28, fontWeight: 900, letterSpacing: '0.18em', color: '#fff' }}>
-                  {user.accessCode}
-                </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 22, flexWrap: 'wrap' }}>
+              <div style={{ background: 'rgba(255,255,255,.06)', borderRadius: 14, padding: '12px 18px', border: '1px solid var(--space-brd)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--space-fg-m)', marginBottom: 4 }}>{L({ ru: 'Твой код доступа', en: 'Your access code' })}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 26, fontWeight: 800, letterSpacing: '.18em' }}>{user.accessCode}</div>
               </div>
-              <button onClick={copyCode} style={{
-                padding: '10px 18px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.3)',
-                background: codeCopied ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.10)',
-                color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-                transition: 'all .15s',
-              }}>
-                {codeCopied ? 'Copied!' : 'Copy code'}
-              </button>
+              <button onClick={copyCode} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid var(--space-brd)', background: 'transparent', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>{copied ? L({ ru: 'Скопировано!', en: 'Copied!' }) : L({ ru: 'Копировать', en: 'Copy code' })}</button>
             </div>
           )}
-
-          <Link href="/reno" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 10, borderRadius: 999,
-            padding: '13px 24px', fontWeight: 700, fontSize: 14, color: '#fff',
-            background: 'linear-gradient(95deg, #FF5C72, #FF8A45)',
-            boxShadow: '0 10px 24px -8px rgba(255,100,80,.55)',
-          }}>
-            Take the assessment ↗
-          </Link>
-        </div>
-
-        {/* What you'll unlock */}
-        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkMute, fontWeight: 700, marginBottom: 16 }}>
-          What you&apos;ll unlock once you finish
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18 }}>
-
-          {[
-            { t: 'Personality Passport', d: 'An interactive passport with a stamp for every assessment — your type, your four character axes, and a profile that’s yours.' },
-            { t: 'Your full report', d: '7 best-fit careers, your superpowers and blind spots, a 30-day growth plan and more — written to your exact profile.' },
-            { t: 'Grows every year', d: 'Retake once a year; each assessment adds a new stamp, so you can see how you’ve changed over time.' },
-          ].map((card, i) => (
-            <div key={i} style={{ background: '#fff', border: `1px solid ${C.line}`, borderRadius: 20, padding: '30px 28px' }}>
-              <div style={{ width: 34, height: 34, borderRadius: 10, background: C.bone, border: `1px solid ${C.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Geist Mono', monospace", fontSize: 13, fontWeight: 800, color: C.blue, marginBottom: 16 }}>
-                {String(i + 1).padStart(2, '0')}
-              </div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 8 }}>{card.t}</div>
-              <p style={{ fontSize: 14, color: C.inkSoft, margin: 0, lineHeight: 1.6 }}>{card.d}</p>
-            </div>
-          ))}
+          <Link className="btn btn-orange" href="/reno" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: '#fff', padding: '14px 26px', borderRadius: 999, fontWeight: 700, background: 'linear-gradient(135deg,#FF7A3D,#FF5A5A)' }}>{t('nav_cta')} →</Link>
         </div>
       </main>
-
-      {/* ── Footer ── */}
-      <footer style={{ borderTop: `1px solid ${C.line}`, marginTop: 80, padding: '24px 28px', textAlign: 'center' }}>
-        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: C.inkMute }}>
-          © 2026 PsyID · <Link href="/" style={{ color: C.inkMute }}>Back to site</Link>
-        </div>
-      </footer>
     </div>
   );
 }
