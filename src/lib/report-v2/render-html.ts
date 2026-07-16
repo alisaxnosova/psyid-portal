@@ -43,7 +43,8 @@ export function renderReportHtml(report: ComposedReport): string {
 
   return (
     `<div class="rp" data-tier="${esc(report.tier)}" data-lang="${esc(report.lang)}" ` +
-    `data-content-version="${esc(report.contentVersion)}" data-signature="${esc(report.signature)}">` +
+    `data-content-version="${esc(report.contentVersion)}" data-signature="${esc(report.signature)}" ` +
+    `data-word="${esc(report.word)}" data-archetype="${esc(report.archetype)}">` +
     sections +
     `</div>`
   );

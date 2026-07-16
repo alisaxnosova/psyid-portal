@@ -7,6 +7,7 @@
 // Basic tier (L0 identity + L1 per-axis cells) from the existing answer key.
 import { AXES, BANDS, classify, type AxisCode, type Bilingual } from '@/data/reno-axes';
 import { axisCell } from './content';
+import { archetypeFor } from './archetypes';
 import type {
   ComposedReport,
   Lang,
@@ -79,8 +80,11 @@ function identitySection(
   lang: Lang,
   holder?: ReportHolder,
 ): ReportSection {
+  const arch = archetypeFor(positions);
   const views = AXES.map(a => axisView(a.code, positions, lang));
   const meta: Record<string, string | number> = {
+    word: tx(arch.word, lang),
+    archetype: arch.code,
     signature: views.map(v => v.signature).join(' · '),
   };
   for (const v of views) {
@@ -89,13 +93,14 @@ function identitySection(
   }
   return {
     id: 'identity',
-    title: lang === 'ru' ? 'Ваша сигнатура' : 'Your signature',
+    title: holder?.name ?? '',
     blocks: [
       {
+        // The archetype word is the report title; its definition is the standfirst.
         id: 'identity',
         layer: 'identity',
-        heading: holder?.name ?? (lang === 'ru' ? 'Профиль личности' : 'Personality signature'),
-        body: [meta.signature as string],
+        heading: tx(arch.word, lang),
+        body: [tx(arch.definition, lang)],
         meta,
       },
     ],
@@ -138,11 +143,14 @@ export function composeReport({ positions, tier, lang, holder }: ComposeInput): 
   } as const;
 
   const sections = TIER_SECTIONS[tier].map(id => builders[id]());
+  const arch = archetypeFor(positions);
 
   return {
     tier,
     lang,
     contentVersion: CONTENT_VERSION,
+    word: tx(arch.word, lang),
+    archetype: arch.code,
     signature: signatureOf(positions),
     holder,
     sections,

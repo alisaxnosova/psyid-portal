@@ -38,6 +38,8 @@ export interface ComposedReport {
   tier: ReportTier;
   lang: Lang;
   contentVersion: string;
+  word: string;               // archetype headline, e.g. 'Contemplative' — the report title
+  archetype: string;          // 5-letter pole code, e.g. 'WAVFS'
   signature: string;          // 'W2 · A4 · V3 · F4 · S2'
   holder?: ReportHolder;
   sections: ReportSection[];
