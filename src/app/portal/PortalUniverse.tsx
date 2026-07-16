@@ -96,7 +96,7 @@ export default function PortalUniverse({ data }: { data: UniverseData }) {
       <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
         {view === 'dna' ? (
           <>
-            <Starfield count={90} />
+            <Starfield count={130} />
             <GalaxyCanvas
               graph={graph}
               interactive

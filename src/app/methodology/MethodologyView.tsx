@@ -100,6 +100,28 @@ export default function MethodologyView() {
           </div>
         </div></section>
 
+        {/* three levels of depth */}
+        <section className="section" style={{ paddingTop: 0 }}><div className="wrap wrap-narrow">
+          <div className="eyebrow dash violet" style={{ marginBottom: 16 }}>{L({ ru: 'Три уровня глубины', en: 'Three levels of depth' })}</div>
+          <h2 className="h-2" style={{ marginBottom: 14 }}>{L({ ru: 'Звёзды, планеты, спутники', en: 'Stars, planets, moons' })}</h2>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: '60ch', marginBottom: 28 }}>{L({ ru: 'Каждая ось раскрывается на два вложенных уровня — не глубже. Ниже — только отдельные пункты; глубже была бы структура без содержания.', en: 'Each axis opens into two nested levels — no deeper. Below that lie only individual items; deeper would be structure without substance.' })}</p>
+          {([
+            [{ ru: 'Звезда', en: 'Star' }, { ru: 'Ось', en: 'Axis' }, { ru: 'Пять широких осей — сама система координат. Они заморожены и не меняются.', en: 'Five broad axes — the coordinate system itself. Frozen, and they never change.' }, 'var(--ax1)'],
+            [{ ru: 'Планета', en: 'Planet' }, { ru: 'Фасет', en: 'Facet' }, { ru: '3–5 фасетов на ось: отдельные под-черты со своими мини-шкалами. Уточняют картину под осью, но никогда не переписывают её балл.', en: '3–5 facets per axis: distinct sub-traits with their own mini-scales. They refine the picture beneath the axis but never overwrite its score.' }, 'var(--ax3)'],
+            [{ ru: 'Спутник', en: 'Moon' }, { ru: 'Нюанс', en: 'Nuance' }, { ru: 'Самый тонкий уровень: узкие оттенки внутри фасета. Сначала — оценка «в дымке», затем «в фокусе» по мере уточнения.', en: 'The finest level: narrow shades within a facet. First an estimate "in haze", then "in focus" as it is refined.' }, 'var(--gold)'],
+          ] as [Bi, Bi, Bi, string][]).map(([body, term, desc, hue], i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 20, alignItems: 'flex-start', padding: '20px 0', borderTop: '1px solid var(--line)' }}>
+              <div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--ink)' }}>
+                  <span style={{ width: 12 + i * 3, height: 12 + i * 3, borderRadius: '50%', background: hue, boxShadow: `0 0 12px ${hue}` }} />{L(body)}
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginTop: 6 }}>{L(term)}</div>
+              </div>
+              <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--ink-soft)' }}>{L(desc)}</p>
+            </div>
+          ))}
+        </div></section>
+
         {/* vocabulary */}
         <section className="section" style={{ paddingTop: 0 }}><div className="wrap wrap-narrow">
           <div className="eyebrow dash violet" style={{ marginBottom: 16 }}>{L({ ru: 'Словарь', en: 'Vocabulary' })}</div>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PsyID · Element Vault — Master</title>
+<style>
+  /* ============================================================
+     PsyID · ELEMENT VAULT — MASTER (single source of truth)
+     Merges the old ReNo v1.2 vault + the new 5-axis handoff.
+     Passport/document metaphor RETIRED → universe + detail cards.
+     Token conflicts resolved in favour of canonical `00` + shipping code.
+     ============================================================ */
+  :root{
+    /* — brand — */
+    --navy:#050C2E; --navy-2:#0B1A56;
+    --blue:#2244E0; --blue-soft:#6A85F0; --violet:#8A5CD6;
+    --orange:#FF7A3D; --coral:#FF5A5A; --gold:#FFC074; --gold-tint:#FFF0D6;
+    --star-gold:#EBD98A;                 /* session-star colour (distinct from UI gold) */
+
+    /* — 5 axis hues (axis order; carry meaning, keep exact) — */
+    --ax1:#2244E0;  /* Energy      O/W */
+    --ax2:#6A85F0;  /* Information C/A */
+    --ax3:#8A5CD6;  /* Decision    L/V */
+    --ax4:#FF7A3D;  /* Structure   D/F */
+    --ax5:#FF5A5A;  /* Emotion     S/R */
+
+    /* — light surfaces (paper: reports, cards, marketing paper sections) — */
+    --paper:#F6F1EA; --paper-2:#EDE7DC; --paper-3:#E4DCCF; --page:#FBF7F0;
+    --ink:#0E1230; --ink-soft:#4F5470; --ink-mute:#8A8FA8;
+    --line:#E0D9CE; --line-dark:#C8C0B4;
+
+    /* — dark surfaces (the universe / portal home) — */
+    --u-bg:#05060f; --u-fg:#EAEEFF; --u-fg-soft:rgba(226,232,255,.66); --u-fg-mute:rgba(226,232,255,.42);
+    --u-glass:rgba(20,26,58,.5); --u-border:rgba(150,170,255,.14);
+
+    --font-display:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-sans:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+
+    --r-xs:8px; --r-sm:12px; --r-md:18px; --r-lg:26px; --r-xl:36px; --r-card:22px; --r-full:999px;
+
+    --grad-coral:linear-gradient(135deg,var(--coral),var(--orange));
+    --grad-blue:linear-gradient(95deg,var(--blue),var(--blue-soft));
+    --grad-cta:linear-gradient(135deg,#FF7A3D,#FF5A5A);
+    --grad-fit:linear-gradient(90deg,#2244E0,#FF5A5A);
+    --grad-axis:linear-gradient(90deg,var(--ax1),var(--ax2),var(--ax3),var(--ax4),var(--ax5));
+    --grad-hero:linear-gradient(140deg,#040924 0%,#0D1E6A 35%,#3D1E5A 60%,#A83040 80%,#FF7030 100%);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font-sans);line-height:1.55;}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(24px,5vw,64px);}
+  h1{font-family:var(--font-display);font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,5vw,46px);line-height:1.04;margin:.2em 0;}
+  h2{font-family:var(--font-display);font-weight:750;letter-spacing:-.03em;font-size:26px;margin:0;}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);}
+  .lede{color:var(--ink-soft);font-size:17px;max-width:64ch;margin-top:14px;}
+  .sec{margin-top:64px;padding-top:26px;border-top:2px solid var(--ink);}
+  .sec > .eyebrow{color:var(--orange);}
+  .sec h2{margin:8px 0 6px;}
+  .sec-note{color:var(--ink-soft);font-size:14.5px;max-width:70ch;margin:6px 0 22px;}
+  .grid{display:grid;gap:14px;}
+  .cols-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+  .cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .cols-5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+  .mono{font-family:var(--font-mono);}
+  code{font-family:var(--font-mono);font-size:.86em;background:var(--paper-2);padding:1px 6px;border-radius:5px;}
+
+  /* constellation mark */
+  .mark{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:-.03em;}
+  .mark i{font-style:normal;color:var(--orange);}
+
+  /* palette swatches */
+  .sw{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:#fff;}
+  .sw .chip{height:66px;}
+  .sw .meta{padding:9px 12px;font-family:var(--font-mono);font-size:11px;letter-spacing:.02em;color:var(--ink-soft);display:flex;justify-content:space-between;gap:8px;}
+  .sw .meta b{color:var(--ink);font-weight:600;}
+
+  /* type scale */
+  .type-row{display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .type-row .tag{font-family:var(--font-mono);font-size:11px;color:var(--ink-mute);width:120px;flex:none;letter-spacing:.06em;}
+
+  /* axis table */
+  .axis-row{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-md);background:#fff;border-left:5px solid var(--ax);}
+  .axis-row .dot{width:14px;height:14px;border-radius:50%;background:var(--ax);flex:none;}
+  .axis-row .nm{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em;}
+  .axis-row .po{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft);margin-left:auto;letter-spacing:.04em;}
+
+  /* band scale */
+  .band-strip{display:flex;flex-wrap:wrap;gap:8px;}
+  .band{flex:1;min-width:120px;border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;background:#fff;}
+  .band b{font-family:var(--font-mono);font-size:22px;font-weight:700;}
+  .band .lbl{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .band .rng{font-family:var(--font-mono);font-size:10px;color:var(--ink-mute);letter-spacing:.04em;margin-top:6px;}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:var(--font-sans);font-weight:650;font-size:15px;padding:13px 22px;border-radius:var(--r-full);background:var(--ink);color:#fff;}
+  .btn.cta{background:var(--grad-cta);}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line);}
+
+  /* sig-slots (results signature strip) */
+  .sig-code{display:flex;gap:10px;flex-wrap:wrap;}
+  .sig-slot{flex:1;min-width:100px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 14px 14px;position:relative;overflow:hidden;}
+  .sig-slot::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--ax);}
+  .sig-slot.balanced::before{background:var(--line-dark);}
+  .ss-axis{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);}
+  .ss-code{font-family:var(--font-display);font-weight:800;letter-spacing:-.03em;margin-top:8px;}
+  .ss-code b{font-size:34px;color:var(--ink);} .ss-code span{font-size:20px;color:var(--ax);font-weight:700;}
+  .ss-pole{font-size:11px;color:var(--ink-soft);margin-top:8px;font-weight:600;}
+
+  /* results hero */
+  .res-hero{background:var(--grad-hero);border-radius:var(--r-xl);padding:clamp(28px,5vw,44px);color:#fff;overflow:hidden;}
+  .res-hero .eyebrow{color:rgba(255,255,255,.6);}
+  .res-type{font-family:var(--font-display);font-weight:800;letter-spacing:-.045em;font-size:clamp(46px,9vw,78px);line-height:1;margin:6px 0 0;}
+  .res-type span{color:var(--gold);}
+  .res-def{font-weight:500;font-size:clamp(16px,2.4vw,20px);color:rgba(255,255,255,.82);margin-top:14px;max-width:34ch;}
+  .res-sig{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;color:rgba(255,255,255,.85);margin-top:20px;}
+
+  /* AXIS DETAIL CARD — the canonical "Core (axis)" component (paper glass) */
+  .dcard{background:rgba(255,253,248,.96);border:1px solid var(--line);border-radius:var(--r-card);padding:26px 28px;box-shadow:0 24px 60px -30px rgba(40,28,14,.35);}
+  .dcard-eye{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ax);margin-bottom:10px;}
+  .dcard-eye .d{width:8px;height:8px;border-radius:50%;background:var(--ax);}
+  .dcard-h{font-family:var(--font-display);font-size:25px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--ink);}
+  .dcard-sub{margin-top:4px;font-family:var(--font-mono);font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em;}
+  .dcard-body{margin-top:16px;font-size:14.5px;line-height:1.62;color:var(--ink-soft);}
+  .spectrum{margin-top:18px;}
+  .sp-poles{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-mute);margin-bottom:7px;}
+  .sp-poles b{color:var(--ink);font-weight:700;}
+  .sp-track{position:relative;height:7px;border-radius:7px;background:linear-gradient(90deg,var(--paper-3),color-mix(in srgb,var(--ax) 45%,var(--paper-3)));}
+  .sp-thumb{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--ax);border:3px solid #fff;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  .spec-band{margin-top:14px;display:flex;gap:12px;align-items:center;}
+  .band-pill{font-family:var(--font-mono);font-weight:700;font-size:13px;color:#fff;background:var(--ax);padding:4px 11px;border-radius:var(--r-full);}
+  .band-pill.balanced{background:var(--line-dark);color:var(--ink);}
+  .band-note{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft);letter-spacing:.02em;}
+
+  /* match card (professions) */
+  .match{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;}
+  .match .riasec{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);}
+  .match .nm{font-family:var(--font-display);font-weight:750;font-size:19px;margin:6px 0 12px;}
+  .match .fit{font-family:var(--font-display);font-weight:800;font-size:40px;background:var(--grad-fit);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;}
+  .match .bar{height:6px;border-radius:6px;background:var(--paper-3);margin:14px 0;overflow:hidden;}
+  .match .bar>i{display:block;height:100%;background:var(--grad-fit);}
+  .match .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;}
+  .achip{font-family:var(--font-mono);font-size:11px;padding:3px 9px;border-radius:var(--r-full);border:1px solid var(--line);color:var(--ink-soft);}
+
+  /* retired */
+  .retired{border:1px dashed var(--line-dark);border-radius:var(--r-md);padding:18px 20px;background:var(--paper-2);color:var(--ink-soft);}
+  .retired s{color:var(--ink-mute);}
+  .flag{border-left:4px solid var(--coral);background:#fff;border-radius:0 var(--r-sm) var(--r-sm) 0;padding:14px 18px;margin-top:12px;}
+  .flag b{color:var(--coral);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mark"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+    <polygon points="15,3 26,11 22,25 8,25 4,11" fill="none" stroke="#C8C0B4" stroke-width="1"/>
+    <circle cx="15" cy="3" r="2.4" fill="#2244E0"/><circle cx="26" cy="11" r="2.4" fill="#6A85F0"/>
+    <circle cx="22" cy="25" r="2.4" fill="#8A5CD6"/><circle cx="8" cy="25" r="2.4" fill="#FF7A3D"/>
+    <circle cx="4" cy="11" r="2.4" fill="#FF5A5A"/></svg>
+    <span>Psy<i>ID</i></span></div>
+
+  <p class="eyebrow" style="margin-top:26px">Element Vault · Master · 5-axis</p>
+  <h1>One design system, retiring the passport.</h1>
+  <p class="lede">The single source of truth: the old ReNo v1.2 vault and the new Personality-DNA handoff merged into one, token conflicts resolved, the passport/document metaphor retired in favour of the universe + node detail cards.</p>
+
+  <!-- PALETTE -->
+  <section class="sec">
+    <p class="eyebrow">01 · Palette</p><h2>Colour</h2>
+    <p class="sec-note">Brand + 5 axis hues (these carry meaning — keep exact). Conflict resolved: canonical <code>00</code> and <code>reno-axes.ts</code> win over the Part B README's <code>#3A63F0/#F1EADD/#EBD98A</code>. Star-gold kept separate.</p>
+    <div class="grid cols-5" id="pal"></div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="sec">
+    <p class="eyebrow">02 · Type</p><h2>Geist &amp; Geist Mono</h2>
+    <p class="sec-note">Geist (300–900) for UI, Geist Mono for codes / labels / eyebrows. Self-host in production.</p>
+    <div>
+      <div class="type-row"><span class="tag">display / h1</span><span style="font-family:var(--font-display);font-weight:800;font-size:40px;letter-spacing:-.035em">Contemplative.</span></div>
+      <div class="type-row"><span class="tag">h2 / 26</span><span style="font-family:var(--font-display);font-weight:750;font-size:26px;letter-spacing:-.03em">Пять осей характера</span></div>
+      <div class="type-row"><span class="tag">body / 15</span><span style="font-size:15px;color:var(--ink-soft)">Каждая ось — это continuum, а не коробка.</span></div>
+      <div class="type-row"><span class="tag">mono / eyebrow</span><span class="mono" style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute)">ось · decision</span></div>
+    </div>
+  </section>
+
+  <!-- AXES + BANDS -->
+  <section class="sec">
+    <p class="eyebrow">03 · The five axes</p><h2>Coordinate system</h2>
+    <p class="sec-note">Fixed core. Pole letter + band digit → the signature code (<code>W2·A4·V3·F4·S2</code>). Raw 0–100 is the record; bands are display only.</p>
+    <div class="grid" id="axes" style="gap:10px"></div>
+
+    <h2 style="margin-top:30px;font-size:20px">Band scale · <span class="mono" style="font-size:13px;color:var(--ink-mute)">s = |pos−50|×2</span></h2>
+    <div class="band-strip" id="bands" style="margin-top:12px"></div>
+    <div class="flag"><b>CONFLICT — needs your call.</b> Design-handoff band words (shown above) vs <code>reno-axes.ts</code>: <code>Сбалансированный · Лёгкий · Умеренный · Выраженный · Сильный · Максимальный</code>. Also axis names differ (design <code>Энергия/Информация/Решения/Структура/Реакция</code> vs code <code>Направленность энергии/…</code>). Pick one and I'll align code + memory.</div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="sec">
+    <p class="eyebrow">04 · Controls</p><h2>Buttons</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+      <button class="btn cta">Войти в свою вселенную →</button>
+      <button class="btn">Продолжить</button>
+      <button class="btn ghost">Назад</button>
+    </div>
+  </section>
+
+  <!-- SIGNATURE STRIP -->
+  <section class="sec">
+    <p class="eyebrow">05 · Signature</p><h2>Code strip</h2>
+    <p class="sec-note">Five axis-coloured slots — the profile code, from the results hero downward.</p>
+    <div class="sig-code" id="sig"></div>
+  </section>
+
+  <!-- RESULTS HERO -->
+  <section class="sec">
+    <p class="eyebrow">06 · Results hero</p><h2>The word is the title</h2>
+    <div class="res-hero" style="margin-top:10px">
+      <p class="eyebrow">— Твоя личная вселенная —</p>
+      <div class="res-type">Созерцатель<span>.</span></div>
+      <div class="res-def">внутренний мир смысла; ориентир — то, что ощущается истинным.</div>
+      <div class="res-sig">W2 · A4 · V3 · F4 · S2</div>
+    </div>
+  </section>
+
+  <!-- AXIS DETAIL CARD -->
+  <section class="sec">
+    <p class="eyebrow">07 · Axis detail card</p><h2>Core (axis) card</h2>
+    <p class="sec-note">The canonical way axis content is shown — replaces the passport's axis pages. Spectrum thumb at <code>clamp(50%, 50 + s·0.46, 96%)</code>.</p>
+    <div class="grid cols-2" id="dcards" style="margin-top:10px"></div>
+  </section>
+
+  <!-- MATCH CARD -->
+  <section class="sec">
+    <p class="eyebrow">08 · Professions</p><h2>Match card (RIASEC × PsyID)</h2>
+    <div class="grid cols-2" style="margin-top:10px">
+      <div class="match">
+        <div class="riasec">Artistic · Investigative</div>
+        <div class="nm">Автор / сценарист</div>
+        <div class="fit">91<span style="font-size:14px;-webkit-text-fill-color:var(--ink-mute);color:var(--ink-mute);font-weight:600"> совпад.</span></div>
+        <div class="bar"><i style="width:91%"></i></div>
+        <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Абстрактная ось и гибкость дают простор для замысла; внутренняя энергия — для долгой сосредоточенной работы.</p>
+        <div class="chips"><span class="achip">A4 ведущая</span><span class="achip">F4</span><span class="achip">W2</span></div>
+      </div>
+      <div class="match">
+        <div class="riasec">Social · Artistic</div>
+        <div class="nm">Куратор / редактор</div>
+        <div class="fit">74<span style="font-size:14px;-webkit-text-fill-color:var(--ink-mute);color:var(--ink-mute);font-weight:600"> совпад.</span></div>
+        <div class="bar"><i style="width:74%"></i></div>
+        <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Ценностная ось помогает чувствовать людей и замысел; гибкость — вести много линий сразу.</p>
+        <div class="chips"><span class="achip">V3</span><span class="achip">A4</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RETIRED -->
+  <section class="sec">
+    <p class="eyebrow">09 · Retired</p><h2>No longer used</h2>
+    <div class="retired">
+      <s>Passport / book / stamp metaphor</s> — replaced by the universe + node detail cards. Its per-test report content survives inside the <b>session-star card</b> and the archetype report, not a paginated document.<br><br>
+      <s>Old paper-only "results document" layout</s> · <s>ES/FR/AR locales</s> (EN/RU only) · <s>MBTI 4-letter type as the headline</s> (now the 32 archetype words + the 5-axis code).
+    </div>
+  </section>
+
+  <p class="mono" style="margin-top:56px;color:var(--ink-mute);font-size:11px;letter-spacing:.06em">PsyID · Element Vault Master · merges docs/reno + design_handoff_psyid_master · Geist self-hosted in prod</p>
+</div>
+
+<script>
+  const AX=[
+    {k:'EO',hue:'#2244E0',en:'Energy',ru:'Энергия',plus:['O','Наружу'],minus:['W','Внутрь']},
+    {k:'IF',hue:'#6A85F0',en:'Information',ru:'Информация',plus:['C','Конкретика'],minus:['A','Абстракция']},
+    {k:'DB',hue:'#8A5CD6',en:'Decision',ru:'Решения',plus:['L','Логика'],minus:['V','Ценности']},
+    {k:'SP',hue:'#FF7A3D',en:'Structure',ru:'Структура',plus:['D','Порядок'],minus:['F','Гибкость']},
+    {k:'ER',hue:'#FF5A5A',en:'Emotion',ru:'Реакция',plus:['S','Ровно'],minus:['R','Живо']},
+  ];
+  const BANDWORDS=['в балансе','лёгкий наклон','заметный наклон','выраженный','сильный','очень сильный'];
+  const BANDRANGE=['s<8','≤20','≤40','≤60','≤80','>80'];
+  const PAL=[
+    ['--ax1 Energy','#2244E0'],['--ax2 Information','#6A85F0'],['--ax3 Decision','#8A5CD6'],
+    ['--ax4 Structure','#FF7A3D'],['--ax5 Emotion','#FF5A5A'],
+    ['paper','#F6F1EA'],['page','#FBF7F0'],['ink','#0E1230'],['gold (UI)','#FFC074'],['star-gold','#EBD98A'],
+    ['navy','#050C2E'],['universe bg','#05060f'],['coral','#FF5A5A'],['orange','#FF7A3D'],['line','#E0D9CE'],
+  ];
+
+  const pal=document.getElementById('pal');
+  PAL.forEach(([n,h])=>pal.insertAdjacentHTML('beforeend',
+    `<div class="sw"><div class="chip" style="background:${h}"></div><div class="meta"><b>${n}</b><span>${h}</span></div></div>`));
+
+  const axes=document.getElementById('axes');
+  AX.forEach(a=>axes.insertAdjacentHTML('beforeend',
+    `<div class="axis-row" style="--ax:${a.hue}"><span class="dot"></span><span class="nm">${a.ru}</span>
+     <span class="po">${a.plus[0]} ${a.plus[1]} ↔ ${a.minus[1]} ${a.minus[0]}</span></div>`));
+
+  const bands=document.getElementById('bands');
+  BANDWORDS.forEach((w,i)=>bands.insertAdjacentHTML('beforeend',
+    `<div class="band" style="--ax:${AX[Math.min(i,4)].hue}"><b style="color:${i?AX[Math.min(i,4)].hue:'#8A8FA8'}">${i}</b>
+     <div class="lbl">${w}</div><div class="rng">${BANDRANGE[i]}</div></div>`));
+
+  const sig=document.getElementById('sig');
+  const SAMPLE=[['EO','W','2'],['IF','A','4'],['DB','V','3'],['SP','F','4'],['ER','S','2']];
+  SAMPLE.forEach(([k,pole,band])=>{const a=AX.find(x=>x.k===k);
+    const poleName=(a.plus[0]===pole?a.plus:a.minus)[1];
+    sig.insertAdjacentHTML('beforeend',
+    `<div class="sig-slot" style="--ax:${a.hue}"><div class="ss-axis">${a.ru}</div>
+     <div class="ss-code"><b>${pole}</b><span>${band}</span></div><div class="ss-pole">${poleName}</div></div>`);});
+
+  // two sample detail cards
+  const DC=[
+    {k:'DB',pole:'V',band:3,score:50,body:'Решения нередко опираются на ценности и учитывают окружающих; сглаживаете острые углы, предпочитаете согласие спору.'},
+    {k:'IF',pole:'A',band:4,score:70,body:'Доверяете идеям больше, чем частностям, предпочитаете стратегическую работу и удерживаете видение целого; тянетесь к новому и непроверенному.'},
+  ];
+  const dc=document.getElementById('dcards');
+  DC.forEach(d=>{const a=AX.find(x=>x.k===d.k);
+    const cur=(a.plus[0]===d.pole?a.plus:a.minus), opp=(a.plus[0]===d.pole?a.minus:a.plus);
+    const left=Math.min(96,Math.max(50,50+d.score*0.46));
+    dc.insertAdjacentHTML('beforeend',
+    `<div class="dcard" style="--ax:${a.hue}">
+      <div class="dcard-eye"><span class="d"></span>ось · ${a.en}</div>
+      <div class="dcard-h">${a.ru}</div>
+      <div class="dcard-sub">полюс «${cur[1]}» · ${d.pole}${d.band}</div>
+      <div class="dcard-body">${d.body}</div>
+      <div class="spectrum">
+        <div class="sp-poles"><span>${opp[1]}</span><b>${cur[1]}</b></div>
+        <div class="sp-track"><div class="sp-thumb" style="left:${left}%"></div></div>
+      </div>
+      <div class="spec-band"><span class="band-pill">${d.pole}${d.band}</span>
+        <span class="band-note">${BANDWORDS[d.band]} · ${d.score} из 100 к «${cur[1]}»</span></div>
+    </div>`);});
+</script>
+</body>
+</html>

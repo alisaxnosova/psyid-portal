@@ -64,9 +64,12 @@ export default function SiteLanding() {
 
   return (
     <div className="usite" ref={rootRef}>
+      {/* site-wide glowing starfield behind every section */}
+      <Starfield fixed count={230} />
+
       {/* ── HERO ── */}
       <header className="surface-space" style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <Starfield count={190} />
+        <Starfield count={150} />
         <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
           <DecorativeGalaxy sizeK={1.75} centerY={0.5} glow={1.25} />
         </div>

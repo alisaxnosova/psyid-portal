@@ -57,7 +57,7 @@ export default function PortalPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--portal-bg)', color: 'var(--space-fg)', position: 'relative', overflow: 'hidden' }}>
-      <Starfield count={90} />
+      <Starfield count={130} />
       <header style={{ position: 'relative', zIndex: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', borderBottom: '1px solid var(--space-brd)' }}>
         <Link href="/"><Mark tone="dark" size="sm" /></Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
