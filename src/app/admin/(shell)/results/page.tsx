@@ -12,7 +12,7 @@ const C = {
   line: '#E5DED2', bone: '#F6F1EA',
   orange: '#FF7A3D', orangeHot: '#FF9540',
   green: '#1DA36A', coral: '#FF5A5A', blue: '#2244E0',
-  violet: '#4B1E8E', purple: '#7B3FBE',
+  violet: '#8A5CD6', purple: '#7B3FBE',
 };
 
 type Tab = 'results' | 'research';
@@ -496,7 +496,7 @@ function ExpandedRow({ r }: { r: ResultRow }) {
                     style={{
                       padding: '8px 14px', borderRadius: 10,
                       border: `1.5px solid ${C.violet}`,
-                      background: 'rgba(75,30,142,0.08)', color: C.violet,
+                      background: 'rgba(138,92,214,0.08)', color: C.violet,
                       fontSize: 12, fontWeight: 700, textDecoration: 'none',
                       fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center',
                     }}

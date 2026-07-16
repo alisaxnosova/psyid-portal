@@ -297,15 +297,15 @@ function AdminsTab() {
 export default function AdminUsersPage() {
   const router = useRouter();
   const { t }  = useAdminLang();
-  const [tab, setTab] = useState<Tab>('external');
+  const [tab, setTab] = useState<Tab>('portal');
 
   useEffect(() => {
     if (!isAdminLoggedIn()) router.push('/admin/login');
   }, [router]);
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'external', label: t('users_tab_ext')    },
     { key: 'portal',   label: t('users_tab_portal') },
+    { key: 'external', label: t('users_tab_ext')    },
     { key: 'admins',   label: t('users_tab_admins') },
   ];
 

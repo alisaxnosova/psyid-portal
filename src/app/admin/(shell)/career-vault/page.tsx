@@ -11,7 +11,7 @@ import {
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8', line: '#E5DED2', bone: '#F6F1EA',
   orange: '#FF7A3D', orangeHot: '#FF9540', coral: '#FF5A5A', blue: '#2244E0', green: '#1DA36A',
-  violet: '#4B1E8E', purple: '#7B3FBE',
+  violet: '#8A5CD6', purple: '#7B3FBE',
 };
 
 function getToken(): string | null {

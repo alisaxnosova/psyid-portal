@@ -20,7 +20,7 @@ const C = {
   orange: '#FF7A3D', orangeHot: '#FF9540', orangeLight: 'rgba(255,149,64,0.12)',
   green: '#1DA36A', greenLight: 'rgba(29,163,106,0.12)',
   coral: '#FF5A5A',
-  violet: '#4B1E8E', violetLight: 'rgba(75,30,142,0.12)',
+  violet: '#8A5CD6', violetLight: 'rgba(138,92,214,0.12)',
   blue: '#2244E0', blueLight: 'rgba(34,68,224,0.12)',
   purple: '#7B3FBE',
 };

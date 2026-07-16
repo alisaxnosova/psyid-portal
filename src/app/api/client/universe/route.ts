@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { getSession, getPortalUser, ensureAccessCode } from '@/lib/portalAuth';
-import { isV12Session } from '@/lib/scoreSessionAuto';
 import { scoreSessionV12 } from '@/lib/renoScoreV12';
 import { scoreSession } from '@/lib/renoScore';
 import { codeOf, type Profile } from '@/components/galaxy/model';
@@ -20,6 +19,12 @@ const CODES_KEY = 'psyid:codes';
 const V12_CODES = ['EO', 'IF', 'DB', 'SP', 'ER'] as const;
 
 const posToAxis = (pos: number) => (pos >= 50 ? { t: 'plus' as const, s: (pos - 50) * 2 } : { t: 'minus' as const, s: (50 - pos) * 2 });
+
+// v1.2 sessions store Likert answers ('1'..'5'); legacy sessions store 'a'/'b'.
+// (Kept local so this feature stays independent of the in-flight scoring refactor.)
+function isV12Session(s: RenoSession): boolean {
+  return s.answers.length > 0 && s.answers.every((a) => /^[1-5]$/.test(a.answerId));
+}
 
 function profileForSession(s: RenoSession): { profile: Profile; legacy: boolean } {
   if (isV12Session(s)) {
