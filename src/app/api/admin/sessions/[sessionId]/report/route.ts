@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { kvGet, kvSet } from '@/lib/upstash';
 import { profiles, getLevelFromPct } from '@/app/reno/data/profiles';
 import type { Lang } from '@/app/reno/data/profiles';
-import { scoreSession } from '@/lib/renoScore';
+import { scoreSessionAuto } from '@/lib/scoreSessionAuto';
 
 interface RenoSession {
   id: string;
@@ -67,7 +67,7 @@ export async function POST(
     return NextResponse.json({ error: 'Session not completed' }, { status: 400 });
   }
 
-  const scored = scoreSession(session.answers);
+  const scored = scoreSessionAuto(session);
   const pct: Record<string, number> = scored.pct;
 
   const langName = LANG_NAMES[lang] ?? 'English';

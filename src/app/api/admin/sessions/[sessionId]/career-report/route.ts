@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { kvGet, kvSet } from '@/lib/upstash';
-import { scoreSession } from '@/lib/renoScore';
+import { scoreSessionAuto } from '@/lib/scoreSessionAuto';
 import { generateReport } from '@/lib/report-generator';
 import type { ReportInput } from '@/lib/report-generator';
 
@@ -61,7 +61,7 @@ export async function POST(
   }
 
   try {
-    const score = scoreSession(session.answers);
+    const score = scoreSessionAuto(session);
 
     const input: ReportInput = {
       sessionId,

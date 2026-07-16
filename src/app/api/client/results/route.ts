@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { getSession, getPortalUser, ensureAccessCode } from '@/lib/portalAuth';
-import { scoreSession } from '@/lib/renoScore';
+import { scoreSessionAuto } from '@/lib/scoreSessionAuto';
 import { profiles } from '@/app/reno/data/profiles';
 import descriptions from '@/content/descriptions.json';
 import type { AccessCode } from '@/app/api/codes/route';
@@ -136,7 +136,7 @@ export async function GET(req: Request) {
     const tierCode = plan === 'full' ? 'FULL' : 'STD';
 
     const assessments: AssessmentPayload[] = sessions.map((s, i) => {
-      const score = scoreSession(s.answers);
+      const score = scoreSessionAuto(s);
       const p = score.pct;
       const vals = [p.E / 100, p.N / 100, p.F / 100, p.J / 100];
       const dominants = [

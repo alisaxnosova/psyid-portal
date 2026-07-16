@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { scoreSession } from '@/lib/renoScore';
 import { scoreSessionV12 } from '@/lib/renoScoreV12';
+import { isV12Session } from '@/lib/scoreSessionAuto';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
@@ -9,10 +10,6 @@ const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
 // ReNo v1.2 sessions store Likert answers ('1'..'5'); legacy sessions store
 // forced-choice option ids ('a'/'b'). Detect by answer shape so each session is
 // scored with the matching engine — never the old MBTI scorer on new data.
-function isV12Session(s: RenoSession): boolean {
-  return s.answers.length > 0 && s.answers.every(a => /^[1-5]$/.test(a.answerId));
-}
-
 const EMPTY_PCT = { E: 0, I: 0, S: 0, N: 0, F: 0, T: 0, J: 0, P: 0 };
 
 async function verifyAdmin(req: Request): Promise<boolean> {

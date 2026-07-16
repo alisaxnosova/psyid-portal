@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { kvGet, kvKeys } from '@/lib/upstash';
 import { scoreSession } from '@/lib/renoScore';
+import { isV12Session } from '@/lib/scoreSessionAuto';
 import type { RenoSession } from '@/app/api/reno/types';
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://159.194.222.35:3010';
@@ -117,7 +118,7 @@ export async function GET(req: Request) {
   for (const s of completed) {
     // Skip ReNo v1.2 (Likert) sessions — the legacy MBTI scorer can't read them and
     // would mis-classify every one as ESFJ. They belong to the five-axis analytics.
-    if (s.answers.length && s.answers.every(a => /^[1-5]$/.test(a.answerId))) continue;
+    if (isV12Session(s)) continue;
     const score = scoreSession(s.answers);
     typeCounts[score.type] = (typeCounts[score.type] ?? 0) + 1;
     eiPct.push(score.pct.E);
