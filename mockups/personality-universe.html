@@ -177,6 +177,7 @@ canvas{ display:block; position:relative; }
       <span class="lg"><span class="d facet"></span>фасеты</span>
       <span class="lg"><span class="d hazy"></span>в дымке</span>
       <span class="lg"><span class="d hole"></span>тень</span>
+      <span class="lg"><span class="d" style="background:#EBD98A"></span>оценки во времени</span>
       <span class="sep"></span><span class="hint" id="hint">клик — карточка · «Погрузиться» — внутрь</span>
     </div>
     <div id="cardHost"></div>
@@ -238,7 +239,16 @@ var SHADOW={
   info:{ h:"Слишком много идей", body:"Когда идей чересчур много, ты теряешь землю под ногами: план ускользает, конкретика раздражает, а до дела руки доходят последними.", cost:"Кому это стоит: команде, которая ждёт от тебя простого следующего шага." },
   structure:{ h:"Ни одной точки", body:"Когда гибкость на пределе, ты избегаешь любых рамок — и тонешь в открытых задачах, так и не поставив точку.", cost:"Кому это стоит: тем, кто ждёт решения, которое ты всё ещё «додумываешь»." }
 };
-var SESSIONS=[["Май 2024","Идеалист-исследователь"],["Окт 2024","Архитектор-аналитик"],["Мар 2025","Вдохновитель"],["Июн 2026","Рефлексивный исследователь"]];
+var SESSIONS=[
+  {date:"Май 2024", year:"2024", name:"Идеалист-исследователь", code:"W2·A5·V2·F3·R2",
+   note:"Первый снимок: мечтатель с сильной тягой к смыслам, но нерешительный в выборе."},
+  {date:"Окт 2024", year:"2024", name:"Архитектор-аналитик", code:"W2·A5·L3·F3·S1",
+   note:"Решения качнулись к логике — период, когда ты строила систему на новой работе."},
+  {date:"Мар 2025", year:"2025", name:"Вдохновитель", code:"O3·A2·V2·F4·R2",
+   note:"Ты вышла к людям и идеям — самый экстравертный из твоих замеров."},
+  {date:"Июн 2026", year:"2026", name:"Рефлексивный исследователь", code:"W2·A4·V3·F4·S2",
+   note:"Сейчас: спокойный изобретательный ум, который видит целое, а решает по ценностям.", latest:true}
+];
 var HOLDER={name:"Лиза Морозова"};
 var BW=["в балансе","лёгкий наклон","заметный наклон","выраженный","сильный","очень сильный"];
 
@@ -325,9 +335,12 @@ function universeNodes(){
     var done=ST.module[m.key];
     N.push({id:"mod-"+m.key,type:"module",modKey:m.key,locked:!done,x:pa.x+Math.cos(ang)*R*0.5,y:pa.y+(mi%2?-46:48),z:pa.z+Math.sin(ang)*R*0.5,
       r:done?9:7,color:pa.color,label:m.name+" "+m.sub,link:parent,pk:"mod:"+m.key}); });
-  var prev="me"; SESSIONS.forEach(function(sn,i){ var ang=i*2.15,rad=40+i*26,latest=i===3;
-    N.push({id:"ses-"+i,type:"session",sesIdx:i,x:Math.cos(ang)*rad,y:Math.sin(ang)*rad*0.5-14,z:Math.sin(ang)*rad-14-i*18,
-      r:latest?7:5,color:"#EBD98A",latest:latest,link:prev,pk:"ses:"+i}); prev="ses-"+i; });
+  var LS=SESSIONS.length-1;
+  SESSIONS.forEach(function(sn,i){ var t=LS?i/LS:1;                       // 0 = oldest self, 1 = "now"
+    var ang=-Math.PI*0.5+(1-t)*2.3, rad=52+(1-t)*74;                      // inner spiral arm IN the disk: newest hugs the core, past winds outward & fades
+    N.push({id:"ses-"+i,type:"session",sesIdx:i,recency:t,latest:!!sn.latest,
+      x:Math.cos(ang)*rad, y:Math.sin(ang)*rad*0.62, z:Math.sin(ang)*rad*0.72,   // same tilt as the galaxy disk → part of the body, not a tail
+      r:3.6+t*3.6,color:"#EBD98A",label:sn.year,link:(i===LS?"me":"ses-"+(i+1)),pk:"ses:"+i}); });
   for(var i=0;i<80;i++){ var r=46+Math.pow(Math.random(),0.7)*250, ang=Math.random()*TAU+r*0.01;
     N.push({id:"d"+i,type:"dust",x:Math.cos(ang)*r,y:(Math.random()-0.5)*46+Math.sin(ang)*r*0.1,z:Math.sin(ang)*r,
       r:Math.random()*1.5+0.6,color:Math.random()<0.55?"#cdd8ff":HUES[Math.floor(((ang%TAU)/TAU)*5)%5]}); }
@@ -394,7 +407,7 @@ function renderSet(ns,gA,zb,interactive,anchor){
   var order=ns.map(function(n){return {n:n,pr:P[n.id]};}).sort(function(u,v){return u.pr.z-v.pr.z;});
   order.forEach(function(o){ var n=o.n,pr=o.pr, depth=(pr.z+300)/600, r=n.r*pr.scale*(0.72+depth*0.5);
     if(!isFinite(pr.sx)||!isFinite(pr.sy)||!isFinite(r)||r<=0) return; // safety: never let a stray value blank the galaxy
-    var a=gA*(0.5+depth*0.5); if(focusNode) a*=(n===focusNode?1:0.72);
+    var a=gA*(0.5+depth*0.5); if(n.type==="session") a*=(0.42+0.58*(n.recency||1)); if(focusNode) a*=(n===focusNode?1:0.72);
     var pulse=(n.pk&&pulses[n.pk])||0;
     if(n.type==="dust"){ ctx.globalAlpha=(0.12+depth*0.4)*gA*(focusNode?0.4:1); ctx.fillStyle=n.color; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,Math.max(0.5,r),0,TAU); ctx.fill(); ctx.globalAlpha=1; return; }
     if(n.type==="hole"){ ctx.globalAlpha=Math.min(1,gA*(focusNode&&n!==focusNode?0.85:1)); drawHole(pr.sx,pr.sy,r,s.t); ctx.globalAlpha=1;
@@ -403,7 +416,7 @@ function renderSet(ns,gA,zb,interactive,anchor){
     var isCore=n.type==="core"||n.type==="axis"||(n.type==="facet"&&n.hub);
     var isFacet=n.type==="facet"&&!n.hub, isMoon=n.type==="moon", isMod=n.type==="module";
     var ghost=(isFacet && !n.measured) || (isMoon && !n.focus) || (isMod && n.locked);
-    var glow=isMoon?(n.focus?0.5:0): n.type==="center"?1.25: n.type==="session"?0.7: isCore?1.05: isFacet?0.85: isMod?(n.locked?0:0.7):0.6;
+    var glow=isMoon?(n.focus?0.5:0): n.type==="center"?1.25: n.type==="session"?(0.35+0.5*(n.recency||1)): isCore?1.05: isFacet?0.85: isMod?(n.locked?0:0.7):0.6;
     glow*=(1+pulse*1.6);
     // pulse ring
     if(pulse>0.02){ ctx.globalAlpha=pulse*0.9; ctx.strokeStyle=hexA(ghost?"#EBD98A":n.color,0.9); ctx.lineWidth=1.6;
@@ -426,6 +439,7 @@ function renderSet(ns,gA,zb,interactive,anchor){
       else if(isMod){ label(pr.sx,pr.sy+r+5,n.label,hexA(n.locked?"#c7d0ee":"#dfe6ff",(n.locked?0.5:0.75)*gA),9.5,600); }
       else if(isFacet){ label(pr.sx,pr.sy+r+5,n.label,hexA("#dfe6ff",(n.measured?0.82:0.5)*gA),10.5,600); }
       else if(isMoon && (hov||n===focusNode||n.focus)){ label(pr.sx,pr.sy+r+4,n.label,hexA("#cdd8ff",(n.focus?0.72:0.5)*gA),9,500); }
+      else if(n.type==="session" && (n.latest||hov||n===focusNode)){ label(pr.sx,pr.sy+r+5,n.label,hexA("#EBD98A",(n.latest?0.85:0.55)*gA),9,600); }
     }
     if(interactive && n.type!=="dust") s.projected.push({node:n,pr:pr,r:r});
   });
@@ -509,6 +523,9 @@ function unlock(kind,ref){
 
 /* ── detail card ──────────────────────────────────────────────────── */
 function swatch(col){ return '<span class="dc-sw" style="background:'+col+'"></span>'; }
+function diffCodes(oldc,newc){ var a=oldc.split("·"),b=newc.split("·"),out=[];
+  for(var i=0;i<Math.min(a.length,b.length);i++){ if(a[i]!==b[i]) out.push('<b>'+(AXES[i]?AXES[i].name:"")+'</b> '+a[i]+' → '+b[i]); }
+  return out.slice(0,3).join("<br/>"); }
 function cardHTML(n){
   var inner="";
   if(n.type==="center"){
@@ -554,6 +571,14 @@ function cardHTML(n){
       +(!focus?'<div class="dc-mini"><div class="mt"><b>Навести резкость · 2 мин.</b> Короткий микро-тест превратит оценку в точный замер.</div></div>'
         +'<button class="dc-cta" data-act="unlock-nuance" data-ref="'+n.aidx+':'+n.fi+':'+n.mi+'">Навести резкость · 2 мин <span class="ar">→</span></button>':'')
       +'<div class="dc-foot">'+(focus?"Измерен отдельным микро-тестом — можно доверять.":"Пока это первое приближение из базового теста.")+'</div>';
+  } else if(n.type==="session"){
+    var sn=SESSIONS[n.sesIdx], latest=!!sn.latest, diff=latest?"":diffCodes(sn.code,SESSIONS[SESSIONS.length-1].code);
+    inner='<div class="dc-eye" style="color:#EBD98A">'+swatch("#EBD98A")+(latest?"последняя оценка · сейчас":"оценка №"+(n.sesIdx+1))+'</div>'
+      +'<div class="dc-h">'+sn.name+'</div><div class="dc-sub">'+sn.date+'</div>'
+      +'<div class="dc-code">'+sn.code+'</div><div class="dc-body">'+sn.note+'</div>'
+      +(latest?'<div class="dc-foot">Это твой текущий снимок — та вселенная, которую ты видишь вокруг.</div>'
+        :'<div class="dc-mini"><div class="mt"><b>Что изменилось с тех пор:</b><br/>'+(diff||"по осям — в пределах погрешности; ядро осталось собой.")+'</div></div>'
+         +'<div class="dc-foot">Каждая оценка — новая нить света во времени. Так видно, что менялось, а что осталось тобой.</div>');
   } else if(n.type==="hole"){
     var a=AXES[n.aidx], sh=SHADOW[a.key]||{h:"Тень оси",body:"Сильная сторона на пределе оборачивается против тебя.",cost:""};
     inner='<div class="dc-eye" style="color:var(--coral)"><span class="dc-sw hole"></span>тень · зона гравитации</div>'
@@ -568,8 +593,8 @@ function openCard(node){ focusNode=node; stage.classList.add("dimmed"); cardHost
   requestAnimationFrame(function(){ scrim.classList.add("show"); card.classList.add("show"); });
   scrim.onclick=closeCard; cardHost.querySelector(".dc-x").onclick=closeCard;
   cardHost.querySelectorAll(".dc-cta").forEach(function(btn){ btn.onclick=function(){ var act=btn.getAttribute("data-act");
-    if(act==="drill-axis"){ pushFrame({level:1,axis:+btn.getAttribute("data-axis")}); }
-    else if(act==="drill-facet"){ pushFrame({level:2,axis:+btn.getAttribute("data-axis"),facet:+btn.getAttribute("data-fi")}); }
+    if(act==="drill-axis"){ var da=+btn.getAttribute("data-axis"); pushFrame({level:1,axis:da}, nodes.find(function(n){return n.type==="core"&&n.axis===da;})); }
+    else if(act==="drill-facet"){ var db=+btn.getAttribute("data-axis"), df=+btn.getAttribute("data-fi"); pushFrame({level:2,axis:db,facet:df}, nodes.find(function(n){return n.type==="facet"&&n.aidx===db&&n.fi===df;})); }
     else if(act==="unlock-module"){ unlock("module",btn.getAttribute("data-ref")); closeCard(); }
     else if(act==="unlock-facet"){ unlock("facet",btn.getAttribute("data-ref")); closeCard(); }
     else if(act==="unlock-nuance"){ unlock("nuance",btn.getAttribute("data-ref")); closeCard(); }
