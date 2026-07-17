@@ -10,7 +10,7 @@
  */
 
 export type Lang = 'en' | 'ru';
-export type Bi = Record<Lang, string>;
+export type Bi = { en: string; ru?: string };
 
 export interface Pole { L: string; name: Bi; desc: Bi }
 export interface AxisDef {
@@ -26,61 +26,48 @@ export interface AxisDef {
 // Axis hues are meaning-bearing — never approximate. Order is fixed.
 export const AXES: AxisDef[] = [
   {
-    key: 'energy', name: { ru: 'Энергия', en: 'Energy' }, en: 'Energy', hue: '#3A63F0',
-    plus: { L: 'O', name: { ru: 'Наружу', en: 'Outward' }, desc: {
-      ru: 'Ты заряжаешься от людей и движения: чем больше вокруг жизни и общения, тем ты живее.',
+    key: 'energy', name: { en: 'Energy' }, en: 'Energy', hue: '#3A63F0',
+    plus: { L: 'O', name: { en: 'Outward' }, desc: {
       en: 'You recharge from people and motion — the more life and contact around you, the more alive you feel.' } },
-    minus: { L: 'W', name: { ru: 'Внутрь', en: 'Inward' }, desc: {
-      ru: 'Энергию ты черпаешь изнутри — в тишине и работе один на один. Толпа скорее тратит тебя, чем заряжает.',
+    minus: { L: 'W', name: { en: 'Inward' }, desc: {
       en: 'You draw energy from within — in quiet and one-on-one work. A crowd spends you rather than charges you.' } },
-    link: { ru: 'Питает созвездие «Энергия и выгорание».', en: 'Feeds the "Energy & burnout" constellation.' },
+    link: { en: 'Feeds the "Energy & burnout" constellation.' },
   },
   {
-    key: 'info', name: { ru: 'Информация', en: 'Information' }, en: 'Information', hue: '#6A85F0',
-    plus: { L: 'C', name: { ru: 'Конкретика', en: 'Concrete' }, desc: {
-      ru: 'Ты доверяешь фактам, деталям и опыту. Сначала — что есть на самом деле, потом теории.',
+    key: 'info', name: { en: 'Information' }, en: 'Information', hue: '#6A85F0',
+    plus: { L: 'C', name: { en: 'Concrete' }, desc: {
       en: 'You trust facts, detail and experience. First what is actually there, then the theory.' } },
-    minus: { L: 'A', name: { ru: 'Абстракция', en: 'Abstract' }, desc: {
-      ru: 'Ты живёшь идеями и смыслами: сначала ловишь общую картину и связи, а детали — потом.',
+    minus: { L: 'A', name: { en: 'Abstract' }, desc: {
       en: 'You live in ideas and meaning: you catch the whole picture and the links first, details later.' } },
-    link: { ru: 'Одна из осей, задающих подбор направлений.', en: 'One of the axes that drives direction matching.' },
+    link: { en: 'One of the axes that drives direction matching.' },
   },
   {
-    key: 'decision', name: { ru: 'Решения', en: 'Decision' }, en: 'Decision', hue: '#8A5CD6',
-    plus: { L: 'L', name: { ru: 'Логика', en: 'Logic' }, desc: {
-      ru: 'Выбор ты проверяешь расчётом и принципами. Верно то, что логично и последовательно.',
+    key: 'decision', name: { en: 'Decision' }, en: 'Decision', hue: '#8A5CD6',
+    plus: { L: 'L', name: { en: 'Logic' }, desc: {
       en: 'You test a choice by reasoning and principle. What is right is what is logical and consistent.' } },
-    minus: { L: 'V', name: { ru: 'Ценности', en: 'Values' }, desc: {
-      ru: 'Выбор ты сверяешь с ценностями и людьми. Правильное для тебя должно быть ещё и своим.',
+    minus: { L: 'V', name: { en: 'Values' }, desc: {
       en: 'You weigh a choice against values and people. For you, the right call also has to be yours.' } },
-    link: { ru: 'Влияет на направления и на созвездие «Стиль в команде».', en: 'Shapes directions and the "Team style" constellation.' },
+    link: { en: 'Shapes directions and the "Team style" constellation.' },
   },
   {
-    key: 'structure', name: { ru: 'Структура', en: 'Structure' }, en: 'Structure', hue: '#FF7A3D',
-    plus: { L: 'D', name: { ru: 'Порядок', en: 'Order' }, desc: {
-      ru: 'Тебе спокойнее с планом, списком и ясным финишем. Определённость — это опора, а не клетка.',
+    key: 'structure', name: { en: 'Structure' }, en: 'Structure', hue: '#FF7A3D',
+    plus: { L: 'D', name: { en: 'Order' }, desc: {
       en: 'A plan, a list and a clear finish steady you. Certainty is support, not a cage.' } },
-    minus: { L: 'F', name: { ru: 'Гибкость', en: 'Flexible' }, desc: {
-      ru: 'Любишь открытые рамки и простор для манёвра. Лучшие решения приходят, когда есть воздух.',
+    minus: { L: 'F', name: { en: 'Flexible' }, desc: {
       en: 'You like open frames and room to move. Your best decisions arrive when there is air.' } },
-    link: { ru: 'Одна из осей, задающих ритм работы.', en: 'One of the axes that sets your working rhythm.' },
+    link: { en: 'One of the axes that sets your working rhythm.' },
   },
   {
-    key: 'emotion', name: { ru: 'Реакция', en: 'Emotion' }, en: 'Emotion', hue: '#FF5A5A',
-    plus: { L: 'S', name: { ru: 'Ровно', en: 'Steady' }, desc: {
-      ru: 'Внутри у тебя ровный тыл. Ты редко идёшь на поводу у всплесков и в напряжённый момент — опора для других.',
+    key: 'emotion', name: { en: 'Emotion' }, en: 'Emotion', hue: '#FF5A5A',
+    plus: { L: 'S', name: { en: 'Steady' }, desc: {
       en: 'You keep a level core. You rarely ride the spikes, and in a tense moment you are the anchor for others.' } },
-    minus: { L: 'R', name: { ru: 'Живо', en: 'Reactive' }, desc: {
-      ru: 'Ты чувствуешь ярко и быстро. Эмоции — твой радар: они приходят первыми и подсказывают, что важно.',
+    minus: { L: 'R', name: { en: 'Reactive' }, desc: {
       en: 'You feel vividly and fast. Emotion is your radar — it arrives first and tells you what matters.' } },
-    link: { ru: 'Питает созвездие «Энергия и выгорание».', en: 'Feeds the "Energy & burnout" constellation.' },
+    link: { en: 'Feeds the "Energy & burnout" constellation.' },
   },
 ];
 
-export const BAND_WORDS: Record<Lang, string[]> = {
-  ru: ['в балансе', 'лёгкий наклон', 'заметный наклон', 'выраженный', 'сильный', 'очень сильный'],
-  en: ['balanced', 'a slight lean', 'a clear lean', 'pronounced', 'strong', 'very strong'],
-};
+export const BAND_WORDS: string[] = ['balanced', 'a slight lean', 'a clear lean', 'pronounced', 'strong', 'very strong'];
 
 /** Band 0–5 from a score (distance to a pole, 0..100). Display only. */
 export function bandFromScore(s: number): number {
@@ -113,7 +100,7 @@ export function axisView(a: AxisScore, i: number, lang: Lang) {
     otherName: opp.name[lang],
     body: side.desc[lang],
     foot: ax.link[lang],
-    bandWord: BAND_WORDS[lang][band],
+    bandWord: BAND_WORDS[band],
     hue: ax.hue,
   };
 }
@@ -153,7 +140,7 @@ export function buildGraph(profile: Profile, opts: BuildOpts = {}): Graph {
   const add = (n: GNode) => (nodes.push(n), n);
   const link = (a: GNode, b: GNode, w = 1, pentWeb = false) => edges.push({ a: a.id, b: b.id, w, pent: pentWeb });
 
-  const center = add({ id: 'me', type: 'center', x: 0, y: 0, z: 0, r: 7.5, color: '#ffffff', label: codeOf(profile), sub: 'ядро' });
+  const center = add({ id: 'me', type: 'center', x: 0, y: 0, z: 0, r: 7.5, color: '#ffffff', label: codeOf(profile), sub: 'core' });
 
   // 5 cores on a tilted pentagon; distance & size = f(score)
   const cores = profile.map((a, i) => {
@@ -236,17 +223,17 @@ export function buildGraph(profile: Profile, opts: BuildOpts = {}): Graph {
 // ── Sample profiles (demo selector + the decorative marketing hero) ──
 export interface ProfilePreset { key: string; name: Bi; note: Bi; axes: Profile }
 export const PROFILES: ProfilePreset[] = [
-  { key: 'reflective', name: { ru: 'Рефлексивный исследователь', en: 'The Reflective Explorer' },
-    note: { ru: 'Смешанный профиль: две оси выражены, остальные ближе к центру.', en: 'A mixed profile: two axes pronounced, the rest nearer the center.' },
+  { key: 'reflective', name: { en: 'The Reflective Explorer' },
+    note: { en: 'A mixed profile: two axes pronounced, the rest nearer the center.' },
     axes: [{ t: 'minus', s: 30 }, { t: 'minus', s: 70 }, { t: 'minus', s: 50 }, { t: 'minus', s: 70 }, { t: 'plus', s: 30 }] },
-  { key: 'balanced', name: { ru: 'Универсал — всё в балансе', en: 'The All-Rounder' },
-    note: { ru: 'Почти по центру на каждой оси. Плотное ядро без явных краёв.', en: 'Near center on every axis. A tight knot with no sharp edges.' },
+  { key: 'balanced', name: { en: 'The All-Rounder' },
+    note: { en: 'Near center on every axis. A tight knot with no sharp edges.' },
     axes: [{ t: 'plus', s: 7 }, { t: 'minus', s: 11 }, { t: 'plus', s: 5 }, { t: 'minus', s: 9 }, { t: 'minus', s: 6 }] },
-  { key: 'vivid', name: { ru: 'Ярко выраженный', en: 'The Vivid One' },
-    note: { ru: 'Сильный крен по всем пяти осям. Очень «читаемый» характер.', en: 'A strong lean on all five axes. A very legible character.' },
+  { key: 'vivid', name: { en: 'The Vivid One' },
+    note: { en: 'A strong lean on all five axes. A very legible character.' },
     axes: [{ t: 'plus', s: 92 }, { t: 'plus', s: 86 }, { t: 'plus', s: 90 }, { t: 'plus', s: 88 }, { t: 'plus', s: 90 }] },
-  { key: 'leader', name: { ru: 'Двигатель-командир', en: 'The Driver' },
-    note: { ru: 'Наружу, логикой и порядком. Берёт на себя, структурирует, ведёт.', en: 'Outward, by logic and order. Takes charge, structures, leads.' },
+  { key: 'leader', name: { en: 'The Driver' },
+    note: { en: 'Outward, by logic and order. Takes charge, structures, leads.' },
     axes: [{ t: 'plus', s: 78 }, { t: 'plus', s: 44 }, { t: 'plus', s: 84 }, { t: 'plus', s: 80 }, { t: 'plus', s: 40 }] },
 ];
 export const DEFAULT_PROFILE = PROFILES[0];

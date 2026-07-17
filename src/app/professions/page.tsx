@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import ProfessionsView from './ProfessionsView';
 
 export const metadata: Metadata = {
-  title: 'Профессии · RIASEC × ReNo — PsyID',
-  description: 'Не «кем стать», а где твоя природа работает на тебя. Совпадение на стыке карты интересов RIASEC и твоего профиля ReNo. · Where your nature works for you.',
+  title: 'Professions · RIASEC × ReNo — PsyID',
+  description: 'Not "what to become" but where your nature works for you — the match between the RIASEC interest map and your ReNo profile.',
 };
 
 export default function ProfessionsPage() {

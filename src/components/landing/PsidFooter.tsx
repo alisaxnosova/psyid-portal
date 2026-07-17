@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useSiteLang } from '@/lib/siteLang';
 import { Mark } from '@/components/shared/Mark';
-import { LocaleToggle } from '@/components/shared/LocaleToggle';
 
 export function PsidFooter() {
   const { t } = useSiteLang();
@@ -13,11 +12,10 @@ export function PsidFooter() {
         {/* brand hugs the left edge, the link columns hug the right — fills the band edge-to-edge */}
         <div className="psid-foot-top" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '40px 64px' }}>
           <div style={{ maxWidth: 340, minWidth: 240 }}>
-            <Mark tone="dark" size="md" />
+            <Mark tone="dark" size={48} />
             <p style={{ marginTop: 16, fontSize: 14, lineHeight: 1.6, color: 'var(--space-fg-m)' }}>
               {t('foot_promise')}
             </p>
-            <div style={{ marginTop: 20 }}><LocaleToggle tone="dark" /></div>
           </div>
 
           <div className="psid-foot-cols" style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(48px, 7vw, 104px)' }}>

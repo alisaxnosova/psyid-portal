@@ -33,7 +33,7 @@ function LoginForm() {
   return (
     <div className="psid-site">
       <div className="auth-wrap grad-ground">
-        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" /></Link>
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" size={54} /></Link>
         <div className="auth-card">
           <div className="auth-head">
             <div className="eyebrow blue" style={{ marginBottom: 12 }}>PsyID · ReNo 2.0</div>

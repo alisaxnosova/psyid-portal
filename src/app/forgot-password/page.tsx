@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
       <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: 'radial-gradient(ellipse 60% 60% at 15% 85%, rgba(48,87,224,0.5) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 85% 15%, rgba(255,128,72,0.4) 0%, transparent 60%)' }}/>
 
       <Link href="/" aria-label="PsyID home" style={{ position: 'absolute', top: 28, left: 32, display: 'inline-flex', alignItems: 'center' }}>
-        <Mark tone="dark" />
+        <Mark tone="dark" size={54} />
       </Link>
 
       <div style={{ width: '100%', maxWidth: 440, background: C.paper, borderRadius: 28, padding: '44px 40px', boxShadow: '0 32px 80px rgba(0,0,0,0.35)' }}>

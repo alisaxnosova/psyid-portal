@@ -8,32 +8,26 @@ const FEATURES = [
   {
     icon: '📄',
     en: { title: 'Basic Report Template', desc: 'Starter tier PDF — overview of PsyID type, key traits, and brief recommendations.' },
-    ru: { title: 'Базовый шаблон отчёта', desc: 'PDF для базового тарифа — обзор типа PsyID, ключевые черты и краткие рекомендации.' },
   },
   {
     icon: '📈',
     en: { title: 'Growth Report Template', desc: 'Mid-tier PDF — deeper trait analysis, growth areas, and coaching prompts.' },
-    ru: { title: 'Шаблон Growth-отчёта', desc: 'PDF среднего тарифа — углублённый анализ черт, зоны роста и коучинговые подсказки.' },
   },
   {
     icon: '⭐',
     en: { title: 'Premium Report Template', desc: 'Full 20+ page PDF — complete psychological passport with team fit and career mapping.' },
-    ru: { title: 'Шаблон Premium-отчёта', desc: 'Полный PDF на 20+ страниц — психологический паспорт с командной совместимостью и картой карьеры.' },
   },
   {
     icon: '⬆️',
     en: { title: 'Upload PDFs', desc: 'Upload base template files for each tier. Sections auto-filled from test results.' },
-    ru: { title: 'Загрузка PDF', desc: 'Загружайте базовые шаблоны для каждого тарифа. Разделы заполняются автоматически из результатов теста.' },
   },
   {
     icon: '✏️',
     en: { title: 'Edit Sections', desc: 'Customize text blocks, reorder sections, and adjust layout per tier.' },
-    ru: { title: 'Редактирование разделов', desc: 'Настраивайте текстовые блоки, меняйте порядок разделов и корректируйте макет для каждого тарифа.' },
   },
   {
     icon: '🔄',
     en: { title: 'Regenerate Reports', desc: 'Re-trigger PDF generation for any completed user — push an updated template to existing orders.' },
-    ru: { title: 'Перегенерация отчётов', desc: 'Перезапускайте генерацию PDF для любого завершённого пользователя — обновите шаблон для существующих заказов.' },
   },
 ];
 
@@ -56,15 +50,13 @@ export default function ReportTemplatesPage() {
           </span>
         </div>
         <p style={{ fontSize: 14, color: C.inkMute, marginTop: 10, maxWidth: 560, lineHeight: 1.6 }}>
-          {lang === 'en'
-            ? 'PDF report generation for each tier — Basic, Growth, and Premium. Upload templates, edit sections, and regenerate reports for any order.'
-            : 'Генерация PDF-отчётов для каждого тарифа — Basic, Growth и Premium. Загружайте шаблоны, редактируйте разделы и перегенерируйте отчёты для любого заказа.'}
+          {'PDF report generation for each tier — Basic, Growth, and Premium. Upload templates, edit sections, and regenerate reports for any order.'}
         </p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
         {FEATURES.map((f) => {
-          const content = lang === 'en' ? f.en : f.ru;
+          const content = f.en;
           return (
             <div key={f.en.title} style={{
               background: 'white', borderRadius: 18, padding: '22px 22px',

@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useAuth } from '@/lib/useAuth';
 import { useSiteLang } from '@/lib/siteLang';
 import { Mark } from '@/components/shared/Mark';
-import { LocaleToggle } from '@/components/shared/LocaleToggle';
 
 const LINKS = [
   { href: '/', key: 'nav_home' },
@@ -27,7 +26,7 @@ export function PsidNav() {
       {/* full-bleed bar; true 3-column grid keeps the tabs dead-center regardless of side widths */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 80, padding: '0 clamp(24px,4vw,72px)', gap: 24 }}>
         <div style={{ justifySelf: 'start' }}>
-          <Link href="/" aria-label="PsyID"><Mark tone="dark" size={44} /></Link>
+          <Link href="/" aria-label="PsyID"><Mark tone="dark" size={60} /></Link>
         </div>
 
         <div className="psid-nav-links" style={{ justifySelf: 'center', display: 'flex', gap: 6 }}>
@@ -44,7 +43,6 @@ export function PsidNav() {
 
         <div style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: 14 }}>
           <div className="psid-nav-right" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <LocaleToggle tone="dark" />
             <Link href={isLoggedIn ? '/portal' : '/login'} style={{ fontSize: 15, fontWeight: 500, color: 'var(--space-fg-s)' }}>
               {isLoggedIn ? t('nav_portal') : t('nav_login')}
             </Link>
@@ -88,7 +86,6 @@ export function PsidNav() {
             <Link href={isLoggedIn ? '/portal' : '/login'} onClick={() => setOpen(false)} style={{ color: 'var(--space-fg-s)', fontSize: 15, fontWeight: 500 }}>
               {isLoggedIn ? t('nav_portal') : t('nav_login')}
             </Link>
-            <LocaleToggle tone="dark" />
           </div>
           <Link className="btn btn-orange" href="/reno" onClick={() => setOpen(false)} style={{ justifyContent: 'center', margin: '4px 8px 4px' }}>
             {t('nav_cta')} →

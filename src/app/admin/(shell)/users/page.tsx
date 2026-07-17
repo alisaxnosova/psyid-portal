@@ -28,7 +28,7 @@ interface ExternalUser {
 
 function formatDate(iso: string | null, lang: 'en' | 'ru') {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 function Pill({ label, bg, color }: { label: string; bg: string; color: string }) {
@@ -165,7 +165,7 @@ function ExternalUsersTab() {
                         <div key={code.id} style={{ display: 'grid', gridTemplateColumns: '120px 100px 1fr 1fr auto', gap: 12, alignItems: 'center', background: 'white', borderRadius: 10, padding: '10px 14px', border: `1px solid ${C.line}` }}>
                           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 16, fontWeight: 900, letterSpacing: '0.10em', color: C.ink }}>{code.code}</span>
                           <Pill
-                            label={code.status === 'USED' ? (lang === 'en' ? 'Used' : 'Использован') : code.status === 'IN_PROGRESS' ? 'In Progress' : (lang === 'en' ? 'Unused' : 'Не использован')}
+                            label={code.status === 'USED' ? ('Used') : code.status === 'IN_PROGRESS' ? 'In Progress' : ('Unused')}
                             bg={code.status === 'USED' ? C.bone : code.status === 'IN_PROGRESS' ? 'rgba(34,68,224,0.10)' : 'rgba(255,149,64,0.12)'}
                             color={code.status === 'USED' ? C.inkMute : code.status === 'IN_PROGRESS' ? C.blue : C.orangeHot}
                           />

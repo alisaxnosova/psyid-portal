@@ -3,15 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAdminLoggedIn } from '@/lib/adminApi';
-import { AXES, toCode, type AxisCode, type Lang } from '@/data/reno-axes';
+import { AXES, toCode, type AxisCode } from '@/data/reno-axes';
 import { cellForPosition, type AnswerKeyCell } from '@/app/reno/data/answer-key';
 
 const C = {
   ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8',
   line: '#E5DED2', bone: '#F6F1EA', orange: '#FF7A3D', orangeHot: '#FF9540', blue: '#2244E0',
 };
-
-const LANGS: Lang[] = ['en', 'ru'];
 
 // Delegates to the shared §6 classifier so the explorer, the scorer, and toCode() agree.
 function cellFor(axis: AxisCode, pos: number): AnswerKeyCell | undefined {
@@ -21,12 +19,11 @@ function cellFor(axis: AxisCode, pos: number): AnswerKeyCell | undefined {
 export default function AssessmentsPage() {
   const router = useRouter();
   const [pos, setPos] = useState<Record<AxisCode, number>>({ EO: 50, IF: 50, DB: 50, SP: 50, ER: 50 });
-  const [lang, setLang] = useState<Lang>('en');
 
   useEffect(() => { if (!isAdminLoggedIn()) router.push('/admin/login'); }, [router]);
 
   const signature = AXES.map(a => toCode(a, pos[a.code])).join(' · ');
-  const tx = (b: { en: string; ru: string }) => (lang === 'ru' ? b.ru || b.en : b.en);
+  const tx = (b: { en: string; ru?: string }) => b.en;
 
   return (
     <div style={{ fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
@@ -37,16 +34,6 @@ export default function AssessmentsPage() {
           <p style={{ fontSize: 13, color: C.inkMute, marginTop: 6, fontFamily: "'Geist Mono', monospace" }}>
             ReNo v1.2 · drag each axis to read the interpretive key
           </p>
-        </div>
-        <div style={{ display: 'flex', gap: 4 }}>
-          {LANGS.map(l => (
-            <button key={l} onClick={() => setLang(l)} style={{
-              padding: '7px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700, cursor: 'pointer',
-              border: '1.5px solid', borderColor: lang === l ? C.blue : C.line,
-              background: lang === l ? 'rgba(34,68,224,0.08)' : 'white', color: lang === l ? C.blue : C.inkMute,
-              fontFamily: "'Geist Mono', monospace",
-            }}>{l.toUpperCase()}</button>
-          ))}
         </div>
       </div>
 

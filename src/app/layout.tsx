@@ -3,13 +3,13 @@ import './globals.css';
 import { SiteLangProvider } from '@/lib/siteLang';
 
 export const metadata: Metadata = {
-  title: 'PsyID — Твоя личная вселенная · Your personal universe',
-  description: 'Пять осей характера, собранные в живую личную вселенную. Всё, что светится, — измерено. Ничего не выдумано. · Five axes of character rendered as a living personal universe.',
+  title: 'PsyID — Your personal universe',
+  description: 'Five axes of character rendered as a living personal universe. Everything that glows is measured. Nothing is invented.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body>
         <SiteLangProvider>
           <main>{children}</main>

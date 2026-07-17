@@ -3,7 +3,9 @@
 
 export type Lang = 'en' | 'ru';
 export type AxisCode = 'EO' | 'IF' | 'DB' | 'SP' | 'ER';
-export type Bilingual = { en: string; ru: string };
+// The product is English-only; `ru` is retained as optional so any legacy
+// reader that references it still compiles (it is simply absent now).
+export type Bilingual = { en: string; ru?: string };
 
 export interface AxisPole {
   /** Single-letter code used in the signature, e.g. O / W. */
@@ -26,21 +28,21 @@ export interface Axis {
 }
 
 export const AXES: Axis[] = [
-  { code: 'EO', index: 1, name: { en: 'Energy Orientation', ru: 'Направленность энергии' },
-    plus: { letter: 'O', label: { en: 'Outward', ru: 'Вовне' } },
-    minus: { letter: 'W', label: { en: 'Inward', ru: 'Внутрь' } }, color: '#2244E0' },
-  { code: 'IF', index: 2, name: { en: 'Information Focus', ru: 'Фокус восприятия' },
-    plus: { letter: 'C', label: { en: 'Concrete', ru: 'Конкретика' } },
-    minus: { letter: 'A', label: { en: 'Abstract', ru: 'Абстракция' } }, color: '#6A85F0' },
-  { code: 'DB', index: 3, name: { en: 'Decision Basis', ru: 'Основа решений' },
-    plus: { letter: 'L', label: { en: 'Logic', ru: 'Логика' } },
-    minus: { letter: 'V', label: { en: 'Values', ru: 'Ценности' } }, color: '#8A5CD6' },
-  { code: 'SP', index: 4, name: { en: 'Structure Preference', ru: 'Организация жизни' },
-    plus: { letter: 'D', label: { en: 'Ordered', ru: 'Упорядоченность' } },
-    minus: { letter: 'F', label: { en: 'Flexible', ru: 'Гибкость' } }, color: '#FF7A3D' },
-  { code: 'ER', index: 5, name: { en: 'Emotional Response', ru: 'Эмоциональный отклик' },
-    plus: { letter: 'S', label: { en: 'Steady', ru: 'Устойчивость' } },
-    minus: { letter: 'R', label: { en: 'Reactive', ru: 'Реактивность' } }, color: '#FF5A5A',
+  { code: 'EO', index: 1, name: { en: 'Energy Orientation' },
+    plus: { letter: 'O', label: { en: 'Outward' } },
+    minus: { letter: 'W', label: { en: 'Inward' } }, color: '#2244E0' },
+  { code: 'IF', index: 2, name: { en: 'Information Focus' },
+    plus: { letter: 'C', label: { en: 'Concrete' } },
+    minus: { letter: 'A', label: { en: 'Abstract' } }, color: '#6A85F0' },
+  { code: 'DB', index: 3, name: { en: 'Decision Basis' },
+    plus: { letter: 'L', label: { en: 'Logic' } },
+    minus: { letter: 'V', label: { en: 'Values' } }, color: '#8A5CD6' },
+  { code: 'SP', index: 4, name: { en: 'Structure Preference' },
+    plus: { letter: 'D', label: { en: 'Ordered' } },
+    minus: { letter: 'F', label: { en: 'Flexible' } }, color: '#FF7A3D' },
+  { code: 'ER', index: 5, name: { en: 'Emotional Response' },
+    plus: { letter: 'S', label: { en: 'Steady' } },
+    minus: { letter: 'R', label: { en: 'Reactive' } }, color: '#FF5A5A',
     excludeFromType: true },
 ];
 
@@ -71,12 +73,12 @@ export interface Band {
 }
 
 export const BANDS: Band[] = [
-  { band: 5, label: { en: 'Maximal', ru: 'Максимальный' }, intensityMin: 81, intensityMax: 100 },
-  { band: 4, label: { en: 'Strong', ru: 'Сильный' }, intensityMin: 61, intensityMax: 80 },
-  { band: 3, label: { en: 'Pronounced', ru: 'Выраженный' }, intensityMin: 41, intensityMax: 60 },
-  { band: 2, label: { en: 'Moderate', ru: 'Умеренный' }, intensityMin: 21, intensityMax: 40 },
-  { band: 1, label: { en: 'Slight', ru: 'Лёгкий' }, intensityMin: 8, intensityMax: 20 },
-  { band: 0, label: { en: 'Balanced', ru: 'Сбалансированный' }, intensityMin: 0, intensityMax: 7 },
+  { band: 5, label: { en: 'Maximal' }, intensityMin: 81, intensityMax: 100 },
+  { band: 4, label: { en: 'Strong' }, intensityMin: 61, intensityMax: 80 },
+  { band: 3, label: { en: 'Pronounced' }, intensityMin: 41, intensityMax: 60 },
+  { band: 2, label: { en: 'Moderate' }, intensityMin: 21, intensityMax: 40 },
+  { band: 1, label: { en: 'Slight' }, intensityMin: 8, intensityMax: 20 },
+  { band: 0, label: { en: 'Balanced' }, intensityMin: 0, intensityMax: 7 },
 ];
 
 /**

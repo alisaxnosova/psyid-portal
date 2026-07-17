@@ -132,7 +132,7 @@ function axesSection(positions: Positions, lang: Lang): ReportSection {
   });
   return {
     id: 'axes',
-    title: lang === 'ru' ? 'Пять осей' : 'The five axes',
+    title: 'The five axes',
     blocks,
   };
 }

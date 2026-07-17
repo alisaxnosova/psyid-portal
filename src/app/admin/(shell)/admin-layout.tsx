@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { adminLogout } from '@/lib/adminApi';
-import { useAdminLang, TKey, AdminLang } from '@/lib/adminLang';
+import { useAdminLang, TKey } from '@/lib/adminLang';
 import { Mark } from '@/components/shared/Mark';
 
 const NAV: { href: string; key: TKey; icon: string; exact?: boolean; built: boolean; newTab?: boolean }[] = [
@@ -128,7 +128,7 @@ function NavIcon({ type }: { type: string }) {
 
 export default function AdminShellLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { t, lang, setLang } = useAdminLang();
+  const { t } = useAdminLang();
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: '#F6F1EA', fontFamily: "'Geist', 'Onest', system-ui, sans-serif" }}>
@@ -143,7 +143,7 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
         {/* Brand */}
         <div style={{ padding: '24px 20px 20px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Mark tone="dark" size={30} />
+            <Mark tone="dark" size={46} />
           </Link>
           <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
             Admin Panel
@@ -187,28 +187,6 @@ export default function AdminShellLayout({ children }: { children: React.ReactNo
             );
           })}
         </nav>
-
-        {/* Language toggle */}
-        <div style={{ padding: '12px 12px 0' }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.28)', padding: '0 8px 8px', textTransform: 'uppercase', fontFamily: "'Geist Mono', monospace" }}>
-            Language
-          </div>
-          <div style={{ display: 'flex', gap: 4, padding: '0 0 12px' }}>
-            {(['en', 'ru'] as AdminLang[]).map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{
-                flex: 1, padding: '7px 0', borderRadius: 8, cursor: 'pointer', border: '1px solid',
-                borderColor: lang === l ? 'rgba(255,149,64,0.5)' : 'rgba(255,255,255,0.1)',
-                background: lang === l ? 'rgba(255,149,64,0.18)' : 'transparent',
-                color: lang === l ? '#FF9540' : 'rgba(255,255,255,0.3)',
-                fontSize: 11, fontWeight: 800,
-                fontFamily: "'Geist Mono', monospace", letterSpacing: '0.06em',
-                textTransform: 'uppercase', transition: 'all .15s',
-              }}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Footer links */}
         <div style={{ padding: '12px 12px 20px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>

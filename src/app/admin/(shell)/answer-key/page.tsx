@@ -61,11 +61,11 @@ export default function AnswerKeyPage() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', background: 'white', borderRadius: 12, border: `1px solid ${C.line}`, borderLeft: `4px solid ${axis.color}` }}>
         <div>
           <div style={{ fontSize: 17, fontWeight: 800, color: C.ink, letterSpacing: '-0.02em' }}>
-            {lang === 'ru' ? axis.name.ru : axis.name.en}
+            {axis.name.en}
           </div>
           <div style={{ fontSize: 12, color: C.inkMute, fontFamily: "'Geist Mono', monospace", marginTop: 3 }}>
-            {axis.plus.letter} {lang === 'ru' ? axis.plus.label.ru : axis.plus.label.en} (100) ·
-            {' '}{axis.minus.letter} {lang === 'ru' ? axis.minus.label.ru : axis.minus.label.en} (0)
+            {axis.plus.letter} {axis.plus.label.en} (100) ·
+            {' '}{axis.minus.letter} {axis.minus.label.en} (0)
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function AnswerKeyPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ background: C.bone }}>
-              {['Code', 'Level', 'Position', lang === 'ru' ? 'Описание' : 'Descriptor', lang === 'ru' ? 'Примечание' : 'Framing'].map((h, i) => (
+              {['Code', 'Level', 'Position', 'Descriptor', 'Framing'].map((h, i) => (
                 <th key={i} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 700, color: C.ink, fontSize: 11, borderBottom: `1.5px solid ${C.line}`, fontFamily: "'Geist Mono', monospace", minWidth: i >= 3 ? 280 : 80 }}>{h}</th>
               ))}
             </tr>
@@ -99,7 +99,7 @@ export default function AnswerKeyPage() {
                     {lang === 'ru' ? cell.ru || cell.en : cell.en}
                   </td>
                   <td style={{ padding: '12px 14px', verticalAlign: 'top', color: C.inkMute, lineHeight: 1.5, fontSize: 12, fontStyle: 'italic' }}>
-                    {(lang === 'ru' ? cell.framing.ru : cell.framing.en) || <span style={{ color: C.line }}>—</span>}
+                    {(cell.framing.en) || <span style={{ color: C.line }}>—</span>}
                   </td>
                 </tr>
               );

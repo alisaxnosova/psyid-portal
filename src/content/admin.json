@@ -1,462 +1,347 @@
 {
   "nav_section": {
-    "en": "Navigation",
-    "ru": "Навигация"
+    "en": "Navigation"
   },
   "nav_dashboard": {
-    "en": "Dashboard",
-    "ru": "Обзор"
+    "en": "Dashboard"
   },
   "nav_assessments": {
-    "en": "Cognitive Profiles",
-    "ru": "Когнитивные профили"
+    "en": "Cognitive Profiles"
   },
   "nav_answer_key": {
-    "en": "Answer Key",
-    "ru": "Ключ ответов"
+    "en": "Answer Key"
   },
   "nav_questions": {
-    "en": "Questions",
-    "ru": "Вопросы"
+    "en": "Questions"
   },
   "nav_report_tmpls": {
-    "en": "Report Templates",
-    "ru": "Шаблоны отчётов"
+    "en": "Report Templates"
   },
   "nav_users": {
-    "en": "Users",
-    "ru": "Пользователи"
+    "en": "Users"
   },
   "nav_results": {
-    "en": "Results",
-    "ru": "Результаты"
+    "en": "Results"
   },
   "nav_career_vault": {
-    "en": "Career Vault",
-    "ru": "Хранилище профессий"
+    "en": "Career Vault"
   },
   "nav_orders": {
-    "en": "Third Party Orders",
-    "ru": "Сторонние заказы"
+    "en": "Third Party Orders"
   },
   "nav_billing": {
-    "en": "Billing",
-    "ru": "Финансы"
+    "en": "Billing"
   },
   "nav_analytics": {
-    "en": "Analytics",
-    "ru": "Аналитика"
+    "en": "Analytics"
   },
   "nav_assess_ana": {
-    "en": "Assessment Analytics",
-    "ru": "Аналитика теста"
+    "en": "Assessment Analytics"
   },
   "nav_test": {
-    "en": "Access Codes",
-    "ru": "Коды доступа"
+    "en": "Access Codes"
   },
   "nav_to_site": {
-    "en": "Go to site",
-    "ru": "На сайт"
+    "en": "Go to site"
   },
   "nav_logout": {
-    "en": "Log out",
-    "ru": "Выйти"
+    "en": "Log out"
   },
   "loading": {
-    "en": "Loading...",
-    "ru": "Загрузка..."
+    "en": "Loading..."
   },
   "nothing_found": {
-    "en": "Nothing found",
-    "ru": "Ничего не найдено"
+    "en": "Nothing found"
   },
   "coming_soon": {
-    "en": "Coming soon",
-    "ru": "В разработке"
+    "en": "Coming soon"
   },
   "in_dev": {
-    "en": "This section is being built",
-    "ru": "Этот раздел находится в разработке"
+    "en": "This section is being built"
   },
   "search": {
-    "en": "Search...",
-    "ru": "Поиск..."
+    "en": "Search..."
   },
   "all": {
-    "en": "All",
-    "ru": "Все"
+    "en": "All"
   },
   "filter_compl": {
-    "en": "Completed",
-    "ru": "Завершённые"
+    "en": "Completed"
   },
   "filter_prog": {
-    "en": "In Progress",
-    "ru": "В процессе"
+    "en": "In Progress"
   },
   "dash_title": {
-    "en": "Dashboard",
-    "ru": "Обзор"
+    "en": "Dashboard"
   },
   "dash_sub": {
-    "en": "Overview · PsyID",
-    "ru": "Общая картина · PsyID"
+    "en": "Overview · PsyID"
   },
   "dash_users": {
-    "en": "Total Users",
-    "ru": "Всего пользователей"
+    "en": "Total Users"
   },
   "dash_started": {
-    "en": "Tests Started",
-    "ru": "Тестов начато"
+    "en": "Tests Started"
   },
   "dash_compl": {
-    "en": "Tests Completed",
-    "ru": "Тестов завершено"
+    "en": "Tests Completed"
   },
   "dash_funnel": {
-    "en": "Funnel",
-    "ru": "Воронка"
+    "en": "Funnel"
   },
   "dash_today": {
-    "en": "Today",
-    "ru": "Сегодня"
+    "en": "Today"
   },
   "dash_reg": {
-    "en": "Registered",
-    "ru": "Зарегистрировались"
+    "en": "Registered"
   },
   "dash_started2": {
-    "en": "Started test",
-    "ru": "Начали тест"
+    "en": "Started test"
   },
   "dash_compl2": {
-    "en": "Completed test",
-    "ru": "Завершили тест"
+    "en": "Completed test"
   },
   "dash_new_u": {
-    "en": "New users",
-    "ru": "Новых пользователей"
+    "en": "New users"
   },
   "dash_t_start": {
-    "en": "Tests started",
-    "ru": "Тестов начато"
+    "en": "Tests started"
   },
   "dash_t_compl": {
-    "en": "Tests completed",
-    "ru": "Тестов завершено"
+    "en": "Tests completed"
   },
   "users_title": {
-    "en": "Users",
-    "ru": "Пользователи"
+    "en": "Users"
   },
   "users_count": {
-    "en": "accounts",
-    "ru": "аккаунтов"
+    "en": "accounts"
   },
   "users_ph": {
-    "en": "Search by email or name...",
-    "ru": "Поиск по email или имени..."
+    "en": "Search by email or name..."
   },
   "users_none": {
-    "en": "No users found",
-    "ru": "Пользователи не найдены"
+    "en": "No users found"
   },
   "users_user": {
-    "en": "User",
-    "ru": "Пользователь"
+    "en": "User"
   },
   "users_tests": {
-    "en": "Tests",
-    "ru": "Тестов"
+    "en": "Tests"
   },
   "users_done": {
-    "en": "Completed",
-    "ru": "Завершено"
+    "en": "Completed"
   },
   "users_joined": {
-    "en": "Joined",
-    "ru": "Регистрация"
+    "en": "Joined"
   },
   "res_title": {
-    "en": "Results",
-    "ru": "Результаты"
+    "en": "Results"
   },
   "res_total": {
-    "en": "total",
-    "ru": "всего"
+    "en": "total"
   },
   "res_compl": {
-    "en": "completed",
-    "ru": "завершено"
+    "en": "completed"
   },
   "res_prog": {
-    "en": "in progress",
-    "ru": "в процессе"
+    "en": "in progress"
   },
   "res_user": {
-    "en": "User",
-    "ru": "Пользователь"
+    "en": "User"
   },
   "res_profile": {
-    "en": "Profile",
-    "ru": "Профиль"
+    "en": "Profile"
   },
   "res_status": {
-    "en": "Status",
-    "ru": "Статус"
+    "en": "Status"
   },
   "res_date": {
-    "en": "Date",
-    "ru": "Дата"
+    "en": "Date"
   },
   "res_anon": {
-    "en": "Anonymous",
-    "ru": "Анонимный"
+    "en": "Anonymous"
   },
   "res_done": {
-    "en": "Completed",
-    "ru": "Завершён"
+    "en": "Completed"
   },
   "res_inprog": {
-    "en": "In Progress",
-    "ru": "В процессе"
+    "en": "In Progress"
   },
   "res_created": {
-    "en": "Created",
-    "ru": "Создан"
+    "en": "Created"
   },
   "ass_title": {
-    "en": "Test Questions",
-    "ru": "Вопросы теста"
+    "en": "Test Questions"
   },
   "ass_sub": {
-    "en": "questions · ReNo v1.2",
-    "ru": "вопросов · ReNo v1.2"
+    "en": "questions · ReNo v1.2"
   },
   "ass_search": {
-    "en": "Search...",
-    "ru": "Поиск..."
+    "en": "Search..."
   },
   "ass_save": {
-    "en": "Save",
-    "ru": "Сохранить"
+    "en": "Save"
   },
   "ass_saved": {
-    "en": "Saved",
-    "ru": "Сохранено"
+    "en": "Saved"
   },
   "ass_edit": {
-    "en": "Edit",
-    "ru": "Редактировать"
+    "en": "Edit"
   },
   "ass_cancel": {
-    "en": "Cancel",
-    "ru": "Отмена"
+    "en": "Cancel"
   },
   "users_tab_ext": {
-    "en": "External Users",
-    "ru": "Внешние пользователи"
+    "en": "External Users"
   },
   "users_tab_portal": {
-    "en": "Portal Users",
-    "ru": "Пользователи портала"
+    "en": "Portal Users"
   },
   "users_tab_admins": {
-    "en": "Admins",
-    "ru": "Администраторы"
+    "en": "Admins"
   },
   "users_ext_none": {
-    "en": "No external users yet. Assign a name when generating an access code to track them here.",
-    "ru": "Внешних пользователей нет. Укажите имя при создании кода доступа."
+    "en": "No external users yet. Assign a name when generating an access code to track them here."
   },
   "users_ext_name": {
-    "en": "Name",
-    "ru": "Имя"
+    "en": "Name"
   },
   "users_ext_codes": {
-    "en": "Codes",
-    "ru": "Кодов"
+    "en": "Codes"
   },
   "users_ext_used": {
-    "en": "Tests Taken",
-    "ru": "Тестов пройдено"
+    "en": "Tests Taken"
   },
   "users_ext_refs": {
-    "en": "References",
-    "ru": "Источники"
+    "en": "References"
   },
   "users_ext_first": {
-    "en": "First Seen",
-    "ru": "Первый раз"
+    "en": "First Seen"
   },
   "users_ext_last": {
-    "en": "Last Active",
-    "ru": "Последняя активность"
+    "en": "Last Active"
   },
   "users_ext_type": {
-    "en": "Type",
-    "ru": "Тип"
+    "en": "Type"
   },
   "users_ext_expand": {
-    "en": "History",
-    "ru": "История"
+    "en": "History"
   },
   "users_ext_code": {
-    "en": "Code",
-    "ru": "Код"
+    "en": "Code"
   },
   "users_ext_result": {
-    "en": "Result",
-    "ru": "Результат"
+    "en": "Result"
   },
   "users_ext_notest": {
-    "en": "Not taken",
-    "ru": "Не пройден"
+    "en": "Not taken"
   },
   "codes_user": {
-    "en": "User (Optional)",
-    "ru": "Пользователь (необязательно)"
+    "en": "User (Optional)"
   },
   "codes_user_ph": {
-    "en": "e.g. Alisa from Etsy",
-    "ru": "напр. Алиса с Etsy"
+    "en": "e.g. Alisa from Etsy"
   },
   "codes_col_user": {
-    "en": "User",
-    "ru": "Пользователь"
+    "en": "User"
   },
   "ak_title": {
-    "en": "Answer Key",
-    "ru": "Ключ ответов"
+    "en": "Answer Key"
   },
   "ak_sub": {
-    "en": "Reference grid for all profile descriptions",
-    "ru": "Справочная таблица описаний профилей"
+    "en": "Reference grid for all profile descriptions"
   },
   "sliders_title": {
-    "en": "Cognitive Profiles",
-    "ru": "Когнитивные профили"
+    "en": "Cognitive Profiles"
   },
   "sliders_sub": {
-    "en": "Preview cognitive profile report with custom scores",
-    "ru": "Предпросмотр когнитивного профиля"
+    "en": "Preview cognitive profile report with custom scores"
   },
   "sliders_gen": {
-    "en": "Generate Report Preview",
-    "ru": "Сгенерировать отчёт"
+    "en": "Generate Report Preview"
   },
   "sliders_regen": {
-    "en": "Regenerate",
-    "ru": "Перегенерировать"
+    "en": "Regenerate"
   },
   "sliders_lang": {
-    "en": "Report Language",
-    "ru": "Язык отчёта"
+    "en": "Report Language"
   },
   "sliders_preview": {
-    "en": "Report Preview",
-    "ru": "Предпросмотр отчёта"
+    "en": "Report Preview"
   },
   "sliders_gen_report": {
-    "en": "Generate Report",
-    "ru": "Создать отчёт"
+    "en": "Generate Report"
   },
   "sliders_dl_pdf": {
-    "en": "Download PDF",
-    "ru": "Скачать PDF"
+    "en": "Download PDF"
   },
   "codes_title": {
-    "en": "Access Codes",
-    "ru": "Коды доступа"
+    "en": "Access Codes"
   },
   "codes_sub": {
-    "en": "Generate single-use test access codes",
-    "ru": "Создание одноразовых кодов доступа"
+    "en": "Generate single-use test access codes"
   },
   "codes_gen_heading": {
-    "en": "Generate a Code",
-    "ru": "Создать код"
+    "en": "Generate a Code"
   },
   "codes_invoice": {
-    "en": "Invoice / Reference",
-    "ru": "Счёт / Источник"
+    "en": "Invoice / Reference"
   },
   "codes_invoice_ph": {
-    "en": "e.g. Etsy Order #12345",
-    "ru": "напр. Etsy Заказ #12345"
+    "en": "e.g. Etsy Order #12345"
   },
   "codes_note": {
-    "en": "Note",
-    "ru": "Заметка"
+    "en": "Note"
   },
   "codes_note_ph": {
-    "en": "Optional note",
-    "ru": "Необязательная заметка"
+    "en": "Optional note"
   },
   "codes_gen_btn": {
-    "en": "Generate Code",
-    "ru": "Создать код"
+    "en": "Generate Code"
   },
   "codes_open_test": {
-    "en": "Open Test Page ↗",
-    "ru": "Открыть тест ↗"
+    "en": "Open Test Page ↗"
   },
   "codes_copy": {
-    "en": "Copy",
-    "ru": "Копировать"
+    "en": "Copy"
   },
   "codes_copied": {
-    "en": "Copied!",
-    "ru": "Скопировано!"
+    "en": "Copied!"
   },
   "codes_list_title": {
-    "en": "Generated Codes",
-    "ru": "Созданные коды"
+    "en": "Generated Codes"
   },
   "codes_col_code": {
-    "en": "Code",
-    "ru": "Код"
+    "en": "Code"
   },
   "codes_col_status": {
-    "en": "Status",
-    "ru": "Статус"
+    "en": "Status"
   },
   "codes_col_invoice": {
-    "en": "Invoice Ref",
-    "ru": "Счёт"
+    "en": "Invoice Ref"
   },
   "codes_col_note": {
-    "en": "Note",
-    "ru": "Заметка"
+    "en": "Note"
   },
   "codes_col_created": {
-    "en": "Created",
-    "ru": "Создан"
+    "en": "Created"
   },
   "codes_col_used": {
-    "en": "Used",
-    "ru": "Использован"
+    "en": "Used"
   },
   "codes_none": {
-    "en": "No codes generated yet",
-    "ru": "Коды ещё не созданы"
+    "en": "No codes generated yet"
   },
   "codes_unused": {
-    "en": "Unused",
-    "ru": "Не использован"
+    "en": "Unused"
   },
   "codes_used": {
-    "en": "Used",
-    "ru": "Использован"
+    "en": "Used"
   },
   "codes_local_note": {
-    "en": "Stored locally — backend sync coming",
-    "ru": "Хранится локально — синхронизация скоро"
+    "en": "Stored locally — backend sync coming"
   },
   "codes_del": {
-    "en": "Delete",
-    "ru": "Удалить"
+    "en": "Delete"
   }
 }

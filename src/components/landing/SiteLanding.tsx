@@ -7,7 +7,7 @@ import { PsidNav } from './PsidNav';
 import { PsidFooter } from './PsidFooter';
 import { DecorativeGalaxy, Starfield, AXES } from '@/components/galaxy';
 
-/* ── Animated personality-code ticker (§ Твой код) ── */
+/* ── Animated personality-code ticker (§ Your code) ── */
 const CODES = ['W2·A4·V3·F4·S2', 'O3·C4·L3·D4·R2', 'W3·A3·V4·F2·S3', 'O2·A5·L2·D3·R4'];
 function CodeMorph() {
   const [i, setI] = useState(0);

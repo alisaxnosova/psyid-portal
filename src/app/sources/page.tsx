@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import SourcesView from './SourcesView';
 
 export const metadata: Metadata = {
-  title: 'Источники и литература — PsyID',
-  description: 'Работы, на которых стоит методика ReNo. Красота — на поверхности, строгость — на один тап вглубь. · The open science the ReNo method stands on.',
+  title: 'Sources & Literature — PsyID',
+  description: 'The open science the ReNo method stands on. Beauty on the surface, rigor one tap deeper.',
 };
 
 export default function SourcesPage() {

@@ -5,9 +5,9 @@ import { useAdminLang } from '@/lib/adminLang';
 const C = { ink: '#0E1230', inkSoft: '#4F5470', inkMute: '#8A8FA8', line: '#E5DED2', bone: '#F6F1EA', orangeHot: '#FF9540', blue: '#2244E0', coral: '#FF5A5A', gold: '#FFC074' };
 
 const MOCK_DROPS = [
-  { q: 'Q42', pct: 18, en: 'Maybe it\'s confusing or emotionally heavy.', ru: 'Возможно, вопрос сбивает с толку или эмоционально тяжёлый.' },
-  { q: 'Q31', pct: 14, en: 'Users stall on this — review wording.',          ru: 'Пользователи теряются здесь — пересмотрите формулировку.'   },
-  { q: 'Q57', pct: 11, en: 'Possible translation issue in this question.',   ru: 'Возможная проблема с переводом этого вопроса.'              },
+  { q: 'Q42', pct: 18, en: 'Maybe it\'s confusing or emotionally heavy.' },
+  { q: 'Q31', pct: 14, en: 'Users stall on this — review wording.'   },
+  { q: 'Q57', pct: 11, en: 'Possible translation issue in this question.'              },
 ];
 
 const MOCK_TYPES = [
@@ -22,32 +22,26 @@ const FEATURES = [
   {
     icon: '⚠️',
     en: { title: 'Abandonment Heatmap', desc: 'See exactly which questions cause users to quit — ranked by dropout rate.' },
-    ru: { title: 'Карта отсева', desc: 'Видите точно, на каких вопросах пользователи бросают тест — отсортировано по проценту отсева.' },
   },
   {
     icon: '🧠',
     en: { title: 'Type Distribution', desc: 'Which PsyID types are most common? Breakdowns by gender, age, and language.' },
-    ru: { title: 'Распределение типов', desc: 'Какие типы PsyID наиболее распространены? Разбивка по полу, возрасту и языку.' },
   },
   {
     icon: '💡',
     en: { title: 'Content Insights', desc: 'Use type distribution data to drive content strategy — blog, social, product.' },
-    ru: { title: 'Контентные инсайты', desc: 'Используйте данные о распределении типов для контентной стратегии — блог, соцсети, продукт.' },
   },
   {
     icon: '🔤',
     en: { title: 'Language Breakdown', desc: 'Compare completion rates and type distributions across EN, RU, ES, FR, AR.' },
-    ru: { title: 'Разбивка по языкам', desc: 'Сравнивайте процент завершения и распределение типов по языкам: EN, RU, ES, FR, AR.' },
   },
   {
     icon: '📊',
     en: { title: 'Response Patterns', desc: 'Aggregate answer distributions per question — spot answer bias or clustering.' },
-    ru: { title: 'Паттерны ответов', desc: 'Агрегируйте распределение ответов по каждому вопросу — выявляйте смещения или кластеризацию.' },
   },
   {
     icon: '🗓️',
     en: { title: 'Cohort Analysis', desc: 'Compare type distributions across registration cohorts — are newer users different?' },
-    ru: { title: 'Когортный анализ', desc: 'Сравнивайте распределение типов по когортам регистрации — отличаются ли новые пользователи?' },
   },
 ];
 
@@ -70,9 +64,7 @@ export default function AssessmentAnalyticsPage() {
           </span>
         </div>
         <p style={{ fontSize: 14, color: C.inkMute, marginTop: 10, maxWidth: 560, lineHeight: 1.6 }}>
-          {lang === 'en'
-            ? 'Understand which questions cause abandonment, how types are distributed, and generate content ideas from psychographic data.'
-            : 'Узнайте, какие вопросы вызывают отсев, как распределяются типы, и генерируйте идеи контента на основе психографических данных.'}
+          {'Understand which questions cause abandonment, how types are distributed, and generate content ideas from psychographic data.'}
         </p>
       </div>
 
@@ -80,15 +72,15 @@ export default function AssessmentAnalyticsPage() {
         {/* Abandonment preview */}
         <div style={{ background: 'white', borderRadius: 18, padding: '22px 24px', border: `1.5px solid ${C.line}`, opacity: 0.55 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 18 }}>
-            {lang === 'en' ? 'Top Abandonment Points' : 'Топ точек отсева'}
+            {'Top Abandonment Points'}
           </div>
           {MOCK_DROPS.map(d => (
             <div key={d.q} style={{ marginBottom: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, fontWeight: 700, color: C.ink }}>{d.q}</span>
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.coral, fontFamily: "'Geist Mono', monospace" }}>{d.pct}% {lang === 'en' ? 'quit here' : 'бросили здесь'}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: C.coral, fontFamily: "'Geist Mono', monospace" }}>{d.pct}% {'quit here'}</span>
               </div>
-              <div style={{ fontSize: 12, color: C.inkMute, marginBottom: 6 }}>{lang === 'en' ? d.en : d.ru}</div>
+              <div style={{ fontSize: 12, color: C.inkMute, marginBottom: 6 }}>{d.en}</div>
               <div style={{ height: 5, background: C.bone, borderRadius: 100 }}>
                 <div style={{ height: '100%', width: `${d.pct * 4}%`, background: C.coral, borderRadius: 100 }}/>
               </div>
@@ -99,7 +91,7 @@ export default function AssessmentAnalyticsPage() {
         {/* Type distribution preview */}
         <div style={{ background: 'white', borderRadius: 18, padding: '22px 24px', border: `1.5px solid ${C.line}`, opacity: 0.55 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 18 }}>
-            {lang === 'en' ? 'Type Distribution' : 'Распределение типов'}
+            {'Type Distribution'}
           </div>
           {MOCK_TYPES.map(tp => (
             <div key={tp.type} style={{ marginBottom: 12 }}>
@@ -117,7 +109,7 @@ export default function AssessmentAnalyticsPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
         {FEATURES.map((f) => {
-          const content = lang === 'en' ? f.en : f.ru;
+          const content = f.en;
           return (
             <div key={f.en.title} style={{ background: 'white', borderRadius: 18, padding: '22px 22px', border: `1.5px solid ${C.line}`, opacity: 0.6 }}>
               <div style={{ fontSize: 24, marginBottom: 12 }}>{f.icon}</div>

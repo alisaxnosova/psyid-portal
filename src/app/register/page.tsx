@@ -10,7 +10,7 @@ function PageWrap({ children }: { children: React.ReactNode }) {
   return (
     <div className="psid-site">
       <div className="auth-wrap grad-ground">
-        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" /></Link>
+        <Link href="/" className="auth-logo" aria-label="PsyID home"><Mark tone="dark" size={54} /></Link>
         <div className="auth-card">{children}</div>
       </div>
     </div>

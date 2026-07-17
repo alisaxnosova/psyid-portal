@@ -12,9 +12,8 @@ import { Mark } from '@/components/shared/Mark';
    answers-with-retries → progress → intake → complete) is preserved.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-type Lang = 'en' | 'ru';
+type Lang = 'en';
 
-const LANG_NAMES: Record<Lang, string> = { en: 'EN', ru: 'RU' };
 
 /* ─── Scoped styles (from the preview, prefixed under .reno-v12) ─── */
 const CSS = `
@@ -181,70 +180,6 @@ const T = {
     complete_ext_body: 'Your assessment is complete. Your results will be prepared and sent to you within 24 hours. You may now close this page.',
     resume_note: 'Welcome back — continuing where you left off.',
   },
-  ru: {
-    lang_html: 'ru',
-    eyebrow: 'Тестирование ReNo',
-    heading: 'Добро пожаловать',
-    subtitle: 'Введите полученный код доступа, чтобы начать тестирование.',
-    code_label: 'Код доступа',
-    code_ph: '000000',
-    btn_begin: 'Начать →',
-    btn_loading: 'Проверяем…',
-    err_not_found: 'Код не найден. Проверьте правильность ввода.',
-    err_already_used: 'Этот код уже был использован. Свяжитесь с вашим специалистом.',
-    err_expired: 'Срок действия кода истёк.',
-    err_network: 'Что-то пошло не так. Попробуйте ещё раз.',
-    err_cooldown: 'Вы уже проходили тест. Пройти его снова можно после {date}.',
-    footer: 'Ваши ответы конфиденциальны и защищены.',
-
-    disclaimer_eyebrow: 'Шаг 1 из 3',
-    disclaimer_heading: 'Перед началом',
-    disclaimer_body: 'Этот тест показывает, как вы склонны думать, принимать решения и реагировать по пяти измерениям темперамента. Он занимает около 15–20 минут. Отвечайте честно и доверяйте первому ощущению — правильных и неправильных ответов нет, и ни один полюс не «лучше» другого.',
-    btn_continue: 'Продолжить →',
-
-    consent_eyebrow: 'Шаг 2 из 3',
-    consent_heading: 'Согласие на обработку данных',
-    consent_body: 'Результаты тестирования будут переданы только специалисту, выдавшему код доступа. Обезличенные данные могут использоваться в исследовательских целях.',
-    consent_check: 'Я согласен(на) с обработкой моих персональных данных.',
-    consent_err: 'Необходимо согласие для продолжения.',
-
-    research_eyebrow: 'Шаг 3 из 3',
-    research_heading: 'Участие в исследовании',
-    research_body: 'Помимо ваших результатов, мы изучаем, как темперамент различается у разных людей. Для этого мы собираем несколько данных о вас — возраст, образование, род занятий и т. д. Они используются только в исследовании, всегда обезличенно, и никогда не связываются с вашей личностью. Делиться ими — полностью ваш выбор, и на ваши результаты это не влияет.',
-    research_consent_btn: 'Согласен(на) — использовать мои данные для исследования',
-    research_decline_btn: 'Нет, спасибо — перейти к тесту',
-
-    intake_eyebrow: 'Демографические данные · Опционально',
-    intake_heading: 'Немного о вас',
-    intake_note: 'Спасибо за участие. Эти данные используются только для обезличенного исследования. Любое поле можно пропустить.',
-    intake_age: 'Возраст',
-    intake_age_ph: '16+',
-    intake_sex: 'Пол / гендерная идентичность',
-    intake_country: 'Страна',
-    intake_native_language: 'Родной язык',
-    intake_education: 'Образование',
-    intake_occupation: 'Профессия / отрасль',
-    intake_occupation_ph: 'например, Программист, Медицина',
-    intake_employment: 'Занятость',
-    intake_relationship: 'Семейное положение',
-    intake_select_ph: 'Выберите…',
-    intake_skip: 'Пропустить',
-    intake_begin: 'Начать тест →',
-
-    test_of: 'из',
-    test_back: '← Назад',
-    test_next: 'Далее',
-    test_finish: 'К результатам →',
-    test_offline: 'Не удалось сохранить ответ. Проверьте соединение.',
-    scale: ['Совершенно не согласен(на)', 'Не согласен(на)', 'Нейтрально', 'Согласен(на)', 'Полностью согласен(на)'],
-
-    complete_heading: 'Спасибо',
-    complete_loading: 'Завершаем…',
-    complete_portal_body: 'Тест завершён, ваш паспорт личности готов.',
-    complete_portal_btn: 'Перейти в кабинет →',
-    complete_ext_body: 'Тест завершён. Ваши результаты будут подготовлены и отправлены вам в течение 24 часов. Вы можете закрыть эту страницу.',
-    resume_note: 'С возвращением — продолжаем с того места, где вы остановились.',
-  },
 } as const;
 
 /* ─── Intake option lists (EN/RU) ─── */
@@ -274,22 +209,10 @@ const NATIVE_LANGUAGES = [
   'Ukrainian','Urdu','Uzbek','Vietnamese','Other',
 ];
 
-const SEX_OPTIONS: Record<Lang, string[]> = {
-  en: ['Female', 'Male', 'Non-binary / gender diverse', 'Prefer not to say'],
-  ru: ['Женщина', 'Мужчина', 'Небинарная идентичность', 'Не хочу указывать'],
-};
-const EDUCATION_OPTIONS: Record<Lang, string[]> = {
-  en: ['High school', 'Some college', "Bachelor's degree", "Master's degree", 'Doctoral degree', 'Prefer not to say'],
-  ru: ['Среднее', 'Неполное высшее', 'Бакалавр', 'Магистр', 'Доктор наук', 'Не хочу указывать'],
-};
-const EMPLOYMENT_OPTIONS: Record<Lang, string[]> = {
-  en: ['Employed (full-time)', 'Employed (part-time)', 'Self-employed', 'Student', 'Job-seeking', 'Career transitioning', 'Not employed', 'Prefer not to say'],
-  ru: ['Работаю полный день', 'Работаю неполный день', 'Самозанятый(ая)', 'Студент(ка)', 'В поиске работы', 'Смена карьеры', 'Не работаю', 'Не хочу указывать'],
-};
-const RELATIONSHIP_OPTIONS: Record<Lang, string[]> = {
-  en: ['Single', 'In a relationship', 'Married / partnered', 'Divorced / separated', 'Widowed', 'Prefer not to say'],
-  ru: ['Не в отношениях', 'В отношениях', 'В браке / с партнёром', 'В разводе / разлучён(а)', 'Вдовец / вдова', 'Не хочу указывать'],
-};
+const SEX_OPTIONS: string[] = ['Female', 'Male', 'Non-binary / gender diverse', 'Prefer not to say'];
+const EDUCATION_OPTIONS: string[] = ['High school', 'Some college', "Bachelor's degree", "Master's degree", 'Doctoral degree', 'Prefer not to say'];
+const EMPLOYMENT_OPTIONS: string[] = ['Employed (full-time)', 'Employed (part-time)', 'Self-employed', 'Student', 'Job-seeking', 'Career transitioning', 'Not employed', 'Prefer not to say'];
+const RELATIONSHIP_OPTIONS: string[] = ['Single', 'In a relationship', 'Married / partnered', 'Divorced / separated', 'Widowed', 'Prefer not to say'];
 
 /* ─── Deterministic interleave so axes don't clump (stable across resumes) ─── */
 function interleave(qs: RenoQuestion[]): RenoQuestion[] {
@@ -314,17 +237,12 @@ type Copy = (typeof T)[Lang];
 
 
 /* ─── Top bar ─── */
-function TopBar({ lang, onLang, progress }: { lang: Lang; onLang: (l: Lang) => void; progress: number | null }) {
+function TopBar({ progress }: { progress: number | null }) {
   return (
     <div className="topbar">
       <div className="row">
-        <span className="brand"><Mark tone="light" size={30} /></span>
+        <span className="brand"><Mark tone="light" size={46} /></span>
         <span className="spacer" />
-        <span className="langtoggle">
-          {(['en', 'ru'] as Lang[]).map(l => (
-            <button key={l} className={lang === l ? 'on' : ''} onClick={() => onLang(l)}>{LANG_NAMES[l]}</button>
-          ))}
-        </span>
       </div>
       {progress != null && (
         <div className="progressbar"><div className="fill" style={{ width: `${progress}%` }} /></div>
@@ -546,16 +464,16 @@ function IntakeStage({ t, sessionId, lang, onContinue }: { t: Copy; sessionId: s
           <label>{t.intake_age}</label>
           <input type="number" min={16} max={99} inputMode="numeric" placeholder={t.intake_age_ph} value={age} onChange={e => setAge(e.target.value)} />
         </div>
-        {sel(t.intake_sex, sex, setSex, SEX_OPTIONS[lang])}
+        {sel(t.intake_sex, sex, setSex, SEX_OPTIONS)}
         {sel(t.intake_country, country, setCountry, COUNTRIES)}
         {sel(t.intake_native_language, nativeLanguage, setNativeLanguage, NATIVE_LANGUAGES)}
-        {sel(t.intake_education, education, setEducation, EDUCATION_OPTIONS[lang])}
-        {sel(t.intake_employment, employment, setEmployment, EMPLOYMENT_OPTIONS[lang])}
+        {sel(t.intake_education, education, setEducation, EDUCATION_OPTIONS)}
+        {sel(t.intake_employment, employment, setEmployment, EMPLOYMENT_OPTIONS)}
         <div className="field full">
           <label>{t.intake_occupation}</label>
           <input placeholder={t.intake_occupation_ph} value={occupation} onChange={e => setOccupation(e.target.value)} />
         </div>
-        {sel(t.intake_relationship, relationship, setRelationship, RELATIONSHIP_OPTIONS[lang])}
+        {sel(t.intake_relationship, relationship, setRelationship, RELATIONSHIP_OPTIONS)}
       </div>
       <div className="btnrow">
         <button className="btn grad full" onClick={() => save()} disabled={loading}>{loading ? '…' : t.intake_begin}</button>
@@ -760,7 +678,7 @@ function CompleteStage({ t, sessionId }: { t: Copy; sessionId: string | null }) 
 
 /* ═══ Main page ═══ */
 export default function RenoPage() {
-  const [lang, setLang] = useState<Lang>('en');
+  const [lang] = useState<Lang>('en');
   const [stage, setStage] = useState<Stage>('code');
   const [fading, setFading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -800,7 +718,7 @@ export default function RenoPage() {
   return (
     <div className="reno-v12">
       <style>{CSS}</style>
-      <TopBar lang={lang} onLang={setLang} progress={stage === 'test' ? progress : null} />
+      <TopBar progress={stage === 'test' ? progress : null} />
       {resume && <div className="resume">{resume}</div>}
       <div className="wrap" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div className="fadewrap" style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fading ? 0 : 1, transform: fading ? 'translateY(8px)' : 'none' }}>

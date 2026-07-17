@@ -1,171 +1,157 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext } from 'react';
 import CATALOG from '@/content/admin.json';
-
-export type AdminLang = 'en' | 'ru';
 
 // Sheet-editable overrides (regenerated from admin.tsv by scripts/sync-content.mjs).
 const OVERRIDE = CATALOG as Record<string, Record<string, string>>;
-const tr = (k: string, lang: AdminLang): string => OVERRIDE[k]?.[lang] || (T as Record<string, Record<string, string>>)[k]?.[lang] || k;
+const tr = (k: string): string => OVERRIDE[k]?.en || (T as Record<string, Record<string, string>>)[k]?.en || k;
 
 export const T = {
   // Sidebar nav
-  nav_section:      { en: 'Navigation',           ru: 'Навигация'           },
-  nav_dashboard:    { en: 'Dashboard',            ru: 'Обзор'               },
-  nav_assessments:  { en: 'Cognitive Profiles',    ru: 'Когнитивные профили' },
-  nav_answer_key:   { en: 'Answer Key',           ru: 'Ключ ответов'        },
-  nav_questions:    { en: 'Questions',            ru: 'Вопросы'             },
-  nav_report_tmpls: { en: 'Report Templates',     ru: 'Шаблоны отчётов'     },
-  nav_users:        { en: 'Users',                ru: 'Пользователи'        },
-  nav_results:      { en: 'Results',              ru: 'Результаты'          },
-  nav_career_vault: { en: 'Career Vault',         ru: 'Хранилище профессий' },
-  nav_orders:       { en: 'Third Party Orders',   ru: 'Сторонние заказы'    },
-  nav_billing:      { en: 'Billing',              ru: 'Финансы'             },
-  nav_analytics:    { en: 'Analytics',            ru: 'Аналитика'           },
-  nav_assess_ana:   { en: 'Assessment Analytics', ru: 'Аналитика теста'     },
-  nav_test:         { en: 'Access Codes',          ru: 'Коды доступа'        },
-  nav_to_site:      { en: 'Go to site',           ru: 'На сайт'             },
-  nav_logout:       { en: 'Log out',              ru: 'Выйти'               },
+  nav_section:      { en: 'Navigation'           },
+  nav_dashboard:    { en: 'Dashboard'               },
+  nav_assessments:  { en: 'Cognitive Profiles' },
+  nav_answer_key:   { en: 'Answer Key'        },
+  nav_questions:    { en: 'Questions'             },
+  nav_report_tmpls: { en: 'Report Templates'     },
+  nav_users:        { en: 'Users'        },
+  nav_results:      { en: 'Results'          },
+  nav_career_vault: { en: 'Career Vault' },
+  nav_orders:       { en: 'Third Party Orders'    },
+  nav_billing:      { en: 'Billing'             },
+  nav_analytics:    { en: 'Analytics'           },
+  nav_assess_ana:   { en: 'Assessment Analytics'     },
+  nav_test:         { en: 'Access Codes'        },
+  nav_to_site:      { en: 'Go to site'             },
+  nav_logout:       { en: 'Log out'               },
   // Common
-  loading:       { en: 'Loading...',    ru: 'Загрузка...'        },
-  nothing_found: { en: 'Nothing found', ru: 'Ничего не найдено'  },
-  coming_soon:   { en: 'Coming soon',   ru: 'В разработке'       },
-  in_dev:        { en: 'This section is being built', ru: 'Этот раздел находится в разработке' },
-  search:        { en: 'Search...',    ru: 'Поиск...'            },
-  all:           { en: 'All',          ru: 'Все'                 },
-  filter_compl:  { en: 'Completed',    ru: 'Завершённые'         },
-  filter_prog:   { en: 'In Progress',  ru: 'В процессе'          },
+  loading:       { en: 'Loading...'        },
+  nothing_found: { en: 'Nothing found'  },
+  coming_soon:   { en: 'Coming soon'       },
+  in_dev:        { en: 'This section is being built' },
+  search:        { en: 'Search...'            },
+  all:           { en: 'All'                 },
+  filter_compl:  { en: 'Completed'         },
+  filter_prog:   { en: 'In Progress'          },
   // Dashboard
-  dash_title:    { en: 'Dashboard',        ru: 'Обзор'                  },
-  dash_sub:      { en: 'Overview · PsyID', ru: 'Общая картина · PsyID'  },
-  dash_users:    { en: 'Total Users',      ru: 'Всего пользователей'    },
-  dash_started:  { en: 'Tests Started',    ru: 'Тестов начато'          },
-  dash_compl:    { en: 'Tests Completed',  ru: 'Тестов завершено'       },
-  dash_funnel:   { en: 'Funnel',           ru: 'Воронка'                },
-  dash_today:    { en: 'Today',            ru: 'Сегодня'                },
-  dash_reg:      { en: 'Registered',       ru: 'Зарегистрировались'     },
-  dash_started2: { en: 'Started test',     ru: 'Начали тест'            },
-  dash_compl2:   { en: 'Completed test',   ru: 'Завершили тест'         },
-  dash_new_u:    { en: 'New users',        ru: 'Новых пользователей'    },
-  dash_t_start:  { en: 'Tests started',    ru: 'Тестов начато'          },
-  dash_t_compl:  { en: 'Tests completed',  ru: 'Тестов завершено'       },
+  dash_title:    { en: 'Dashboard'                  },
+  dash_sub:      { en: 'Overview · PsyID'  },
+  dash_users:    { en: 'Total Users'    },
+  dash_started:  { en: 'Tests Started'          },
+  dash_compl:    { en: 'Tests Completed'       },
+  dash_funnel:   { en: 'Funnel'                },
+  dash_today:    { en: 'Today'                },
+  dash_reg:      { en: 'Registered'     },
+  dash_started2: { en: 'Started test'            },
+  dash_compl2:   { en: 'Completed test'         },
+  dash_new_u:    { en: 'New users'    },
+  dash_t_start:  { en: 'Tests started'          },
+  dash_t_compl:  { en: 'Tests completed'       },
   // Users
-  users_title:  { en: 'Users',                       ru: 'Пользователи'              },
-  users_count:  { en: 'accounts',                    ru: 'аккаунтов'                 },
-  users_ph:     { en: 'Search by email or name...', ru: 'Поиск по email или имени...' },
-  users_none:   { en: 'No users found',              ru: 'Пользователи не найдены'   },
-  users_user:   { en: 'User',                        ru: 'Пользователь'              },
-  users_tests:  { en: 'Tests',                       ru: 'Тестов'                    },
-  users_done:   { en: 'Completed',                   ru: 'Завершено'                 },
-  users_joined: { en: 'Joined',                      ru: 'Регистрация'               },
+  users_title:  { en: 'Users'              },
+  users_count:  { en: 'accounts'                 },
+  users_ph:     { en: 'Search by email or name...' },
+  users_none:   { en: 'No users found'   },
+  users_user:   { en: 'User'              },
+  users_tests:  { en: 'Tests'                    },
+  users_done:   { en: 'Completed'                 },
+  users_joined: { en: 'Joined'               },
   // Results
-  res_title:   { en: 'Results',      ru: 'Результаты'       },
-  res_total:   { en: 'total',        ru: 'всего'            },
-  res_compl:   { en: 'completed',    ru: 'завершено'        },
-  res_prog:    { en: 'in progress',  ru: 'в процессе'       },
-  res_user:    { en: 'User',         ru: 'Пользователь'     },
-  res_profile: { en: 'Profile',      ru: 'Профиль'          },
-  res_status:  { en: 'Status',       ru: 'Статус'           },
-  res_date:    { en: 'Date',         ru: 'Дата'             },
-  res_anon:    { en: 'Anonymous',    ru: 'Анонимный'        },
-  res_done:    { en: 'Completed',    ru: 'Завершён'         },
-  res_inprog:  { en: 'In Progress',  ru: 'В процессе'       },
-  res_created: { en: 'Created',      ru: 'Создан'           },
+  res_title:   { en: 'Results'       },
+  res_total:   { en: 'total'            },
+  res_compl:   { en: 'completed'        },
+  res_prog:    { en: 'in progress'       },
+  res_user:    { en: 'User'     },
+  res_profile: { en: 'Profile'          },
+  res_status:  { en: 'Status'           },
+  res_date:    { en: 'Date'             },
+  res_anon:    { en: 'Anonymous'        },
+  res_done:    { en: 'Completed'         },
+  res_inprog:  { en: 'In Progress'       },
+  res_created: { en: 'Created'           },
   // Assessments / Questions
-  ass_title:   { en: 'Test Questions',            ru: 'Вопросы теста'             },
-  ass_sub:     { en: 'questions · ReNo v1.2', ru: 'вопросов · ReNo v1.2' },
-  ass_search:  { en: 'Search...',                 ru: 'Поиск...'                  },
-  ass_save:    { en: 'Save',                      ru: 'Сохранить'                 },
-  ass_saved:   { en: 'Saved',                     ru: 'Сохранено'                 },
-  ass_edit:    { en: 'Edit',                      ru: 'Редактировать'             },
-  ass_cancel:  { en: 'Cancel',                    ru: 'Отмена'                    },
+  ass_title:   { en: 'Test Questions'             },
+  ass_sub:     { en: 'questions · ReNo v1.2' },
+  ass_search:  { en: 'Search...'                  },
+  ass_save:    { en: 'Save'                 },
+  ass_saved:   { en: 'Saved'                 },
+  ass_edit:    { en: 'Edit'             },
+  ass_cancel:  { en: 'Cancel'                    },
   // Users page
-  users_tab_ext:    { en: 'External Users',    ru: 'Внешние пользователи'   },
-  users_tab_portal: { en: 'Portal Users',      ru: 'Пользователи портала'   },
-  users_tab_admins: { en: 'Admins',            ru: 'Администраторы'          },
-  users_ext_none:   { en: 'No external users yet. Assign a name when generating an access code to track them here.', ru: 'Внешних пользователей нет. Укажите имя при создании кода доступа.' },
-  users_ext_name:   { en: 'Name',              ru: 'Имя'                     },
-  users_ext_codes:  { en: 'Codes',             ru: 'Кодов'                   },
-  users_ext_used:   { en: 'Tests Taken',       ru: 'Тестов пройдено'         },
-  users_ext_refs:   { en: 'References',        ru: 'Источники'               },
-  users_ext_first:  { en: 'First Seen',        ru: 'Первый раз'              },
-  users_ext_last:   { en: 'Last Active',       ru: 'Последняя активность'    },
-  users_ext_type:   { en: 'Type',              ru: 'Тип'                     },
-  users_ext_expand: { en: 'History',           ru: 'История'                 },
-  users_ext_code:   { en: 'Code',              ru: 'Код'                     },
-  users_ext_result: { en: 'Result',            ru: 'Результат'               },
-  users_ext_notest: { en: 'Not taken',         ru: 'Не пройден'              },
-  codes_user:       { en: 'User (Optional)',   ru: 'Пользователь (необязательно)' },
-  codes_user_ph:    { en: 'e.g. Alisa from Etsy', ru: 'напр. Алиса с Etsy'  },
-  codes_col_user:   { en: 'User',              ru: 'Пользователь'            },
+  users_tab_ext:    { en: 'External Users'   },
+  users_tab_portal: { en: 'Portal Users'   },
+  users_tab_admins: { en: 'Admins'          },
+  users_ext_none:   { en: 'No external users yet. Assign a name when generating an access code to track them here.' },
+  users_ext_name:   { en: 'Name'                     },
+  users_ext_codes:  { en: 'Codes'                   },
+  users_ext_used:   { en: 'Tests Taken'         },
+  users_ext_refs:   { en: 'References'               },
+  users_ext_first:  { en: 'First Seen'              },
+  users_ext_last:   { en: 'Last Active'    },
+  users_ext_type:   { en: 'Type'                     },
+  users_ext_expand: { en: 'History'                 },
+  users_ext_code:   { en: 'Code'                     },
+  users_ext_result: { en: 'Result'               },
+  users_ext_notest: { en: 'Not taken'              },
+  codes_user:       { en: 'User (Optional)' },
+  codes_user_ph:    { en: 'e.g. Alisa from Etsy'  },
+  codes_col_user:   { en: 'User'            },
   // Answer Key page
-  ak_title:    { en: 'Answer Key',                ru: 'Ключ ответов'              },
-  ak_sub:      { en: 'Reference grid for all profile descriptions', ru: 'Справочная таблица описаний профилей' },
+  ak_title:    { en: 'Answer Key'              },
+  ak_sub:      { en: 'Reference grid for all profile descriptions' },
   // Assessments (slider) page
-  sliders_title:  { en: 'Cognitive Profiles',      ru: 'Когнитивные профили'       },
-  sliders_sub:    { en: 'Preview cognitive profile report with custom scores', ru: 'Предпросмотр когнитивного профиля' },
-  sliders_gen:    { en: 'Generate Report Preview', ru: 'Сгенерировать отчёт'      },
-  sliders_regen:  { en: 'Regenerate',             ru: 'Перегенерировать'          },
-  sliders_lang:   { en: 'Report Language',        ru: 'Язык отчёта'              },
-  sliders_preview:{ en: 'Report Preview',         ru: 'Предпросмотр отчёта'       },
-  sliders_gen_report: { en: 'Generate Report',    ru: 'Создать отчёт'             },
-  sliders_dl_pdf: { en: 'Download PDF',           ru: 'Скачать PDF'               },
+  sliders_title:  { en: 'Cognitive Profiles'       },
+  sliders_sub:    { en: 'Preview cognitive profile report with custom scores' },
+  sliders_gen:    { en: 'Generate Report Preview'      },
+  sliders_regen:  { en: 'Regenerate'          },
+  sliders_lang:   { en: 'Report Language'              },
+  sliders_preview:{ en: 'Report Preview'       },
+  sliders_gen_report: { en: 'Generate Report'             },
+  sliders_dl_pdf: { en: 'Download PDF'               },
   // Access Codes page
-  codes_title:       { en: 'Access Codes',                       ru: 'Коды доступа'                        },
-  codes_sub:         { en: 'Generate single-use test access codes', ru: 'Создание одноразовых кодов доступа'  },
-  codes_gen_heading: { en: 'Generate a Code',                    ru: 'Создать код'                         },
-  codes_invoice:     { en: 'Invoice / Reference',                ru: 'Счёт / Источник'                     },
-  codes_invoice_ph:  { en: 'e.g. Etsy Order #12345',             ru: 'напр. Etsy Заказ #12345'             },
-  codes_note:        { en: 'Note',                               ru: 'Заметка'                             },
-  codes_note_ph:     { en: 'Optional note',                      ru: 'Необязательная заметка'              },
-  codes_gen_btn:     { en: 'Generate Code',                      ru: 'Создать код'                         },
-  codes_open_test:   { en: 'Open Test Page ↗',                   ru: 'Открыть тест ↗'                      },
-  codes_copy:        { en: 'Copy',                               ru: 'Копировать'                          },
-  codes_copied:      { en: 'Copied!',                            ru: 'Скопировано!'                        },
-  codes_list_title:  { en: 'Generated Codes',                    ru: 'Созданные коды'                      },
-  codes_col_code:    { en: 'Code',                               ru: 'Код'                                 },
-  codes_col_status:  { en: 'Status',                             ru: 'Статус'                              },
-  codes_col_invoice: { en: 'Invoice Ref',                        ru: 'Счёт'                                },
-  codes_col_note:    { en: 'Note',                               ru: 'Заметка'                             },
-  codes_col_created: { en: 'Created',                            ru: 'Создан'                              },
-  codes_col_used:    { en: 'Used',                               ru: 'Использован'                         },
-  codes_none:        { en: 'No codes generated yet',             ru: 'Коды ещё не созданы'                 },
-  codes_unused:      { en: 'Unused',                             ru: 'Не использован'                      },
-  codes_used:        { en: 'Used',                               ru: 'Использован'                         },
-  codes_local_note:  { en: 'Stored locally — backend sync coming', ru: 'Хранится локально — синхронизация скоро' },
-  codes_del:         { en: 'Delete',                             ru: 'Удалить'                             },
+  codes_title:       { en: 'Access Codes'                        },
+  codes_sub:         { en: 'Generate single-use test access codes'  },
+  codes_gen_heading: { en: 'Generate a Code'                         },
+  codes_invoice:     { en: 'Invoice / Reference'                     },
+  codes_invoice_ph:  { en: 'e.g. Etsy Order #12345'             },
+  codes_note:        { en: 'Note'                             },
+  codes_note_ph:     { en: 'Optional note'              },
+  codes_gen_btn:     { en: 'Generate Code'                         },
+  codes_open_test:   { en: 'Open Test Page ↗'                      },
+  codes_copy:        { en: 'Copy'                          },
+  codes_copied:      { en: 'Copied!'                        },
+  codes_list_title:  { en: 'Generated Codes'                      },
+  codes_col_code:    { en: 'Code'                                 },
+  codes_col_status:  { en: 'Status'                              },
+  codes_col_invoice: { en: 'Invoice Ref'                                },
+  codes_col_note:    { en: 'Note'                             },
+  codes_col_created: { en: 'Created'                              },
+  codes_col_used:    { en: 'Used'                         },
+  codes_none:        { en: 'No codes generated yet'                 },
+  codes_unused:      { en: 'Unused'                      },
+  codes_used:        { en: 'Used'                         },
+  codes_local_note:  { en: 'Stored locally — backend sync coming' },
+  codes_del:         { en: 'Delete'                             },
 } as const;
 
 export type TKey = keyof typeof T;
 
 interface LangCtx {
-  lang: AdminLang;
-  setLang: (l: AdminLang) => void;
+  // The product is English-only; `lang` is retained as a constant so the many
+  // admin consumers that read it keep resolving to English without churn.
+  lang: 'en';
   t: (key: TKey) => string;
 }
 
 const Ctx = createContext<LangCtx>({
   lang: 'en',
-  setLang: () => {},
   t: (k) => T[k].en,
 });
 
 export function AdminLangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<AdminLang>('en');
-
-  useEffect(() => {
-    const s = localStorage.getItem('psyid-admin-lang') as AdminLang | null;
-    if (s === 'en' || s === 'ru') setLangState(s);
-  }, []);
-
-  function setLang(l: AdminLang) {
-    setLangState(l);
-    localStorage.setItem('psyid-admin-lang', l);
-  }
-
   return (
-    <Ctx.Provider value={{ lang, setLang, t: (k) => tr(k as string, lang) }}>
+    <Ctx.Provider value={{ lang: 'en', t: (k) => tr(k as string) }}>
       {children}
     </Ctx.Provider>
   );

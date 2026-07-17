@@ -37,11 +37,11 @@ function profileForSession(s: RenoSession): { profile: Profile; legacy: boolean 
   return { profile: positions.map(posToAxis), legacy: true };
 }
 
-const MONTHS_RU = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function fmtDate(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return '';
-  return `${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`;
+  return `${MONTHS_EN[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 export async function GET(req: Request) {

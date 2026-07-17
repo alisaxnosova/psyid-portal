@@ -1,942 +1,848 @@
 [
- {
-  "id": "Q001",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "After a party or large gathering, I leave with more energy than when I arrived.",
-   "ru": "После вечеринки или большого собрания я ухожу с большей энергией, чем пришёл(а)."
+  {
+    "id": "Q001",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "After a party or large gathering, I leave with more energy than when I arrived."
+    }
+  },
+  {
+    "id": "Q002",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "I work out my ideas by talking them through with someone."
+    }
+  },
+  {
+    "id": "Q003",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "In a group discussion, I speak up early without waiting to be asked."
+    }
+  },
+  {
+    "id": "Q004",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "I strike up conversations with strangers — in a queue, on a plane — without needing a special reason."
+    }
+  },
+  {
+    "id": "Q005",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "When something good happens to me, my first impulse is to tell someone right away."
+    }
+  },
+  {
+    "id": "Q006",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "After a long day alone, I look for a reason to call or meet someone."
+    }
+  },
+  {
+    "id": "Q007",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "I start answering a question right away, shaping my thought as I speak."
+    }
+  },
+  {
+    "id": "Q008",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "Given the choice, I work or study in a lively place — a café or shared room — rather than in silence."
+    }
+  },
+  {
+    "id": "Q009",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "At meetings, I volunteer to speak or present."
+    }
+  },
+  {
+    "id": "Q010",
+    "axis": "EO",
+    "pole": "O",
+    "reverse": false,
+    "text": {
+      "en": "I plan my weekends around get-togethers with groups of people."
+    }
+  },
+  {
+    "id": "Q011",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "After a few hours in company, I need time alone before I can do anything else."
+    }
+  },
+  {
+    "id": "Q012",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "I rehearse what I am going to say in my head before saying it aloud."
+    }
+  },
+  {
+    "id": "Q013",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "I sometimes let a call go unanswered so I can prepare before calling back."
+    }
+  },
+  {
+    "id": "Q014",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "When facing a difficult problem, I first work it out alone in a quiet place, and only then discuss it."
+    }
+  },
+  {
+    "id": "Q015",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "In conversation, I let others finish and often keep my reaction to myself."
+    }
+  },
+  {
+    "id": "Q016",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "I keep a new idea to myself until it is fully formed."
+    }
+  },
+  {
+    "id": "Q017",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "At big events, I find one person for a quiet conversation at the edge of the room."
+    }
+  },
+  {
+    "id": "Q018",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "I turn down invitations because I would rather spend the evening by myself."
+    }
+  },
+  {
+    "id": "Q019",
+    "axis": "EO",
+    "pole": "W",
+    "reverse": true,
+    "text": {
+      "en": "When asked a question, I pause to think before answering."
+    }
+  },
+  {
+    "id": "Q020",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "When assembling something new, I follow the written instructions step by step."
+    }
+  },
+  {
+    "id": "Q021",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "When someone explains an idea, I ask for a concrete example before accepting it."
+    }
+  },
+  {
+    "id": "Q022",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "I remember exact facts from what I read — dates, prices, names."
+    }
+  },
+  {
+    "id": "Q023",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "When describing an event, I recount what actually happened, in order and with specifics."
+    }
+  },
+  {
+    "id": "Q024",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "When buying, I compare exact specifications rather than general impressions."
+    }
+  },
+  {
+    "id": "Q025",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "I prefer tasks with a clear, proven method over tasks that require inventing an approach."
+    }
+  },
+  {
+    "id": "Q026",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "When planning a trip, I focus on the practical details — schedules, costs, distances."
+    }
+  },
+  {
+    "id": "Q027",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "I judge a proposal mainly by whether it has already worked somewhere."
+    }
+  },
+  {
+    "id": "Q028",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "I do my best work on tasks where the requirements are spelled out precisely."
+    }
+  },
+  {
+    "id": "Q029",
+    "axis": "IF",
+    "pole": "C",
+    "reverse": false,
+    "text": {
+      "en": "In a book or article, I skip the theory and look for the practical takeaway."
+    }
+  },
+  {
+    "id": "Q030",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "When I learn a new fact, I immediately fit it into a bigger pattern or idea."
+    }
+  },
+  {
+    "id": "Q031",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "I catch myself imagining how things could be, rather than noting how they are."
+    }
+  },
+  {
+    "id": "Q032",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "In conversation, I drift from what is happening now to future possibilities."
+    }
+  },
+  {
+    "id": "Q033",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "A new idea can absorb me more than the practical task in front of me."
+    }
+  },
+  {
+    "id": "Q034",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "I invent my own way of solving a problem even when a standard one exists."
+    }
+  },
+  {
+    "id": "Q035",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "I explain things through images, metaphors, and analogies."
+    }
+  },
+  {
+    "id": "Q036",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "Untested, new ways of doing things attract me more than proven ones."
+    }
+  },
+  {
+    "id": "Q037",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "I notice connections between things that seem unrelated to others."
+    }
+  },
+  {
+    "id": "Q038",
+    "axis": "IF",
+    "pole": "A",
+    "reverse": true,
+    "text": {
+      "en": "After a film or book, I think more about its meaning than about the details of the plot."
+    }
+  },
+  {
+    "id": "Q039",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "When deciding, I weigh the pros and cons and follow the conclusion, even if it upsets someone."
+    }
+  },
+  {
+    "id": "Q040",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "In a discussion, I directly point out flaws in the other person's reasoning."
+    }
+  },
+  {
+    "id": "Q041",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "I give honest critical feedback even when I know it will disappoint."
+    }
+  },
+  {
+    "id": "Q042",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "When two people disagree, I judge who is right by the facts, not by who is more upset."
+    }
+  },
+  {
+    "id": "Q043",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "I convince people with evidence and reasoning rather than appeals to feelings."
+    }
+  },
+  {
+    "id": "Q044",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "If a rule is fair, I apply it even to a close friend."
+    }
+  },
+  {
+    "id": "Q045",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "I prefer an uncomfortable truth to a comforting version of events."
+    }
+  },
+  {
+    "id": "Q046",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "In group decisions, I argue for the objectively strongest option even against the group's mood."
+    }
+  },
+  {
+    "id": "Q047",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "I evaluate a person's work on its merits, separately from my relationship with them."
+    }
+  },
+  {
+    "id": "Q048",
+    "axis": "DB",
+    "pole": "L",
+    "reverse": false,
+    "text": {
+      "en": "I question the logic of a claim even when it comes from someone I like."
+    }
+  },
+  {
+    "id": "Q049",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "Before deciding, I first think through how each option will affect the people involved."
+    }
+  },
+  {
+    "id": "Q050",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "I soften critical feedback so the person is not hurt."
+    }
+  },
+  {
+    "id": "Q051",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "I go along with a group decision I privately disagree with, to preserve the peace."
+    }
+  },
+  {
+    "id": "Q052",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "When someone shares a problem, I comfort them first and analyze later."
+    }
+  },
+  {
+    "id": "Q053",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "I make exceptions to rules when applying them would hurt someone."
+    }
+  },
+  {
+    "id": "Q054",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "In a debate, I sense the emotional temperature of the room before I weigh the arguments."
+    }
+  },
+  {
+    "id": "Q055",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "I change my plans to fit what matters to the people close to me."
+    }
+  },
+  {
+    "id": "Q056",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "I persuade by connecting to what a person cares about, not by proving them wrong."
+    }
+  },
+  {
+    "id": "Q057",
+    "axis": "DB",
+    "pole": "V",
+    "reverse": true,
+    "text": {
+      "en": "Choosing between the \"correct\" option and the one that keeps harmony, I choose harmony."
+    }
+  },
+  {
+    "id": "Q058",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "I keep a to-do list and actually cross items off."
+    }
+  },
+  {
+    "id": "Q059",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "I finish tasks well before the deadline."
+    }
+  },
+  {
+    "id": "Q060",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "I plan my week in advance and mostly follow the plan."
+    }
+  },
+  {
+    "id": "Q061",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "Before starting work, I put my workspace in order."
+    }
+  },
+  {
+    "id": "Q062",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "I completely finish one task before starting the next."
+    }
+  },
+  {
+    "id": "Q063",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "When traveling, I book tickets and lodging well in advance."
+    }
+  },
+  {
+    "id": "Q064",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "When plans change suddenly, I immediately build a new plan rather than acting ad hoc."
+    }
+  },
+  {
+    "id": "Q065",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "My files, papers, and belongings each have their fixed place."
+    }
+  },
+  {
+    "id": "Q066",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "I keep a fixed daily routine."
+    }
+  },
+  {
+    "id": "Q067",
+    "axis": "SP",
+    "pole": "D",
+    "reverse": false,
+    "text": {
+      "en": "Once a decision is made, I close the question and do not reopen it."
+    }
+  },
+  {
+    "id": "Q068",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I decide what to do with my day as it unfolds."
+    }
+  },
+  {
+    "id": "Q069",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I work in bursts of inspiration rather than on a schedule."
+    }
+  },
+  {
+    "id": "Q070",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "My best work happens close to the deadline."
+    }
+  },
+  {
+    "id": "Q071",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I start new projects before finishing old ones."
+    }
+  },
+  {
+    "id": "Q072",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I keep plans loose so I can change them if something better comes up."
+    }
+  },
+  {
+    "id": "Q073",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "My workspace has piles that make sense only to me."
+    }
+  },
+  {
+    "id": "Q074",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I put off final decisions to keep my options open longer."
+    }
+  },
+  {
+    "id": "Q075",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "When traveling, I prefer to sort things out on the spot rather than book everything ahead."
+    }
+  },
+  {
+    "id": "Q076",
+    "axis": "SP",
+    "pole": "F",
+    "reverse": true,
+    "text": {
+      "en": "I drop a plan midway if a more interesting path appears."
+    }
+  },
+  {
+    "id": "Q077",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "After an unpleasant conversation, I return to my usual state within minutes."
+    }
+  },
+  {
+    "id": "Q078",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "Bad news rarely changes how I spend the rest of the day."
+    }
+  },
+  {
+    "id": "Q079",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "Under time pressure, I keep working at my normal pace."
+    }
+  },
+  {
+    "id": "Q080",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "I can listen to criticism of my work and get back to it within the hour."
+    }
+  },
+  {
+    "id": "Q081",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "My mood stays roughly level through the week, regardless of events."
+    }
+  },
+  {
+    "id": "Q082",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "When something breaks or falls through, I go straight to fixing it without dwelling on it."
+    }
+  },
+  {
+    "id": "Q083",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "Waiting for important results does not affect my sleep."
+    }
+  },
+  {
+    "id": "Q084",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "A sudden change of plans doesn't knock me off track — I adjust and continue."
+    }
+  },
+  {
+    "id": "Q085",
+    "axis": "ER",
+    "pole": "S",
+    "reverse": false,
+    "text": {
+      "en": "In a heated argument, my voice and pace stay the same as in a calm conversation."
+    }
+  },
+  {
+    "id": "Q086",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "After a conflict, I replay it in my head for hours or even days."
+    }
+  },
+  {
+    "id": "Q087",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "A small setback can color my whole day."
+    }
+  },
+  {
+    "id": "Q088",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "I feel events in my body — racing heart, tight stomach — before I've fully processed them."
+    }
+  },
+  {
+    "id": "Q089",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "My mood can shift noticeably several times in one day."
+    }
+  },
+  {
+    "id": "Q090",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "Criticism stays with me long after the conversation is over."
+    }
+  },
+  {
+    "id": "Q091",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "Before important events, I sleep worse than usual."
+    }
+  },
+  {
+    "id": "Q092",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "A stray remark can occupy my thoughts for the rest of the evening."
+    }
+  },
+  {
+    "id": "Q093",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "A touching film or piece of music can move me to tears."
+    }
+  },
+  {
+    "id": "Q094",
+    "axis": "ER",
+    "pole": "R",
+    "reverse": true,
+    "text": {
+      "en": "When stakes are high, I check and re-check — sent messages, locked doors, submitted work."
+    }
   }
- },
- {
-  "id": "Q002",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "I work out my ideas by talking them through with someone.",
-   "ru": "Я додумываю свои идеи, проговаривая их с кем-нибудь."
-  }
- },
- {
-  "id": "Q003",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "In a group discussion, I speak up early without waiting to be asked.",
-   "ru": "В групповом обсуждении я высказываюсь одним из первых, не дожидаясь, пока меня спросят."
-  }
- },
- {
-  "id": "Q004",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "I strike up conversations with strangers — in a queue, on a plane — without needing a special reason.",
-   "ru": "Я завожу разговор с незнакомыми людьми — в очереди, в самолёте — без особого повода."
-  }
- },
- {
-  "id": "Q005",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "When something good happens to me, my first impulse is to tell someone right away.",
-   "ru": "Когда со мной происходит что-то хорошее, первым делом мне хочется сразу кому-то рассказать."
-  }
- },
- {
-  "id": "Q006",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "After a long day alone, I look for a reason to call or meet someone.",
-   "ru": "После целого дня в одиночестве я ищу повод позвонить кому-нибудь или встретиться."
-  }
- },
- {
-  "id": "Q007",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "I start answering a question right away, shaping my thought as I speak.",
-   "ru": "Я начинаю отвечать на вопрос сразу, формулируя мысль по ходу речи."
-  }
- },
- {
-  "id": "Q008",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "Given the choice, I work or study in a lively place — a café or shared room — rather than in silence.",
-   "ru": "При возможности я работаю или учусь в оживлённом месте — в кафе или общем помещении, а не в тишине."
-  }
- },
- {
-  "id": "Q009",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "At meetings, I volunteer to speak or present.",
-   "ru": "На собраниях я сам(а) вызываюсь выступить или представить результат."
-  }
- },
- {
-  "id": "Q010",
-  "axis": "EO",
-  "pole": "O",
-  "reverse": false,
-  "text": {
-   "en": "I plan my weekends around get-togethers with groups of people.",
-   "ru": "Я планирую выходные вокруг встреч с компанией."
-  }
- },
- {
-  "id": "Q011",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "After a few hours in company, I need time alone before I can do anything else.",
-   "ru": "После нескольких часов в компании мне нужно побыть одному(ой), прежде чем браться за что-то ещё."
-  }
- },
- {
-  "id": "Q012",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "I rehearse what I am going to say in my head before saying it aloud.",
-   "ru": "Я проговариваю про себя то, что собираюсь сказать, прежде чем произнести вслух."
-  }
- },
- {
-  "id": "Q013",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "I sometimes let a call go unanswered so I can prepare before calling back.",
-   "ru": "Иногда я не беру трубку, чтобы подготовиться и перезвонить позже."
-  }
- },
- {
-  "id": "Q014",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "When facing a difficult problem, I first work it out alone in a quiet place, and only then discuss it.",
-   "ru": "Столкнувшись со сложной задачей, я сначала обдумываю её в тишине наедине с собой и лишь потом обсуждаю."
-  }
- },
- {
-  "id": "Q015",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "In conversation, I let others finish and often keep my reaction to myself.",
-   "ru": "В разговоре я даю другим договорить и часто оставляю свою реакцию при себе."
-  }
- },
- {
-  "id": "Q016",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "I keep a new idea to myself until it is fully formed.",
-   "ru": "Я держу новую идею при себе, пока она полностью не сформируется."
-  }
- },
- {
-  "id": "Q017",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "At big events, I find one person for a quiet conversation at the edge of the room.",
-   "ru": "На больших мероприятиях я нахожу одного собеседника для спокойного разговора в стороне."
-  }
- },
- {
-  "id": "Q018",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "I turn down invitations because I would rather spend the evening by myself.",
-   "ru": "Я отказываюсь от приглашений, потому что предпочитаю провести вечер наедине с собой."
-  }
- },
- {
-  "id": "Q019",
-  "axis": "EO",
-  "pole": "W",
-  "reverse": true,
-  "text": {
-   "en": "When asked a question, I pause to think before answering.",
-   "ru": "Когда мне задают вопрос, я беру паузу, чтобы подумать, прежде чем ответить."
-  }
- },
- {
-  "id": "Q020",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "When assembling something new, I follow the written instructions step by step.",
-   "ru": "Собирая что-то новое, я следую инструкции шаг за шагом."
-  }
- },
- {
-  "id": "Q021",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "When someone explains an idea, I ask for a concrete example before accepting it.",
-   "ru": "Когда мне объясняют идею, я прошу конкретный пример, прежде чем принять её."
-  }
- },
- {
-  "id": "Q022",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "I remember exact facts from what I read — dates, prices, names.",
-   "ru": "Я запоминаю из прочитанного точные факты — даты, цены, имена."
-  }
- },
- {
-  "id": "Q023",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "When describing an event, I recount what actually happened, in order and with specifics.",
-   "ru": "Описывая событие, я передаю, что именно произошло, — по порядку и с подробностями."
-  }
- },
- {
-  "id": "Q024",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "When buying, I compare exact specifications rather than general impressions.",
-   "ru": "При покупке я сравниваю точные характеристики, а не общее впечатление."
-  }
- },
- {
-  "id": "Q025",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "I prefer tasks with a clear, proven method over tasks that require inventing an approach.",
-   "ru": "Я предпочитаю задачи с понятным проверенным методом задачам, где подход нужно придумывать."
-  }
- },
- {
-  "id": "Q026",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "When planning a trip, I focus on the practical details — schedules, costs, distances.",
-   "ru": "Планируя поездку, я сосредотачиваюсь на практических деталях — расписании, ценах, расстояниях."
-  }
- },
- {
-  "id": "Q027",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "I judge a proposal mainly by whether it has already worked somewhere.",
-   "ru": "Я оцениваю предложение прежде всего по тому, сработало ли оно уже где-то."
-  }
- },
- {
-  "id": "Q028",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "I do my best work on tasks where the requirements are spelled out precisely.",
-   "ru": "Лучше всего мне удаются задачи, где требования прописаны точно."
-  }
- },
- {
-  "id": "Q029",
-  "axis": "IF",
-  "pole": "C",
-  "reverse": false,
-  "text": {
-   "en": "In a book or article, I skip the theory and look for the practical takeaway.",
-   "ru": "В книге или статье я пропускаю теорию и ищу практический вывод."
-  }
- },
- {
-  "id": "Q030",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "When I learn a new fact, I immediately fit it into a bigger pattern or idea.",
-   "ru": "Узнав новый факт, я сразу встраиваю его в более общую закономерность или идею."
-  }
- },
- {
-  "id": "Q031",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "I catch myself imagining how things could be, rather than noting how they are.",
-   "ru": "Я ловлю себя на том, что представляю, каким всё могло бы быть, а не отмечаю, как есть."
-  }
- },
- {
-  "id": "Q032",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "In conversation, I drift from what is happening now to future possibilities.",
-   "ru": "В разговоре я перехожу от того, что происходит сейчас, к будущим возможностям."
-  }
- },
- {
-  "id": "Q033",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "A new idea can absorb me more than the practical task in front of me.",
-   "ru": "Новая идея может увлечь меня сильнее, чем практическая задача передо мной."
-  }
- },
- {
-  "id": "Q034",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "I invent my own way of solving a problem even when a standard one exists.",
-   "ru": "Я придумываю собственный способ решения, даже когда существует стандартный."
-  }
- },
- {
-  "id": "Q035",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "I explain things through images, metaphors, and analogies.",
-   "ru": "Я объясняю через образы, метафоры и аналогии."
-  }
- },
- {
-  "id": "Q036",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "Untested, new ways of doing things attract me more than proven ones.",
-   "ru": "Новые, непроверенные способы привлекают меня больше, чем проверенные."
-  }
- },
- {
-  "id": "Q037",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "I notice connections between things that seem unrelated to others.",
-   "ru": "Я замечаю связи между вещами, которые другим кажутся не связанными."
-  }
- },
- {
-  "id": "Q038",
-  "axis": "IF",
-  "pole": "A",
-  "reverse": true,
-  "text": {
-   "en": "After a film or book, I think more about its meaning than about the details of the plot.",
-   "ru": "После фильма или книги я думаю больше о смысле, чем о деталях сюжета."
-  }
- },
- {
-  "id": "Q039",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "When deciding, I weigh the pros and cons and follow the conclusion, even if it upsets someone.",
-   "ru": "Принимая решение, я взвешиваю «за» и «против» и следую выводу, даже если кого-то это расстроит."
-  }
- },
- {
-  "id": "Q040",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "In a discussion, I directly point out flaws in the other person's reasoning.",
-   "ru": "В споре я прямо указываю на слабые места в рассуждениях собеседника."
-  }
- },
- {
-  "id": "Q041",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "I give honest critical feedback even when I know it will disappoint.",
-   "ru": "Я даю честную критическую обратную связь, даже если знаю, что она огорчит."
-  }
- },
- {
-  "id": "Q042",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "When two people disagree, I judge who is right by the facts, not by who is more upset.",
-   "ru": "Когда двое спорят, я сужу, кто прав, по фактам, а не по тому, кто сильнее расстроен."
-  }
- },
- {
-  "id": "Q043",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "I convince people with evidence and reasoning rather than appeals to feelings.",
-   "ru": "Я убеждаю доказательствами и логикой, а не обращением к чувствам."
-  }
- },
- {
-  "id": "Q044",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "If a rule is fair, I apply it even to a close friend.",
-   "ru": "Если правило справедливо, я применяю его даже к близкому другу."
-  }
- },
- {
-  "id": "Q045",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "I prefer an uncomfortable truth to a comforting version of events.",
-   "ru": "Я предпочту неприятную правду утешительной версии событий."
-  }
- },
- {
-  "id": "Q046",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "In group decisions, I argue for the objectively strongest option even against the group's mood.",
-   "ru": "В групповых решениях я отстаиваю объективно лучший вариант, даже вопреки настроению группы."
-  }
- },
- {
-  "id": "Q047",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "I evaluate a person's work on its merits, separately from my relationship with them.",
-   "ru": "Я оцениваю работу человека по её качеству, отдельно от моих отношений с ним."
-  }
- },
- {
-  "id": "Q048",
-  "axis": "DB",
-  "pole": "L",
-  "reverse": false,
-  "text": {
-   "en": "I question the logic of a claim even when it comes from someone I like.",
-   "ru": "Я проверяю логику утверждения, даже если его высказал симпатичный мне человек."
-  }
- },
- {
-  "id": "Q049",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "Before deciding, I first think through how each option will affect the people involved.",
-   "ru": "Прежде чем решить, я сначала продумываю, как каждый вариант отразится на людях."
-  }
- },
- {
-  "id": "Q050",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "I soften critical feedback so the person is not hurt.",
-   "ru": "Я смягчаю критику, чтобы не задеть человека."
-  }
- },
- {
-  "id": "Q051",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "I go along with a group decision I privately disagree with, to preserve the peace.",
-   "ru": "Я соглашаюсь с решением группы, с которым внутренне не согласен(на), ради мира."
-  }
- },
- {
-  "id": "Q052",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "When someone shares a problem, I comfort them first and analyze later.",
-   "ru": "Когда со мной делятся проблемой, я сначала утешаю и только потом анализирую."
-  }
- },
- {
-  "id": "Q053",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "I make exceptions to rules when applying them would hurt someone.",
-   "ru": "Я делаю исключения из правил, если их применение причинит кому-то боль."
-  }
- },
- {
-  "id": "Q054",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "In a debate, I sense the emotional temperature of the room before I weigh the arguments.",
-   "ru": "В дискуссии я улавливаю эмоциональную атмосферу раньше, чем взвешиваю аргументы."
-  }
- },
- {
-  "id": "Q055",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "I change my plans to fit what matters to the people close to me.",
-   "ru": "Я меняю свои планы ради того, что важно близким."
-  }
- },
- {
-  "id": "Q056",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "I persuade by connecting to what a person cares about, not by proving them wrong.",
-   "ru": "Я убеждаю, опираясь на то, что дорого человеку, а не доказывая его неправоту."
-  }
- },
- {
-  "id": "Q057",
-  "axis": "DB",
-  "pole": "V",
-  "reverse": true,
-  "text": {
-   "en": "Choosing between the \"correct\" option and the one that keeps harmony, I choose harmony.",
-   "ru": "Выбирая между «правильным» вариантом и тем, что сохранит согласие, я выбираю согласие."
-  }
- },
- {
-  "id": "Q058",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "I keep a to-do list and actually cross items off.",
-   "ru": "Я веду список дел и действительно вычёркиваю выполненное."
-  }
- },
- {
-  "id": "Q059",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "I finish tasks well before the deadline.",
-   "ru": "Я заканчиваю дела задолго до срока."
-  }
- },
- {
-  "id": "Q060",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "I plan my week in advance and mostly follow the plan.",
-   "ru": "Я планирую неделю заранее и в основном следую плану."
-  }
- },
- {
-  "id": "Q061",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "Before starting work, I put my workspace in order.",
-   "ru": "Прежде чем начать работу, я навожу порядок на рабочем месте."
-  }
- },
- {
-  "id": "Q062",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "I completely finish one task before starting the next.",
-   "ru": "Я полностью завершаю одно дело, прежде чем взяться за следующее."
-  }
- },
- {
-  "id": "Q063",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "When traveling, I book tickets and lodging well in advance.",
-   "ru": "В поездках я бронирую билеты и жильё заранее."
-  }
- },
- {
-  "id": "Q064",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "When plans change suddenly, I immediately build a new plan rather than acting ad hoc.",
-   "ru": "Если планы внезапно меняются, я сразу выстраиваю новый план, а не действую по обстоятельствам."
-  }
- },
- {
-  "id": "Q065",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "My files, papers, and belongings each have their fixed place.",
-   "ru": "У моих файлов, бумаг и вещей есть своё постоянное место."
-  }
- },
- {
-  "id": "Q066",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "I keep a fixed daily routine.",
-   "ru": "Я придерживаюсь постоянного распорядка дня."
-  }
- },
- {
-  "id": "Q067",
-  "axis": "SP",
-  "pole": "D",
-  "reverse": false,
-  "text": {
-   "en": "Once a decision is made, I close the question and do not reopen it.",
-   "ru": "Приняв решение, я закрываю вопрос и не возвращаюсь к нему."
-  }
- },
- {
-  "id": "Q068",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I decide what to do with my day as it unfolds.",
-   "ru": "Я решаю, чем заняться, по ходу дня."
-  }
- },
- {
-  "id": "Q069",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I work in bursts of inspiration rather than on a schedule.",
-   "ru": "Я работаю рывками по вдохновению, а не по расписанию."
-  }
- },
- {
-  "id": "Q070",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "My best work happens close to the deadline.",
-   "ru": "Лучше всего мне работается ближе к дедлайну."
-  }
- },
- {
-  "id": "Q071",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I start new projects before finishing old ones.",
-   "ru": "Я начинаю новые дела, не закончив старых."
-  }
- },
- {
-  "id": "Q072",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I keep plans loose so I can change them if something better comes up.",
-   "ru": "Я оставляю планы гибкими, чтобы поменять их, если подвернётся что-то лучше."
-  }
- },
- {
-  "id": "Q073",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "My workspace has piles that make sense only to me.",
-   "ru": "На моём рабочем месте — стопки, понятные только мне."
-  }
- },
- {
-  "id": "Q074",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I put off final decisions to keep my options open longer.",
-   "ru": "Я откладываю окончательные решения, чтобы дольше сохранять варианты."
-  }
- },
- {
-  "id": "Q075",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "When traveling, I prefer to sort things out on the spot rather than book everything ahead.",
-   "ru": "В путешествиях я предпочитаю разбираться на месте, а не бронировать всё заранее."
-  }
- },
- {
-  "id": "Q076",
-  "axis": "SP",
-  "pole": "F",
-  "reverse": true,
-  "text": {
-   "en": "I drop a plan midway if a more interesting path appears.",
-   "ru": "Я бросаю план на середине, если появляется более интересный путь."
-  }
- },
- {
-  "id": "Q077",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "After an unpleasant conversation, I return to my usual state within minutes.",
-   "ru": "После неприятного разговора я возвращаюсь в обычное состояние за считанные минуты."
-  }
- },
- {
-  "id": "Q078",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "Bad news rarely changes how I spend the rest of the day.",
-   "ru": "Плохие новости редко меняют то, как я провожу остаток дня."
-  }
- },
- {
-  "id": "Q079",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "Under time pressure, I keep working at my normal pace.",
-   "ru": "В цейтноте я продолжаю работать в своём обычном темпе."
-  }
- },
- {
-  "id": "Q080",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "I can listen to criticism of my work and get back to it within the hour.",
-   "ru": "Я могу выслушать критику своей работы и вернуться к ней в течение часа."
-  }
- },
- {
-  "id": "Q081",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "My mood stays roughly level through the week, regardless of events.",
-   "ru": "Моё настроение остаётся ровным всю неделю, независимо от событий."
-  }
- },
- {
-  "id": "Q082",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "When something breaks or falls through, I go straight to fixing it without dwelling on it.",
-   "ru": "Когда что-то ломается или срывается, я сразу перехожу к исправлению, не пережёвывая случившееся."
-  }
- },
- {
-  "id": "Q083",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "Waiting for important results does not affect my sleep.",
-   "ru": "Ожидание важных результатов не влияет на мой сон."
-  }
- },
- {
-  "id": "Q084",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "A sudden change of plans doesn't knock me off track — I adjust and continue.",
-   "ru": "Внезапная смена планов не выбивает меня из колеи — я перестраиваюсь и продолжаю."
-  }
- },
- {
-  "id": "Q085",
-  "axis": "ER",
-  "pole": "S",
-  "reverse": false,
-  "text": {
-   "en": "In a heated argument, my voice and pace stay the same as in a calm conversation.",
-   "ru": "В жарком споре мой голос и темп остаются такими же, как в спокойной беседе."
-  }
- },
- {
-  "id": "Q086",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "After a conflict, I replay it in my head for hours or even days.",
-   "ru": "После конфликта я прокручиваю его в голове часами, а то и днями."
-  }
- },
- {
-  "id": "Q087",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "A small setback can color my whole day.",
-   "ru": "Небольшая неудача может окрасить весь мой день."
-  }
- },
- {
-  "id": "Q088",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "I feel events in my body — racing heart, tight stomach — before I've fully processed them.",
-   "ru": "Я ощущаю события телом — учащённое сердцебиение, сжатие в животе — раньше, чем успеваю их осмыслить."
-  }
- },
- {
-  "id": "Q089",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "My mood can shift noticeably several times in one day.",
-   "ru": "Моё настроение может заметно меняться несколько раз за день."
-  }
- },
- {
-  "id": "Q090",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "Criticism stays with me long after the conversation is over.",
-   "ru": "Критика остаётся со мной надолго после окончания разговора."
-  }
- },
- {
-  "id": "Q091",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "Before important events, I sleep worse than usual.",
-   "ru": "Перед важными событиями я сплю хуже обычного."
-  }
- },
- {
-  "id": "Q092",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "A stray remark can occupy my thoughts for the rest of the evening.",
-   "ru": "Случайное замечание может занимать мои мысли весь вечер."
-  }
- },
- {
-  "id": "Q093",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "A touching film or piece of music can move me to tears.",
-   "ru": "Трогательный фильм или музыка могут довести меня до слёз."
-  }
- },
- {
-  "id": "Q094",
-  "axis": "ER",
-  "pole": "R",
-  "reverse": true,
-  "text": {
-   "en": "When stakes are high, I check and re-check — sent messages, locked doors, submitted work.",
-   "ru": "Когда ставки высоки, я проверяю и перепроверяю — отправленные сообщения, закрытые двери, сданную работу."
-  }
- }
 ]

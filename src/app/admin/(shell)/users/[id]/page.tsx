@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { admin, AdminUser, AdminAttempt, isAdminLoggedIn } from '@/lib/adminApi';
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return new Date(iso).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { label: string; bg: string; color: string }> = {
-    COMPLETED: { label: 'Завершён', bg: '#f0fdf4', color: '#16a34a' },
-    IN_PROGRESS: { label: 'В процессе', bg: '#fefce8', color: '#ca8a04' },
-    CREATED: { label: 'Создан', bg: '#f3f4f6', color: '#6b7280' },
+    COMPLETED: { label: 'Completed', bg: '#f0fdf4', color: '#16a34a' },
+    IN_PROGRESS: { label: 'In Progress', bg: '#fefce8', color: '#ca8a04' },
+    CREATED: { label: 'Created', bg: '#f3f4f6', color: '#6b7280' },
   };
   const s = map[status] ?? { label: status, bg: '#f3f4f6', color: '#6b7280' };
   return (
@@ -40,13 +40,13 @@ export default function AdminUserDetailPage() {
 
   if (loading) return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 300 }}>
-      <span style={{ color: '#6b7280' }}>Загрузка...</span>
+      <span style={{ color: '#6b7280' }}>Loading...</span>
     </div>
   );
 
   if (error || !data) return (
     <div style={{ background: 'white', borderRadius: 16, padding: 32, textAlign: 'center', border: '1px solid #e8eaed' }}>
-      <div style={{ fontSize: 15, color: '#dc2626' }}>{error || 'Пользователь не найден'}</div>
+      <div style={{ fontSize: 15, color: '#dc2626' }}>{error || 'User not found'}</div>
     </div>
   );
 
@@ -54,7 +54,7 @@ export default function AdminUserDetailPage() {
     <div>
       <div style={{ marginBottom: 24 }}>
         <Link href="/admin/users" style={{ fontSize: 13, color: '#6b7280', display: 'inline-flex', alignItems: 'center', gap: 4, marginBottom: 16 }}>
-          ← Все пользователи
+          ← All users
         </Link>
         <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111827', letterSpacing: '-0.02em' }}>
           {data.fullName ?? data.firstName ?? data.email}
@@ -64,13 +64,13 @@ export default function AdminUserDetailPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 20 }}>
         <div style={{ background: 'white', borderRadius: 16, padding: 24, border: '1px solid #e8eaed', alignSelf: 'start' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 16 }}>Информация</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 16 }}>Information</div>
           {[
             { label: 'ID', value: data.id },
             { label: 'Email', value: data.email },
-            { label: 'Имя', value: data.fullName ?? data.firstName ?? '—' },
-            { label: 'Регистрация', value: formatDate(data.createdAt) },
-            { label: 'Тестов', value: `${data.attemptsCount} (${data.completedCount} завершено)` },
+            { label: 'Name', value: data.fullName ?? data.firstName ?? '—' },
+            { label: 'Registered', value: formatDate(data.createdAt) },
+            { label: 'Tests', value: `${data.attemptsCount} (${data.completedCount} completed)` },
           ].map(row => (
             <div key={row.label} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 11, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 2 }}>
@@ -83,12 +83,12 @@ export default function AdminUserDetailPage() {
 
         <div style={{ background: 'white', borderRadius: 16, border: '1px solid #e8eaed', overflow: 'hidden' }}>
           <div style={{ padding: '16px 20px', borderBottom: '1px solid #e8eaed' }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>История тестов</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>Test history</div>
           </div>
 
           {data.attempts.length === 0 ? (
             <div style={{ padding: 32, textAlign: 'center', color: '#9ca3af', fontSize: 14 }}>
-              Тестов не найдено
+              No tests found
             </div>
           ) : data.attempts.map((attempt, i) => (
             <div key={attempt.id} style={{
@@ -113,7 +113,7 @@ export default function AdminUserDetailPage() {
                   padding: '6px 12px', borderRadius: 8, border: '1px solid #e0e7ff',
                   background: '#eef2ff',
                 }}>
-                  Результат →
+                  Result →
                 </Link>
               )}
             </div>

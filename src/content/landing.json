@@ -1,107 +1,281 @@
 {
-  "nav_home":        { "ru": "Главная",     "en": "Home" },
-  "nav_method":      { "ru": "Методология", "en": "Methodology" },
-  "nav_prof":        { "ru": "Профессии",   "en": "Professions" },
-  "nav_sources":     { "ru": "Источники",   "en": "Sources" },
-  "nav_cta":         { "ru": "Пройти тест",  "en": "Take the test" },
-  "nav_login":       { "ru": "Войти",       "en": "Log in" },
-  "nav_portal":      { "ru": "Портал",      "en": "Portal" },
-  "nav_price":       { "ru": "Цены",        "en": "Pricing" },
-
-  "hero_eyebrow":    { "ru": "PsyID · ReNo", "en": "PsyID · ReNo" },
-  "hero_h1a":        { "ru": "Ты — целая",   "en": "You are a whole" },
-  "hero_h1b":        { "ru": "вселенная.",   "en": "universe." },
-  "hero_p":          { "ru": "Пять осей характера в ядре. Планеты, спутники и созвездия — вокруг. Всё построено из твоих ответов, и всё — измерено.", "en": "Five axes of character at the core. Planets, moons and constellations around them. All of it built from your answers, and all of it measured." },
-  "hero_cta":        { "ru": "Исследовать свою галактику", "en": "Explore your galaxy" },
-  "hero_cta2":       { "ru": "Пройти тест",  "en": "Take the test" },
-  "hero_micro":      { "ru": "94 вопроса · 15 минут · научная методика", "en": "94 questions · 15 minutes · a real method" },
-  "hero_grabhint":   { "ru": "потяни, чтобы вращать", "en": "drag to spin" },
-
-  "code_eyebrow":    { "ru": "Твой код", "en": "Your code" },
-  "code_h":          { "ru": "У твоей личности есть координаты.", "en": "Your personality has coordinates." },
-  "code_p":          { "ru": "Каждая ось — непрерывная шкала от 0 до 100, а не ярлык. Твой код — это позиция сразу на пяти шкалах. Двух одинаковых практически не бывает.", "en": "Each axis is a continuous 0–100 scale, not a label. Your code is your position on all five at once. Two the same almost never happen." },
-
-  "grow_eyebrow":    { "ru": "Как она растёт", "en": "How it grows" },
-  "grow_ha":         { "ru": "Вселенная, которая", "en": "A universe that" },
-  "grow_hb":         { "ru": "не заканчивается",   "en": "never finishes" },
-  "grow1_t":         { "ru": "Звёзды и планеты", "en": "Stars and planets" },
-  "grow1_d":         { "ru": "Ядро — пять осей характера. Вокруг каждой вращаются планеты: из чего именно у тебя состоит эта черта.", "en": "The core is five axes of character. Planets orbit each one — what that trait is actually made of in you." },
-  "grow2_t":         { "ru": "Линзы", "en": "Lenses" },
-  "grow2_d":         { "ru": "Включи линзу — и увидишь, как твоя вселенная сдвигается: дома, на работе, под нагрузкой. Та же личность — в разных сферах жизни.", "en": "Turn a lens and watch your universe shift — at home, at work, under load. The same personality across different parts of life." },
-  "grow3_t":         { "ru": "Свет во времени", "en": "Light over time" },
-  "grow3_d":         { "ru": "Раз в полгода — новый слой света. Видно, что изменилось, а что осталось ядром. Люди меняются — теперь это заметно.", "en": "Every six months, a new layer of light. You see what changed and what stayed the core. People change — now it shows." },
-
-  "rigor_1":         { "ru": "Нормативная методика Ликерта", "en": "A normed Likert method" },
-  "rigor_2":         { "ru": "94 пункта", "en": "94 items" },
-  "rigor_3":         { "ru": "Непрерывные шкалы, а не типы", "en": "Continuous scales, not types" },
-  "rigor_4":         { "ru": "Открытый журнал изменений", "en": "An open changelog" },
-  "rigor_cta":       { "ru": "Как это устроено", "en": "How it works" },
-
-  "social_eyebrow":  { "ru": "Живые вселенные", "en": "Living universes" },
-  "social_count":    { "ru": "", "en": "" },
-  "social_label":    { "ru": "вселенных уже построено", "en": "universes built so far" },
-  "testi1_q":        { "ru": "Наконец стало понятно, почему на работе я совсем другой человек.", "en": "It finally made sense why I'm a completely different person at work." },
-  "testi1_by":       { "ru": "по коду W2·A4·V3·F4·S2", "en": "code W2·A4·V3·F4·S2" },
-  "testi2_q":        { "ru": "Не ярлык, а место. Впервые тест не сузил меня, а показал масштаб.", "en": "Not a label — a place. For once a test didn't shrink me, it showed the scale." },
-  "testi2_by":       { "ru": "по коду O3·C4·L3·D4·R2", "en": "code O3·C4·L3·D4·R2" },
-  "testi3_q":        { "ru": "Через полгода вернулся — и увидел, что именно во мне сдвинулось.", "en": "I came back six months later and saw exactly what had shifted in me." },
-  "testi3_by":       { "ru": "по коду W3·A3·V4·F2·S3", "en": "code W3·A3·V4·F2·S3" },
-
-  "price_eyebrow":   { "ru": "Цены", "en": "Pricing" },
-  "price_h":         { "ru": "Три способа исследовать свою вселенную", "en": "Three ways to explore your universe" },
-  "price_sub":       { "ru": "Один код на всю жизнь. Расширяй свою вселенную, когда захочешь — без «премиумов» и мелкого шрифта.", "en": "One code for life. Expand your universe whenever you want — no \"premium\", no fine print." },
-
-  "tier1_name":      { "ru": "Вселенная", "en": "Universe" },
-  "tier1_price":     { "ru": "$12", "en": "$12" },
-  "tier1_period":    { "ru": "разово", "en": "one-time" },
-  "tier1_f1":        { "ru": "Тест из 94 вопросов по пяти осям", "en": "The 94-question, five-axis test" },
-  "tier1_f2":        { "ru": "Твоя личная вселенная — навсегда", "en": "Your personal universe — forever" },
-  "tier1_f3":        { "ru": "Экспорт первой сессии", "en": "Export of your first session" },
-  "tier1_cta":       { "ru": "Начать", "en": "Begin" },
-
-  "tier2_name":      { "ru": "Вселенная+", "en": "Universe+" },
-  "tier2_price":     { "ru": "$6", "en": "$6" },
-  "tier2_period":    { "ru": "в месяц", "en": "per month" },
-  "tier2_badge":     { "ru": "Популярное", "en": "Most popular" },
-  "tier2_f1":        { "ru": "Всё из «Вселенной»", "en": "Everything in Universe" },
-  "tier2_f2":        { "ru": "Все созвездия и мини-тесты", "en": "Every constellation and mini-test" },
-  "tier2_f3":        { "ru": "Контекстные линзы: дом, работа, нагрузка", "en": "Contextual lenses: home, work, pressure" },
-  "tier2_f4":        { "ru": "Журнал изменений и планировщик", "en": "Changelog and planner" },
-  "tier2_cta":       { "ru": "Начать", "en": "Begin" },
-
-  "tier3_name":      { "ru": "Ритуал роста", "en": "Growth ritual" },
-  "tier3_price":     { "ru": "$49", "en": "$49" },
-  "tier3_period":    { "ru": "в год", "en": "per year" },
-  "tier3_f1":        { "ru": "Всё из «Вселенной+»", "en": "Everything in Universe+" },
-  "tier3_f2":        { "ru": "Ретест каждые полгода — новый слой света", "en": "A retest every 6 months — a new layer of light" },
-  "tier3_f3":        { "ru": "Отчёт «Что изменилось» после каждого ретеста", "en": "A \"what changed\" report after each retest" },
-  "tier3_cta":       { "ru": "Начать", "en": "Begin" },
-
-  "final_eyebrow":   { "ru": "Осталось её построить", "en": "All that's left is to build it" },
-  "final_h":         { "ru": "Твоя вселенная уже существует.", "en": "Your universe already exists." },
-  "final_p":         { "ru": "Осталось её увидеть. Пять осей, один код, живая карта, которой ты правда пользуешься.", "en": "You just have to see it. Five axes, one code, a living map you'll actually use." },
-  "final_cta":       { "ru": "Начать · 15 минут", "en": "Begin · 15 minutes" },
-
-  "foot_promise":    { "ru": "Всё, что светится в твоей вселенной, — измерено. Ничего не выдумано.", "en": "Everything that shines in your universe was measured. Nothing was invented." },
-  "foot_col_product": { "ru": "Продукт", "en": "Product" },
-  "foot_col_science": { "ru": "Наука",   "en": "Science" },
-  "foot_col_contact": { "ru": "Контакт", "en": "Contact" },
-  "foot_col_youth":   { "ru": "PsyID Youth", "en": "PsyID Youth" },
-  "foot_youth_line":  { "ru": "Для подростков", "en": "For teens" },
-  "foot_soon":        { "ru": "скоро", "en": "soon" },
-  "foot_link_galaxy":  { "ru": "Твоя галактика", "en": "Your galaxy" },
-  "foot_link_directions": { "ru": "Направления", "en": "Directions" },
-  "foot_link_method":  { "ru": "Методология", "en": "Methodology" },
-  "foot_link_match":   { "ru": "Как считается совпадение", "en": "How matching works" },
-  "foot_link_sources": { "ru": "Источники и литература", "en": "Sources & literature" },
-  "foot_link_changelog": { "ru": "Журнал изменений", "en": "Changelog" },
-  "foot_link_email":   { "ru": "Написать нам", "en": "Email us" },
-  "foot_copy":         { "ru": "© 2026 PsyID · ReNo 2.0", "en": "© 2026 PsyID · ReNo 2.0" },
-  "foot_admin":        { "ru": "Админ", "en": "Admin" },
-
-  "axis_energy":     { "ru": "Энергия",     "en": "Energy" },
-  "axis_info":       { "ru": "Информация",  "en": "Information" },
-  "axis_decision":   { "ru": "Решения",     "en": "Decision" },
-  "axis_structure":  { "ru": "Структура",   "en": "Structure" },
-  "axis_emotion":    { "ru": "Реакция",     "en": "Emotion" }
+  "nav_home": {
+    "en": "Home"
+  },
+  "nav_method": {
+    "en": "Methodology"
+  },
+  "nav_prof": {
+    "en": "Professions"
+  },
+  "nav_sources": {
+    "en": "Sources"
+  },
+  "nav_cta": {
+    "en": "Take the test"
+  },
+  "nav_login": {
+    "en": "Log in"
+  },
+  "nav_portal": {
+    "en": "Portal"
+  },
+  "nav_price": {
+    "en": "Pricing"
+  },
+  "hero_eyebrow": {
+    "en": "PsyID · ReNo"
+  },
+  "hero_h1a": {
+    "en": "You are a whole"
+  },
+  "hero_h1b": {
+    "en": "universe."
+  },
+  "hero_p": {
+    "en": "Five axes of character at the core. Planets, moons and constellations around them. All of it built from your answers, and all of it measured."
+  },
+  "hero_cta": {
+    "en": "Explore your galaxy"
+  },
+  "hero_cta2": {
+    "en": "Take the test"
+  },
+  "hero_micro": {
+    "en": "94 questions · 15 minutes · a real method"
+  },
+  "hero_grabhint": {
+    "en": "drag to spin"
+  },
+  "code_eyebrow": {
+    "en": "Your code"
+  },
+  "code_h": {
+    "en": "Your personality has coordinates."
+  },
+  "code_p": {
+    "en": "Each axis is a continuous 0–100 scale, not a label. Your code is your position on all five at once. Two the same almost never happen."
+  },
+  "grow_eyebrow": {
+    "en": "How it grows"
+  },
+  "grow_ha": {
+    "en": "A universe that"
+  },
+  "grow_hb": {
+    "en": "never finishes"
+  },
+  "grow1_t": {
+    "en": "Stars and planets"
+  },
+  "grow1_d": {
+    "en": "The core is five axes of character. Planets orbit each one — what that trait is actually made of in you."
+  },
+  "grow2_t": {
+    "en": "Lenses"
+  },
+  "grow2_d": {
+    "en": "Turn a lens and watch your universe shift — at home, at work, under load. The same personality across different parts of life."
+  },
+  "grow3_t": {
+    "en": "Light over time"
+  },
+  "grow3_d": {
+    "en": "Every six months, a new layer of light. You see what changed and what stayed the core. People change — now it shows."
+  },
+  "rigor_1": {
+    "en": "A normed Likert method"
+  },
+  "rigor_2": {
+    "en": "94 items"
+  },
+  "rigor_3": {
+    "en": "Continuous scales, not types"
+  },
+  "rigor_4": {
+    "en": "An open changelog"
+  },
+  "rigor_cta": {
+    "en": "How it works"
+  },
+  "social_eyebrow": {
+    "en": "Living universes"
+  },
+  "social_count": {
+    "en": ""
+  },
+  "social_label": {
+    "en": "universes built so far"
+  },
+  "testi1_q": {
+    "en": "It finally made sense why I'm a completely different person at work."
+  },
+  "testi1_by": {
+    "en": "code W2·A4·V3·F4·S2"
+  },
+  "testi2_q": {
+    "en": "Not a label — a place. For once a test didn't shrink me, it showed the scale."
+  },
+  "testi2_by": {
+    "en": "code O3·C4·L3·D4·R2"
+  },
+  "testi3_q": {
+    "en": "I came back six months later and saw exactly what had shifted in me."
+  },
+  "testi3_by": {
+    "en": "code W3·A3·V4·F2·S3"
+  },
+  "price_eyebrow": {
+    "en": "Pricing"
+  },
+  "price_h": {
+    "en": "Three ways to explore your universe"
+  },
+  "price_sub": {
+    "en": "One code for life. Expand your universe whenever you want — no \"premium\", no fine print."
+  },
+  "tier1_name": {
+    "en": "Universe"
+  },
+  "tier1_price": {
+    "en": "$12"
+  },
+  "tier1_period": {
+    "en": "one-time"
+  },
+  "tier1_f1": {
+    "en": "The 94-question, five-axis test"
+  },
+  "tier1_f2": {
+    "en": "Your personal universe — forever"
+  },
+  "tier1_f3": {
+    "en": "Export of your first session"
+  },
+  "tier1_cta": {
+    "en": "Begin"
+  },
+  "tier2_name": {
+    "en": "Universe+"
+  },
+  "tier2_price": {
+    "en": "$6"
+  },
+  "tier2_period": {
+    "en": "per month"
+  },
+  "tier2_badge": {
+    "en": "Most popular"
+  },
+  "tier2_f1": {
+    "en": "Everything in Universe"
+  },
+  "tier2_f2": {
+    "en": "Every constellation and mini-test"
+  },
+  "tier2_f3": {
+    "en": "Contextual lenses: home, work, pressure"
+  },
+  "tier2_f4": {
+    "en": "Changelog and planner"
+  },
+  "tier2_cta": {
+    "en": "Begin"
+  },
+  "tier3_name": {
+    "en": "Growth ritual"
+  },
+  "tier3_price": {
+    "en": "$49"
+  },
+  "tier3_period": {
+    "en": "per year"
+  },
+  "tier3_f1": {
+    "en": "Everything in Universe+"
+  },
+  "tier3_f2": {
+    "en": "A retest every 6 months — a new layer of light"
+  },
+  "tier3_f3": {
+    "en": "A \"what changed\" report after each retest"
+  },
+  "tier3_cta": {
+    "en": "Begin"
+  },
+  "final_eyebrow": {
+    "en": "All that's left is to build it"
+  },
+  "final_h": {
+    "en": "Your universe already exists."
+  },
+  "final_p": {
+    "en": "You just have to see it. Five axes, one code, a living map you'll actually use."
+  },
+  "final_cta": {
+    "en": "Begin · 15 minutes"
+  },
+  "foot_promise": {
+    "en": "Everything that shines in your universe was measured. Nothing was invented."
+  },
+  "foot_col_product": {
+    "en": "Product"
+  },
+  "foot_col_science": {
+    "en": "Science"
+  },
+  "foot_col_contact": {
+    "en": "Contact"
+  },
+  "foot_col_youth": {
+    "en": "PsyID Youth"
+  },
+  "foot_youth_line": {
+    "en": "For teens"
+  },
+  "foot_soon": {
+    "en": "soon"
+  },
+  "foot_link_galaxy": {
+    "en": "Your galaxy"
+  },
+  "foot_link_directions": {
+    "en": "Directions"
+  },
+  "foot_link_method": {
+    "en": "Methodology"
+  },
+  "foot_link_match": {
+    "en": "How matching works"
+  },
+  "foot_link_sources": {
+    "en": "Sources & literature"
+  },
+  "foot_link_changelog": {
+    "en": "Changelog"
+  },
+  "foot_link_email": {
+    "en": "Email us"
+  },
+  "foot_copy": {
+    "en": "© 2026 PsyID · ReNo 2.0"
+  },
+  "foot_admin": {
+    "en": "Admin"
+  },
+  "axis_energy": {
+    "en": "Energy"
+  },
+  "axis_info": {
+    "en": "Information"
+  },
+  "axis_decision": {
+    "en": "Decision"
+  },
+  "axis_structure": {
+    "en": "Structure"
+  },
+  "axis_emotion": {
+    "en": "Emotion"
+  }
 }
