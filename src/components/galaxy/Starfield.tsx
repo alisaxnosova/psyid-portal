@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { deviceTier } from './perf';
 
 interface Star { top: string; left: string; w: number; o: number; d: number; delay: number; glow: number }
 
@@ -16,17 +17,22 @@ interface Star { top: string; left: string; w: number; o: number; d: number; del
 export function Starfield({ count = 130, fixed = false }: { count?: number; fixed?: boolean }) {
   const [stars, setStars] = useState<Star[]>([]);
   useEffect(() => {
-    setStars(Array.from({ length: count }, () => {
+    // Old machines: fewer stars, and no per-star box-shadow glow (glow forces
+    // expensive repaints on hundreds of animating DOM nodes).
+    const tier = deviceTier();
+    const n = Math.max(1, Math.round(count * tier.particleScale));
+    setStars(Array.from({ length: n }, () => {
       const w = +(Math.random() * 1.9 + 0.5).toFixed(2);
+      const o = +(Math.random() * 0.6 + 0.28).toFixed(2);
       return {
         top: (Math.random() * 100).toFixed(2) + '%',
         left: (Math.random() * 100).toFixed(2) + '%',
         w,
-        o: +(Math.random() * 0.6 + 0.28).toFixed(2),
+        o,
         d: +(Math.random() * 3 + 2).toFixed(2),
         delay: +(Math.random() * 4).toFixed(2),
-        // larger stars glow more; small ones stay crisp
-        glow: w > 1.1 ? +(w * 2.4).toFixed(1) : 0,
+        // larger stars glow more; small ones stay crisp. Glow off entirely on low-end.
+        glow: !tier.lowEnd && w > 1.1 ? +(w * 2.4).toFixed(1) : 0,
       };
     }));
   }, [count]);

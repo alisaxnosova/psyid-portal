@@ -39,7 +39,7 @@
     "en": "Explore your galaxy"
   },
   "hero_cta2": {
-    "en": "Take the test"
+    "en": "How it works"
   },
   "hero_micro": {
     "en": "94 questions · 15 minutes · a real method"
@@ -217,6 +217,15 @@
   },
   "foot_promise": {
     "en": "Everything that shines in your universe was measured. Nothing was invented."
+  },
+  "foot_cta": {
+    "en": "Explore your universe"
+  },
+  "foot_cta_sub": {
+    "en": "Not registered yet?"
+  },
+  "foot_cta_sub_link": {
+    "en": "Create an account to take a test"
   },
   "foot_col_product": {
     "en": "Product"

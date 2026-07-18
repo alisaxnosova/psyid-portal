@@ -24,9 +24,9 @@ export function PsidNav() {
   return (
     <nav style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30 }}>
       {/* full-bleed bar; true 3-column grid keeps the tabs dead-center regardless of side widths */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 80, padding: '0 clamp(24px,4vw,72px)', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 92, padding: '0 clamp(24px,4vw,72px)', gap: 24 }}>
         <div style={{ justifySelf: 'start' }}>
-          <Link href="/" aria-label="PsyID"><Mark tone="dark" size={60} /></Link>
+          <Link href="/" aria-label="PsyID"><Mark tone="dark" size={78} /></Link>
         </div>
 
         <div className="psid-nav-links" style={{ justifySelf: 'center', display: 'flex', gap: 6 }}>
@@ -46,7 +46,7 @@ export function PsidNav() {
             <Link href={isLoggedIn ? '/portal' : '/login'} style={{ fontSize: 15, fontWeight: 500, color: 'var(--space-fg-s)' }}>
               {isLoggedIn ? t('nav_portal') : t('nav_login')}
             </Link>
-            <Link className="btn btn-orange sm" href="/reno">{t('nav_cta')} →</Link>
+            <Link className="btn btn-orange sm" href={isLoggedIn ? '/reno' : '/register'}>{t('nav_cta')} →</Link>
           </div>
 
           <button
@@ -87,7 +87,7 @@ export function PsidNav() {
               {isLoggedIn ? t('nav_portal') : t('nav_login')}
             </Link>
           </div>
-          <Link className="btn btn-orange" href="/reno" onClick={() => setOpen(false)} style={{ justifyContent: 'center', margin: '4px 8px 4px' }}>
+          <Link className="btn btn-orange" href={isLoggedIn ? '/reno' : '/register'} onClick={() => setOpen(false)} style={{ justifyContent: 'center', margin: '4px 8px 4px' }}>
             {t('nav_cta')} →
           </Link>
         </div>

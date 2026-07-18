@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSiteLang } from '@/lib/siteLang';
+import { useAuth } from '@/lib/useAuth';
 import { PsidNav } from './PsidNav';
 import { PsidFooter } from './PsidFooter';
 import { DecorativeGalaxy, Starfield, AXES } from '@/components/galaxy';
@@ -36,6 +37,10 @@ function CodeMorph() {
 
 export default function SiteLanding() {
   const { t } = useSiteLang();
+  const { isLoggedIn } = useAuth();
+  // A new visitor must register to get an access code before the test; a
+  // logged-in user goes straight to the code-entry test page.
+  const testHref = isLoggedIn ? '/reno' : '/register';
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export default function SiteLanding() {
           </h1>
           <p className="lead" style={{ margin: '26px auto 0', textAlign: 'center' }}>{t('hero_p')}</p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center', marginTop: 34 }}>
-            <Link className="btn btn-orange" href="/reno">{t('hero_cta')} <span className="ar">→</span></Link>
+            <Link className="btn btn-orange" href={testHref}>{t('hero_cta')} <span className="ar">→</span></Link>
             <Link className="btn btn-ghost-white" href="/methodology">{t('hero_cta2')}</Link>
           </div>
           <div style={{ marginTop: 30, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--space-fg-m)' }}>
@@ -200,7 +205,7 @@ export default function SiteLanding() {
                     </li>
                   ))}
                 </ul>
-                <Link className={`btn ${tier.highlight ? 'btn-orange' : 'btn-ghost-white'}`} href="/reno" style={{ marginTop: 'auto', justifyContent: 'center' }}>
+                <Link className={`btn ${tier.highlight ? 'btn-orange' : 'btn-ghost-white'}`} href={testHref} style={{ marginTop: 'auto', justifyContent: 'center' }}>
                   {tier.cta} <span className="ar">→</span>
                 </Link>
               </div>
@@ -218,7 +223,7 @@ export default function SiteLanding() {
               <div className="eyebrow dash" style={{ justifyContent: 'center', marginBottom: 18 }}>{t('final_eyebrow')}</div>
               <h2 className="h-2" style={{ maxWidth: '18ch', margin: '0 auto' }}>{t('final_h')}</h2>
               <p className="lead" style={{ margin: '18px auto 32px', textAlign: 'center' }}>{t('final_p')}</p>
-              <Link className="btn btn-orange" href="/reno">{t('final_cta')} <span className="ar">→</span></Link>
+              <Link className="btn btn-orange" href={testHref}>{t('final_cta')} <span className="ar">→</span></Link>
             </div>
           </div>
         </div>

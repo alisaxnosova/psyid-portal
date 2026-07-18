@@ -79,7 +79,7 @@ export default function PortalUniverse({ data }: { data: UniverseData }) {
       {/* top nav */}
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 26px', borderBottom: '1px solid var(--space-brd)', position: 'relative', zIndex: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <Link href="/"><Mark tone="dark" size={40} /></Link>
+          <Link href="/"><Mark tone="dark" size={60} /></Link>
           <span style={{ width: 1, height: 20, background: 'var(--space-brd)' }} />
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--space-fg-m)' }}>{L({ en: 'Your universe' })}</span>
         </div>

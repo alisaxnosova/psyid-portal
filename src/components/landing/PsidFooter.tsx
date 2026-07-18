@@ -11,16 +11,23 @@ export function PsidFooter() {
       <div style={{ padding: '64px clamp(24px,4vw,72px) 44px', maxWidth: 1720, margin: '0 auto' }}>
         {/* brand hugs the left edge, the link columns hug the right — fills the band edge-to-edge */}
         <div className="psid-foot-top" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '40px 64px' }}>
-          <div style={{ maxWidth: 340, minWidth: 240 }}>
-            <Mark tone="dark" size={48} />
-            <p style={{ marginTop: 16, fontSize: 14, lineHeight: 1.6, color: 'var(--space-fg-m)' }}>
+          <div style={{ maxWidth: 360, minWidth: 260 }}>
+            <Mark tone="dark" size={76} />
+            <p style={{ marginTop: 20, fontSize: 14.5, lineHeight: 1.6, color: 'var(--space-fg-m)' }}>
               {t('foot_promise')}
+            </p>
+            <Link className="btn btn-orange" href="/login" style={{ marginTop: 22 }}>
+              {t('foot_cta')} <span style={{ marginLeft: 2 }}>→</span>
+            </Link>
+            <p style={{ marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--space-fg-m)' }}>
+              {t('foot_cta_sub')}{' '}
+              <Link href="/register" style={{ color: 'var(--orange)', fontWeight: 600 }}>{t('foot_cta_sub_link')}</Link>
             </p>
           </div>
 
           <div className="psid-foot-cols" style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(48px, 7vw, 104px)' }}>
             <FootCol title={t('foot_col_product')} links={[
-              { href: '/reno', label: t('nav_cta') },
+              { href: '/register', label: t('nav_cta') },
               { href: '/portal', label: t('foot_link_galaxy') },
               { href: '/professions', label: t('foot_link_directions') },
             ]} />

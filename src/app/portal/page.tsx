@@ -58,7 +58,7 @@ export default function PortalPage() {
     <div style={{ minHeight: '100vh', background: 'var(--portal-bg)', color: 'var(--space-fg)', position: 'relative', overflow: 'hidden' }}>
       <Starfield count={130} />
       <header style={{ position: 'relative', zIndex: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', borderBottom: '1px solid var(--space-brd)' }}>
-        <Link href="/"><Mark tone="dark" size={40} /></Link>
+        <Link href="/"><Mark tone="dark" size={60} /></Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <span style={{ fontSize: 14, color: 'var(--space-fg-s)' }}>{user?.email}</span>
           <button onClick={logout} style={{ fontSize: 13, fontWeight: 600, color: 'var(--space-fg-s)', background: 'none', border: '1px solid var(--space-brd)', borderRadius: 999, padding: '6px 14px', cursor: 'pointer' }}>{L({ en: 'Sign out' })}</button>

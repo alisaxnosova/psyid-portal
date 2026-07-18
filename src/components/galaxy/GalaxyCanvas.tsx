@@ -13,6 +13,7 @@
 
 import { useEffect, useRef } from 'react';
 import type { Graph, GNode } from './model';
+import { deviceTier, prefersReducedMotion } from './perf';
 
 const CAM = 900;
 const BASE = 1.04;
@@ -42,10 +43,6 @@ function hexA(hex: string, a: number): string {
   if (h.length === 3) h = h.replace(/./g, (c) => c + c);
   const n = parseInt(h.slice(0, 6), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
   return `rgba(${r},${g},${b},${Math.max(0, Math.min(1, a)).toFixed(3)})`;
-}
-
-function prefersReducedMotion(): boolean {
-  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 }
 
 interface EngineState {
@@ -106,18 +103,32 @@ export function GalaxyCanvas({
     if (!ctx) return;
     const s = st.current;
     const reduced = prefersReducedMotion();
+    const tier = deviceTier();
+    const frameBudget = 1000 / tier.fps;
+    // Decorative (non-interactive) galaxies under reduced-motion draw a single
+    // static frame — no rAF loop at all.
+    const staticRender = reduced && !interactive;
     if (reduced) { s.autoRot = false; s.velY = 0; }
     let raf = 0;
+    let last = 0;
+    let visible = true;
 
     function resize() {
       const rect = wrap!.getBoundingClientRect();
-      s.dpr = Math.min(2, window.devicePixelRatio || 1);
+      s.dpr = Math.min(tier.dprCap, window.devicePixelRatio || 1);
       s.w = rect.width; s.h = rect.height;
       canvas!.width = rect.width * s.dpr; canvas!.height = rect.height * s.dpr;
       canvas!.style.width = rect.width + 'px'; canvas!.style.height = rect.height + 'px';
+      if (staticRender) draw(); // redraw the frozen frame at the new size
     }
-    resize();
-    const ro = new ResizeObserver(resize); ro.observe(wrap);
+
+    // Pause the animation loop while the canvas is scrolled out of view.
+    const io = new IntersectionObserver(([e]) => {
+      const wasHidden = !visible;
+      visible = e.isIntersecting;
+      if (visible && wasHidden && !staticRender) { last = 0; raf = requestAnimationFrame(frame); }
+    }, { rootMargin: '120px' });
+    io.observe(wrap);
 
     function project(p: { x: number; y: number; z: number }): Projected {
       const cY = Math.cos(s.rotY), sY = Math.sin(s.rotY);
@@ -143,8 +154,7 @@ export function GalaxyCanvas({
 
     const nodeById = new Map(graph.nodes.map((n) => [n.id, n]));
 
-    function frame() {
-      raf = requestAnimationFrame(frame);
+    function step() {
       if (s.autoRot && !s.dragging) { s.rotY += s.velY * speed; }
       else if (!s.dragging) {
         s.rotY += s.velY; s.rotX += s.velX;
@@ -153,7 +163,9 @@ export function GalaxyCanvas({
         if (Math.abs(s.velX) < 0.00018) s.velX = 0;
       }
       s.rotX = Math.max(-1.15, Math.min(1.15, s.rotX));
+    }
 
+    function draw() {
       ctx!.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
       ctx!.clearRect(0, 0, s.w, s.h);
 
@@ -331,8 +343,21 @@ export function GalaxyCanvas({
       };
     }
 
-    frame();
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); cleanupInteract(); };
+    function frame(now = 0) {
+      // Paused while scrolled out of view — keep a light rAF heartbeat only.
+      if (!visible) { raf = requestAnimationFrame(frame); return; }
+      // Frame-rate budget: on low-end devices this halves per-frame work.
+      if (now && last && now - last < frameBudget - 1.5) { raf = requestAnimationFrame(frame); return; }
+      last = now;
+      step();
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+
+    resize();
+    const ro = new ResizeObserver(resize); ro.observe(wrap);
+    if (staticRender) draw(); else frame();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); cleanupInteract(); };
   }, [graph, pal, bg, interactive, showLabels, glow, speed, centerY, tiltX, sizeK, pentagon, focusId]);
 
   return (

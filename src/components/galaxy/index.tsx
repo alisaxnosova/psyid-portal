@@ -9,6 +9,7 @@
 import { useMemo } from 'react';
 import { GalaxyCanvas } from './GalaxyCanvas';
 import { buildGraph, DEFAULT_PROFILE, type Profile } from './model';
+import { deviceTier } from './perf';
 
 export { GalaxyCanvas } from './GalaxyCanvas';
 export type { GalaxyCanvasProps, PaletteKey, LabelMode } from './GalaxyCanvas';
@@ -22,7 +23,8 @@ export function DecorativeGalaxy({
   const graph = useMemo(() => buildGraph(profile, {
     modules: [{ key: 'riasec', axis: 1, locked: false }, { key: 'values', axis: 2, locked: false }, { key: 'burnout', axis: 4, locked: true }, { key: 'team', axis: 3, locked: true }],
     sessions: 4,
-    dust: 96,
+    // dust are the heaviest per-frame cost (one draw each) — thin them on low-end machines
+    dust: Math.round(96 * deviceTier().particleScale),
     pentagonWeb: true,
   }), [profile]);
 
